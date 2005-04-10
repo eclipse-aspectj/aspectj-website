@@ -29,16 +29,16 @@
 	<tr>
 	  <td class="smallParagraph" height="26"><b>
 	    <a href="http://www.eclipse.org/aspectj/docs.php">[doc index]</a>
-	    &nbsp;<a href="http://dev.eclipse.org/viewcvs/indextech.cgi/~checkout~/aspectj-home/doc/ajdk15notebook/index.html">
+	    &nbsp;<a href="doc/ajdk15notebook/index.html">
 	    [AspectJ 5 language changes]</a>
-	    &nbsp;<a href="http://dev.eclipse.org/viewcvs/indextech.cgi/~checkout~/aspectj-home/doc/progguide/index.html">
+	    &nbsp;<a href="doc/progguide/index.html">
 	    [language]</a>
-	    &nbsp;<a href="http://dev.eclipse.org/viewcvs/indextech.cgi/~checkout~/aspectj-home/doc/devguide/index.html">
+	    &nbsp;<a href="doc/devguide/index.html">
 	    [tools]</a>
-	    &nbsp;<a href="http://dev.eclipse.org/viewcvs/indextech.cgi/~checkout~/aspectj-home/doc/faq.html">
+	    &nbsp;<a href="doc/faq.html">
 	    [faq]</a>
 	    &nbsp;<a href="http://www.eclipse.org/aspectj/publications.php">[publications]</a> 
-	    &nbsp;<a href="http://dev.eclipse.org/viewcvs/indextech.cgi/~checkout~/aspectj-home/sample-code.html">
+	    &nbsp;<a href="http://www.eclipse.org/aspectj//sample-code.html">
 	    [samples]</a> 
 	    </b>
 	  </td>
