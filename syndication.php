@@ -4,59 +4,64 @@
 
 <!-- ========== Eclipse portlet =============== -->
 
-  <h2>Eclipse Links</h2>
+  <h2>See also...</h2>
   
   <ul>
-    <li><a href="http://www.eclipse.org">Eclipse home</a></li>
-	<li><a href="http://www.eclipse.org/ajdt">AJDT</a></li>
-	<li><a href="http://www.eclipse.org/downloads/index.php">Eclipse downloads page</a></li>
+    <li><a target="_top" href="http://aosd.net">AOSD.net</a></li>
+    <li><a target="_top" href="http://www.parc.com/research/csl/projects/aspectj/default.html">AspectJ PARC Page</a></li>
    	<li><a href="http://www.amazon.com/exec/obidos/ASIN/0321245873/qid=1112868888/sr=2-3/ref=pd_bbs_b_2_3/103-5274059-2049410">
    	    Eclipse AspectJ</a> the book, by some of the leading AspectJ committers</li>
-   </ul>	
+  </ul>
   
    <p align="center">
     <a href="http://www.amazon.com/exec/obidos/ASIN/0321245873/qid=1112868888/sr=2-3/ref=pd_bbs_b_2_3/103-5274059-2049410">
-  	   <img src="images/eclipseaspectj.jpg" width="180" alt="Eclipse AspectJ Book Cover"/>
+  	   <img src="images/s_eclipseaspectj.jpg" alt="Eclipse AspectJ Book Cover"/>
     </a>
    </p>
 
-
  <!-- ============ The Aspects Blog portlet ============== -->
 
-	<h2>The Aspects Blog</h2>
+	<h3><a href="http://www.aspectprogrammer.org/blogs/adrian">The Aspects Blog</a></h3>
    
    <ul>
 	   <?php require('syndication/aspectprogrammer.html');  ?>
-	 	<li><a href="http://www.aspectprogrammer.org/blogs/adrian"> more...</a></li>
-	</ul>
+   </ul>
+
+ <!-- ============ Jonas' Blog ============== -->
+
+	<h3><a href="http://blogs.codehaus.org/people/jboner">Jonas Bonér's blog</a></h3>
+   
+   <ul>
+	   <?php require('syndication/jonas.html');  ?>
+   </ul>
+
+<!-- ============ Alex's Blog ============== -->
+
+	<h3><a href="http://blogs.codehaus.org/people/avasseur">Alex Vasseur's blog</a></h3>
+   
+   <ul>
+	   <?php require('syndication/alex.html');  ?>
+   </ul>
+
+
 
 <!-- ============ Aspectivity blog portlet =============== -->
 
-	<h2>Aspectivity</h2>
+	<h3><a href="http://ramnivas.com/blog/">Aspectivity</a></h3>
 	<ul>
 	    <?php require('syndication/aspectivity.html'); ?>
-		<li><a href="http://ramnivas.com/blog/"> more...</a></li>
 	</ul>
 	
-<!-- ========== Dion's blog portlet =============== -->
-
-	<h2>Dion Almaer on Tech &amp; AOP</h2>
-	<ul>
-	  <?php require('syndication/dion.html');	  ?>
-	  <li><a href="http://www.almaer.com/blog/archives/cat_aop.html"> more...</a> </li>
-  </ul>
-  
 <!-- ============= Ron Bodkin's blog portlet ========== -->
 
-	<h2>Ron Bodkin on AOP</h2>
+	<h3><a href="http://rbodkin.blogs.com/ron_bodkins_blog/aspectoriented_programming/index.html">Ron Bodkin on AOP</a></h3>
 	<ul>
 	  <?php require('syndication/ron.html'); ?>
-		<li><a href="http://rbodkin.blogs.com/ron_bodkins_blog/aspectoriented_programming/index.html"> more...</a> </li>
 	</ul>
 
 <!-- ========== News portlet ================ -->
-     
-   <h2>AspectJ in Yahoo news...</h2>
+ <!--    
+   <h3>AspectJ in Yahoo news...</h3>
    
    <ul>
 	  <?php require('syndication/news.html'); ?>
@@ -68,5 +73,15 @@
 	   </li>
  
    </ul>
+-->
+<!-- ========== Dion's blog portlet =============== -->
+<!--
+	<h3>Dion Almaer on Tech &amp; AOP</h3>
+	<ul>
+	  <?php require('syndication/dion.html');	  ?>
+	  <li><a href="http://www.almaer.com/blog/archives/cat_aop.html"> more...</a> </li>
+  </ul>
+-->  
+
    
 </div>

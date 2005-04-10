@@ -45,31 +45,24 @@
 
   <?php require("books_and_articles.html"); ?>
 
-  <!-- =========== Links section ================ -->
- 
-  <h2>Links</h2>
-
-  <dl>
-    <dt><a target="_top" href="http://eclipse.org/ajdt">AJDT Project</a></dt>
-    <dd> this Eclipse Technology project provides an 
-          AspectJ plug-in for Eclipse.
-    </dd>
-    
-    <dt>
-          <a target="_top" href="http://www.parc.com/research/csl/projects/aspectj/default.html">AspectJ PARC Page</a>
-    </dt>
-    <dd>
-          provides an archive of papers, slides and project history.
-          <a target="_top" href="http://www.parc.com/research/csl/projects/aspectj/default.html">
-          <img border="0"
-	  src="http://www.parc.com/research/csl/projects/aspectj/parc.gif" width="70" height="21" align="right"></a>
-    </dd>
-
-    <dt><a target="_top" href="http://aosd.net">AOSD.net</a></dt>
-    <dd> is a 
-         comprehensive source of information for Aspect-Oriented Software 
-         Development.
-    </dd>
-  </dl>
-
+  <h2>Awards</h2>
+  
+  <table align="center" width="80%">
+    <tbody>
+    	<tr>
+    		<td><img src="images/14thjolt_small.gif"/ width="150"></td>
+    	    <td>
+	    	    March 17, 2004 - AspectJ 1.1 gets a Software Development Magazine
+			    <a target="_top" href="http://sdmagazine.com/jolts/"> 
+			    Jolt Productivity award</a>
+			</td>
+    		<td><img src="images/jw-ecalogo2003.gif"/></td>
+			<td>
+				June 9, 2003 - AspectJ wins the 
+  		        <a target="_top" href="http://www.javaworld.com/javaworld/jw-06-2003/jw-0609-eca_p.html">
+		        JavaWorld Editors' Choice Award</a> 
+			</td>		
+		</tr>    
+    </tbody>
+  </table>
 </div>

@@ -120,6 +120,11 @@ a.bar {  color: #FFFFFF}
     height: auto;
 	overflow: show;
 	}
+	
+#footer {
+  padding-top: 10px;
+  clear: both;
+  }
 
 #main {
 	float: left;
@@ -144,9 +149,11 @@ a.bar {  color: #FFFFFF}
     line-height: 1.2em;
 	float: right;		
 	width: 19%;
-        border-right: 1px solid #0080C0;
+	border: 1px solid #0080C0;
+    border-right: 1px solid #0080C0;
 	border-left:  1px solid #0080C0;
-	background-color: #FFFFFF;	
+	background-color: #DDDDDD;	
+	padding-bottom: 20px;
 	overflow: hidden;
 	}
 
@@ -155,6 +162,7 @@ a.bar {  color: #FFFFFF}
    font-size: 10pt;
    line-height: 1.2em;
    background: none;
+   padding-left: 2px;
    padding-top: 2px;
    padding-bottom: 0px;
 }
@@ -167,7 +175,7 @@ a.bar {  color: #FFFFFF}
 }
 
 #right h2 { font-family: arial, helvetica, geneva; 
-     font-size: 10pt; 
+     font-size: 12pt; 
      font-weight: bold ; 
      line-height: 14px;
      color: #FFFFFF;
@@ -175,6 +183,14 @@ a.bar {  color: #FFFFFF}
      padding: 5px;
      padding-bottom: 2px;
      margin: 5px;
+}
+
+#right h3 {
+    background-color: orange;
+}
+
+#right h3 a {
+    color: #FFFFFF;
 }
 
 #docs-main {

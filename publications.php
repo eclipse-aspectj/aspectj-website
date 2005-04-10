@@ -206,6 +206,15 @@
 
 	<dl>
 	
+		<dt><a href="http://www.builderau.com.au/architect/0,39024564,39183763,00.htm">
+			&quot;A new aspect to programming&quot;</a> by Simon Sharwood.
+	    </dt>
+	    <dd>
+	       A review of the benefits of AOP and the current state of the practice, with contributions 
+	       from IBM, BEA, and Microsoft amongst others. &quot;The AOP genie is well and truly out of the
+	       bottle.&quot;
+	    </dd>
+	    
 		<dt><a target="_top" href="http://www.ibm.com/developerworks/java/library/j-aopwork1/">
     	&quot;AOP@Work: AOP tools comparison&quot;</a> by Mik Kersten
 		</dt>
@@ -214,6 +223,17 @@
 			JBoss AOP and Spring AOP for power and usability, and touches
 			on the implications of the merger of AspectWerkz and AspectJ.
 		</dd>
+		
+		 <dt><a target="_top" href="http://www-106.ibm.com/developerworks/library/j-ajdt/">
+			  &quot;Develop aspect-oriented Java applications with Eclipse and AJDT&quot;</a>
+			  (Sep. 2004) by Matt Chapman and Helen Hawkins
+	     </dt>
+	     <dd>
+	     	In this article, AJDT contributors and IBM aspect-oriented software development team members 
+	     	Matt Chapman and Helen Hawkins introduce you to AJDT. You'll learn how to install the tools; 
+	     	how to create, run, and debug AspectJ applications; and how to visualize and navigate the crosscutting 
+	     	structures inherent to aspect-oriented programming.
+	     </dd>
 
 		<dt><a target="_top" href="http://www-106.ibm.com/developerworks/library/j-ceaop/">
 			    &quot;Contract enforcement with AOP&quot;</a>
