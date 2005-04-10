@@ -30,6 +30,9 @@
       conditions of the <a href="http://www.eclipse.org/legal/notice.html">Eclipse.org 
       Software User Agreement</a> unless otherwise specified.
     </p>
+    
+    <p>If you plan to use AspectJ inside the Eclipse IDE you can just <a href="http://www.eclipse.org/ajdt">
+         download AJDT</a> since it includes a bundled AspectJ compiler. <a href="#ides"><i>More IDEs...</i></a>.</p>
 
 	<h3>Most Recent Build</h3>
  
@@ -359,7 +362,7 @@
   
   <!-- ============ IDE SUPPORT ======================= -->
 
-  <h2>Development Environment Support</h2>
+  <h2 id="ides">Development Environment Support</h2>
 
 	<dl>
 		<dt><a target="_top" href="http://eclipse.org/ajdt">AJDT Project</a></dt>

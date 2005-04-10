@@ -10,17 +10,7 @@
 <div id="main">
   <!-- ================ Page specific content starts here ================ -->
 
-<table BORDER=0 CELLSPACING=5 CELLPADDING=2 WIDTH="100%" >
-  <tr> 
-    <td ALIGN=LEFT width="60%" valign="top"><font class=indextop>
-		<h1>aspectj user resources</h1>
-    </td>
-    <td WIDTH="40%" align="right">
-      <img src="http://eclipse.org/images/Idea.jpg" width="120" height="86">
-    </td>
-  </tr>
-</table>
-
+<h1>aspectj: user resources</h1>
 
  <!-- =============== ASPECTJ-USERS ==================== -->
 
