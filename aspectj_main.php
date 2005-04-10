@@ -47,7 +47,7 @@
 
   <h2>Awards</h2>
   
-  <table align="center" width="80%">
+  <table align="center" width="100%">
     <tbody>
     	<tr>
     		<td><img src="images/14thjolt_small.gif"/ width="150"></td>
