@@ -64,7 +64,7 @@
    <h3>AspectJ in Yahoo news...</h3>
    
    <ul>
-	  <?php require('syndication/news.html'); ?>
+	  <xphp require('syndication/news.html'); ?>
 	   <li><a href="http://news.search.yahoo.com/search/news/?ei=ISO-8859-1&c=&p=aspectj" target=\"external\">
 	      more from Yahoo...</a>
 	   </li>
@@ -78,7 +78,7 @@
 <!--
 	<h3>Dion Almaer on Tech &amp; AOP</h3>
 	<ul>
-	  <?php require('syndication/dion.html');	  ?>
+	  <xphp require('syndication/dion.html');	  ?>
 	  <li><a href="http://www.almaer.com/blog/archives/cat_aop.html"> more...</a> </li>
   </ul>
 -->  
