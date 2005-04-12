@@ -52,6 +52,14 @@
 	<ul>
 	    <?php require('syndication/aspectivity.html'); ?>
 	</ul>
+
+<!-- ========== Dion's blog portlet =============== -->
+
+	<h3><a href="http://www.almaer.com/blog/archives/cat_aop.html">Dion Almaer on AOP</a></h3>
+	<ul>
+	  <?php require('syndication/dion.html');	  ?>
+  </ul>
+ 
 	
 <!-- ============= Ron Bodkin's blog portlet ========== -->
 
@@ -75,14 +83,7 @@
  
    </ul>
 -->
-<!-- ========== Dion's blog portlet =============== -->
-<!--
-	<h3>Dion Almaer on Tech &amp; AOP</h3>
-	<ul>
-	  <xphp require('syndication/dion.html');	  ?>
-	  <li><a href="http://www.almaer.com/blog/archives/cat_aop.html"> more...</a> </li>
-  </ul>
--->  
+
 
    
 </div>
