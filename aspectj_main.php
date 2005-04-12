@@ -41,6 +41,21 @@
       </tr>
     </table>
 
+  <h2>Quick links</h2>
+  <p>Popular AspectJ downloads: 
+		the most recent <a href="downloads.php#most_recent">development build</a>,
+		the most recent <a href="downloads.php#milestones">milestone build</a>, and
+		the latest <a href="downloads.php#stable_release">stable release</a> 
+		(<a href="resources.php">bug reports, mailing lists...</a>). For Eclipse
+		development you can just download <a href="http://www.eclipse.org/ajdt">AJDT</a>.
+		<a href="downloads.php">More AspectJ downloads...</a> 		
+  </p>
+  <p>Popular AspectJ docs: 
+       the <a href="doc/ajdk15notebook/index.html">AspectJ 5 Developer's Notebook</a>, and
+       the <a href="doc/progguide/index.html">AspectJ Programming Guide</a>. 
+       <a href="docs.php">More AspectJ docs...</a>
+   </p>
+
   <?php require("news_and_events.html"); ?>
 
   <?php require("books_and_articles.html"); ?>
