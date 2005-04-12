@@ -27,10 +27,10 @@
 		        <tr>
 		          <td width=116 bgColor=#000000><a href="http://www.eclipse.org/">
 				  	  <img height=50 
-			            src="eproject-banner_files/EclipseBannerPic.jpg"
+			            src="images/eclipse-logo.gif"
 				 	   width=115 border=0></a>
 				  </td>
-		          <td width=637><img height=50 
+		          <td><img height=50 
 		           	 src="eproject-banner_files/gradient.jpg" width=282 border=0>
 				  </td>
 		          <td width=250><img height=48 
