@@ -10,20 +10,9 @@
 <div id="main">
   <!-- ================ Page specific content starts here ================ -->
 
-<table BORDER="0" CELLSPACING="5" CELLPADDING="2" WIDTH="100%">
-  <tr>
-    <td ALIGN="LEFT" width="60%" valign="top">
-      <h1>aspectj downloads</h1>
-    </td>
-    <td WIDTH="40%" align="right">&nbsp;
-      <img src="http://eclipse.org/images/Idea.jpg" width="120" height="86">
-    </td>
-  </tr>
-</table>
+<h1>aspectj downloads</h1>
 
-<h2>Downloads</h2>
-
-	<p>The AspectJ compiler produces programs for any version of the Java platform 
+<p>The AspectJ compiler produces programs for any version of the Java platform 
       (jdk1.1 and later). The compiler itself requires Java2 (1.3 or later) to run. 
       Consult the <a href="doc/faq.html#q:compability">FAQ</a>
       for more details.&nbsp; All releases are provided under the terms and 
@@ -33,8 +22,19 @@
     
     <p>If you plan to use AspectJ inside the Eclipse IDE you can just <a href="http://www.eclipse.org/ajdt">
          download AJDT</a> since it includes a bundled AspectJ compiler. <a href="#ides"><i>More IDEs...</i></a>.</p>
+         
+<h2>Downloads</h2>
 
-	<h3>Most Recent Build</h3>
+    <p>See below for a list of available AspectJ downloads. You probably want one of:
+		the most recent <a href="#most_recent">development build</a>,
+		the most recent <a href="#milestones">milestone build</a>, or
+		the latest <a href="#stable_release">stable release</a>. <a href="#install">Installation
+		instructions</a> and more information on 
+		<a href="#ides">IDE support</a> can be found at the bottom of this page.
+	</p>
+	    
+
+	<h3 id="most_recent">Most Recent Build</h3>
  
  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
  		<tbody>
@@ -64,7 +64,7 @@
 
   <!-- ============ ASPECTJ 5 ======================= -->
   
-  <h3>AspectJ 5 Milestone Builds</h3>
+  <h3 id="milestones">AspectJ 5 Milestone Builds</h3>
 
 	<p>	Only download these versions if you are prepared to work with a pre-release compiler. 
 	    	The most recent stable build below is the currently supported release version.
@@ -103,7 +103,7 @@
 	
   <!-- ============ LATEST STABLE RELEASE ======================= -->
 
-  <h3>Latest Stable Release</h3>
+  <h3 id="stable_release">Latest Stable Release</h3>
 
  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
  		<tbody>
@@ -348,7 +348,7 @@
 			
   <!-- ============ INSTALLATION ======================= -->
 
-  <h2>Installation</h2>
+  <h2 id="install">Installation</h2>
 
   <p>
       The <tt>.jar</tt> files should not be unzipped as they are self-extracting 
