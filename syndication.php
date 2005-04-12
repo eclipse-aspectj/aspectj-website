@@ -15,7 +15,7 @@
   
    <p align="center">
     <a href="http://www.amazon.com/exec/obidos/ASIN/0321245873/qid=1112868888/sr=2-3/ref=pd_bbs_b_2_3/103-5274059-2049410">
-  	   <img src="images/s_eclipseaspectj.jpg" alt="Eclipse AspectJ Book Cover"/>
+  	   <img src="images/s_eclipseaspectj.gif" alt="Eclipse AspectJ Book Cover"/>
     </a>
    </p>
 
