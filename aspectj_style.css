@@ -228,6 +228,12 @@ a.bar {  color: #FFFFFF}
 	padding-top: 5px;
 	}
 	
+#graphical-banner {   
+    padding: 0px;
+	height: 50px;
+	margin: 0px;
+}
+
 #banner {
 	font-family: Verdana, Arial, sans-serif;
 	padding: 0px;
@@ -235,7 +241,7 @@ a.bar {  color: #FFFFFF}
         padding-top: 0px;
         padding-bottom: 0px;
 	border-bottom: 1px solid #FFFFFF;
-	height: 76px;
+	height: 1.5em;
 	margin: 0px;
 	}
 
