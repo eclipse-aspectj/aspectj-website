@@ -14,6 +14,12 @@
 
  <dl>  
  
+     <dt> January 17th, 2005 - AspectJ 5 development builds now support full Java 5 source compilation </dt>
+    <dd>
+	    The AspectJ 5 development builds as of 17th January now include full support for source
+	    compilation of Java 5 programs.
+    </dd>
+    
      <dt> December 10th, 2004 - AspectJ 5 M1 (milestone 1) build now available. </dt>
     <dd> 
 	    The first milestone build of AspectJ 5 is now available, with support for binary
