@@ -43,9 +43,7 @@
 							<td>AspectJ Compiler, Browser, Ant tasks, and Documentation. 
                                                         <br>Only download this version if you are prepared to work with a pre-release compiler. 
 							<br>The most recent stable build below is the currently supported release version. 
-							<br><i>This download is updated after
-							every successful build and test cycle. Please select the 'main eclipse.org downloads area' when presented with a list of mirrors
-							 to ensure you have the latest version.</i></td>
+							</td>
 							<td>
 							<!-- stick out reference to most recent dev build -->
 							<?php
@@ -54,7 +52,12 @@
                               echo "<a href=\"$devbuilds[0]\">$justthefirstfile</a>";
                             ?>
 				            </td>
+				            
 						</tr>
+						<tr><td colSpan="3"><br><i>This download is updated after
+							every successful build and test cycle. Please select the 'main eclipse.org downloads area' when presented with a list of mirrors
+							 to ensure you have the latest version.</i></td>
+					    </tr>
 					</table>
 				</td>
 
