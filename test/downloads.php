@@ -49,7 +49,7 @@
 							<?php
 							  $devbuilds=GetDevBuildsIn('/home/data/httpd/download.eclipse.org/technology/aspectj/dev');
                               $justthefirstfile=basename($devbuilds[0]);
-                              echo "<a href=\"$devbuilds[0]\">$justthefirstfile</a>";
+                              echo "<a href=\"http://download.eclipse.org/technology/aspectj/dev/$justthefirstfile\">$justthefirstfile</a>";
                             ?>
 				            </td>
 				            
