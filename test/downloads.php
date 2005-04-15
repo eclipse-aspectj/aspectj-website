@@ -47,9 +47,10 @@
 							<td>
 							<!-- stick out reference to most recent dev build -->
 							<?php
+							  #$devbuilds=GetDevBuildsIn('k:/tmp');
 							  $devbuilds=GetDevBuildsIn('/home/data/httpd/download.eclipse.org/technology/aspectj/dev');
                               $justthefirstfile=basename($devbuilds[0]);
-                              $stats=stat($justthefirstfile);
+                              $stats=stat($devbuilds[0]);
                               echo "<a href=\"http://download.eclipse.org/technology/aspectj/dev/$justthefirstfile\">$justthefirstfile</a> (size: $stats[7] bytes)";
                             ?>
 				            </td>
