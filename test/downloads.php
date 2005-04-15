@@ -48,14 +48,10 @@
 							 to ensure you have the latest version.</i></td>
 							<td>
 							<?php
-echo "Current development build:<br>";
-							$devbuilds=GetDevBuildsIn('/home/data/httpd/download.eclipse.org/technology/aspectj/dev');
-echo "Most recent=";
-$justthefile=basename($devbuilds[0]);
-echo "<a href=\"$devbuilds[0]\">$justthefile</a>";
-
-echo "<br>hurrah!<br>"
-?>
+							  $devbuilds=GetDevBuildsIn('/home/data/httpd/download.eclipse.org/technology/aspectj/dev');
+                              $justthefirstfile=basename($devbuilds[0]);
+                              echo "<a href=\"$devbuilds[0]\">$justthefirstfile</a>";
+                            ?>
 
 
 							<a href="http://www.eclipse.org/downloads/download.php?file=/technology/ajdt/dev/aspectj-DEVELOPMENT-20050324155000.jar">aspectj-DEVELOPMENT-20050324155000.jar</a> (~8.3M)
