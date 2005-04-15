@@ -47,16 +47,13 @@
 							every successful build and test cycle. Please select the 'main eclipse.org downloads area' when presented with a list of mirrors
 							 to ensure you have the latest version.</i></td>
 							<td>
+							<!-- stick out reference to most recent dev build -->
 							<?php
 							  $devbuilds=GetDevBuildsIn('/home/data/httpd/download.eclipse.org/technology/aspectj/dev');
                               $justthefirstfile=basename($devbuilds[0]);
                               echo "<a href=\"$devbuilds[0]\">$justthefirstfile</a>";
                             ?>
-
-
-							<a href="http://www.eclipse.org/downloads/download.php?file=/technology/ajdt/dev/aspectj-DEVELOPMENT-20050324155000.jar">aspectj-DEVELOPMENT-20050324155000.jar</a> (~8.3M)
-								<!--a href="http://www.eclipse.org/downloads/download.php?file=/technology/ajdt/dev/aspectj-DEVELOPMENT.jar">aspectj-DEVELOPMENT.jar</a--><!-- (~6.5M)-->
-				</td>
+				            </td>
 						</tr>
 					</table>
 				</td>
@@ -361,7 +358,7 @@ function GetDevBuildsIn($dir){
      if($file=="." || $file=="..") {continue;}
      // echo "$file<br>";
      if (substr($file,0,19) == $devtag) {
-       $files[]="$dir$file";
+       $files[]="$dir/$file";
      }
    }
    @closedir($dir);
