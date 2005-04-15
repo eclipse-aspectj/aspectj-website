@@ -61,9 +61,7 @@
 			</tr>
 			<tr>
 			    <td colSpan="3"><br>
-			      <i>This download is updated after every successful build and test cycle. 
-			      Please select the 'main eclipse.org downloads area' when presented with 
-			      a list of mirrors to ensure you have the latest version.</i>
+			      <i>This download is updated after every successful build and test cycle.</i>
 			    </td>
 			</tr>
 		</tbody>
