@@ -45,19 +45,26 @@
 						<dd>
 						AspectJ Compiler, Browser, Ant tasks, and Documentation. Only download this version if you are prepared to work with a pre-release compiler. 
 					    The most recent stable build below is the currently supported release version. 
-					    <i>This download is updated after
-					    every successful build and test cycle. Please select the
-					    'main eclipse.org downloads area' when presented with a list of mirrors
-					    to ensure you have the latest version.</i>
 					  </dd>
 					</dl>
 				</td>
 				<td width="30%" align="right">
-					    <a href="http://www.eclipse.org/downloads/download.php?file=/technology/ajdt/dev/aspectj-DEVELOPMENT-20050324155000.jar">
-					    aspectj-DEVELOPMENT-20050324155000.jar</a> (~8.3M)
-					    <!--a href="http://www.eclipse.org/downloads/download.php?file=/technology/ajdt/dev/aspectj-DEVELOPMENT.jar">
-					    aspectj-DEVELOPMENT.jar</a--><!-- (~6.5M)-->
+					    <!-- stick out reference to most recent dev build -->
+							<?php
+							  #$devbuilds=GetDevBuildsIn('k:/tmp');
+							  $devbuilds=GetDevBuildsIn('/home/data/httpd/download.eclipse.org/technology/aspectj/dev');
+                              $justthefirstfile=basename($devbuilds[0]);
+                              $stats=stat($devbuilds[0]);
+                              echo "<a href=\"http://download.eclipse.org/technology/aspectj/dev/$justthefirstfile\">$justthefirstfile</a> (size: $stats[7] bytes)";
+                            ?>
 				</td>
+			</tr>
+			<tr>
+			    <td colSpan="3"><br>
+			      <i>This download is updated after every successful build and test cycle. 
+			      Please select the 'main eclipse.org downloads area' when presented with 
+			      a list of mirrors to ensure you have the latest version.</i>
+			    </td>
 			</tr>
 		</tbody>
 	</table>
@@ -401,3 +408,28 @@
 </div>
 </body>
 </html>
+<?php 
+// Sorts by newest first
+function date_cmp($f1, $f2) {
+   $f1stats=stat($f1);
+   $f2stats=stat($f2);
+   return $f2stats[9]-$f1stats[9];
+}
+// return entries in the directory that represent dev builds
+function GetDevBuildsIn($dir){
+   ini_set("max_execution_time",10);
+   $devtag="aspectj-DEVELOPMENT";
+   $root=opendir($dir) or die("Check $dir !");
+   while (false!== ($file=readdir($root))) {
+     if($file=="." || $file=="..") {continue;}
+     // echo "$file<br>";
+     if (substr($file,0,19) == $devtag) {
+       $files[]="$dir/$file";
+     }
+   }
+   @closedir($dir);
+   usort($files, "date_cmp");
+   return $files;
+}
+
+?>
