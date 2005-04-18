@@ -416,12 +416,12 @@ function date_cmp($f1, $f2) {
 // return entries in the directory that represent dev builds
 function GetDevBuildsIn($dir){
    ini_set("max_execution_time",10);
-   $devtag="aspectj-DEVELOPMENT";
+   $devtag="aspectj-DEVELOPMENT-2";
    $root=opendir($dir) or die("Check $dir !");
    while (false!== ($file=readdir($root))) {
      if($file=="." || $file=="..") {continue;}
      // echo "$file<br>";
-     if (substr($file,0,19) == $devtag) {
+     if (substr($file,0,21) == $devtag) {
        $files[]="$dir/$file";
      }
    }
