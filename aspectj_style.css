@@ -153,6 +153,7 @@ a.bar {  color: #FFFFFF}
     line-height: 1.2em;
 	float: right;		
 	width: 19%;
+	margin-top: 5px;
 	border: 1px solid #0080C0;
     border-right: 1px solid #0080C0;
 	border-left:  1px solid #0080C0;
