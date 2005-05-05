@@ -29,16 +29,16 @@
 	<tr>
 	  <td class="smallParagraph" height="26"><b>
 	    <a href="http://www.eclipse.org/aspectj/docs.php">[doc index]</a>
-	    &nbsp;<a href="doc/ajdk15notebook/index.html">
+	    &nbsp;<a href="doc/next/adk15notebook/index.html">
 	    [AspectJ 5 language changes]</a>
-	    &nbsp;<a href="doc/progguide/index.html">
+	    &nbsp;<a href="doc/released/progguide/index.html">
 	    [language]</a>
-	    &nbsp;<a href="doc/devguide/index.html">
+	    &nbsp;<a href="doc/released/devguide/index.html">
 	    [tools]</a>
-	    &nbsp;<a href="doc/faq.html">
+	    &nbsp;<a href="doc/released/faq.html">
 	    [faq]</a>
 	    &nbsp;<a href="http://www.eclipse.org/aspectj/publications.php">[publications]</a> 
-	    &nbsp;<a href="http://www.eclipse.org/aspectj//sample-code.html">
+	    &nbsp;<a href="http://www.eclipse.org/aspectj/sample-code.html">
 	    [samples]</a> 
 	    </b>
 	  </td>
@@ -53,54 +53,161 @@
 <div id="docs-main">
 
 <! -- main content for docs page -->
-      <p>
-      This pages contains links to documentation for AspectJ 1.2.1
-      (For an earlier version, see the docs in that release.)
-      </p>
-      <p>For a list of books and articles on AspectJ see the <a href="publications.php">publications</a> page.</p>
-      <!--
-        <p>To learn the AspectJ language, read the
-        <a href="doc/progguide/index.html">Programming Guide</a>. Focus 
-        initially on the join point model and pointcuts, concepts AOP adds to OOP. 
-        To see how the code works, tour the 
-        <a href="doc/examples">examples</a> from the
-        <a href="doc/progguide/examples.html">Examples</a>
-        section of the <a href="doc/progguide/index.html">
-        Programming Guide</a>.
-      -->
-
-    <h2>AspectJ 5 Developer's Notebook</h2>
-	<p>The <a href="doc/ajdk15notebook/index.html">AspectJ 5 Developer's Notebook</a>
-      describes changes to the AspectJ language and tools in the AspectJ 5 release. The
-      programming guide has not yet been updated to reflect these changes.
-    </p>
-    
-    <h2>Programming Guide</h2>
-	<p> 
-      The <a href="doc/progguide/index.html">Programming Guide</a> 
-      introduces AOP and the AspectJ language:      
-      &nbsp; <a href="doc/progguide/starting.html">
-      Getting Started</a> introduces basic AspectJ semantics 
+<p>
+The AspectJ release documentation answers common questions and describes 
+language and tool usage.  Other publications about AspectJ address topics
+in AOP, and code samples demonstrate common idioms.  If you are new to AspectJ,
+follow the trail proposed in the 
+<a href="doc/released/index.html#paths">released documentation</a>.
+</p>
+<h2>AspectJ 5 Developer's Notebook</h2>
+<p>The <a href="doc/next/adk15notebook/index.html">AspectJ 5 Developer's Notebook</a>
+is the most up-to-date documentation (besides the code!) for planned changes to 
+the AspectJ language and tools in the next release, AspectJ 5.
+(Warning: Features might be documented but not in the latest dev build,
+or in the build but not documented.) 
+</p>
+	
+<h2>AspectJ Documentation packages</h2>
+<p>The AspectJ documentation package is included in the AspectJ download
+	and linked below (both the most-recent released version and the
+	next work-in-progress, as 
+	<img border="0" height="13" width="13" src="images/next.gif" alt="next"/>).  
+	Parts are also included with the
+	Eclipse <a href="http://eclipse.org/ajdt">AJDT</a> plugin.
+	For all contents, see the 
+	<a href="doc/released/index.html">index</a> 
+      <a href="doc/next/index.html">
+		<img border="0" height="13" width="13" src="images/next.gif" alt="next"/></a>.
+</p>
+<h3>AspectJ Language</h3>
+      The <a href="doc/released/progguide/index.html">Programming Guide</a> 
+      <a href="doc/next/progguide/index.html">
+		<img border="0" height="13" width="13" src="images/next.gif" alt="next"/></a> 
+      introduces AOP and the AspectJ language:     
+	   
+      &nbsp; <a href="doc/released/progguide/starting.html"> Getting Started</a> 
+      <a href="doc/next/progguide/starting.html">
+		<img border="0" height="13" width="13" src="images/next.gif" alt="next"/></a> 
+	  introduces basic AspectJ semantics 
       and shows development- and production-time applications.
-      <a href="doc/progguide/language.html">The AspectJ 
-      Language</a> describes join points, pointcuts, advice, and 
+	  
+      &nbsp; <a href="doc/released/progguide/language.html">The AspectJ Language</a> 
+      <a href="doc/next/progguide/language.html">
+		<img border="0" height="13" width="13" src="images/next.gif" alt="next"/></a> 
+	  describes join points, pointcuts, advice, and 
       inter-type declarations, all features new to AOP.
-      <a href="doc/progguide/examples.html">Examples</a> 
-      walks through the code in <code>doc/examples</code>; 
-      <a href="doc/progguide/idioms.html">Idioms</a> and  
-      <a href="doc/progguide/pitfalls.html">Pitfalls</a> 
+	  
+      &nbsp; <a href="doc/released/progguide/examples.html">Examples</a> 
+      <a href="doc/next/progguide/examples.html">
+		<img border="0" height="13" width="13" src="images/next.gif" alt="next"/></a> 
+      walks through the code in 
+      <a href="doc/released/examples"><code>doc/released/examples</code></a>
+      <a href="doc/next/examples">
+		<img border="0" height="13" width="13" src="images/next.gif" alt="next"/></a>; 
+	  
+      <a href="doc/released/progguide/idioms.html">Idioms</a> 
+      <a href="doc/next/progguide/idioms.html">
+		<img border="0" height="13" width="13" src="images/next.gif" alt="next"/></a> 
+	  and  
+      <a href="doc/released/progguide/pitfalls.html">Pitfalls</a> 
+      <a href="doc/next/progguide/pitfalls.html">
+		<img border="0" height="13" width="13" src="images/next.gif" alt="next"/></a> 
       offer rules on things to do (or not).
-      The <a href="doc/quick.pdf">Quick Reference</a> summarizes syntax,
-      but the <a href="doc/progguide/semantics.html">
-      Semantics appendix</a> is the best reference for AspectJ usage.
-    </p>
+      The <a href="doc/released/quick.pdf">Quick Reference</a> 
+      <a href="doc/next/quick.pdf">
+		<img border="0" height="13" width="13" src="images/next.gif" alt="next"/></a> 
+		summarizes syntax,
+      but the <a href="doc/released/progguide/semantics.html">
+      Semantics appendix</a> 
+      <a href="doc/next/progguide/semantics.html">
+		<img border="0" border="0" height="13" width="13" src="images/next.gif" alt="next"/></a> 
+		is the best reference for AspectJ usage.
+<h3>AspectJ Tools</h3>
+<p>
+	
+The 
+<a href="doc/released/devguide/index.html">Development Environment Guide</a> 
+<a href="doc/next/devguide/index.html">
+<img border="0" border="0" height="13" width="13" src="images/next.gif" alt="next"/></a>
+describes how to use the command-line compiler 
+<a href="doc/released/devguide/ajc-ref.html">ajc</a>
+<a href="doc/next/devguide/ajc-ref.html">
+<img border="0" border="0" height="13" width="13" src="images/next.gif" alt="next"/></a>,
 
-	<h2>Development Environment Guide</h2>
-	 <p> The <a href="doc/devguide/index.html">Development Environment Guide</a> 
-      describes how to use the
-      command-line compiler <tt>ajc</tt>, ant tasks, <tt>ajdoc</tt> documentation tool, and the
-      stand-alone <tt>ajbrowser</tt>.
-    </p>
+the Ant task 
+<a href="doc/released/devguide/antTasks.html">iajc</a>
+<a href="doc/next/devguide/antTasks.html">
+<img border="0" border="0" height="13" width="13" src="images/next.gif" alt="next"/></a> 
+
+the documentation tool
+<a href="doc/released/devguide/rn01re02.html">AJDoc</a>
+<a href="doc/next/devguide/ajdoc-ref.html">
+<img border="0" border="0" height="13" width="13" src="images/next.gif" alt="next"/></a> 
+
+and the stand-alone
+<a href="doc/released/devguide/ajbrowser.html">AJ Browser</a>
+<a href="doc/next/devguide/ajbrowser.html">
+<img border="0" border="0" height="13" width="13" src="images/next.gif" alt="next"/></a>.
+
+</p>	
+	
+<h3>Other stuff</h3>
+ <p>
+ For answers to frequently-asked questions, see the 
+  <a href="doc/released/faq.html">FAQ</a> 
+  <a href="doc/next/faq.html">
+	 <img border="0" height="13" width="13" src="images/next.gif" alt="next"/></a> 
+ </p>
+ <p>For a history of important fixes and new features for AspectJ, see the
+   <a href="doc/released/porting.html">Porting Guide</a> for upgrading
+   from older versions of the language 
+   and the release README files for
+   <a href="doc/released/README-121.html">1.2.1</a>,
+   <a href="doc/released/README-12.html">1.2</a>, 
+   <a href="doc/released/README-11.html">1.1</a> or the summary of 
+   <a href="doc/released/changes.html">changes</a>
+	<a href="doc/next/changes.html">
+	 <img border="0" height="13" width="13" src="images/next.gif" alt="next"/></a>.
+</p>
+
+
+<h2>Online and external resources</h2>
+
+<p>
+Books and articles we know of are listed on the
+<a href="publications.php">Publications page</a>.
+
+For our published tutorials and exercises outlining
+the rationale and concepts of AOP, the basics of the AspectJ language, and
+the differences from Java programs, see
+<a href="http://dev.eclipse.org/viewcvs/index.cgi/org.aspectj/modules/docs/teaching/exercises/?cvsroot=Technology_Project">
+<code>aspectj.org/modules/docs/teaching</code></a>. 
+(To get stuff from the CVS repository, see 
+<a href="doc/released/faq.html#q:buildingsource">building source</a>.)
+Spanish speakers might also be interested in "Programemos en AspectJ" at
+<a href="http://www.programemos.com">http://www.programemos.com</a>.
+Find earlier project history, papers, and articles on the
+<a target="_top" href="http://www.parc.com/groups/csl/projects/aspectj/">
+PARC project page</a>.
+ </p>
+
+<p>
+  For a list of places to get example AspectJ code,
+  see the <a href="doc/released/faq.html#q:exampleprograms">FAQ entry on example programs</a>.
+  We collect and publish 
+  <a href="sample-code.html">sample code contributions from community</a>, 
+  including AspectJ programs and user-level trails for things like
+  <a href="sample-code.html#trails-debugging-aspectj11">
+  debugging AspectJ code</a>  or 
+  <a href="sample-code.html#j2ee-tomcat4-precompileJsp">
+  precompiling JSP's for Tomcat using AspectJ</a>.&nbsp;&nbsp;
+  Popular entries include reusable code for 
+  <a href="sample-code.html#library-pointcutIdioms">standard pointcut idioms</a>
+  and 
+  <a href="sample-code.html#pubs-papers-aodesignpatterns">design pattern implementations</a>.
+ </p>
+
 </div>
 <!-- Eclipse AspectJ book -->
 
@@ -121,64 +228,6 @@
    
 </div>
 
-<div id="main">
-	<h2>Changes and Porting</h2>
-	<p>
-      Important fixes and new features for the 
-      <a href="doc/README-121.html">1.2.1 release</a>,
-      <a href="doc/README-12.html">1.2 release</a>, 
-      <a href="doc/README-11.html">1.1 release</a>,
-      or <a href="doc/changes.html">releases before and since 1.2</a>,
-      and the 
-      <a href="doc/porting.html">Porting Guide</a> for upgrading
-      from older versions of the language. 
-    </p>
-
-	<h2>FAQ</h2>
-	<p>
-	 <a href="doc/faq.html">Frequently-asked questions</a> about the 
-      AspectJ language, tools, and project.
-    </p>
-  
-  	<h2>Contributed samples and trails</h2>
-    <p>
-      For a list of places to get example AspectJ code,
-      see the <a href="doc/faq.html#q:exampleprograms">FAQ entry on example programs</a>.
-      We collect and publish 
-      <a href="sample-code.html">sample code contributions from community</a>, 
-      including AspectJ programs and user-level trails for things like
-      <a href="sample-code.html#trails-debugging-aspectj11">
-      debugging AspectJ code</a>  or 
-      <a href="sample-code.html#j2ee-tomcat4-precompileJsp">
-      precompiling JSP's for Tomcat using AspectJ</a>.&nbsp;&nbsp;
-      Popular entries include reusable code for 
-      <a href="sample-code.html#library-pointcutIdioms">standard pointcut idioms</a>
-      and 
-      <a href="sample-code.html#pubs-papers-aodesignpatterns">design pattern implementations</a>.
-     </p>
-
-	<h2>AspectJ Papers and Slides</h2>
-      <p>Books and articles we know of are listed on the
-      <a href="publications.html">Publications page</a>.
-      We publish some presentations and tutorials outlining
-      the rationale and concepts of AOP,
-      the basics of the AspectJ language, and
-      the differences from Java programs;
-      these are in the AspectJ CVS tree at
-      <a href="http://dev.eclipse.org/viewcvs/index.cgi/org.aspectj/modules/docs/teaching/exercises/?cvsroot=Technology_Project">
-      <code>aspectj.org/modules/docs/teaching</code></a>, 
-      and include answers to tutorial exercies.
-      For instructions on downloading code from the CVS repository, see the
-      <a href="doc/faq.html#q:buildingsource">FAQ entry on building source</a>.
-      </p>
-      <p> 
-      Find earlier project history, papers, and articles on the
-      <a target="_top" href="http://www.parc.com/groups/csl/projects/aspectj/">
-      PARC project page</a>.
-
-      <p>Spanish speakers might also be interested in "Programemos en AspectJ" at
-      <a href="http://www.programemos.com">http://www.programemos.com.</p>
-</div>
 
 
   <!-- ================ End of page specific content ===================== -->
