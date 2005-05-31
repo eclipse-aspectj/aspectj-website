@@ -58,19 +58,27 @@
      weave time, not when the aspects containing the declarations are compiled.
      (This is the same behaviour as when using declare warning or error with the
      code style). Declare warning and error declarations are made by annotating
-     a string constant whose value is the message to be issued.</p><pre class="programlisting">
+     a string constant whose value is the message to be issued.</p><p>Note that the String must be a constant and not the result of the invocation
+     of a static method for example.</p><pre class="programlisting">
        declare warning : call(* javax.sql..*(..)) &amp;&amp; !within(org.xyz.daos..*)
                        : "Only DAOs should be calling JDBC.";
-                       
+
        declare error : execution(* IFoo+.*(..)) &amp;&amp; !within(org.foo..*)
                      : "Only foo types can implement IFoo";
-                     
+
        can be written as...
-       
+
        @DeclareWarning("call(* javax.sql..*(..)) &amp;&amp; !within(org.xyz.daos..*)")
        static final String aMessage = "Only DAOs should be calling JDBC.";
-       
+
        @DeclareError("execution(* IFoo+.*(..)) &amp;&amp; !within(org.foo..*)")
        static final String badIFooImplementors = "Only foo types can implement IFoo";
-     
+
+       // the following is not valid since the message is not a String constant
+       @DeclareError("execution(* IFoo+.*(..)) &amp;&amp; !within(org.foo..*)")
+       static final String badIFooImplementorsCorrupted = getMessage();
+       static String getMessage() {
+           return "Only foo types can implement IFoo " + System.currentTimeMillis();
+       }
+
       </pre></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ataspectj-itds.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ataspectj-aspectof.html">Next</a></td></tr><tr><td width="40%" align="left">Inter-type Declarations&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ataspectj.html">Up</a></td><td width="40%" align="right">&nbsp;aspectOf() and hasAspect() methods</td></tr></table></div></body></html>

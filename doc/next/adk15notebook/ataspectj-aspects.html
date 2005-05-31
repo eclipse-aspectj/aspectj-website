@@ -9,45 +9,13 @@
      public class Foo {}
       </pre><p>Is equivalent to:</p><pre class="programlisting">
      public aspect Foo {}
-      </pre><p>Privileged aspects are declared as:</p><pre class="programlisting">
-     @Aspect(isPrivileged=true)
-     public class Foo {}
-     
-     is equivalent to...
-     
-     public privileged aspect Foo {}
-      </pre><p>To specify an aspect an aspect instantiation model (the default is
-    singleton), use the <tt>instantionModel</tt> and
-    <tt>perClausePattern</tt> attributes. For example:</p><pre class="programlisting">
-     @Aspect(instantiationModel=AspectInstantiationModel.PERTHIS,
-             perClausePattern="execution(* abc..*(..))")
+      </pre><p>Privileged aspects are not supported by the annotation style</p><p>To specify an aspect an aspect instantiation model (the default is
+    singleton), provide the perclause as the <tt>@Aspect</tt> value.
+    For example:</p><pre class="programlisting">
+     @Aspect("perthis(execution(* abc..*(..)))")
      public class Foo {}
      
      is equivalent to...
      
      public aspect Foo perthis(execution(* abc..*(..))) {}
-      </pre><p>The full definitions of the Aspect annotation type and the
-        AspectInstantiationModel enumerated type are:</p><pre class="programlisting">
-     /**
-      * Use to indicate that a class should be treated as an aspect by
-      * AspectJ's weaver.
-      */
-     @Target({ElementType.TYPE})
-     public @interface Aspect {
-     	AspectInstantiationModel instantiationModel() default AspectInstantiationModel.SINGLETON;
-     	String perClausePattern() default "";
-       	boolean isPrivileged() default false;
-     }
-     
-     /**
-      * The different aspect instantiation models supported by AspectJ
-      */
-     public enum AspectInstantiationModel {
-      SINGLETON,
-      PERTHIS,
-      PERTARGET,
-      PERCFLOW,
-      PERCFLOWBELOW,
-      PERTYPEWITHIN
-     }
       </pre></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ataspectj.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ataspectj-pcadvice.html">Next</a></td></tr><tr><td width="40%" align="left">Chapter 9. An Annotation Based Development Style&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="ataspectj.html">Up</a></td><td width="40%" align="right">&nbsp;Pointcuts and Advice</td></tr></table></div></body></html>

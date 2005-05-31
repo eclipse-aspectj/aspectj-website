@@ -1,3 +1,315 @@
 <html><head>
       <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-   <title></title><link rel="stylesheet" href="aspectj-docs.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.44"><link rel="home" href="index.html" title="The AspectJTM 5 Development Kit Developer's Notebook"><link rel="up" href="generics.html" title="Chapter 3. Generics"><link rel="previous" href="generics.html" title="Chapter 3. Generics"><link rel="next" href="autoboxing.html" title="Chapter 4. Autoboxing and Unboxing"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center"></th></tr><tr><td width="20%" align="left"><a accesskey="p" href="generics.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter 3. Generics</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="autoboxing.html">Next</a></td></tr></table><hr></div><div class="sect1"><a name="generics-inAspectJ5"></a><div class="titlepage"></div><div class="sect2"><a name="d0e1685"></a><div class="titlepage"><div><h3 class="title"><a name="d0e1685"></a>Parameterized Aspect Types</h3></div></div></div><div class="sect2"><a name="d0e1688"></a><div class="titlepage"><div><h3 class="title"><a name="d0e1688"></a></h3></div></div></div><div class="sect2"><a name="d0e1690"></a><div class="titlepage"><div><h3 class="title"><a name="d0e1690"></a></h3></div></div></div><div class="sect2"><a name="d0e1692"></a><div class="titlepage"><div><h3 class="title"><a name="d0e1692"></a></h3></div></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="generics.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="autoboxing.html">Next</a></td></tr><tr><td width="40%" align="left">Chapter 3. Generics&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="generics.html">Up</a></td><td width="40%" align="right">&nbsp;Chapter 4. Autoboxing and Unboxing</td></tr></table></div></body></html>
+   <title>Generics in AspectJ 5</title><link rel="stylesheet" href="aspectj-docs.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.44"><link rel="home" href="index.html" title="The AspectJTM 5 Development Kit Developer's Notebook"><link rel="up" href="generics.html" title="Chapter 3. Generics"><link rel="previous" href="generics.html" title="Chapter 3. Generics"><link rel="next" href="autoboxing.html" title="Chapter 4. Autoboxing and Unboxing"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Generics in AspectJ 5</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="generics.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter 3. Generics</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="autoboxing.html">Next</a></td></tr></table><hr></div><div class="sect1"><a name="generics-inAspectJ5"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="generics-inAspectJ5"></a>Generics in AspectJ 5</h2></div></div><div class="sect2"><a name="d0e2089"></a><div class="titlepage"><div><h3 class="title"><a name="d0e2089"></a>Matching generic and parameterized types in type patterns</h3></div></div><p>
+           The type pattern <tt>"Foo"</tt> matches all types named <tt>Foo</tt>, whether they
+           be simple types, generic types, or parameterized types. So for example, <tt>Foo</tt>, 
+           <tt>Foo&lt;T&gt;</tt>, and <tt>Foo&lt;String&gt;</tt>will all be matched. 
+      </p><p>
+          AspectJ 5 also extends the specification of type patterns to allow explicit matching of generic and parameterized
+          types.
+      </p><pre class="programlisting">
+  	  	TypePattern := SimpleTypePattern |
+  	  	               '!' TypePattern |
+  	  	               '(' AnnotationPattern? TypePattern ')'
+  	  	               TypePattern '&amp;&amp;' TypePattern |
+  	  	               TypePattern '||' TypePattern |
+  	  	               TypePattern '&lt;' TypeParameterPatternList '&gt;'
+  	  	               
+  	  	TypeParameterPatternList ::= TypeParameterPattern (',' TypeParameterPattern)*
+  	  	
+  	  	TypeParameterPattern ::= TypePattern |
+  	  	                                    '?' TypeBoundPattern?
+  	  	                                    
+  	  	TypeBoundPattern ::= 'extends' TypePattern AdditionalBoundPatternList? |
+  	  	                               'super' TypePattern AdditionalBoundPatternList?
+  	  	                     
+  	  	AdditionalBoundPatternList ::= AdditionalBoundPattern AdditionalBoundPatternList |
+  	  	                                         AdditionalBoundPattern
+  	  	                               
+  	  	AdditionalBoundPattern ::= '&amp;' TypePattern 
+  	  	
+  	  	TypeParameterList ::= '&lt;' TypeParameter (',' TypeParameter)* '&gt;'
+  	  	    
+  	  	TypeParameter ::= Identifier TypeBound?
+  	  	
+  	  	TypeBound ::= 'extends' ReferenceType AdditionBoundList? |
+  	  	                     'super' ReferenceType AdditionalBoundList?
+  	  	                     
+  	  	AdditionalBoundList ::= AdditionalBound AdditionalBoundList |
+  	  	                                AdditionalBound
+  	  	                                
+  	  	AdditionalBound ::= '&amp;' ReferenceType 
+  	  	
+		</pre><p>
+  	  	    A simple identifier occuring in a type parameter list will be treated as a type name unless it has previously
+  	  	    been declared as a type variable in a <tt>TypeParameterList</tt>. Some simple examples of 
+  	  	    type patterns follow:
+  	  	</p><div class="variablelist"><dl><dt><a name="d0e2119"></a><span class="term">List&lt;String&gt;</span></dt><dd><p><a name="d0e2122"></a>Matches the parameterized type <tt>List&lt;String&gt;</tt>
+            </p></dd><dt><a name="d0e2128"></a><span class="term">List&lt;? extends Number&gt;</span></dt><dd><p><a name="d0e2131"></a>Matches the parameterized type <tt>List&lt;? extends Number&gt;</tt>
+            </p></dd><dt><a name="d0e2137"></a><span class="term">List&lt;E&gt;</span></dt><dd><p><a name="d0e2140"></a>Matches the parameterized type <tt>List&lt;E&gt;</tt>. If <tt>E</tt> is not
+            a type then an <tt>invalidAbsoluteTypeName</tt> xlint warning will be issued.
+            </p></dd><dt><a name="d0e2152"></a><span class="term">&lt;E&gt; List&lt;E&gt;</span></dt><dd><p><a name="d0e2155"></a>Matches the generic type <tt>List&lt;E&gt;</tt>. The type parameter name does not
+            have to match the name used in the declaration of <tt>List</tt>, but the bounds must match.
+            Also matches any parameterization of <tt>List</tt> that satisfies the bounds of the type variable
+            (for example, <tt>List&lt;String&gt;</tt>).
+            </p></dd></dl></div><p>
+  	    The <tt>*</tt>, <tt>+</tt>, and <tt>..</tt> wildcards may be used in type patterns
+  	    matching against generic and parameterized types (just as in any other type pattern). The <tt>+</tt>
+  	    wildcard matches all subtypes. Recalling the discussion on subtypes and supertypes in the previous section, note
+  	    that the pattern <tt>List&lt;Number&gt;+</tt> will match <tt>List&lt;Number&gt;</tt> and
+  	    <tt>LinkedList&lt;Number&gt;</tt>, but not <tt>List&lt;Double&gt;</tt>. To match lists of
+  	    any number type use the pattern <tt>List&lt;Number+&gt;</tt> which will match 
+  	    <tt>List&lt;Number&gt;</tt>, <tt>List&lt;Double&gt;</tt>, <tt>List&lt;Float&gt;</tt>
+  	    and so on.  
+  	  </p><p>
+  	      The generics wildcard <tt>?</tt> is considered part of the signature of a parameterized type, and
+  	      is <span class="emphasis"><i>not</i></span> used as an AspectJ wildcard in type matching. For example:
+  	  </p><div class="variablelist"><dl><dt><a name="d0e2217"></a><span class="term">List&lt;*&gt;</span></dt><dd><p><a name="d0e2220"></a>Matches any parameterized <tt>List</tt>type (<tt>List&lt;String&gt;</tt>,
+              <tt>List&lt;Integer&gt;</tt> and so on).
+            </p></dd><dt><a name="d0e2232"></a><span class="term">List&lt;?&gt;</span></dt><dd><p><a name="d0e2235"></a>Matches the parameterized type <tt>List&lt;?&gt;</tt> (and does 
+              <span class="emphasis"><i>not</i></span> match <tt>List&lt;String&gt;</tt>,
+              <tt>List&lt;Integer&gt;</tt> and so on)
+            </p></dd><dt><a name="d0e2250"></a><span class="term">List&lt;? extends Number+&gt;</span></dt><dd><p><a name="d0e2253"></a>Matches <tt>List&lt;? extends Number&gt;</tt>, <tt>List&lt;? extends Double&gt;</tt>,
+              and so on, but does not match <tt>List&lt;Double&gt;</tt>.
+            </p></dd></dl></div></div><div class="sect2"><a name="d0e2265"></a><div class="titlepage"><div><h3 class="title"><a name="d0e2265"></a>Signature patterns</h3></div></div><p>
+            Signature patterns are extended to allow matching of generic methods and constructors, and of
+            members of generic types and parameterized types. 
+          </p><p>To match members in generic types, the type variables are declared at the start of the
+          signature pattern as in the following examples:</p><div class="variablelist"><dl><dt><a name="d0e2273"></a><span class="term">&lt;T&gt; T *&lt;T&gt;.*</span></dt><dd><p><a name="d0e2276"></a>Matches a field of the type of type parameter <tt>T</tt> in any generic type with a single
+            unbounded type parameter. The field may be of any name.  The similar looking pattern <tt>&lt;T&gt; T *.*</tt> is
+            not valid as the type parameter <tt>T</tt> must be bound in the field pattern body.
+            </p></dd><dt><a name="d0e2288"></a><span class="term">&lt;T extends Number,S&gt; T Util&lt;T,S&gt;.someFunction(List&lt;S&gt;)</span></dt><dd><p><a name="d0e2291"></a>Matches the method <tt>someFunction</tt> in a generic type <tt>Util</tt> with
+            two type parameters, the first type parameter having an upper bound of <tt>Number</tt>.
+            </p></dd><dt><a name="d0e2303"></a><span class="term">&lt;E&gt; LinkedList&lt;E&gt;.new()</span></dt><dd><p><a name="d0e2306"></a>Matches the no-argument constructor of the generic type <tt>LinkedList</tt>. 
+            </p></dd></dl></div><p>Matching of members of parameterized types is straightforward. For example, 
+          <tt>void List&lt;String&gt;.add(String)</tt> matches the add method in the 
+          parameterized type <tt>List&lt;String&gt;</tt>.</p><p>
+            To match a generic method simply omit the binding of the type variable(s) in the declaring type
+            pattern. For example:          
+          </p><pre class="programlisting">
+          &lt;T&gt; List&lt;T&gt; *.favourites(List&lt;T&gt;)
+		</pre><p>matches a generic method <tt>favourites</tt> declared in any type. To match a 
+		static generic method simply include the <tt>static</tt> modifier in the type pattern.</p></div><div class="sect2"><a name="d0e2332"></a><div class="titlepage"><div><h3 class="title"><a name="d0e2332"></a>Pointcuts</h3></div></div><p>
+            In this section we discuss how type patterns and signature patterns matching on generic and 
+            parameterized types, methods, and constructors can be used in pointcut expressions.  We distinguish
+            between pointcuts that match based on static type information, and pointcuts that match based on
+            runtime type information (<tt>this, target, args</tt>).
+        </p>
+
+         can have execution jps for parameterized interface types?
+
+        <pre class="programlisting">
+        
+          execution(* List&lt;T&gt;.*(..))
+          call(* List&lt;String&gt;.*(..))
+          execution(T List&lt;T&gt;.*(..))
+          execution(* List&lt;T&gt;.*(T))
+          execution(&lt;T&gt; * *(..))
+          execution(&lt;T&gt; T *.*(T,T))
+          execution(&lt;T extends Number&gt; T *.*(T,T))
+          execution(static&lt;T&gt; T *.*(T))    
+          call(* List&lt;?&gt;.*(..))
+          call(* List&lt;? extends Number&gt;.*(..))
+          call(* List&lt;? super Double&gt;.*(..))
+          
+          this/target/args   
+          examples with "+"                
+		</pre>
+
+      declaring pointcuts in generic classes.
+
+      </div><div class="sect2"><a name="d0e2344"></a><div class="titlepage"><div><h3 class="title"><a name="d0e2344"></a>Inter-type Declarations</h3></div></div><p>
+            AspectJ 5 allows type parameters to be used in inter-type declarations - either for declaring generic
+            methods and constructors, or for declaring members on generic types. The syntax for declaring generic
+            methods and constructors follows the regular AspectJ convention of simply qualifying the member name with
+            the target type.
+          </p><div class="variablelist"><dl><dt><a name="d0e2350"></a><span class="term">&lt;T extends Number&gt; T Utils.max(T first, T second) {...}</span></dt><dd><p><a name="d0e2353"></a>Declares a generic instance method <tt>max</tt> on the class <tt>Util</tt>.
+            The <tt>max</tt> method takes two arguments, <tt>first</tt> and <tt>second</tt> which must
+            both be of the same type (and that type must be Number or a subtype of Number) and returns an instance
+            of that type.
+            </p></dd><dt><a name="d0e2371"></a><span class="term">static &lt;E&gt; E Utils.first(List&lt;E&gt; elements) {...}</span></dt><dd><p><a name="d0e2374"></a>Declares a static generic method <tt>first</tt> on the class <tt>Util</tt>.
+            The <tt>first</tt> method takes a list of elements of some type, and returns an instance
+            of that type.
+            </p></dd><dt><a name="d0e2386"></a><span class="term">&lt;T&gt; Sorter.new(List&lt;T&gt; elements,Comparator&lt;? super T&gt; comparator) {...}</span></dt><dd><p><a name="d0e2389"></a>Declares a constructor on the class <tt>Sorter</tt>.
+            The constructor takes a list of elements of some type, and a comparator that can compare instances
+            of the element type.
+            </p></dd></dl></div><p>
+         A generic type may be the target of an inter-type declaration, used either in its raw form or with
+         type parameters specified. If type parameters are specified, then the number of type parameters and
+         their bounds given in the inter-type declararation must be compatible with type parameter definitions in
+         the generic type declaration. Type parameter <span class="emphasis"><i>names</i></span> do not have to match.
+         For example, given the generic type <tt>Foo&lt;T,S extends Number&gt;</tt> then:      
+      </p><div class="variablelist"><dl><dt><a name="d0e2404"></a><span class="term">String Foo.getName() {...}</span></dt><dd><p><a name="d0e2407"></a>Declares a <tt>getName</tt> method on behalf of the raw type <tt>Foo</tt>. It is
+            not possible to refer to the type parameters of Foo in such a declaration.
+            </p></dd><dt><a name="d0e2416"></a><span class="term">R Foo&lt;Q, R extends Number&gt;.getMagnitude() {...}</span></dt><dd><p><a name="d0e2419"></a>Declares a method <tt>getMagnitude</tt> on the generic class <tt>Foo</tt>.
+            The method returns an instance of the type substituted for the second type parameter in an invocation
+            of <tt>Foo</tt>.
+            </p></dd><dt><a name="d0e2431"></a><span class="term">R Foo&lt;Q, R&gt;.getMagnitude() {...}</span></dt><dd><p><a name="d0e2434"></a>Results in a compilation error since the generic type <tt>Foo</tt> with two unbounded
+            type parameters cannot be found.
+            </p></dd></dl></div><p>A parameterized type may not be the target of an inter-type declaration. This is because
+      there is only one type (the generic type) regardless of how many different invocations (parameterizations) of
+      that generic type are made in a program. Therefore it does not make sense to try and declare a member
+      on behalf of (say) <tt>Foo&lt;String&gt;</tt>, you can only declare members on the generic
+      type <tt>Foo&lt;T&gt;</tt>. 
+      </p><p>
+        If an inter-type member is declared inside a generic aspect, then the type parameter names from the
+        aspect declaration may be used in the signature specification of the inter-type declaration, but 
+        <span class="emphasis"><i>not</i></span> as type parameter names for a generic target type. In other words the example
+        that follows is legal:
+      </p><pre class="programlisting">
+            public abstract aspect A&lt;T&gt; {
+              
+              private T Foo.data;
+              
+              public T Foo.getData(T defaultValue) {
+                return (this.data != null ? data : defaultValue);
+              }   
+                
+            }
+		</pre><p>
+       Whereas the following example is not allowed and will report an error that a parameterized type may not be the
+       target of an inter-type declaration (since when the type parameter <tt>T</tt> in the aspect is subsituted with
+       say, <tt>String</tt>, then the target of the inter-type declaration becomes <tt>Goo&lt;String&gt;</tt>).  
+      </p><pre class="programlisting">
+            public abstract aspect A&lt;T&gt; {
+              
+              private T Goo&lt;T&gt;.data;
+              
+              public T Goo&lt;T&gt;.getData(T defaultValue) {
+                return (this.data != null ? data : defaultValue);
+              }   
+                
+            }
+		</pre></div><div class="sect2"><a name="d0e2468"></a><div class="titlepage"><div><h3 class="title"><a name="d0e2468"></a>Declare Parents</h3></div></div><p>Both generic and parameterized types can be used as the parent type in a <tt>declare parents</tt>
+          statement (as long as the resulting type hierarchy would be well-formed in accordance with Java's sub-typing
+          rules). Generic types may also be used as the target type of a <tt>declare parents</tt> statement: 
+          a type variable specification preceeds the type pattern in these cases.
+          Some examples follow:</p><div class="variablelist"><dl><dt><a name="d0e2480"></a><span class="term">declare parents: Foo implements List&lt;String&gt;</span></dt><dd><p><a name="d0e2483"></a>The <tt>Foo</tt> type implements the <tt>List&lt;String&gt;</tt> interface. If
+            <tt>Foo</tt> already implements some other parameterization of the <tt>List</tt>
+            interface (for example, <tt>List&lt;Integer&gt;</tt> then a compilation error will result since a 
+            type cannot implement multiple parameterizations of the same generic interface type. 
+            </p></dd><dt><a name="d0e2501"></a><span class="term">declare parents: &lt;T&gt; org.xyz..*&lt;T&gt; extends Base&lt;T&gt;</span></dt><dd><p><a name="d0e2504"></a>All generic types declared in a package beginning with <tt>org.xyz</tt> and with a 
+            single unbounded type parameter, extend the generic type <tt>Base&lt;T&gt;</tt>.
+            </p></dd><dt><a name="d0e2513"></a><span class="term">declare parents: &lt;T&gt; org.xyz..*&lt;T&gt; extends Base&lt;S&gt;</span></dt><dd><p><a name="d0e2516"></a>Results in a compilation error (unless <tt>S</tt> is a type) since <tt>S</tt> is
+            not bound in the type pattern.
+            </p></dd></dl></div></div><div class="sect2"><a name="d0e2525"></a><div class="titlepage"><div><h3 class="title"><a name="d0e2525"></a>Declare Soft</h3></div></div><p>It is an error to use a generic or parameterized type as the softened exception type in a declare soft statement. Java 5 does
+          not permit a generic class to be a direct or indirect subtype of <tt>Throwable</tt> (JLS 8.1.2).</p></div><div class="sect2"><a name="d0e2533"></a><div class="titlepage"><div><h3 class="title"><a name="d0e2533"></a>Parameterized Aspects</h3></div></div><p>
+            AspectJ 5 allows an <span class="emphasis"><i>abstract</i></span> aspect to be declared as a generic type. Any concrete
+            aspect extending a generic abstract aspect must extend a parameterized version of the abstract aspect.
+            Wildcards are not permitted in this parameterization.     
+          </p><p>Given the aspect declaration:</p><pre class="programlisting">
+            public abstract aspect ParentChildRelationship&lt;P,C&gt; {
+                ...
+            }
+		</pre><p>then</p><div class="variablelist"><dl><dt><a name="d0e2548"></a><span class="term">public aspect FilesInFolders extends ParentChildRelationship&lt;Folder,File&gt; {...</span></dt><dd><p><a name="d0e2551"></a>declares a concrete sub-aspect, <tt>FilesInFolders</tt> which extends the
+            parameterized abstract aspect <tt>ParentChildRelationship&lt;Folder,File&gt;</tt>.
+            </p></dd><dt><a name="d0e2560"></a><span class="term">public aspect FilesInFolders extends ParentChildRelationship {...</span></dt><dd><p><a name="d0e2563"></a>results in a compilation error since the <tt>ParentChildRelationship</tt> aspect must
+            be fully parameterized.
+            </p></dd><dt><a name="d0e2569"></a><span class="term">public aspect ThingsInFolders&lt;T&gt; extends ParentChildRelationship&lt;Folder,T&gt;</span></dt><dd><p><a name="d0e2572"></a>results in a compilation error since concrete aspects may not have type parameters.
+            </p></dd><dt><a name="d0e2575"></a><span class="term">public abstract aspect ThingsInFolders&lt;T&gt; extends ParentChildRelationship&lt;Folder,T&gt;</span></dt><dd><p><a name="d0e2578"></a>declares a sub-aspect of <tt>ParentChildRelationship</tt> in which <tt>Folder</tt>
+            plays the role of parent (is bound to the type variable <tt>P</tt>).
+            </p></dd></dl></div><p>An exception to the rule that concrete aspects may not be generic is a pertypewithin aspect, which
+       may be declared with a single unbounded type parameter. This is discussed in the chapter on <a href="pertypewithin.html">pertypewithin</a>.</p><p>The type parameter variables from a generic aspect declaration may be used in place of a type within any
+        member of the aspect. For example, we can declare a <tt>ParentChildRelationship</tt> aspect to
+        manage the bi-directional relationship between parent and child nodes as follows:
+        </p><pre class="programlisting">
+            public abstract aspect ParentChildRelationship&lt;P,C&gt; {
+                
+                /**
+                 * Parents contain a list of children
+                 */
+                private List&lt;C&gt; P.children;
+                    
+                /**
+                 * Each child has a parent
+                 */
+                private P C.parent;
+                
+                /**
+                 * ensure bi-directional navigation on adding a child
+                 */
+                public void P.addChild(C child) {
+                   if (child.parent != null) {
+                     child.parent.removeChild(child);
+                   }
+                   children.add(child);
+                   child.parent = this;
+                }
+
+                /**
+                 * ensure bi-directional navigation on removing a child
+                 */
+                public void P.removeChild(C child) {
+                   if (children.remove(child)) {
+                     child.parent = null;
+                   }
+                }
+
+               /**
+                 * ensure bi-directional navigation on setting parent
+                 */
+                public void C.setParent(P parent) {
+                   parent.addChild(this);
+                }
+                
+                public pointcut addingChild(P p, C c) :
+                  execution(* P.addChild(C)) &amp;&amp; this(p) &amp;&amp; args(c);
+                  
+                public pointcut removingChild(P p, C c) :
+                  execution(* P.removeChild(C)) &amp;&amp; this(p) &amp;&amp; args(c);
+            }
+		</pre><p>
+          Note in the above example how the type parameters <tt>P</tt> and <tt>C</tt> can be
+          used in inter-type declarations, pointcut expressions, and any other member of the aspect type. 
+        </p><p>
+          The example aspect captures the protocol for managing a bi-directional parent-child relationship between
+          any two types playing the role of parent and child. In a compiler implementation managing an abstract syntax
+          tree (AST) in which AST nodes may contain other AST nodes we could declare the concrete aspect:
+        </p><pre class="programlisting">
+            public aspect ASTNodeContainment extends ParentChildRelationship&lt;ASTNode,ASTNode&gt; {
+                
+                before(ASTNode parent, ASTNode child) : addingChild(parent, child) {
+                  ...
+                }
+                
+            }
+		</pre><p>
+           As a result of this declaration, <tt>ASTNode</tt> gains members:
+         </p><table class="simplelist" border="0" summary="Simple list"><tr><td><tt>List&lt;ASTNode&gt; children</tt></td></tr><tr><td><tt>ASTNode parent</tt></td></tr><tr><td><tt>void addChild(ASTNode child)</tt></td></tr><tr><td><tt>void removeChild(ASTNode child)</tt></td></tr><tr><td><tt>void setParent(ASTNode parent)</tt></td></tr></table><p>
+           In a system managing files and folders, we could declare the concrete aspect:
+         </p><pre class="programlisting">
+            public aspect FilesInFolders extends ParentChildRelationship&lt;Folder,File&gt; {
+                                
+            }
+		</pre><p>
+           As a result of this declaration, <tt>Folder</tt> gains members:
+         </p><table class="simplelist" border="0" summary="Simple list"><tr><td><tt>List&lt;File&gt; children</tt></td></tr><tr><td><tt>void addChild(File child)</tt></td></tr><tr><td><tt>void removeChild(File child)</tt></td></tr></table><p>and <tt>File</tt> gains members:</p><table class="simplelist" border="0" summary="Simple list"><tr><td><tt>Folder parent</tt></td></tr><tr><td><tt>void setParent(Folder parent)</tt></td></tr></table><p>When used in this way, the type parameters in a generic abstract aspect declare
+        <span class="emphasis"><i>roles</i></span>, and the parameterization of the abstract aspect in the <tt>extends</tt>
+        clause binds types to those roles. This is a case where you may consider departing from the standard practice 
+        of using a single letter to represent a type parameter, and instead use a role name. It makes no difference
+        to the compiler which option you choose of course.</p><pre class="programlisting">
+            public abstract aspect ParentChildRelationship&lt;Parent,Child&gt; {
+                
+                /**
+                 * Parents contain a list of children
+                 */
+                private List&lt;Child&gt; Parent.children;
+                    
+                /**
+                 * Each child has a parent
+                 */
+                private Parent Child.parent;
+                
+                /**
+                 * ensure bi-directional navigation on adding a child
+                 */
+                public void Parent.addChild(Child child) {
+                   if (child.parent != null) {
+                     child.parent.removeChild(child);
+                   }
+                   children.add(child);
+                   child.parent = this;
+                }
+         
+                ...
+		</pre></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="generics.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="autoboxing.html">Next</a></td></tr><tr><td width="40%" align="left">Chapter 3. Generics&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="generics.html">Up</a></td><td width="40%" align="right">&nbsp;Chapter 4. Autoboxing and Unboxing</td></tr></table></div></body></html>
