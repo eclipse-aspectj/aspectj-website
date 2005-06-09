@@ -40,7 +40,7 @@
 	<h3><a href="http://blogs.codehaus.org/people/avasseur">Alex Vasseur's blog</a></h3>
    
    <ul>
-	   <xphp require('syndication/alex.html');  x>
+	   <?php require('syndication/alex.html');  ?>
    </ul>
 
 
