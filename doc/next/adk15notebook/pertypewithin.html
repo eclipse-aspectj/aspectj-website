@@ -61,7 +61,7 @@
 	    the aspect tracks all known instances of each type within
 	    <tt>org.xyz..*</tt>. To get access to the instances, a
 	    programmer can simply write 
-	    <tt>InstanceTracking.aspectOf(org.xyz.SomeType).getInstances()</tt>.
+	    <tt>InstanceTracking.aspectOf(org.xyz.SomeType.class).getInstances()</tt>.
 	</p><p>
         A <tt>pertypewithin</tt> aspect may optionally be declared
         with a single generic type parameter. In this case, for each type 
