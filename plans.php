@@ -20,6 +20,8 @@ features planned for AspectJ 5 are documented in the
 AspectJ 5 Developer's Notebook</a>. 
 </p>
 
+<h2>AspectJ 5 M2 </h2>
+
 <p>The AspectJ 5 M2 milestone build is currently available from the 
 <a href="http://www.eclipse.org/aspectj/downloads.php">download page</a>
 and supports full source compilation of Java 5 constructs and a complete implementation
@@ -27,6 +29,8 @@ of all the features described in the annotations, autoboxing, covariance, vararg
 enumerated types, and "other changes in AspectJ 5" chapters in the AspectJ 5 Developer's
 Notebook. The M2 build also supports the <code>pertypewithin</code> aspect
 instantiation model, but not with a generic aspect declaration.</p>
+
+<h2>AspectJ 5 M3</h2>
 
 <p>We are currently developing M3, which will include full support for the features
 documented in the generics chapter of the AspectJ 5 Developer's Notebook. This 
@@ -39,20 +43,27 @@ complete list of bugs and enhancements targeted
 for the M3 release</a>. 
 </p>
 
+<h2>AspectJ 5 M4</h2>
+
 <p>AspectJ 5 M4 will complete the new function planned for the AspectJ 5 release with
 a new set of reflection interfaces for AspectJ types, and completion of the @AspectJ
 (annotation style) development support. See the <a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=AspectJ&target_milestone=1.5.0+M4&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED">
 complete list of bugs and enhancements targeted
 for the M4 release</a>. 
 
+<h2>Schedule</h2>
+
 <p>Following M4 we will put out the first release candidate and then proceed to
 AspectJ 5 (1.5.0 final) based on bug reports from the field.</p>
 
 <table>
-  <th>
+  <thead>
+    <tr>
       <td>build</td>
       <td>planned release date</td>
-  </th>
+     </tr>
+  </thead>
+  <tbody>
   <tr>
       <td>AspectJ 5 M3</td>
       <td>17th July 2005</td>
@@ -69,6 +80,7 @@ AspectJ 5 (1.5.0 final) based on bug reports from the field.</p>
       <td>AspectJ 5 final</td>
       <td>16th September 2005</td>
   </tr>
+  </tbody>
 </table>
 
   <!-- ================ End of page specific content ===================== -->
