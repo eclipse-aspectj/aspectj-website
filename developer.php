@@ -72,7 +72,7 @@
  		<dd>Answers to questions about building and extending AspectJ.
  		</dd>
  		
- 		<dt><a href="developerPlans.html">Plans</a>
+ 		<dt><a href="plans.php">Plans</a>
  		</dt>
  		<dd>Plans for the next release of AspectJ (scheduled features, bug fixes etc.).
  		</dd>
