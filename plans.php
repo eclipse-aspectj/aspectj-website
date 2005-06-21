@@ -56,7 +56,7 @@ for the M4 release</a>.
 <p>Following M4 we will put out the first release candidate and then proceed to
 AspectJ 5 (1.5.0 final) based on bug reports from the field.</p>
 
-<table>
+<table border="1" width="100%">
   <thead>
     <tr>
       <td>build</td>
