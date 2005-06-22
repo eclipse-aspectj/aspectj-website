@@ -5,7 +5,7 @@
             <tt>Pointcut, Before, After, AfterReturning, AfterThrowing,</tt>
           and
             <tt>Around</tt> annotations.
-        </p><div class="sect2"><a name="d0e3980"></a><div class="titlepage"><div><h3 class="title"><a name="d0e3980"></a>Pointcuts</h3></div></div><p>
+        </p><div class="sect2"><a name="d0e4016"></a><div class="titlepage"><div><h3 class="title"><a name="d0e4016"></a>Pointcuts</h3></div></div><p>
               Pointcuts are specified using the
                 <tt>org.aspectj.lang.annotation.Pointcut</tt> annotation
               on a method declaration. The method should have a
@@ -142,7 +142,7 @@
                 The special forms <tt>if(true)</tt> and <tt>if(false)</tt> can be used in a more
                 general way and don't imply that the pointcut method must have a body.
                 You can thus write <tt>@Before("somePoincut() &amp;&amp; if(false)")</tt>.
-            </p></div><div class="sect2"><a name="d0e4101"></a><div class="titlepage"><div><h3 class="title"><a name="d0e4101"></a>Advice</h3></div></div><p>In this section we first discuss the use of annotations for
+            </p></div><div class="sect2"><a name="d0e4137"></a><div class="titlepage"><div><h3 class="title"><a name="d0e4137"></a>Advice</h3></div></div><p>In this section we first discuss the use of annotations for
           simple advice declarations. Then we show how
                 <tt>thisJoinPoint</tt>
           and its siblings are handled in the body of advice and discuss the 
