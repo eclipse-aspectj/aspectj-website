@@ -171,6 +171,28 @@ and the stand-alone
 	 <img border="0" height="13" width="13" src="images/next.gif" alt="next"/></a>.
 </p>
 
+</div>
+
+<div id="docs-inset">
+<!-- Eclipse AspectJ book -->
+  
+   <p align="center">
+    <a href="http://www.amazon.com/exec/obidos/ASIN/0321245873/qid=1112868888/sr=2-3/ref=pd_bbs_b_2_3/103-5274059-2049410">
+  	   <img src="images/eclipseaspectj.jpg" width="180" alt="Eclipse AspectJ Book Cover"/>
+    </a>
+   </p>
+
+  <p align="center"><a href="http://www.amazon.com/exec/obidos/ASIN/0321245873/qid=1112868888/sr=2-3/ref=pd_bbs_b_2_3/103-5274059-2049410">
+   	    Eclipse AspectJ</a> the book, by some of the leading AspectJ committers
+  </p>	
+  
+  <p/>
+   
+</div>
+
+<div id="main">
+
+<br/>
 
 <h2>Online and external resources</h2>
 
@@ -208,24 +230,6 @@ PARC project page</a>.
   <a href="sample-code.html#pubs-papers-aodesignpatterns">design pattern implementations</a>.
  </p>
 
-</div>
-<!-- Eclipse AspectJ book -->
-
-<div id="docs-inset">
-  <!-- <h2>Eclipse Links</h2> -->
-  
-   <p align="center">
-    <a href="http://www.amazon.com/exec/obidos/ASIN/0321245873/qid=1112868888/sr=2-3/ref=pd_bbs_b_2_3/103-5274059-2049410">
-  	   <img src="images/eclipseaspectj.jpg" width="180" alt="Eclipse AspectJ Book Cover"/>
-    </a>
-   </p>
-
-  <p align="center"><a href="http://www.amazon.com/exec/obidos/ASIN/0321245873/qid=1112868888/sr=2-3/ref=pd_bbs_b_2_3/103-5274059-2049410">
-   	    Eclipse AspectJ</a> the book, by some of the leading AspectJ committers
-  </p>	
-  
-  <p/>
-   
 </div>
 
 
