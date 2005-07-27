@@ -5,7 +5,8 @@ body {
 
 h1 {
   margin-bottom: 3px;
-  padding-bottom: 5px;
+  padding-bottom: 0px;
+  line-height: 1.1em;
 }
 
 h2 { 
@@ -35,7 +36,7 @@ tt tt {
   font-size: 100%;
  }
 
-.programlisting {
+.programlistng {
   padding-top: 5px; 
   border: 2px solid #ccc;
   background: #eee;
