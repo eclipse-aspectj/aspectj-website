@@ -56,6 +56,7 @@
                               $justthefirstfile=basename($devbuilds[0]);
                               $stats=stat($devbuilds[0]);
                               echo "<a href=\"http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/dev/$justthefirstfile\">$justthefirstfile</a><br><br>(size: $stats[7] bytes)";
+                              echo "Changes:<br>"
                               $changesFiles=GetChangesFilesIn('/home/www/technology/aspectj/dev');
                               $justthefirstchangesfile=basename($changesFiles[0]);
                               $stats2=stat($changesFiles[0]);
