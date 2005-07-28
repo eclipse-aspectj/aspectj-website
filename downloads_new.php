@@ -441,7 +441,7 @@ function GetChangesFilesIn($dir){
    $root=opendir($dir) or die("Check $dir !");
    while (false!== ($file=readdir($root))) {
      if($file=="." || $file=="..") {continue;}
-     // echo "$file<br>";
+     echo "$file<br>";
      if (substr($file,0,21) == $devtag) {
        $files[]="$dir/$file";
      }
