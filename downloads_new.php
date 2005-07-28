@@ -56,11 +56,11 @@
                               $justthefirstfile=basename($devbuilds[0]);
                               $stats=stat($devbuilds[0]);
                               echo "<a href=\"http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/dev/$justthefirstfile\">$justthefirstfile</a><br><br>(size: $stats[7] bytes)";
-                              echo "<br>Changes:<br>";
+                              echo "<br>";
                               $changesFiles=GetChangesFilesIn('/home/data/httpd/download.eclipse.org/technology/aspectj/dev');
                               $justthefirstchangesfile=basename($changesFiles[0]);
                               $stats2=stat($changesFiles[0]);
-                              echo "<a href=\"http://download.eclipse.org/technology/aspectj/dev/$justthefirstchangesfile\">$justthefirstchangesfile</a><br>";          
+                              echo "<a href=\"http://download.eclipse.org/technology/aspectj/dev/$justthefirstchangesfile\">(Changes in this build)</a><br>";          
                             ?>
 				</td>
 			</tr>
@@ -441,7 +441,7 @@ function GetChangesFilesIn($dir){
    $root=opendir($dir) or die("Check $dir !");
    while (false!== ($file=readdir($root))) {
      if($file=="." || $file=="..") {continue;}
-     echo "$file<br>";
+     // echo "$file<br>";
      if (substr($file,0,8) == $devtag) {
        $files[]="$dir/$file";
      }
