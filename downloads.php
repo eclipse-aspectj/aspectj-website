@@ -56,6 +56,10 @@
                               $justthefirstfile=basename($devbuilds[0]);
                               $stats=stat($devbuilds[0]);
                               echo "<a href=\"http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/dev/$justthefirstfile\">$justthefirstfile</a><br><br>(size: $stats[7] bytes)";
+                              $changesFiles=GetChangesFilesIn('/home/www/technology/aspectj/dev');
+                              $justthefirstchangesfile=basename($changesFiles[0]);
+                              $stats2=stat($changesFiles[0]);
+                              echo "<a href=\"http://download.eclipse.org/technology/aspectj/dev/$justthefirstchangesfile\">$justthefirstchangesfile</a><br>";          
                             ?>
 				</td>
 			</tr>
@@ -417,6 +421,22 @@ function date_cmp($f1, $f2) {
 function GetDevBuildsIn($dir){
    ini_set("max_execution_time",10);
    $devtag="aspectj-DEVELOPMENT-2";
+   $root=opendir($dir) or die("Check $dir !");
+   while (false!== ($file=readdir($root))) {
+     if($file=="." || $file=="..") {continue;}
+     // echo "$file<br>";
+     if (substr($file,0,21) == $devtag) {
+       $files[]="$dir/$file";
+     }
+   }
+   @closedir($dir);
+   usort($files, "date_cmp");
+   return $files;
+}
+
+function GetChangesFilesIn($dir){
+   ini_set("max_execution_time",10);
+   $devtag="changes-";
    $root=opendir($dir) or die("Check $dir !");
    while (false!== ($file=readdir($root))) {
      if($file=="." || $file=="..") {continue;}
