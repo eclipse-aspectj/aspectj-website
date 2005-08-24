@@ -123,6 +123,12 @@ or in the build but not documented.)
       <a href="doc/next/progguide/semantics.html">
 		<img border="0" border="0" height="13" width="13" src="images/next.gif" alt="next"/></a> 
 		is the best reference for AspectJ usage.
+<h3>Runtime and tools APIs</h3>
+<p>
+<a href="doc/released/api/index.html">Javadocs for the AspectJ runtime and tools APIs</a> 
+<a href="doc/next/api/index.html">
+<img border="0" border="0" height="13" width="13" src="images/next.gif" alt="next"/></a>.
+
 <h3>AspectJ Tools</h3>
 <p>
 	
