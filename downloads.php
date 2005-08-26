@@ -87,13 +87,13 @@
  			<tr>
  				<td>
 				 	<dl>
-				 		<dt>AspectJ 1.5.0 M3, Released 25th August, 2005</dt>
+				 		<dt>AspectJ 1.5.0 M3a, Released 26th August, 2005</dt>
 						<dd>AspectJ Compiler, Browser, Ant tasks, and Documentation. 
 	  					</dd>
 	  				</dl>
 	  			</td>
 				<td width="30%" align="right">
-					<a href="http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/aspectj-1.5.0_M3.jar&url=http://download.eclipse.org/technology/aspectj/aspectj-1.5.0_M3.jar&mirror_id=1">aspectj-1.5.0_M3.jar</a> (~9.1M)
+					<a href="http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/aspectj-1.5.0_M3a.jar">aspectj-1.5.0_M3a.jar</a> (~9.1M)
 	  			</td>
 			</tr>
  		
