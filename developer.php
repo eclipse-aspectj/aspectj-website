@@ -25,9 +25,9 @@
 		    <a href="http://dev.eclipse.org/bugs/bugwritinghelp.html">
 		    Eclipse Bug Writing Guidelines</a>
 		    and the FAQ entries for 
-		    <a href="doc/faq.html#q:idebugs">writing IDE bugs</a>
+		    <a href="doc/released/faq.html#q:idebugs">writing IDE bugs</a>
 		    and
-		    <a href="doc/faq.html#q:ajcbugs">writing compiler bugs</a>.
+		    <a href="doc/released/faq.html#q:ajcbugs">writing compiler bugs</a>.
  		</dd>
  		
  		<dt><a href="http://dev.eclipse.org/bugs/query.cgi">View 
@@ -67,7 +67,7 @@
 	<h2>Developer Documentation</h2>
 	
 	<dl>
- 		<dt><a href="doc/faq.html#Developers">Developer FAQ</a>
+ 		<dt><a href="doc/released/faq.html#Developers">Developer FAQ</a>
  		</dt>
  		<dd>Answers to questions about building and extending AspectJ.
  		</dd>
