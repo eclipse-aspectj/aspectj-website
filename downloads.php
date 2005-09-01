@@ -14,7 +14,7 @@
 
 <p>The AspectJ compiler produces programs for any version of the Java platform 
       (jdk1.1 and later). The compiler itself requires Java2 (1.3 or later) to run. 
-      Consult the <a href="doc/faq.html#q:compability">FAQ</a>
+      Consult the <a href="doc/released/faq.html#q:compability">FAQ</a>
       for more details.&nbsp; All releases are provided under the terms and 
       conditions of the <a href="http://www.eclipse.org/legal/notice.html">Eclipse.org 
       Software User Agreement</a> unless otherwise specified.
