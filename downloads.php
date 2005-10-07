@@ -93,7 +93,7 @@
 	  				</dl>
 	  			</td>
 				<td width="30%" align="right">
-					<a href="http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/aspectj-1.5.0_M4.jar">aspectj-1.5.0_M4.jar</a> (~10M)
+					<a href="http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/aspectj-1.5.0_M4.jar">aspectj-1.5.0_M4.jar</a> (~9.7M)
 	  			</td>
 			</tr>
  		
