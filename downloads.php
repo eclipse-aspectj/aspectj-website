@@ -87,6 +87,19 @@
  			<tr>
  				<td>
 				 	<dl>
+				 		<dt>AspectJ 1.5.0 M4, Released 7th October, 2005</dt>
+						<dd>AspectJ Compiler, Browser, Ant tasks, and Documentation. 
+	  					</dd>
+	  				</dl>
+	  			</td>
+				<td width="30%" align="right">
+					<a href="http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/aspectj-1.5.0_M4.jar">aspectj-1.5.0_M4.jar</a> (~10M)
+	  			</td>
+			</tr>
+ 		
+ 			<tr>
+ 				<td>
+				 	<dl>
 				 		<dt>AspectJ 1.5.0 M3a, Released 26th August, 2005</dt>
 						<dd>AspectJ Compiler, Browser, Ant tasks, and Documentation. 
 	  					</dd>
