@@ -84,6 +84,19 @@
 	
  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
  		<tbody>
+ 		 	<tr>
+ 				<td>
+				 	<dl>
+				 		<dt>AspectJ 1.5.0 M5, Released 16th November, 2005</dt>
+						<dd>AspectJ Compiler, Browser, Ant tasks, and Documentation. 
+	  					</dd>
+	  				</dl>
+	  			</td>
+				<td width="30%" align="right">
+					<a href="http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/aspectj-1.5.0_M5.jar">aspectj-1.5.0_M4.jar</a> (~9.7M)
+	  			</td>
+			</tr>
+			
  			<tr>
  				<td>
 				 	<dl>
