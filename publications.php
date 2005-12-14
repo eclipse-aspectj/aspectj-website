@@ -36,6 +36,23 @@
 	<tbody>
 		<tr>
 			<td width="20%">
+				<a href="http://www.dpunkt.de/buch/3-89864-330-1.html">
+					<img width="200" src="images/aopaj5.jpg" alt="Aspektorientierte Programmierung mit AspectJ 5">
+				</a>
+			</td>
+			<td align ="left"><p><b>
+				<a href="http://www.dpunkt.de/buch/3-89864-330-1.html">Aspektorientierte Programmierung mit AspectJ 5</a> </b>,
+			      by Oliver Böhm.</p>
+			      <p> Nach der Objektorientierung ist ein neuer, bedeutender Trend in der 
+			      Softwareentwicklung in Sicht: die aspektorientierte Programmierung (AOP). 
+			      Schritt für Schritt vermittelt Oliver Böhm ihre Grundlagen und zeigt den 
+			      praktischen Einsatz anhand der führenden AO-Programmiersprache AspectJ. 
+			      </p>
+			 </td>
+		</tr>
+
+		<tr>
+			<td width="20%">
 				<a href="http://www.amazon.com/exec/obidos/ASIN/0321245873/qid=1112868888/sr=2-3/ref=pd_bbs_b_2_3/103-5274059-2049410">
 					<img width="200" src="images/eclipseaspectj.jpg" alt="Eclipse AspectJ">
 				</a>
