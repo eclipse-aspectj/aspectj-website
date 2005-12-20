@@ -51,7 +51,7 @@
 		<a href="downloads.php">More AspectJ downloads...</a> 		
   </p>
   <p>Popular AspectJ docs: 
-       the <a href="doc/next/adk15notebook/index.html">AspectJ 5 Developer's Notebook</a>, and
+       the <a href="doc/released/adk15notebook/index.html">AspectJ 5 Developer's Notebook</a>, and
        the <a href="doc/released/progguide/index.html">AspectJ Programming Guide</a>. 
        <a href="docs.php">More AspectJ docs...</a>
    </p>
