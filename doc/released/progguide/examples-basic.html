@@ -1,6 +1,6 @@
 <html><head>
       <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-   <title>Basic Techniques</title><meta name="generator" content="DocBook XSL Stylesheets V1.44"><link rel="home" href="index.html" title="The AspectJTM Programming Guide"><link rel="up" href="examples.html" title="Chapter 3. Examples"><link rel="previous" href="examples-howto.html" title="Obtaining, Compiling and Running the Examples"><link rel="next" href="examples-development.html" title="Development Aspects"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Basic Techniques</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="examples-howto.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter 3. Examples</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="examples-development.html">Next</a></td></tr></table><hr></div><div class="sect1"><a name="examples-basic"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="examples-basic"></a>Basic Techniques</h2></div></div><p>
+   <title>Basic Techniques</title><link rel="stylesheet" href="aspectj-docs.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.44"><link rel="home" href="index.html" title="The AspectJTM Programming Guide"><link rel="up" href="examples.html" title="Chapter 3. Examples"><link rel="previous" href="examples-howto.html" title="Obtaining, Compiling and Running the Examples"><link rel="next" href="examples-development.html" title="Development Aspects"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Basic Techniques</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="examples-howto.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter 3. Examples</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="examples-development.html">Next</a></td></tr></table><hr></div><div class="sect1"><a name="examples-basic"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="examples-basic"></a>Basic Techniques</h2></div></div><p>
       This section presents two basic techniques of using AspectJ, one each
       from the two fundamental ways of capturing crosscutting concerns:
       with dynamic join points and advice, and with static
@@ -317,12 +317,16 @@ public aspect ComparablePoint {
           <tt>equals</tt> and <tt>hashCode</tt> methods
           in order to make <tt>Point</tt>s hashable.
         </p><p>
-          The method <tt>Object.hashCode</tt> returns an unique
-          integer, suitable for use as a hash table key. Different
-          implementations are allowed return different integers, but must
-          return distinct integers for distinct objects, and the same integer
-          for objects that test equal. But since the default implementation
-          of <tt>Object.equal</tt> returns <tt>true</tt>
+          The method <tt>Object.hashCode</tt> returns an 
+          integer, suitable for use as a hash table key.  It is not required
+          that two objects which are not equal (according to the 
+          <tt>equals</tt> method) return different integer
+          results from <tt>hashCode</tt> but it can
+          improve performance when the integer is used as a key into a 
+          data structure.  However, any two objects which are equal 
+          must return the same integer value from a call to 
+          <tt>hashCode</tt>.  Since the default implementation
+          of <tt>Object.equals</tt> returns <tt>true</tt>
           only when two objects are identical, we need to redefine both
           <tt>equals</tt> and <tt>hashCode</tt> to work
           correctly with objects of type <tt>Point</tt>. For
