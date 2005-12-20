@@ -76,6 +76,27 @@
 
   <!-- ============ ASPECTJ 5 ======================= -->
 
+  <h3 id="milestones">AspectJ 5 Releases</h3>
+
+ 	<table border="0" cellspacing="0" cellpadding="0" width="100%">
+ 		<tbody>
+ 		 	<tr>
+ 				<td>
+				 	<dl>
+				 		<dt>AspectJ 1.5.0, Released 20th December, 2005</dt>
+						<dd>AspectJ Compiler, Browser, Ant tasks, and Documentation. 
+	  					</dd>
+	  				</dl>
+	  			</td>
+				<td width="30%" align="right">
+					<a href="http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/aspectj-1.5.0.jar">aspectj-1.5.0.jar</a> (~10M)
+	  			</td>
+			</tr>
+
+		</tbody>
+	</table>
+
+
   <h3 id="milestones">AspectJ 5 Release Candidates</h3>
 
 	<p>	Only download these versions if you are prepared to work with a pre-release compiler. 
@@ -87,7 +108,7 @@
  		 	<tr>
  				<td>
 				 	<dl>
-				 		<dt>AspectJ 1.5.0 RC1, Released 16th November, 2005</dt>
+				 		<dt>AspectJ 1.5.0 RC1, Released 14th December, 2005</dt>
 						<dd>AspectJ Compiler, Browser, Ant tasks, and Documentation. 
 	  					</dd>
 	  				</dl>
