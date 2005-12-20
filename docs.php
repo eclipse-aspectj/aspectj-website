@@ -29,7 +29,7 @@
 	<tr>
 	  <td class="smallParagraph" height="26"><b>
 	    <a href="http://www.eclipse.org/aspectj/docs.php">[doc index]</a>
-	    &nbsp;<a href="doc/next/adk15notebook/index.html">
+	    &nbsp;<a href="doc/released/adk15notebook/index.html">
 	    [AspectJ 5 language changes]</a>
 	    &nbsp;<a href="doc/released/progguide/index.html">
 	    [language]</a>
@@ -61,11 +61,9 @@ follow the trail proposed in the
 <a href="doc/released/index.html#paths">released documentation</a>.
 </p>
 <h2>AspectJ 5 Developer's Notebook</h2>
-<p>The <a href="doc/next/adk15notebook/index.html">AspectJ 5 Developer's Notebook</a>
-is the most up-to-date documentation (besides the code!) for planned changes to 
-the AspectJ language and tools in the next release, AspectJ 5.
-(Warning: Features might be documented but not in the latest dev build,
-or in the build but not documented.) 
+<p>The <a href="doc/released/adk15notebook/index.html">AspectJ 5 Developer's Notebook</a>
+summarises changes made to the AspectJ language in AspectJ 5. These changes are
+<emphasis>not</emphasis> yet reflected in the programming guide.
 </p>
 	
 <h2>AspectJ Documentation packages</h2>
@@ -114,8 +112,8 @@ or in the build but not documented.)
       <a href="doc/next/progguide/pitfalls.html">
 		<img border="0" height="13" width="13" src="images/next.gif" alt="next"/></a> 
       offer rules on things to do (or not).
-      The <a href="doc/released/quick.pdf">Quick Reference</a> 
-      <a href="doc/next/quick.pdf">
+      The <a href="doc/released/quick5.pdf">Quick Reference</a> 
+      <a href="doc/next/quick5.pdf">
 		<img border="0" height="13" width="13" src="images/next.gif" alt="next"/></a> 
 		summarizes syntax,
       but the <a href="doc/released/progguide/semantics.html">
@@ -124,11 +122,24 @@ or in the build but not documented.)
 		<img border="0" border="0" height="13" width="13" src="images/next.gif" alt="next"/></a> 
 		is the best reference for AspectJ usage.
 <h3>Runtime and tools APIs</h3>
-<p>
-<a href="doc/released/api/index.html">Javadocs for the AspectJ runtime and tools APIs</a> 
-<a href="doc/next/api/index.html">
+<ul>
+<li>
+<a href="doc/released/runtime-api/index.html">Javadocs for the AspectJ runtime API</a> 
+<a href="doc/next/runtime-api/index.html">
 <img border="0" border="0" height="13" width="13" src="images/next.gif" alt="next"/></a>.
-
+</li>
+<li>
+<a href="doc/released/aspectj5rt-api/index.html">Javadocs for the "Java 5"-only runtime APIs</a> 
+<a href="doc/next/aspectj5rt-api/index.html">
+<img border="0" border="0" height="13" width="13" src="images/next.gif" alt="next"/></a> 
+(reflection API and annotations).
+</li>
+<li>
+<a href="doc/released/weaver-api/index.html">Javadocs for the AspectJ weaver API</a> 
+<a href="doc/next/weaver-api/index.html">
+<img border="0" border="0" height="13" width="13" src="images/next.gif" alt="next"/></a>.
+</li>
+</ul>
 <h3>AspectJ Tools</h3>
 <p>
 	
@@ -169,11 +180,12 @@ and the stand-alone
    <a href="doc/released/porting.html">Porting Guide</a> for upgrading
    from older versions of the language 
    and the release README files for
+   <a href="doc/released/README-150.html">1.5.0</a>,
    <a href="doc/released/README-121.html">1.2.1</a>,
    <a href="doc/released/README-12.html">1.2</a>, 
    <a href="doc/released/README-11.html">1.1</a> or the summary of 
    <a href="doc/released/changes.html">changes</a>
-	<a href="doc/next/changes.html">
+	<a href="doc/released/changes.html">
 	 <img border="0" height="13" width="13" src="images/next.gif" alt="next"/></a>.
 </p>
 
