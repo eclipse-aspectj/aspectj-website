@@ -76,7 +76,7 @@
 
   <!-- ============ ASPECTJ 5 ======================= -->
 
-  <h3 id="milestones">AspectJ 5 Releases</h3>
+  <h3 id="milestones">AspectJ 5</h3>
 
  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
  		<tbody>
@@ -84,7 +84,8 @@
  				<td>
 				 	<dl>
 				 		<dt>AspectJ 1.5.0, Released 20th December, 2005</dt>
-						<dd>AspectJ Compiler, Browser, Ant tasks, and Documentation. 
+						<dd>AspectJ compiler, browser, documentation tool,
+                            Ant tasks, and documentation. 
 	  					</dd>
 	  				</dl>
 	  			</td>
@@ -96,6 +97,10 @@
 		</tbody>
 	</table>
 
+<!--
+    Commenting out all pre-release AspectJ 5.
+    Normally I would just delete, but the convention in this document
+    seems to be commenting - to preserve the original file location?
 
   <h3 id="milestones">AspectJ 5 Release Candidates</h3>
 
@@ -198,6 +203,9 @@
 			</tr>
 		</tbody>
 	</table>
+    
+    END of commenting out AspectJ 5 pre-release versions
+    -->                    
 	
   <!-- ============ LATEST STABLE RELEASE ======================= -->
 
@@ -205,16 +213,17 @@
 
  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
  		<tbody>
- 			<tr>
+ 		 	<tr>
  				<td>
 				 	<dl>
-				 		<dt>Version 1.2.1&nbsp;&nbsp;&nbsp; Released November 5th, 2004</dt>
-						<dd>AspectJ Compiler, Browser, Ant tasks, and Documentation</dd>
-					</dl>
-	 			 </td>
+				 		<dt>AspectJ 1.5.0, Released 20th December, 2005</dt>
+						<dd>AspectJ compiler, browser, documentation tool,
+                            Ant tasks, and documentation. 
+	  					</dd>
+	  				</dl>
+	  			</td>
 				<td width="30%" align="right">
-				    <a href="http://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.2.1.jar">
-	    			aspectj-1.2.1.jar</a> (7,382,062 bytes)
+					<a href="http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/aspectj-1.5.0.jar">aspectj-1.5.0.jar</a> (~10M)
 	  			</td>
 			</tr>
 		</tbody>
@@ -466,19 +475,19 @@
 		<dt><a target="_top" href="http://eclipse.org/ajdt">AJDT Project</a></dt>
 		<dd>an Eclipse Technology project that provides an AspectJ plug-in for Eclipse.</dd>
 		<dt><a target="_top" href="http://aspectj4jbuildr.sourceforge.net">AJDE for JBuilder</a></dt>
-		<dd>is a SourceForge project that provides an AspectJ 
+		<dd>is an old SourceForge project that provides an AspectJ 
 	    	OpenTool for Borland's JBuilder IDE.
 	    </dd>
 	    <dt><a target="_top" href="http://aspectj4netbean.sourceforge.net">
 	    	AJDE for SunONE/NetBeans</a>
 	    </dt>
-	    <dd> is a SourceForge project that provides an 
+	    <dd> is an old SourceForge project that provides an 
 	    	AspectJ Module for Sun's Forte/SunONEStudio4/NetBeans IDE.
 	    </dd>
 	    <dt><a target="_top" href="http://aspectj4emacs.sourceforge.net">
 	    	AJDE for Emacs and JDEE</a>
 	    </dt>	
-	    <dd>is a SourceForge project that provides an 
+	    <dd>is an old SourceForge project that provides an 
 	    	AspectJ mode for Emacs and an AspectJ extension to JDEE.
     	</dd>
     	<dt><a target="_top" href="https://jdeveloperaop.dev.java.net"> 
@@ -487,11 +496,13 @@
 	    <dd>	is a java.net project to support AspectJ programming in 
 	    	Oracle's JDeveloper IDE.
 	    </dd>
+        <!-- removed - installers not updated since July, 2005
 	    <dt>Easy installers</dt>
 	    <dd>Russ Miles has packaged together
 	    	<a target="_top" href="http://www.aspectjcookbook.com">integrated 
 	    	installers for Eclipse, AJDT, and AspectJ on the Windows and Mac platforms</a>.
     	</dd>
+        -->
 	</dl>
 	
   <!-- ================ End of page specific content ===================== -->
