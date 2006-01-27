@@ -13,8 +13,78 @@
 <h1>the aspectj news archives</h1>
 
  <dl>  
- 
-     <dt> January 17th, 2005 - AspectJ 5 development builds now support full Java 5 source compilation </dt>
+   <dt>December 14th 2005, AspectJ 5 RC1 released</dt>
+   <dd>AspectJ 5 release candidate 1 was released today. It contains many bug fixes and
+   enhancments since the M5 release. You can see the
+   <a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=AspectJ&bug_status=RESOLVED&chfieldfrom=2005-11-17&chfieldto=2005-12-14">
+   complete list of resolved issues since M5</a> on bugzilla. AspectJ 5 RC1 is available for download from the
+   <a href="downloads.php">downloads page</a>.
+  </dd>
+  
+   <dt>November 16th 2005, AspectJ 5 M5 released</dt>
+   <dd>The AspectJ 5 milestone 5 build was released today. It contains a large number of bug fixes and
+   enhancements since M4.  We are no longer adding new features to AspectJ and are concentrating
+   on fixing bugs before creating our first Release Candidate.  You can see 
+   the <a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=AspectJ&bug_status=RESOLVED&chfieldfrom=2005-10-07&chfieldto=2005-11-16">
+   complete list of resolved issues since M4</a> on bugzilla. AspectJ 5 M5 is available for download from the  
+   <a href="downloads.php">downloads page</a>.  You can see the list of remaining bugs to fix before 1.5.0 is finished
+   <a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=AspectJ&target_milestone=1.5.0&target_milestone=1.5.0RC1&target_milestone=1.5.0RC2&keywords=&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED">here</a>.
+   </dd>
+   
+   <dt>October 7th 2005, AspectJ 5 M4 released</dt>
+   <dd>The AspectJ 5 milestone 4 build was released today. It contains a large number of bug fixes and
+   enhancements since M3, including the <a href="http://www.eclipse.org/aspectj/doc/next/api/index.html">
+   new reflection and weaver tools APIs</a>. You can see the <a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=AspectJ&bug_status=RESOLVED&chfieldfrom=2005-08-27&chfieldto=2005-10-07">
+   complete
+   list of resolved issues since M3</a> on bugzilla. AspectJ 5 M4 is available for download from the  
+   <a href="downloads.php">downloads page</a>.
+   </dd>
+
+	
+  
+  <dt>August 25th, 2005, AspectJ 5 M3 released</dt>
+   <dd>At long last, AspectJ 5 M3 is here. This release has full Java 5 compilation support,
+   language extensions for generics, enhanced load-time weaving, and the first official support
+   for the @AspectJ development style. Now it's full speed ahead to M4 and then AspectJ 5 final.
+   You can download AspectJ 5 M3 from the <a href="downloads.php">downloads page</a>.
+    </dd>
+	
+   <dt> July 2005, Call for papers issued for 5th International Conference on AOSD</dt>
+   <dd>
+     <table border="0">
+      <tr>
+        <td>
+           <a href="http://aosd.net/conference">
+             <img align="right" src="images/aosd06logo.gif"  border="0" 
+                alt="AOSD.06 March 20-24: Bonn, Germany"/ title="AOSD.06"/>
+           </a>
+        </td>
+        <td>
+     The <a href="http://aosd.net/conference">AOSD.06</a> conference is now
+     soliciting contributions. A great chance for AspectJ users to meet up and share what
+     they are doing. Submit your <a href="http://aosd.net/2006/cfc/reports.php">
+     experience report</a> abstracts by September 23rd.
+         </td>
+       </tr>
+      </table>
+   </dd>
+     
+   <dt> April 12, 2005, aUnit 0.1 released</dt>
+   <dd>Russ Miles has made available the 0.1 release of <a href="http://www.aunit.org">aUnit</a>, a 
+   unit testing framework for aspects. The 0.1 release includes a full working test framework
+   with a set of examples in the source download to show you how to create tests.</dd>
+
+     
+   <dt> April 7, 2005 <a href="downloads.php">AspectJ 5 M2</a> build now available</dt>
+   <dd>
+	   The second milestone build of AspectJ 5 is now available, with full support for compiling Java 5 language
+	   features and annotation matching and binding.
+	   See the <a href="doc/README-150.html">README</a>
+	   for more details, or go straight to the <a href="doc/ajdk15notebook/index.html">AspectJ 5
+	   Developer's Notebook</a> for a detailed description of the new language features.
+   </dd>       
+	        
+   <dt> January 17th, 2005 - AspectJ 5 development builds now support full Java 5 source compilation </dt>
     <dd>
 	    The AspectJ 5 development builds as of 17th January now include full support for source
 	    compilation of Java 5 programs.
