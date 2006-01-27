@@ -12,76 +12,26 @@
 
 <h1>aspectj: development plan</h1>
 
-<p>Last update 21st June 2005</p>
+<p>Last updated 27 January 2006</p>
 
-<p>The next major release of AspectJ will be AspectJ 5. Details of the new
-features planned for AspectJ 5 are documented in the
-<a href="http://www.eclipse.org/aspectj/doc/next/adk15notebook">
+<h2>AspectJ 5, version 1.5.1 </h2>
+
+<p>The next release of AspectJ will focus on bug-fixing and performance
+improvements.  We hope to do it in short order! To stay tuned, watch
+the <a href="https://bugs.eclipse.org/bugs/buglist.cgi?product=AspectJ&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED">
+    list of open AspectJ bugs</a>, or the
+    <a href="https://bugs.eclipse.org/bugs/buglist.cgi?product=AspectJ&target_milestone=1.5.1">
+        list of AspectJ bugs targetting 1.5.1
+    </a>.
+</p>
+
+<h2>AspectJ 5 - Done!</h2>
+
+<p>AspectJ 5 was released on December 20, 2005. For details on the new features,
+see the <a href="http://www.eclipse.org/aspectj/doc/released/adk15notebook">
 AspectJ 5 Developer's Notebook</a>. 
 </p>
 
-<h2>AspectJ 5 M2 </h2>
-
-<p>The AspectJ 5 M2 milestone build is currently available from the 
-<a href="http://www.eclipse.org/aspectj/downloads.php">download page</a>
-and supports full source compilation of Java 5 constructs and a complete implementation
-of all the features described in the annotations, autoboxing, covariance, varargs, 
-enumerated types, and "other changes in AspectJ 5" chapters in the AspectJ 5 Developer's
-Notebook. The M2 build also supports the <code>pertypewithin</code> aspect
-instantiation model, but not with a generic aspect declaration.</p>
-
-<h2>AspectJ 5 M3</h2>
-
-<p>We are currently developing M3, which will include full support for the features
-documented in the generics chapter of the AspectJ 5 Developer's Notebook. This 
-milestone will also include support for the annotation based development style 
-described in chapter 9, excluding inter-type declaration support (M4).  In addition,
-M3 will support the enhanced load-time weaving mechanisms described in chapter
-12 "load-time weaving". 
-See the <a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=AspectJ&target_milestone=1.5.0+M3&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED">
-complete list of bugs and enhancements targeted
-for the M3 release</a>. 
-</p>
-
-<h2>AspectJ 5 M4</h2>
-
-<p>AspectJ 5 M4 will complete the new function planned for the AspectJ 5 release with
-a new set of reflection interfaces for AspectJ types, and completion of the @AspectJ
-(annotation style) development support. See the <a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=AspectJ&target_milestone=1.5.0+M4&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED">
-complete list of bugs and enhancements targeted
-for the M4 release</a>. 
-
-<h2>Schedule</h2>
-
-<p>Following M4 we will put out the first release candidate and then proceed to
-AspectJ 5 (1.5.0 final) based on bug reports from the field.</p>
-
-<table border="1" width="100%">
-  <thead>
-    <tr>
-      <td>build</td>
-      <td>planned release date</td>
-     </tr>
-  </thead>
-  <tbody>
-  <tr>
-      <td>AspectJ 5 M3</td>
-      <td>17th July 2005</td>
-  </tr>
-  <tr>
-      <td>AspectJ 5 M4</td>
-      <td>19th August 2005</td>
-  </tr>
-  <tr>
-      <td>AspectJ 5 RC1</td>
-      <td>2nd September 2005</td>
-  </tr>
-  <tr>
-      <td>AspectJ 5 final</td>
-      <td>16th September 2005</td>
-  </tr>
-  </tbody>
-</table>
 
   <!-- ================ End of page specific content ===================== -->
 </div>
