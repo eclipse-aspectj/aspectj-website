@@ -27,14 +27,6 @@
 	   <?php require('syndication/aspectprogrammer.html');  ?>
    </ul>
 
- <!-- ============ Jonas' Blog ============== -->
-
-	<h3><a href="http://blogs.codehaus.org/people/jboner">Jonas Bonér's blog</a></h3>
-   
-   <ul>
-	   <?php require('syndication/jonas.html');  ?>
-   </ul>
-
 <!-- ============ Alex's Blog ============== -->
 
 	<h3><a href="http://blogs.codehaus.org/people/avasseur">Alex Vasseur's blog</a></h3>
@@ -51,14 +43,6 @@
 	    <?php require('syndication/aspectivity.html'); ?>
 	</ul>
 
-<!-- ========== Dion's blog portlet =============== -->
-
-	<h3><a href="http://www.almaer.com/blog/archives/cat_aop.html">Dion Almaer on AOP</a></h3>
-	<ul>
-	  <?php require('syndication/dion.html');	  ?>
-  </ul>
- 
-	
 <!-- ============= Ron Bodkin's blog portlet ========== -->
 
 	<h3><a href="http://rbodkin.blogs.com/ron_bodkins_blog/aspectoriented_programming/index.html">Ron Bodkin on AOP</a></h3>
@@ -66,6 +50,21 @@
 	  <?php require('syndication/ron.html'); ?>
 	</ul>
 
+ <!-- ============ Jonas' Blog ============== -->
+
+	<h3><a href="http://blogs.codehaus.org/people/jboner">Jonas Bonér's blog</a></h3>
+   
+   <ul>
+	   <?php require('syndication/jonas.html');  ?>
+   </ul>
+
+<!-- ========== Dion's blog portlet =============== -->
+
+	<h3><a href="http://www.almaer.com/blog/archives/cat_aop.html">Dion Almaer on AOP</a></h3>
+	<ul>
+	  <?php require('syndication/dion.html');	  ?>
+  </ul>
+ 
 <!-- ========== News portlet ================ -->
  <!--    
    <h3>AspectJ in Yahoo news...</h3>
