@@ -74,12 +74,50 @@
 		</tbody>
 	</table>
 
+  <!-- ============ LATEST STABLE RELEASE ======================= -->
+
+  <h3 id="stable_release">Latest Stable Release</h3>
+
+      <table border="0" cellspacing="0" cellpadding="0" width="100%">
+ 		<tbody>
+ 		 	<tr>
+ 				<td>
+				 	<dl>
+				 		<dt>AspectJ 1.5.1, Released 4th April, 2006</dt>
+						<dd>AspectJ compiler, browser, documentation tool,
+                            Ant tasks, and documentation. 
+	  					</dd>
+	  				</dl>
+	  			</td>
+				<td width="30%" align="right">
+					<a href="http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/aspectj-1.5.1.jar">aspectj-1.5.1.jar</a> (~10M)
+	  			</td>
+			</tr>
+		</tbody>
+      </table> 
+      
+
   <!-- ============ ASPECTJ 5 ======================= -->
 
   <h3 id="milestones">AspectJ 5</h3>
 
  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
  		<tbody>
+ 		
+ 		     <tr>
+ 				<td>
+				 	<dl>
+				 		<dt>AspectJ 1.5.1, Released 4th April, 2006</dt>
+						<dd>AspectJ compiler, browser, documentation tool,
+                            Ant tasks, and documentation. 
+	  					</dd>
+	  				</dl>
+	  			</td>
+				<td width="30%" align="right">
+					<a href="http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/aspectj-1.5.1.jar">aspectj-1.5.1.jar</a> (~10M)
+	  			</td>
+			</tr>
+			
  		 	<tr>
  				<td>
 				 	<dl>
@@ -207,47 +245,7 @@
     END of commenting out AspectJ 5 pre-release versions
     -->                    
 	
-  <!-- ============ LATEST STABLE RELEASE ======================= -->
-
-  <h3 id="stable_release">Latest Stable Releases</h3>
-
-      <table border="0" cellspacing="0" cellpadding="0" width="100%">
- 		<tbody>
- 		 	<tr>
- 				<td>
-				 	<dl>
-				 		<dt>AspectJ 1.5.1, Released 4th April, 2006</dt>
-						<dd>AspectJ compiler, browser, documentation tool,
-                            Ant tasks, and documentation. 
-	  					</dd>
-	  				</dl>
-	  			</td>
-				<td width="30%" align="right">
-					<a href="http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/aspectj-1.5.1.jar">aspectj-1.5.1.jar</a> (~10M)
-	  			</td>
-			</tr>
-		</tbody>
-      </table> 
-      
-      
- 	<table border="0" cellspacing="0" cellpadding="0" width="100%">
- 		<tbody>
- 		 	<tr>
- 				<td>
-				 	<dl>
-				 		<dt>AspectJ 1.5.0, Released 20th December, 2005</dt>
-						<dd>AspectJ compiler, browser, documentation tool,
-                            Ant tasks, and documentation. 
-	  					</dd>
-	  				</dl>
-	  			</td>
-				<td width="30%" align="right">
-					<a href="http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/aspectj-1.5.0.jar">aspectj-1.5.0.jar</a> (~10M)
-	  			</td>
-			</tr>
-		</tbody>
-      </table>
-
+  
   <!-- ============ ASPECTJ 1.2 ======================= -->
   
   <h3>AspectJ 1.2</h3>
