@@ -1,0 +1,6 @@
+The AspectJ1.5.0 and AspectJ1.5.1 jpgs represent compilation of shadows at 
+the 1.5.1 level, with the options:
+
+ajc -d c:\temp -sourceroots antadapter;aspectj;batch;codeassist;compiler;dom;eval;formatter;model;search 
+    -noExit -Xlint:ignore -showWeaveInfo
+    
