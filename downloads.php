@@ -90,7 +90,7 @@
 	  				</dl>
 	  			</td>
 				<td width="30%" align="right">
-					<a href="http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/aspectj1.5.1a.jar">aspectj-1.5.1a.jar</a> (~10M)
+					<a href="http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/aspectj-1.5.1_a.jar">aspectj-1.5.1_a.jar</a> (~10M)
 	  			</td>
 			</tr>
 		</tbody>
@@ -114,7 +114,7 @@
 	  				</dl>
 	  			</td>
 				<td width="30%" align="right">
-					<a href="http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/aspectj1.5.1a.jar">aspectj-1.5.1a.jar</a> (~10M)
+					<a href="http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/aspectj-1.5.1_a.jar">aspectj-1.5.1_a.jar</a> (~10M)
 	  			</td>
 			</tr>
 			
