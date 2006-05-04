@@ -162,6 +162,11 @@ the documentation tool
 <a href="doc/next/devguide/ajdoc-ref.html">
 <img border="0" border="0" height="13" width="13" src="images/next.gif" alt="next"/></a> 
 
+the 
+<a href="doc/released/devguide/ltw.html">load-time weaving (LTW) support</a>
+<a href="doc/next/devguide/ltw.html">
+<img border="0" border="0" height="13" width="13" src="images/next.gif" alt="next"/></a> 
+
 and the stand-alone
 <a href="doc/released/devguide/ajbrowser.html">AJ Browser</a>
 <a href="doc/next/devguide/ajbrowser.html">
