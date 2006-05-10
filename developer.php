@@ -87,7 +87,7 @@
 		    AspectJ CVS Repository</a>
  		</dt>
  		<dd> Use the web interface to browse the AspectJ source code or
-		    <a href="doc/faq.html#q:buildingsource">use CVS to download it</a>.
+		    <a href="doc/released/faq.html#q:buildingsource">use CVS to download it</a>.
  		</dd>
  		
  	</dl> 
