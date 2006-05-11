@@ -28,8 +28,8 @@ watch the <a href="https://bugs.eclipse.org/bugs/buglist.cgi?product=AspectJ&bug
 <h2>AspectJ 5, version 1.5.1a - released 20th April 2006  </h2>
 
 <p>AspectJ 1.5.1a included numerous bug fixes and significant improvements to 
-memory usage.  The full list of bugs resolved in this release can be found
-with <a href="http://www.eclipse.org/aspectj/doc/released/README-151.html"/>this bugzilla query</a>.
+memory usage.  For the full list of bugs resolved see the 
+<a href="http://www.eclipse.org/aspectj/doc/released/README-151.html"/>AspectJ 1.5.1a README</a>.
 </p>
 
 <h2>AspectJ 5 - Done!</h2>
