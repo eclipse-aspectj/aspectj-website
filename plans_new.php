@@ -42,7 +42,7 @@
 </p>
 
 <p>
-  Here are some details of recent and upcoming AJDT releases.
+  Here are some details of recent and upcoming AspectJ releases.
   
   <!--
   These are plotted on the

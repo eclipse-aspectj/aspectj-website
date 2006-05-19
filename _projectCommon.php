@@ -16,7 +16,7 @@
 	$Nav->addNavSeparator("AspectJ", 	"/ajdt/");
 	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;About", "/aspectj/description.php", "_self", 1);
 	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Committers", "/aspectj/committers.php", 	"_self", 1);
-	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Plans", "/aspectj/plans.php", 	"_self", 1);
+	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Plans", "/aspectj/plans_new.php", 	"_self", 1);
 
 	$Nav->addNavSeparator("Users", "", "_self", 1);
 	#$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Getting Started", 	"/aspectj/gettingstarted.php", 	"_self", 1);
