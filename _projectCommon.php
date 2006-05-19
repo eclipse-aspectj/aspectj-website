@@ -13,7 +13,7 @@
 
 	# Define your project-wide Nav bars here.
 	# Format is Link text, link URL (can be http://www.someothersite.com/), target (_self, _blank), level (1, 2 or 3)
-	$Nav->addNavSeparator("AspectJ", 	"/ajdt/");
+	$Nav->addNavSeparator("AspectJ", 	"/aspectj/index_new.php");
 	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;About", "/aspectj/description.php", "_self", 1);
 	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Committers", "/aspectj/committers.php", 	"_self", 1);
 	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Plans", "/aspectj/plans_new.php", 	"_self", 1);

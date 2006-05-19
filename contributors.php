@@ -50,7 +50,7 @@
         </tr>
         <tr>
           <td>Ron Bodkin</td>
-          <td>IBM UK Ltd</td>
+          <td></td>
         </tr>
       
 			</table>
