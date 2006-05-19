@@ -20,12 +20,12 @@
 
 	$Nav->addNavSeparator("Users", "", "_self", 1);
 	#$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Getting Started", 	"/aspectj/gettingstarted.php", 	"_self", 1);
-	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Downloads", 	"/aspectj/downloads/", 	"_self", 1);
+	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Downloads", 	"/aspectj/downloads.php", 	"_self", 1);
 	#$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Bugs", "/aspectj/bugs.php", 	"_self", 1);
 	#$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;FAQ", "/aspectj/faq.php", "_self", 1);
 	#$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Demos", "/aspectj/demos/", "_self", 1);
 	#$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;New Features", "/aspectj/newfeatures/", "_self", 1);
-	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;Mailing list", "http://dev.eclipse.org/mailman/listinfo/aspectj-users", "_self", 1);
+	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Mailing list", "http://dev.eclipse.org/mailman/listinfo/aspectj-users", "_self", 1);
 	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Newsgroup", "http://www.eclipse.org/newsportal/thread.php?group=eclipse.technology.aspectj", "_self", 1);
 
 	$Nav->addNavSeparator("Developers", "", "_self", 1);
