@@ -6,14 +6,14 @@
 	$theme = "Phoenix";
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/projects/common/project-info.class.php");
-	#$projectInfo = new ProjectInfo("technology.ajdt");
+	#$projectInfo = new ProjectInfo("technology.aspectj");
 	#$projectInfo->generate_common_nav( $Nav );
 
 	$Nav->setLinkList(array());
 
 	# Define your project-wide Nav bars here.
 	# Format is Link text, link URL (can be http://www.someothersite.com/), target (_self, _blank), level (1, 2 or 3)
-	$Nav->addNavSeparator("AJDT", 	"/ajdt/");
+	$Nav->addNavSeparator("AspectJ", 	"/ajdt/");
 	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;About", "/aspectj/description.php", "_self", 1);
 	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Committers", "/aspectj/committers.php", 	"_self", 1);
 	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Plans", "/aspectj/plans.php", 	"_self", 1);
