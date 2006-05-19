@@ -46,15 +46,13 @@
 		handling, standards enforcement and feature variations are
 		notoriously difficult to implement in a modular way. The result
 		is that code is tangled across a system and leads to quality,
-		productivity and maintenance problems. Aspect Oriented Software
-		Development enables the clean modularization of these crosscutting
-		concerns. The AspectJ Development Tools (AJDT) project provides
-		Eclipse platform based tool support for AOSD with AspectJ. Our goal
-		is to deliver a user experience that is consistent with the Java
-		Development Tools (JDT) when working with AspectJ projects and
-		resources. This will be accomplished by developing an integration
-		layer between the AspectJ Development Environment Framework and
-		Eclipse/JDT extension points.
+		productivity and maintenance problems.  AspectJ is a seamless 
+		aspect-oriented extension to the Java programming language 
+		that enables clean modularization of these 'crosscutting concerns'.
+		For the best AspectJ development experience, the AspectJ 
+		Development Tools (AJDT) project provides
+		Eclipse platform based tool support for AOSD with AspectJ - see
+		<a href="http://eclipse.org/ajdt"> Eclipse AJDT project</a>.
 		</p>
 
 		  	</td>

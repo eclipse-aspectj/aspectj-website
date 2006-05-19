@@ -45,7 +45,7 @@
 		<h3>Committers</h3>
 			<table cellpadding="2">
 	  <tr>
-        <td>Adrian Colyer</td>
+        <td><a href="http://aspectprogrammer.org"/>Adrian Colyer</a></td>
         <td>Interface 21</td>
       </tr>
 	  <tr>
