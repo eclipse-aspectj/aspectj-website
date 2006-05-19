@@ -14,8 +14,8 @@
 	
 	#
 	# Begin: page-specific settings.  Change these. 
-	$pageTitle 		= "AspectJ Committers";
-	$pageKeywords	= "AspectJ, AJDT, Aspect Oriented Software Development, Eclipse, Contributors";
+	$pageTitle 		= "AspectJ";
+	$pageKeywords	= "AspectJ, AJDT, Aspect Oriented Software Development, Eclipse";
 	$pageAuthor		= "Andy Clement";
 	
 	# Add page-specific Nav bars here
@@ -25,8 +25,7 @@
 	# $Nav->addCustomNav("Google", "http://www.google.com/", "_blank", 3);
 
 	# End: page-specific settings
-	#
-		
+
 	$rightcolumn = file_get_contents("rightcolumn.html");
 		
 	# Paste your HTML content between the EOHTML markers!	
@@ -36,43 +35,33 @@
 	<div id="midcolumn">
 	
 	<div align="center"><h1>$pageTitle</h1></div>
-	
-	<p> Below is the list of core committers for the AspectJ project.
-	See also the list of <a href="contributors.php">contributors.</a>
-	</p>
+		<table border="0" cellpadding="4">
+          <tr>
+          	<td valign="top"><img border=0 src="logo.gif" width="164" height="229" alt="AJDT screenshot"></td>
+          	<td valign="top">&nbsp;</td>
+            <td valign="top">
 
-	<div class="homeitem">
-		<h3>Committers</h3>
-			<table cellpadding="2">
-	  <tr>
-        <td>Adrian Colyer</td>
-        <td>Interface 21</td>
-      </tr>
-	  <tr>
-        <td>Andy Clement</td>
-        <td>IBM UK Ltd</td>
-      </tr>
-	  <tr>
-        <td>Wes Isberg</td>
-        <td></td>
-      </tr>
-	  <tr>
-        <td><a href="http://kerstens.org/mik">Mik Kersten</a></td>
-        <td>University of British Columbia</td>
-      </tr>
-      <tr>
-        <td>Alex Vasseur</td>
-        <td>BEA</td>
-      </tr> 
-      <tr>
-        <td>Matthew Webster</td>
-        <td>IBM UK Ltd</td>
-      </tr>
-      <tr></tr>
+		<p>
+		Some aspects of system implementation, such as logging, error
+		handling, standards enforcement and feature variations are
+		notoriously difficult to implement in a modular way. The result
+		is that code is tangled across a system and leads to quality,
+		productivity and maintenance problems. Aspect Oriented Software
+		Development enables the clean modularization of these crosscutting
+		concerns. The AspectJ Development Tools (AJDT) project provides
+		Eclipse platform based tool support for AOSD with AspectJ. Our goal
+		is to deliver a user experience that is consistent with the Java
+		Development Tools (JDT) when working with AspectJ projects and
+		resources. This will be accomplished by developing an integration
+		layer between the AspectJ Development Environment Framework and
+		Eclipse/JDT extension points.
+		</p>
 
-			</table>
-	</div>
-	
+		  	</td>
+          </tr>
+
+        </table>
+			 		
 		<hr class="clearer" />
 	</div>
 
