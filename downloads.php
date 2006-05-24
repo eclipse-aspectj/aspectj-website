@@ -495,7 +495,7 @@
 		<dd>is an old SourceForge project that provides an AspectJ 
 	    	OpenTool for Borland's JBuilder IDE.
 	    </dd>
-	    <dt><a target="_top" href="http://aspectj4netbean.sourceforge.net">
+	    <dt><a target="_top" href="http://aspectj-netbeans.sourceforge.net">
 	    	AJDE for SunONE/NetBeans</a>
 	    </dt>
 	    <dd> is an old SourceForge project that provides an 
