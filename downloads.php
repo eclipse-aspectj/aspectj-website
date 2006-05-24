@@ -491,18 +491,18 @@
 	<dl>
 		<dt><a target="_top" href="http://eclipse.org/ajdt">AJDT Project</a></dt>
 		<dd>an Eclipse Technology project that provides an AspectJ plug-in for Eclipse.</dd>
-		<dt><a target="_top" href="http://aspectj4jbuildr.sourceforge.net">AJDE for JBuilder</a></dt>
+		<dt><a target="_top" href="http://aspectj4jbuildr.sourceforge.net">AspectJ for JBuilder</a></dt>
 		<dd>is an old SourceForge project that provides an AspectJ 
 	    	OpenTool for Borland's JBuilder IDE.
 	    </dd>
 	    <dt><a target="_top" href="http://aspectj-netbeans.sourceforge.net">
-	    	AJDE for SunONE/NetBeans</a>
+	    	AspectJ for NetBeans</a>
 	    </dt>
-	    <dd> is an old SourceForge project that provides an 
+	    <dd> is an a SourceForge project that provides an 
 	    	AspectJ Module for Sun's Forte/SunONEStudio4/NetBeans IDE.
 	    </dd>
 	    <dt><a target="_top" href="http://aspectj4emacs.sourceforge.net">
-	    	AJDE for Emacs and JDEE</a>
+	    	AspectJ for Emacs and JDEE</a>
 	    </dt>	
 	    <dd>is an old SourceForge project that provides an 
 	    	AspectJ mode for Emacs and an AspectJ extension to JDEE.
