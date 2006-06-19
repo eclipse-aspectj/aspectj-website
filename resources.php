@@ -77,7 +77,7 @@
 		</dd>
 
 		<dt>
-		    <a href="https://bugs.eclipse.org/bugs/enter_feature.cgi?product=AspectJ">Submit 
+		    <a href="https://bugs.eclipse.org/bugs/enter_feature.cgi?product=AspectJ&bug_severity=enhancement">Submit 
 		    a request for a new AspectJ feature</a>
 		</dt>
 		<dd>	    	Submit new Bugzilla feature requests for AspectJ.
