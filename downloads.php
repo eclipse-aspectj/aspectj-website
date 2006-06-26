@@ -83,14 +83,14 @@
  		 	<tr>
  				<td>
 				 	<dl>
-				 		<dt>AspectJ 1.5.1a, Released 10th April, 2006</dt>
+				 		<dt>AspectJ 1.5.2rc1, Released 26th June, 2006</dt>
 						<dd>AspectJ compiler, browser, documentation tool,
                             Ant tasks, and documentation. 
 	  					</dd>
 	  				</dl>
 	  			</td>
 				<td width="30%" align="right">
-					<a href="http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/aspectj-1.5.1_a.jar">aspectj-1.5.1_a.jar</a> (~10M)
+					<a href="http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/aspectj-1.5.2rc1.jar">aspectj-1.5.2rc1.jar</a> (~10M)
 	  			</td>
 			</tr>
 		</tbody>
@@ -104,6 +104,21 @@
  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
  		<tbody>
  		
+ 		     <tr>
+ 				<td>
+				 	<dl>
+				 		<dt>AspectJ 1.5.2rc1, Released 26th June, 2006</dt>
+						<dd>AspectJ compiler, browser, documentation tool,
+                            Ant tasks, and documentation. 
+	  					</dd>
+	  				</dl>
+	  			</td>
+				<td width="30%" align="right">
+					<a href="http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/aspectj-1.5.2rc1.jar">aspectj-1.5.2rc1.jar</a> (~10M)
+	  			</td>
+			</tr>
+			
+			
  		     <tr>
  				<td>
 				 	<dl>
