@@ -12,18 +12,25 @@
 
 <h1>aspectj: development plan</h1>
 
-<p>Last updated 11th May 2006</p>
+<p>Last updated 16th August 2006</p>
 
-<h2>AspectJ 5, version 1.5.2</h2>
+<h2>AspectJ 5, version 1.5.3</h2>
 
-<p>The next release of AspectJ will focus on bug-fixing and performance
-improvements.  It is scheduled for release in the middle of 2006.  To keep informed,
+<p>The next release of AspectJ will include our new compilation pipeline
+structure which drastically reduces maximum memory requirements for building
+projects from source.
+
+It is scheduled for release in the 2rd quarter of 2006.  To keep informed,
 watch the <a href="https://bugs.eclipse.org/bugs/buglist.cgi?product=AspectJ&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED">
     list of open AspectJ bugs</a>, or the
-    <a href="https://bugs.eclipse.org/bugs/buglist.cgi?product=AspectJ&target_milestone=1.5.2">
-        list of AspectJ bugs targetting 1.5.2
+    <a href="https://bugs.eclipse.org/bugs/buglist.cgi?product=AspectJ&target_milestone=1.5.3">
+        list of AspectJ bugs targetting 1.5.3
     </a>.
 </p>
+
+<h2>AspectJ 5, version 1.5.2 - released 30th June 2006 </h2>
+<p>For the full list of bugs resolved see the 
+<a href="http://www.eclipse.org/aspectj/doc/released/README-152.html"/>AspectJ 1.5.2 README</a>.
 
 <h2>AspectJ 5, version 1.5.1a - released 20th April 2006  </h2>
 
