@@ -18,9 +18,10 @@
 
 <p>The next release of AspectJ will include our new compilation pipeline
 structure which drastically reduces maximum memory requirements for building
-projects from source.
+projects from source.  It will also include a number of loadtime weaving
+enhancements to reduce memory consumption.
 
-It is scheduled for release in the 2rd quarter of 2006.  To keep informed,
+It is scheduled for release in the 3rd quarter of 2006.  To keep informed,
 watch the <a href="https://bugs.eclipse.org/bugs/buglist.cgi?product=AspectJ&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED">
     list of open AspectJ bugs</a>, or the
     <a href="https://bugs.eclipse.org/bugs/buglist.cgi?product=AspectJ&target_milestone=1.5.3">
