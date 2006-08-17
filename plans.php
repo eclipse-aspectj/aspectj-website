@@ -14,6 +14,10 @@
 
 <p>Last updated 16th August 2006</p>
 
+<h2>AspectJ, version 1.6</h2>
+<p>At the end of this year we are planning AspectJ6 - this will incorporate the
+Eclipse 3.2 Java6 compiler.</p>
+
 <h2>AspectJ 5, version 1.5.3</h2>
 
 <p>The next release of AspectJ will include our new compilation pipeline
