@@ -26,6 +26,15 @@
 
 	# End: page-specific settings
 	#
+	$theme = "Lazarus";
+	
+	$branding = <<<EOBRANDING
+<div id="branding">
+<img src="aspectjbanner.png" width="340" height="58" alt="AspectJ">
+</div>
+EOBRANDING;
+$Menu->setProjectBranding($branding);
+	
 		
 	# Paste your HTML content between the EOHTML markers!	
 	$html = <<<EOHTML
@@ -33,9 +42,11 @@
 <div id="maincontent">
 	<div id="midcolumn" style="width: 80%">
 
+<!--
 <p align="center" style="margin-top: 0">
 <img src="aspectjbanner.png" width="340" height="58" alt="AspectJ">
 </p>
+-->
 
 <!-- style="position: absolute; top: 0; left: 250px" -->
 
