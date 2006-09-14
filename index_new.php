@@ -26,6 +26,19 @@
 
 	# End: page-specific settings
 	#
+	$theme = "Lazarus";
+	
+	$branding = <<<EOBRANDING
+<STYLE TYPE="text/css">
+  #midcolumn { margin-top: 5px; }
+  body { font-size: small; }
+</STYLE>	
+<div id="branding">
+<img src="aspectjbanner2.png" width="502" height="42" alt="AspectJ">
+</div>
+EOBRANDING;
+$Menu->setProjectBranding($branding);
+	
 		
 	# Paste your HTML content between the EOHTML markers!	
 	$html = <<<EOHTML
@@ -33,16 +46,18 @@
 <div id="maincontent">
 	<div id="midcolumn" style="width: 80%">
 
+<!--
 <p align="center" style="margin-top: 0">
 <img src="aspectjbanner.png" width="340" height="58" alt="AspectJ">
 </p>
+-->
 
 <!-- style="position: absolute; top: 0; left: 250px" -->
 
 
   <!-- ========== "aspectj is... "  ============= -->
-    <table id="aspectj-is" style="BORDER-COLLAPSE: collapse" borderColor="#111111"
-           cellSpacing="0" cellPadding="0" width="100%" border="0" valign="top">
+    <table id="aspectj-is" borderColor="#111111"
+           cellSpacing="10" cellPadding="0" width="100%" border="0" valign="top">
       <tr>
         <td colSpan="2" width="50%">
           <img alt="AspectJ[TM] is" src="http://www.eclipse.org/aspectj/aspectjIs.gif "
@@ -79,16 +94,14 @@
       </tr>
     </table>
 
-	<hr class="clearer" />
-
-
 <div class="homeitem" style="width: 97%">
   <h3>Quick Links</h3>
 	<ul>
-<li>For Eclipse development: <a href="http://www.eclipse.org/ajdt">AJDT</a></li>
+<li>For Eclipse development: <a href="http://www.eclipse.org/ajdt">AJDT: The AspectJ Development Tools</a></li>
 <li>Popular AspectJ downloads: <a href="http://www.eclipse.org/aspectj/downloads.php#most_recent">Latest development build</a> | <a href="http://www.eclipse.org/aspectj/downloads.php#stable_release">Latest stable release</a> | <a href="http://www.eclipse.org/aspectj/downloads.php">More downloads...</a></li>
 	<li>Popular AspectJ docs: <a href="http://www.eclipse.org/aspectj/doc/released/adk15notebook/index.html">AspectJ 5 Developer's Notebook</a> | <a href="http://www.eclipse.org/aspectj/doc/released/progguide/index.html">Programming Guide</a> | <a href="http://www.eclipse.org/aspectj/docs.php">More docs...</a></li>
         <li><a href="http://www.amazon.com/exec/obidos/ASIN/0321245873/qid=1112868888/sr=2-3/ref=pd_bbs_b_2_3/103-5274059-2049410">Eclipse AspectJ: </a> the book, by some of the leading AspectJ committers</li>
+        <li><a href="http://aosd.net/">AOSD.net</a></li>
         <li><a href="http://www.parc.com/research/csl/projects/aspectj/default.html">AspectJ PARC Page</a></li>
 </ul>
 </div>
@@ -97,6 +110,22 @@
 			<h3>News and Events</h3>
 	                <ul>
 
+	<li>
+   AspectJ 1.5.2 is now <a href="downloads.php">available for download</a>.
+   It includes approximately 60 fixes and enhancements that have been incorporated since the 1.5.1a 
+   release.  For full details see the 
+   <a href="doc/released/README-152.html">1.5.2 README</a>.
+   <br><div align="right"><span class="dates"><i>posted 30-06-06</i></span></div>
+   </li>
+   
+   <li>
+   AspectJ 1.5.2 release candidate 1 is now <a href="downloads.php">available for download</a>.
+   It includes approximately 60 fixes and enhancements that have been incorporated since the 1.5.1 
+   release.  For full details see the 
+   <a href="doc/released/README-152.html">1.5.2 README</a>.
+   <br><div align="right"><span class="dates"><i>posted 26-06-06</i></span></div>
+	</li>
+   
 	<li>
 A podcast <a href="http://www.se-radio.net/index.php?post_id=78154">
    interview with Gregor Kiczales</a> recorded at this year's AOSD conference
@@ -117,14 +146,6 @@ AspectJ 1.5.1 is now <a href="downloads.php">available for download</a>. This
    <a href="doc/released/README-151.html">1.5.1 README</a>.
 
 <br><div align="right"><span class="dates"><i>posted 04-04-06</i></span></div>
-</li>
-
-<li>
-     Gerard Davidson released a version of AJDT with AspectJ 5 
-     for JDeveloper 10.1.3.
-     To get it, use the automatic update feature in JDeveloper
-     to find AspectJ via the "Open Source and Partner" update center.
-<br><div align="right"><span class="dates"><i>posted 03-04-06</i></span></div>
 </li>
 
 	                </ul>
