@@ -7,7 +7,7 @@
 	<contributors url="/aspectj/contributors.php"/>
 	<leaders url="/aspectj/committers.php"/>
 	
-	<cvs repository="/cvsroot/technology/">
+	<cvs repository="/cvsroot/tools/">
 		<module path="org.aspectj/modules"/>
 	</cvs>
 
