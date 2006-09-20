@@ -52,15 +52,15 @@
 					    <!-- stick out reference to most recent dev build -->
 							<?php
 							  #$devbuilds=GetDevBuildsIn('k:/tmp');
-							  $devbuilds=GetDevBuildsIn('/home/data/httpd/download.eclipse.org/technology/aspectj/dev');
+							  $devbuilds=GetDevBuildsIn('/home/data/httpd/download.eclipse.org/tools/aspectj/dev');
                               $justthefirstfile=basename($devbuilds[0]);
                               $stats=stat($devbuilds[0]);
-                              echo "<a href=\"http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/dev/$justthefirstfile\">$justthefirstfile</a><br><br>(size: $stats[7] bytes)";
+                              echo "<a href=\"http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/dev/$justthefirstfile\">$justthefirstfile</a><br><br>(size: $stats[7] bytes)";
                               echo "<br><br>";
-                              $changesFiles=GetChangesFilesIn('/home/data/httpd/download.eclipse.org/technology/aspectj/dev');
+                              $changesFiles=GetChangesFilesIn('/home/data/httpd/download.eclipse.org/tools/aspectj/dev');
                               $justthefirstchangesfile=basename($changesFiles[0]);
                               $stats2=stat($changesFiles[0]);
-                              echo "<a href=\"http://download.eclipse.org/technology/aspectj/dev/$justthefirstchangesfile\">(Changes in this build)</a><br>";          
+                              echo "<a href=\"http://download.eclipse.org/tools/aspectj/dev/$justthefirstchangesfile\">(Changes in this build)</a><br>";          
                             ?>
                             <br><a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=AspectJ&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&keywords_type=allwords&keywords=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&emailtype1=substring&email1=&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=2006-06-30&chfieldto=Now&chfieldvalue=&field0-0-0=noop&type0-0-0=noop&value0-0-0=">
                             Bugs resolved since last release</a>
