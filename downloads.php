@@ -519,7 +519,7 @@
 
 	<dl>
 		<dt><a target="_top" href="http://eclipse.org/ajdt">AJDT Project</a></dt>
-		<dd>an Eclipse Technology project that provides an AspectJ plug-in for Eclipse.</dd>
+		<dd>an Eclipse Tools project that provides an AspectJ plug-in for Eclipse.</dd>
 		<dt><a target="_top" href="http://aspectj4jbuildr.sourceforge.net">AspectJ for JBuilder</a></dt>
 		<dd>is an old SourceForge project that provides an AspectJ 
 	    	OpenTool for Borland's JBuilder IDE.

@@ -114,7 +114,7 @@
 
     <dt> November 5th, 2004 - AspectJ 1.2.1 released </dt>
     <dd>
-	    <a href="http://download.eclipse.org/technology/ajdt/aspectj-1.2.1.jar">(Download)</a> 
+	    <a href="http://download.eclipse.org/tools/ajdt/aspectj-1.2.1.jar">(Download)</a> 
 	    <a href="http://www.aspectprogrammer.org/dist/aspectj-1.2.1.jar">(Mirror)</a>.
 	    AspectJ 1.2.1 was released today. See the
 	    <a href="http://dev.eclipse.org/viewcvs/indextech.cgi/~checkout~/aspectj-home/doc/README-121.html">
@@ -126,7 +126,7 @@
 
     <dt> October 22nd, 2004 - AspectJ 1.2.1rc1 released </dt>
     <dd>
-	    <a href="http://download.eclipse.org/technology/ajdt/aspectj-1.2.1rc1.jar">(Download)</a> 
+	    <a href="http://download.eclipse.org/tools/ajdt/aspectj-1.2.1rc1.jar">(Download)</a> 
 	    <a href="http://www.aspectprogrammer.org/dist/aspectj-1.2.1rc1.jar">(Mirror)</a>.
 	    AspectJ 1.2.1 release candidate 1 was released today. See the
 	    <a href="http://dev.eclipse.org/viewcvs/indextech.cgi/~checkout~/aspectj-home/doc/README-121.html">
