@@ -3,6 +3,23 @@ aclement,acolyer,mwebster,wisberg,mkersten,avasseur
 
 Developers
 
+For AspectJ 1.5.3 (so far... not yet shipped):
+component,      bug#,     name,               size,       committer,      description
+...
+various,        141556,   Helen Hawkins,      <500,       aclement,       fix for vanishing warnings
+various,        145963,   Helen Hawkins,      <500,       aclement,       injar aspects added to model correctly
+docs,           149321,   Steve Park,         <50,        aclement,       doc changes for ltw text
+loadtime,       152161,   Ron Bodkin,         <50,        aclement,       Xset support for LTW
+loadtime,       152873,   Ron Bodkin,         <500,       aclement,       efficient recognition of aspects
+docs,           149554,   Helen Hawkins,      <50,        aclement,       change to EPL not CPL
+ajdtcore,       150467,   Helen Hawkins,      <50,        aclement,       AST parser fix for javadoc comments
+weaver,         150671,   Helen Hawkins,      <50,        aclement,       fix for deow volatile
+ajdtcore,       110465,   Eduardo Piveta,     <500,       aclement,       AST changes
+ajdtcore,       110465,   Helen Hawkins,      <1000,      aclement,       AST changes
+bcel,           152979,   Ron Bodkin,         <500,       aclement,       bcel class caching
+ajdtcore,       155763,   Helen Hawkins,      <50,        aclement,       porting 3.2 compiler patch
+
+
 For AspectJ 1.5.2a:
 component,      bug#,     name,               size,       committer,      description
 weaver,         121312,   Ron Bodkin,         <100,       aclement,       reflection delegates for bootstrap types
