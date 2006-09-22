@@ -1,0 +1,75 @@
+Committers
+aclement,acolyer,mwebster,wisberg,mkersten,avasseur
+
+Developers
+
+For AspectJ 1.5.2a:
+component,      bug#,     name,               size,       committer,      description
+weaver,         121312,   Ron Bodkin,         <100,       aclement,       reflection delegates for bootstrap types
+ajdtcore,       129282,   Helen Hawkins,      <200,       aclement,       improved interaction between javac warnings and Aj constructs
+weaver,         133117,   Helen Hawkins,      <100,       aclement,       remove duplicate warnings 
+weaver,         134371,   Helen Hawkins,      <50,        aclement,       bug fix
+runtime,        135780,   Ron Bodkin,         <50,        aclement,       removed Java2 dependency
+weaver,         136665,   Ron Bodkin,         <50,        aclement,       coping with bad classpath
+various,        137235,   Ron Bodkin,         <100,       aclement,       allow jar processing on files that don't end in .jar
+taskdefs,       138540,   Ron Bodkin,         <50,        aclement,       support -Xset: options in Ant
+weaver,         143924,   Helen Hawkins,      <50,        aclement,       structure model related bug
+various,        143930,   Helen Hawkins,      <50,        aclement,       structure model related bug
+runtime,        145086,   Ron Bodkin,         <50,        aclement,       bug fix for use of weak references
+various,        146456,   Helen Hawkins,      <50,        aclement,       structure model related bug
+
+
+For AspectJ 1.5.1: 
+component,          bug#,       name,               size,       committer,          description
+ajdoc,              58520,      Helen Hakwins,      <100,       aclement,           ajdoc fixes
+ajdoc,              58524,      Helen Hawkins,      <1000,      aclement,           ajdoc fixes
+docs,               76101,      Helen Hawkins,      <100,       aclement,           docs on how to build aspectj/ajdt
+weaver,             98901,      Andrew Huff,        <1000,      aclement,           bug fix for annotations on intertype declarations
+ajdoc,              119453,     Helen Hawkins,      <1000,      aclement,           ajdoc fixes - itds missing
+various,            119882,     Helen Hawkins,      <100,       aclement,           incremental compilation
+asm,                120356,     Helen Hawkins,      <100,       aclement,           structure model related bug - annotation style deows missing
+ajdtcore,           121616,     Helen Hawkins,      <50,        aclement,           fix for missing import causes failure
+ajdoc,              121711,     Helen Hawkins,      <500,       aclement,           bug fixes
+weaver,             122370,     Helen Hawkins,      <50,        aclement,           bug fix for annotation style
+ajdoc,              122728,     Helen Hawkins,      <50,        aclement,           bug fix
+weaver,             122742,     Helen Hawkins,      <50,        aclement,           bug fix for annotation style
+weaver,             125027,     Helen Hawkins,      <50,        aclement,           bug fix with deow parsing not quite right
+asm,                125925,     Helen Hawkins,      <50,        aclement,           bug fix for incorrect labels
+weaver,             125699,     Helen Hawkins,      <50,        aclement,           bug fix for annotation style
+ajdtcore,           125809,     Helen Hawkins,      <50,        aclement,           bug fix
+ajdtcore,           125810,     Helen Hawkins,      <50,        aclement,           bug fix for annotation style
+weaver,             128237,     Helen Hawkins,      <50,        aclement,           bug fix for annotation style
+ajdtcore,           128618,     Helen Hawkins,      <50,        aclement,           bug fix for xlint warning
+various,            129163,     Helen Hawkins,      <1000,      aclement,           bug fix for incremental compilation
+weaver,             129298,     Ron Bodkin,         <50,        aclement,           reduce memory consumption
+weaver,             131505,     Helen Hawkins,      <50,        aclement,           bug fix for aop.xml generation
+asm,                131932,     Helen Hawkins,      <50,        aclement,           bug fix
+weaver,             131933,     Helen Hawkins,      <50,        aclement,           bug fix
+docs,               132111,     Ron Bodkin,         <500,       aclement,           doc changes for ltw
+asm,                132130,     Helen Hawkins,      <50,        aclement,           structure model bug fix
+ajdtcore,           132977,     Helen Hawkins,      <50,        aclement,           bug fix for usage text
+ajdoc,              134063,     Helen Hawkins,      <50,        aclement,           bug fix
+
+
+For AspectJ 1.5.0:
+Besides the core committers, various contributions from the following people:
+* Noel Markham (whilst working at IBM)
+* Andrew Huff (whilst working at IBM)
+* Martin Lippert
+* Oliver Boehm
+* Matthew Webster (whilst working at IBM)
+* Helen Hawkins (whilst working at IBM)
+* David Knibb (whilst working at IBM)
+* Ron Bodkin
+* Eduardo Piveta
+
+
+Third Party Software
+
+BCEL 5.1 derivative - reworked for performance and updated to support Java5.  The source files still 
+include the standard apache 1.1 software license. (http://jakarta.apache.org/bcel/index.html)
+
+ASM 2.2.1 - jarjar used to transform it to include an org.aspectj package prefix, but no other 
+changes to the code. (http://asm.objectweb.org/)
+
+Eclipse JDT Compiler 3.1 - AspectJ is based on an extended form of this compiler (http://eclipse.org)
