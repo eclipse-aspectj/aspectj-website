@@ -14,8 +14,8 @@
 	
 	#
 	# Begin: page-specific settings.  Change these. 
-	$pageTitle 		= "AspectJ Plans";
-	$pageKeywords	= "AspectJ, AJDT, Aspect Oriented Software Development, Eclipse";
+	$pageTitle 		= "AspectJ Committers and Contributors";
+	$pageKeywords	= "AspectJ, AJDT, Aspect Oriented Software Development, Eclipse, Contributors";
 	$pageAuthor		= "Andy Clement";
 	
 	# Add page-specific Nav bars here
@@ -33,70 +33,56 @@
 <div id="maincontent">
 	<div id="midcolumn">
 	
-	<h1>Plans</h1>
+	<h1>Team</h1>
+	
+	<p>We are grateful to the following for their contributions to the AspectJ project:</p>
 
-<p>
-<i>Last updated: 20 October 2006</i>
-</p>
+	<div class="homeitem">
+		<h3>Committers</h3>
+			<table cellpadding="2">
+	  <tr>
+        <td><a href="http://aspectprogrammer.org"/>Adrian Colyer</a></td>
+        <td>Interface 21</td>
+      </tr>
+	  <tr>
+        <td>Andy Clement</td>
+        <td>IBM UK Ltd</td>
+      </tr>
+	  <tr>
+        <td>Wes Isberg</td>
+        <td></td>
+      </tr>
+	  <tr>
+        <td><a href="http://kerstens.org/mik">Mik Kersten</a></td>
+        <td>University of British Columbia</td>
+      </tr>
+      <tr>
+        <td>Alex Vasseur</td>
+        <td>BEA</td>
+      </tr> 
+      <tr>
+        <td>Matthew Webster</td>
+        <td>IBM UK Ltd</td>
+      </tr>
+      <tr></tr>
 
-<p>
-  Here are some details of recent and upcoming AspectJ releases.
-  
-  <!--
-  These are plotted on the
-  <a href="http://www.eclipse.org/projects/timeline/">Eclipse timeline</a>.
-  -->
-  
-</p>
-
-<div class="homeitem3col">
-	<h3>AspectJ 1.5.3</h3>
-	<p>
-	Status: Planned for October 2006
-	</p>
-	 <p>
-      Release themes:
-    </p>
-
-    <ul>
-       <li>Improved memory usage</li>        
-       <li>Improved LTW</li>
-       <li>Improved serviceability</li>
-    </ul>
-</div>
-
-<div class="homeitem3col">
-	<h3>AspectJ 1.5.2</h3>
-	<p>
-	Released: 30th June 2006
-	</p>
-	 <p>
-      Release themes:
-    </p>
-
-    <ul>
-       <li>Improved performance</li>        
-       <li>Improved LTW</li>
-       <li>Improved incremental compilation</li>
-    </ul>
-</div>
-
-<div class="homeitem3col">
-	<h3>AspectJ 1.5.1a</h3>
-		<p>
-		Released: 10th April 2006
-		</p>
-		
-        <p>
-          Release themes:
-        </p>
-
-        <ul>
-           <li>Improved memory usage</li>        
-           <li>Improved performance</li>
-        </ul>
-</div>
-
+			</table>
+	</div>
+	
+			<div class="homeitem">
+		<h3>Contributors</h3>
+			<table cellpadding="2">
+       <tr>
+          <td>Helen Hawkins</td>
+          <td>IBM UK Ltd</td>
+        </tr>
+        <tr>
+          <td>Ron Bodkin</td>
+          <td></td>
+        </tr>    		
+			</table>
+	</div>	
+	
 		<hr class="clearer" />
 	</div>
 

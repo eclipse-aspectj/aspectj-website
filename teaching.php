@@ -1,16 +1,39 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <title>The AspectJ project at Eclipse.org: Teaching</title>
-  <link rel="stylesheet" href="aspectj_style.css" type="text/css" />
-</head>
-<body>
-<div id="container">
-<?php require("banner.html"); ?>
-<div id="main">
-  <!-- ================ Page specific content starts here ================ -->
+<?php  																														require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/nav.class.php"); 	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/menu.class.php"); 	$App 	= new App();	$Nav	= new Nav();	$Menu 	= new Menu();		include($App->getProjectCommon());    # All on the same line to unclutter the user's desktop'
 
-<h1>who's teaching aosd</h1>
+	#*****************************************************************************
+	#
+	# template.php
+	#
+	# Author: 		Denis Roy
+	# Date:			2005-06-16
+	#
+	# Description: Type your page comments here - these are not sent to the browser
+	#
+	#
+	#****************************************************************************
+	
+	#
+	# Begin: page-specific settings.  Change these. 
+	$pageTitle 		= "The AspectJ Project: Teaching";
+	$pageKeywords	= "AspectJ, AJDT, Aspect Oriented Software Development, Eclipse";
+	$pageAuthor		= "Type your name here";
+	
+	# Add page-specific Nav bars here
+	# Format is Link text, link URL (can be http://www.someothersite.com/), target (_self, _blank), level (1, 2 or 3)
+	# $Nav->addNavSeparator("My Page Links", 	"downloads.php");
+	# $Nav->addCustomNav("My Link", "mypage.php", "_self", 3);
+	# $Nav->addCustomNav("Google", "http://www.google.com/", "_blank", 3);
+
+	# End: page-specific settings	
+		
+	# Paste your HTML content between the EOHTML markers!	
+	$html = <<<EOHTML
+
+<div id="maincontent">
+	<div id="midcolumn" style="width: 80%">
+
+	  <h1>Who's teaching AOSD</h1>
+
 <p> This list is a compilation of responses to a query sent out in November 2004 to find out
 which establishments and individuals were teaching courses on the topic of
 aspect-oriented software development, or courses that included some AOSD content. The
@@ -20,12 +43,12 @@ courses listed here are not exclusively teaching AspectJ, and nor are they in an
 this list then please let us know.</p>
 
 <h2>Courses with online materials</h2>
-<table border="1" width="100%">
+<table border="1" cellspacing="0" cellpadding="5" width="100%">
   <thead>
     <tr>
-      <td>Lecturer(s)</td>
-      <td>Organisation</td>
-      <td>Details</td>
+      <th>Lecturer(s)</th>
+      <th>Organisation</th>
+      <th>Details</th>
     </tr>
   </thead>
   <tbody>
@@ -178,12 +201,12 @@ this list then please let us know.</p>
 </table>
 
 <h2>Other academic courses</h2>
-<table border="1" width="100%">
+<table border="1" cellspacing="0" cellpadding="5" width="100%">
   <thead>
     <tr>
-      <td>Lecturer(s)</td>
-      <td>Organisation</td>
-      <td>Details</td>
+      <th>Lecturer(s)</th>
+      <th>Organisation</th>
+      <th>Details</th>
     </tr>
   </thead>
   <tbody>
@@ -235,12 +258,12 @@ this list then please let us know.</p>
 </table>
 
 <h2>Open source offerings</h2>
-<table border="1" width="100%">
+<table border="1" cellspacing="0" cellpadding="5" width="100%">
   <thead>
     <tr>
-      <td>Instructor</td>
-      <td>Organisation</td>
-      <td>Details</td>
+      <th>Instructor</th>
+      <th>Organisation</th>
+      <th>Details</th>
     </tr>
   </thead>
   <tbody>
@@ -257,12 +280,12 @@ this list then please let us know.</p>
 </table>
 
 <h2>Commercial offerings</h2>
-<table border="1" width="100%">
+<table border="1" cellspacing="0" cellpadding="5" width="100%">
   <thead>
     <tr>
-      <td>Instructor</td>
-      <td>Organisation</td>
-      <td>Details</td>
+      <th>Instructor</th>
+      <th>Organisation</th>
+      <th>Details</th>
     </tr>
   </thead>
   <tbody>
@@ -303,8 +326,16 @@ this list then please let us know.</p>
   </tbody>
 </table>
 
-  <!-- ================ End of page specific content ===================== -->
+<br clear="all">
+
+	</div>
+
 </div>
-</div>
-</body>
-</html>
+
+
+EOHTML;
+
+
+	# Generate the web page
+	$App->generatePage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html);
+?>

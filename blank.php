@@ -14,9 +14,9 @@
 	
 	#
 	# Begin: page-specific settings.  Change these. 
-	$pageTitle 		= "AspectJ Plans";
+	$pageTitle 		= "The AspectJ Project";
 	$pageKeywords	= "AspectJ, AJDT, Aspect Oriented Software Development, Eclipse";
-	$pageAuthor		= "Andy Clement";
+	$pageAuthor		= "Type your name here";
 	
 	# Add page-specific Nav bars here
 	# Format is Link text, link URL (can be http://www.someothersite.com/), target (_self, _blank), level (1, 2 or 3)
@@ -24,80 +24,16 @@
 	# $Nav->addCustomNav("My Link", "mypage.php", "_self", 3);
 	# $Nav->addCustomNav("Google", "http://www.google.com/", "_blank", 3);
 
-	# End: page-specific settings
-	#
-				
+	# End: page-specific settings	
+		
 	# Paste your HTML content between the EOHTML markers!	
 	$html = <<<EOHTML
 
 <div id="maincontent">
-	<div id="midcolumn">
-	
-	<h1>Plans</h1>
+	<div id="midcolumn" style="width: 80%">
 
-<p>
-<i>Last updated: 20 October 2006</i>
-</p>
+	  <h1></h1>
 
-<p>
-  Here are some details of recent and upcoming AspectJ releases.
-  
-  <!--
-  These are plotted on the
-  <a href="http://www.eclipse.org/projects/timeline/">Eclipse timeline</a>.
-  -->
-  
-</p>
-
-<div class="homeitem3col">
-	<h3>AspectJ 1.5.3</h3>
-	<p>
-	Status: Planned for October 2006
-	</p>
-	 <p>
-      Release themes:
-    </p>
-
-    <ul>
-       <li>Improved memory usage</li>        
-       <li>Improved LTW</li>
-       <li>Improved serviceability</li>
-    </ul>
-</div>
-
-<div class="homeitem3col">
-	<h3>AspectJ 1.5.2</h3>
-	<p>
-	Released: 30th June 2006
-	</p>
-	 <p>
-      Release themes:
-    </p>
-
-    <ul>
-       <li>Improved performance</li>        
-       <li>Improved LTW</li>
-       <li>Improved incremental compilation</li>
-    </ul>
-</div>
-
-<div class="homeitem3col">
-	<h3>AspectJ 1.5.1a</h3>
-		<p>
-		Released: 10th April 2006
-		</p>
-		
-        <p>
-          Release themes:
-        </p>
-
-        <ul>
-           <li>Improved memory usage</li>        
-           <li>Improved performance</li>
-        </ul>
-</div>
-
-		<hr class="clearer" />
 	</div>
 
 </div>

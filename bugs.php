@@ -15,7 +15,7 @@
 	#
 	# Begin: page-specific settings.  Change these. 
 	$pageTitle 		= "AspectJ Bugs";
-	$pageKeywords	= "AspectJ, AJDT, Aspect Oriented Software Development, Eclipse, Contributors";
+	$pageKeywords	= "AspectJ, AJDT, Aspect Oriented Software Development, Eclipse";
 	$pageAuthor		= "Andy Clement";
 	
 	# Add page-specific Nav bars here
@@ -26,16 +26,14 @@
 
 	# End: page-specific settings
 	#
-		
-	$rightcolumn = file_get_contents("rightcolumn.html");
-		
+				
 	# Paste your HTML content between the EOHTML markers!	
 	$html = <<<EOHTML
 
 <div id="maincontent">
 	<div id="midcolumn">
 	
-	<div align="center"><h1>$pageTitle</h1></div>
+	<h1>Bugs</h1>
 
 <p>The best way to report a problem or request a new feature in AspectJ
 is to use the Bugzilla system. Here are some useful links to get you
@@ -55,8 +53,6 @@ started:</p>
 		
 		<hr class="clearer" />
 	</div>
-
-$rightcolumn
 
 </div>
 

@@ -1,41 +1,55 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <title>The AspectJ project at Eclipse.org: Documentation</title>
-  <link rel="stylesheet" href="aspectj_style.css" type="text/css" />
-</head>
-<body>
-<div id="container">
-<?php require("banner.html"); ?>
-  <!-- ================ Page specific content starts here ================ -->
+<?php  																														require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/nav.class.php"); 	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/menu.class.php"); 	$App 	= new App();	$Nav	= new Nav();	$Menu 	= new Menu();		include($App->getProjectCommon());    # All on the same line to unclutter the user's desktop'
 
-<!-- sub-banner for docs page -->
-<table BORDER=0 CELLSPACING=5 CELLPADDING=2 WIDTH="100%" >
-  <!-- header row -->
-  <tr> 
-    <td ALIGN=LEFT width="60%" valign="top">
-      <h1>aspectj documentation</h1>
-    </td>
-    <td WIDTH="40%" align="right">
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <img src="http://eclipse.org/images/howto_banner.jpg" align="center" width="183" height="71">
-    </td>
-  </tr>
+	#*****************************************************************************
+	#
+	# template.php
+	#
+	# Author: 		Denis Roy
+	# Date:			2005-06-16
+	#
+	# Description: Type your page comments here - these are not sent to the browser
+	#
+	#
+	#****************************************************************************
+	
+	#
+	# Begin: page-specific settings.  Change these. 
+	$pageTitle 		= "AspectJ Documentation";
+	$pageKeywords	= "AspectJ, AJDT, Aspect Oriented Software Development, Eclipse";
+	$pageAuthor		= "Type your name here";
+	
+	# Add page-specific Nav bars here
+	# Format is Link text, link URL (can be http://www.someothersite.com/), target (_self, _blank), level (1, 2 or 3)
+	# $Nav->addNavSeparator("My Page Links", 	"downloads.php");
+	# $Nav->addCustomNav("My Link", "mypage.php", "_self", 3);
+	# $Nav->addCustomNav("Google", "http://www.google.com/", "_blank", 3);
 
+	# End: page-specific settings	
+		
+	# Paste your HTML content between the EOHTML markers!	
+	$html = <<<EOHTML
+
+<div id="maincontent">
+	<div id="midcolumn" style="width: 80%">
+
+	  <h1>Documentation</h1>
+
+	  <div id="container">
+ <table>
   <!-- links row -->
   <tr>
     <td ALIGN=LEFT width="100%" colspan="2">
       <table cellSpacing="0" cellPadding="0" align="left" border="0">
 	<tr>
 	  <td class="smallParagraph" height="26"><b>
-	    <a href="http://www.eclipse.org/aspectj/docs.php">[doc index]</a>
+	    <a href="/aspectj/docs.php">[doc index]</a>
 	    &nbsp;<a href="doc/released/adk15notebook/index.html">
 	    [AspectJ 5 language changes]</a>
 	    &nbsp;<a href="doc/released/progguide/index.html">
 	    [language]</a>
 	    &nbsp;<a href="doc/released/devguide/index.html">
 	    [tools]</a>
-	    &nbsp;<a href="doc/released/faq.html">
+	    &nbsp;<a href="doc/released/faq.php">
 	    [faq]</a>
 	    &nbsp;<a href="http://www.eclipse.org/aspectj/publications.php">[publications]</a> 
 	    &nbsp;<a href="http://www.eclipse.org/aspectj/sample-code.html">
@@ -60,13 +74,21 @@ in AOP, and code samples demonstrate common idioms.  If you are new to AspectJ,
 follow the trail proposed in the 
 <a href="doc/released/index.html#paths">released documentation</a>.
 </p>
-<h2>AspectJ 5 Developer's Notebook</h2>
+
+
+<div class="homeitem" style="width: 97%">
+<h3>AspectJ 5 Developer's Notebook</h3>
+<ul>
 <p>The <a href="doc/released/adk15notebook/index.html">AspectJ 5 Developer's Notebook</a>
 summarises changes made to the AspectJ language in AspectJ 5. These changes are
 <emphasis>not</emphasis> yet reflected in the programming guide.
 </p>
-	
-<h2>AspectJ Documentation packages</h2>
+</ul>
+</div>
+
+<div class="homeitem" style="width: 97%">
+<h3>AspectJ Documentation packages</h3>
+<ul>
 <p>The AspectJ documentation package is included in the AspectJ download
 	and linked below (both the most-recent released version and the
 	next work-in-progress, as 
@@ -78,7 +100,11 @@ summarises changes made to the AspectJ language in AspectJ 5. These changes are
       <a href="doc/next/index.html">
 		<img border="0" height="13" width="13" src="images/next.gif" alt="next"/></a>.
 </p>
-<h3>AspectJ Language</h3>
+</ul>
+
+<ul>
+<li>
+<h4>AspectJ Language</h4>
       The <a href="doc/released/progguide/index.html">Programming Guide</a> 
       <a href="doc/next/progguide/index.html">
 		<img border="0" height="13" width="13" src="images/next.gif" alt="next"/></a> 
@@ -121,7 +147,10 @@ summarises changes made to the AspectJ language in AspectJ 5. These changes are
       <a href="doc/next/progguide/semantics.html">
 		<img border="0" border="0" height="13" width="13" src="images/next.gif" alt="next"/></a> 
 		is the best reference for AspectJ usage.
-<h3>Runtime and tools APIs</h3>
+	</li>
+	
+	<li>	
+<h4>Runtime and tools APIs</h4>
 <ul>
 <li>
 <a href="doc/released/runtime-api/index.html">Javadocs for the AspectJ runtime API</a> 
@@ -140,7 +169,11 @@ summarises changes made to the AspectJ language in AspectJ 5. These changes are
 <img border="0" border="0" height="13" width="13" src="images/next.gif" alt="next"/></a>.
 </li>
 </ul>
-<h3>AspectJ Tools</h3>
+
+</li>
+
+<li>
+<h4>AspectJ Tools</h4>
 <p>
 	
 The 
@@ -173,11 +206,13 @@ and the stand-alone
 <img border="0" border="0" height="13" width="13" src="images/next.gif" alt="next"/></a>.
 
 </p>	
-	
-<h3>Other stuff</h3>
+</li>
+
+<li>
+<h4>Other stuff</h4>
  <p>
  For answers to frequently-asked questions, see the 
-  <a href="doc/released/faq.html">FAQ</a> 
+  <a href="doc/released/faq.php">FAQ</a> 
   <a href="doc/next/faq.html">
 	 <img border="0" height="13" width="13" src="images/next.gif" alt="next"/></a> 
  </p>
@@ -193,32 +228,18 @@ and the stand-alone
 	<a href="doc/released/changes.html">
 	 <img border="0" height="13" width="13" src="images/next.gif" alt="next"/></a>.
 </p>
-
+</li>
+</ul>
 </div>
 
-<div id="docs-inset">
-<!-- Eclipse AspectJ book -->
-  
-   <p align="center">
-    <a href="http://www.amazon.com/exec/obidos/ASIN/0321245873/qid=1112868888/sr=2-3/ref=pd_bbs_b_2_3/103-5274059-2049410">
-  	   <img src="images/eclipseaspectj.jpg" width="180" alt="Eclipse AspectJ Book Cover"/>
-    </a>
-   </p>
 
-  <p align="center"><a href="http://www.amazon.com/exec/obidos/ASIN/0321245873/qid=1112868888/sr=2-3/ref=pd_bbs_b_2_3/103-5274059-2049410">
-   	    Eclipse AspectJ</a> the book, by some of the leading AspectJ committers
-  </p>	
-  
-  <p/>
-   
 </div>
-
-<div id="main">
 
 <br/>
 
-<h2>Online and external resources</h2>
-
+<div class="homeitem">
+<h3>Online and external resources</h3>
+<ul>
 <p>
 Books and articles we know of are listed on the
 <a href="publications.php">Publications page</a>.
@@ -229,7 +250,7 @@ the differences from Java programs, see
 <a href="http://dev.eclipse.org/viewcvs/index.cgi/org.aspectj/modules/docs/teaching/exercises/?cvsroot=Technology_Project">
 <code>aspectj.org/modules/docs/teaching</code></a>. 
 (To get stuff from the CVS repository, see 
-<a href="doc/released/faq.html#q:buildingsource">building source</a>.)
+<a href="doc/released/faq.php#q:buildingsource">building source</a>.)
 Spanish speakers might also be interested in "Programemos en AspectJ" at
 <a href="http://www.programemos.com">http://www.programemos.com</a>.
 Find earlier project history, papers, and articles on the
@@ -239,7 +260,7 @@ PARC project page</a>.
 
 <p>
   For a list of places to get example AspectJ code,
-  see the <a href="doc/released/faq.html#q:exampleprograms">FAQ entry on example programs</a>.
+  see the <a href="doc/released/faq.php#q:exampleprograms">FAQ entry on example programs</a>.
   We collect and publish 
   <a href="sample-code.html">sample code contributions from community</a>, 
   including AspectJ programs and user-level trails for things like
@@ -252,11 +273,34 @@ PARC project page</a>.
   and 
   <a href="sample-code.html#pubs-papers-aodesignpatterns">design pattern implementations</a>.
  </p>
+</ul>
+</div>
+
+<div class="homeitem">
+<h3>Eclipse AspectJ book</h3>
+  
+   <p align="center">
+    <a href="http://www.amazon.com/exec/obidos/ASIN/0321245873/qid=1112868888/sr=2-3/ref=pd_bbs_b_2_3/103-5274059-2049410">
+  	   <img src="images/eclipseaspectj.jpg" width="180" alt="Eclipse AspectJ Book Cover"/>
+    </a>
+   </p>
+
+  <p align="center"><a href="http://www.amazon.com/exec/obidos/ASIN/0321245873/qid=1112868888/sr=2-3/ref=pd_bbs_b_2_3/103-5274059-2049410">
+   	    Eclipse AspectJ</a> the book, by some of the leading AspectJ committers
+  </p>	
+  
 
 </div>
 
 
+	</div>
 
-  <!-- ================ End of page specific content ===================== -->
-</body>
-</html>
+</div>
+
+
+EOHTML;
+
+
+	# Generate the web page
+	$App->generatePage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html);
+?>

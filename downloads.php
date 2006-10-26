@@ -1,16 +1,98 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <title>The AspectJ project at Eclipse.org: Downloads</title>
-  <link rel="stylesheet" href="aspectj_style.css" type="text/css" />
-</head>
-<body>
-<div id="container">
-<?php require("banner.html"); ?>
-<div id="main">
-  <!-- ================ Page specific content starts here ================ -->
+<?php  																														require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/nav.class.php"); 	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/menu.class.php"); 	$App 	= new App();	$Nav	= new Nav();	$Menu 	= new Menu();		include($App->getProjectCommon());    # All on the same line to unclutter the user's desktop'
 
-<h1>aspectj downloads</h1>
+// Sorts by newest first
+function date_cmp($f1, $f2) {
+   $f1stats=stat($f1);
+   $f2stats=stat($f2);
+   return $f2stats[9]-$f1stats[9];
+}
+// return entries in the directory that represent dev builds
+function GetDevBuildsIn($dir){
+   ini_set("max_execution_time",10);
+   $devtag="aspectj-DEVELOPMENT-2";
+   $root=opendir($dir) or die("Check $dir !");
+   while (false!== ($file=readdir($root))) {
+     if($file=="." || $file=="..") {continue;}
+     // echo "$file<br>";
+     if (substr($file,0,21) == $devtag) {
+       $files[]="$dir/$file";
+     }
+   }
+   @closedir($dir);
+   usort($files, "date_cmp");
+   return $files;
+}
+
+function GetChangesFilesIn($dir){
+   ini_set("max_execution_time",10);
+   $devtag="changes-";
+   $root=opendir($dir) or die("Check $dir !");
+   while (false!== ($file=readdir($root))) {
+     if($file=="." || $file=="..") {continue;}
+     // echo "$file<br>";
+     if (substr($file,0,8) == $devtag) {
+       $files[]="$dir/$file";
+     }
+   }
+   @closedir($dir);
+   usort($files, "date_cmp");
+   return $files;
+}
+
+function ListDevBuilds($dir){
+	$str = "";
+	
+	$devbuilds=GetDevBuildsIn($dir);
+    $justthefirstfile=basename($devbuilds[0]);
+    $stats=stat($devbuilds[0]);
+    $str = $str . "<a href=\"http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/dev/$justthefirstfile\">$justthefirstfile</a><br>(size: $stats[7] bytes)";
+    $str = $str . "<br><br>";
+    $changesFiles=GetChangesFilesIn($dir);
+    $justthefirstchangesfile=basename($changesFiles[0]);
+    $stats2=stat($changesFiles[0]);
+    $str = $str .  "<a href=\"http://download.eclipse.org/tools/aspectj/dev/$justthefirstchangesfile\">Changes in this build</a><br>";          
+	
+	return $str;
+}
+
+	#*****************************************************************************
+	#
+	# template.php
+	#
+	# Author: 		Denis Roy
+	# Date:			2005-06-16
+	#
+	# Description: Type your page comments here - these are not sent to the browser
+	#
+	#
+	#****************************************************************************
+	
+	#
+	# Begin: page-specific settings.  Change these. 
+	$pageTitle 		= "AspectJ Downloads";
+	$pageKeywords	= "AspectJ, AJDT, Aspect Oriented Software Development, Eclipse";
+	$pageAuthor		= "Type your name here";
+	
+	# Add page-specific Nav bars here
+	# Format is Link text, link URL (can be http://www.someothersite.com/), target (_self, _blank), level (1, 2 or 3)
+	# $Nav->addNavSeparator("My Page Links", 	"downloads.php");
+	# $Nav->addCustomNav("My Link", "mypage.php", "_self", 3);
+	# $Nav->addCustomNav("Google", "http://www.google.com/", "_blank", 3);
+
+	# End: page-specific settings	
+		
+	$builds = ListDevBuilds('/home/data/httpd/download.eclipse.org/tools/aspectj/dev');
+	#$builds = ListDevBuilds('c:/temp');
+		
+		
+	# Paste your HTML content between the EOHTML markers!	
+	$html = <<<EOHTML
+
+<div id="maincontent">
+	<div id="midcolumn" style="width: 80%">
+
+	  <h1>Downloads</h1>
+
 
 <p>The AspectJ compiler produces programs for any version of the Java platform 
       (jdk1.1 and later). The compiler itself requires Java2 (1.3 or later) to run. 
@@ -33,136 +115,112 @@
 		<a href="#ides">IDE support</a> can be found at the bottom of this page.
 	</p>
 	    
-
+<div class="homeitem3col">
 	<h3 id="most_recent">Most Recent Build</h3>
- 
+ 	<ul>
+ 	<li>
+ 	  <b>Last Known Good developer build</b>
  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
  		<tbody>
  			<tr>
  				<td>
-				 	<dl>
-				 		<dt>Last Known Good developer build</dt>
-						<dd>
+				 	<ul>
 						AspectJ Compiler, Browser, Ant tasks, and Documentation. Only download this version if you are prepared to work with a pre-release compiler. 
 					    The most recent stable build below is the currently supported release version. 
-					  </dd>
-					</dl>
+					</ul>
 				</td>
-				<td width="30%" align="right">
+				<td rowspan="2" width="30%" align="right">
 					    <!-- stick out reference to most recent dev build -->
-							<?php
-							  #$devbuilds=GetDevBuildsIn('k:/tmp');
-							  $devbuilds=GetDevBuildsIn('/home/data/httpd/download.eclipse.org/tools/aspectj/dev');
-                              $justthefirstfile=basename($devbuilds[0]);
-                              $stats=stat($devbuilds[0]);
-                              echo "<a href=\"http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/dev/$justthefirstfile\">$justthefirstfile</a><br><br>(size: $stats[7] bytes)";
-                              echo "<br><br>";
-                              $changesFiles=GetChangesFilesIn('/home/data/httpd/download.eclipse.org/tools/aspectj/dev');
-                              $justthefirstchangesfile=basename($changesFiles[0]);
-                              $stats2=stat($changesFiles[0]);
-                              echo "<a href=\"http://download.eclipse.org/tools/aspectj/dev/$justthefirstchangesfile\">(Changes in this build)</a><br>";          
-                            ?>
+
+					    	$builds
+					    
                             <br><a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=AspectJ&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&keywords_type=allwords&keywords=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&emailtype1=substring&email1=&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=2006-06-30&chfieldto=Now&chfieldvalue=&field0-0-0=noop&type0-0-0=noop&value0-0-0=">
                             Bugs resolved since last release</a>
 				</td>
 			</tr>
 			<tr>
-			    <td colSpan="3"><br>
+			    <td><br>
 			      <i>This download is updated after every successful build and test cycle.</i>
 			    </td>
 			</tr>
 		</tbody>
 	</table>
+	</li>
+	</ul>
+</div>
 
   <!-- ============ LATEST STABLE RELEASE ======================= -->
 
+<div class="homeitem3col">
   <h3 id="stable_release">Latest Stable Release</h3>
-
-      <table border="0" cellspacing="0" cellpadding="0" width="100%">
- 		<tbody>
- 		    <tr>
- 				<td>
-				 	<dl>
-				 		<dt>AspectJ 1.5.2a, Released 21st August, 2006</dt>
-						<dd>AspectJ compiler, browser, documentation tool,
-                            Ant tasks, and documentation. 
-	  					</dd>
-	  				</dl>
-	  			</td>
-				<td width="30%" align="right">
-					<a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.5.2a.jar">aspectj-1.5.2a.jar</a> (~10M)
-	  			</td>
-			</tr>
-		</tbody>
-      </table> 
-      
-
-  <!-- ============ ASPECTJ 5 ======================= -->
-
-  <h3 id="milestones">AspectJ 5</h3>
-
+  <ul>
+    <li>
+    <b>AspectJ 1.5.2a, Released 21st August, 2006</b>
  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
- 		<tbody>
-
+    <tr>
+      <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
+      <td width="30%" align="right">
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.5.2a.jar">aspectj-1.5.2a.jar</a> (~10M)
+      </td>
+    </tr>
+    </table>
+  </li>
+  </ul>
+</div>
+      
+  <!-- ============ ASPECTJ 5 ======================= -->
+<div class="homeitem3col"> 
+  <h3 id="milestones">AspectJ 5</h3>
+  <ul>
+    <li>
+      <b>AspectJ 1.5.2a, Released 21st August, 2006</b>
+ 	<table border="0" cellspacing="0" cellpadding="0" width="100%">
  		    <tr>
- 				<td>
-				 	<dl>
-				 		<dt>AspectJ 1.5.2a, Released 21st August, 2006</dt>
-						<dd>AspectJ compiler, browser, documentation tool,
-                            Ant tasks, and documentation. 
-	  					</dd>
-	  				</dl>
-	  			</td>
+      			<td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
 				<td width="30%" align="right">
 					<a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.5.2a.jar">aspectj-1.5.2a.jar</a> (~10M)
 	  			</td>
 			</tr>
+ 	</table>
+ 	</li>
  		
+ 	<li>
+ 	<b>AspectJ 1.5.2, Released 30th June, 2006</b>
+ 	<table border="0" cellspacing="0" cellpadding="0" width="100%">
  		     <tr>
- 				<td>
-				 	<dl>
-				 		<dt>AspectJ 1.5.2, Released 30th June, 2006</dt>
-						<dd>AspectJ compiler, browser, documentation tool,
-                            Ant tasks, and documentation. 
-	  					</dd>
-	  				</dl>
-	  			</td>
+      			<td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
 				<td width="30%" align="right">
 					<a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.5.2.jar">aspectj-1.5.2.jar</a> (~10M)
 	  			</td>
 			</tr>
-			
-			
+	</table>
+	</li>
+	
+	<li>
+	<b>AspectJ 1.5.1a, Released 10th April, 2006</b>
+ 	<table border="0" cellspacing="0" cellpadding="0" width="100%">
  		     <tr>
- 				<td>
-				 	<dl>
-				 		<dt>AspectJ 1.5.1a, Released 10th April, 2006</dt>
-						<dd>AspectJ compiler, browser, documentation tool,
-                            Ant tasks, and documentation. 
-	  					</dd>
-	  				</dl>
-	  			</td>
+      			<td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
 				<td width="30%" align="right">
 					<a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.5.1_a.jar">aspectj-1.5.1_a.jar</a> (~10M)
 	  			</td>
 			</tr>
-			
+	</table>
+	</li>
+	
+	<li>
+	<b>AspectJ 1.5.0, Released 20th December, 2005</b>
+ 	<table border="0" cellspacing="0" cellpadding="0" width="100%">
  		 	<tr>
- 				<td>
-				 	<dl>
-				 		<dt>AspectJ 1.5.0, Released 20th December, 2005</dt>
-						<dd>AspectJ compiler, browser, documentation tool,
-                            Ant tasks, and documentation. 
-	  					</dd>
-	  				</dl>
-	  			</td>
+      			<td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
 				<td width="30%" align="right">
 					<a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.5.0.jar">aspectj-1.5.0.jar</a> (~10M)
 	  			</td>
 			</tr>
-
-		</tbody>
 	</table>
+	</li>
+	</ul>
+</div>
 
 <!--
     Commenting out all pre-release AspectJ 5.
@@ -277,23 +335,28 @@
   
   <!-- ============ ASPECTJ 1.2 ======================= -->
   
+<div class="homeitem3col"> 
   <h3>AspectJ 1.2</h3>
-
+  <ul>
+  
+  <li>
+    <b>Version 1.2.1, Released November 5th, 2004</b>
  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
  		<tbody>
  			<tr>
  				<td>
-				 	<dl>
-				 		<dt>Version 1.2.1, Released November 5th, 2004</dt>
-						<dd>AspectJ Compiler, Browser, Ant tasks, and Documentation</dd>
-					</dl>
+				 	<ul>
+						AspectJ Compiler, Browser, Ant tasks, and Documentation
+					</ul>
 	 			 </td>
 				<td width="30%" align="right">
 				    <a href="http://www.eclipse.org/downloads/download.php?file=/tools/ajdt/aspectj-1.2.1.jar">
 	    			aspectj-1.2.1.jar</a> (7,382,062 bytes)
 	  			</td>
 			</tr>
-
+	</table>
+	</li>
+	
 <!--    		
     		<tr>
     			<td>
@@ -307,19 +370,25 @@
 	    			aspectj-1.2.1rc1.jar</a> (7,393,774 bytes)
 	  			</td>
 			</tr>
+			
 -->
+
+  <li>
+    <b>Version 1.2.0, Released May 25, 2004</b>
+ 	<table border="0" cellspacing="0" cellpadding="0" width="100%">
 			<tr>
     			<td>
- 					<dl>
-	  					<dt>Version 1.2.0, Released May 25, 2004</dt>
-	  					<dd>AspectJ Compiler, Browser, Ant tasks, and Documentation</dd>
-	  				</dl>
+ 					<ul>
+	  					AspectJ Compiler, Browser, Ant tasks, and Documentation
+	  				</ul>
 	  			</td>
 				<td width="30%" align="right">
 				    <a href="http://www.eclipse.org/downloads/download.php?file=/tools/ajdt/aspectj-1.2.jar">
 	    			aspectj-1.2.jar</a> (5,859,690 bytes)
 	  			</td>
-			</tr>			
+			</tr>	
+		</table>
+	</li>		
 <!--
 			<tr>
     			<td>
@@ -346,41 +415,47 @@
 				    aspectj-1.2rc1.jar</a> (5,860,538 bytes)	  			
 				 </td>
 			</tr>			
--->
-		</tbody>
 	</table>
+-->
+</div>
 
   <!-- ============ ASPECTJ 1.1 ======================= -->
-
+<div class="homeitem3col"> 
   <h3>AspectJ 1.1</h3>
-
+  <ul>
+  <li>
+    <b>Version 1.1.1, Released September 22nd, 2003</b>
  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
- 		<tbody>
  			<tr>
  				<td>
-				 	<dl>
-				 		<dt>Version 1.1.1, Released September 22nd, 2003</dt>
-						<dd>AspectJ Compiler, Browser, Ant tasks, and Documentation</dd>
-					</dl>
+				 	<ul>
+						AspectJ Compiler, Browser, Ant tasks, and Documentation
+					</ul>
 	 			 </td>
 				<td width="30%" align="right">
 					<a href="http://www.eclipse.org/downloads/download.php?file=/tools/ajdt/aspectj-1.1.1.jar">
 				    aspectj-1.1.1.jar</a> (6,352,092 bytes)	  			
 				</td>
 			</tr>
-
+		</table>
+	</li>
+	
+	<li>
+    <b>Version 1.1.0, Released June 6, 2003</b>
+ 	<table border="0" cellspacing="0" cellpadding="0" width="100%">
 			<tr>
  				<td>
-				 	<dl>
-				 		<dt>Version 1.1.0, Released June 6, 2003</dt>
-						<dd>AspectJ Compiler, Browser, Ant tasks, and Documentation</dd>
-					</dl>
+				 	<ul>
+						AspectJ Compiler, Browser, Ant tasks, and Documentation
+					</ul>
 	 			 </td>
 				<td width="30%" align="right">
 	    			<a href="http://www.eclipse.org/downloads/download.php?file=/tools/ajdt/aspectj-1.1.0.jar">
 	    			aspectj-1.1.0.jar</a> (6,297,885 bytes)	
 				</td>
 			</tr>
+		</table>
+	</li>
 <!--
 			<tr>
  				<td>
@@ -436,69 +511,63 @@
 	  </td>
 	</tr>
 	
--->
       </table>
     </td>
   </tr>
+-->
+  </ul>
+</div>
 
   <!-- ============ ASPECTJ 1.0 ======================= -->
-
+<div class="homeitem3col"> 
  <h3>AspectJ 1.0</h3>
+  <ul>
+  <li>
+    <b>Version 1.0.6</b>
 
- 	<table border="0" cellspacing="0" cellpadding="0" width="100%">
- 		<tbody>
- 			<tr>
- 				<td colspan="2">
-				 	<dl>
-				 		<dt>Version 1.0.6</dt>
-						<dd>
-						 	<table border="0" cellspacing="0" cellpadding="5" width="100%">
- 								<tbody>
+						 	<table border="0" cellspacing="0" cellpadding="2" width="100%">
  									<tr>
-										<td>AspectJ Compiler and Browser (<i>binary distribution</i>)</td>
-										<td width="30%" align="right">
+										<td><ul>AspectJ Compiler and Browser (<i>binary distribution</i>)</ul></td>
+										<td width="40%" align="right">
 										    <a href="http://www.eclipse.org/downloads/download.php?file=/tools/ajdt/aspectj-tools-1.0.6.jar">
 										    aspectj-tools-1.0.6.jar</a> <i>(1,580,450 bytes)</i>
 										</td>
 									</tr>
 									<tr>
-										<td>AspectJ Compiler and Browser (<i>source</i>)</td>
-										<td width="30%" align="right">
+										<td><ul>AspectJ Compiler and Browser (<i>source</i>)</ul></td>
+										<td width="40%" align="right">
 										    <a href="http://www.eclipse.org/downloads/download.php?file=/tools/ajdt/aspectj-tools-src-1.0.6.tgz">
 										    aspectj-tools-src-1.0.6.tgz</a> <i>(795,633 bytes)</i>										    
 										</td>
 									</tr>
 																		
  									<tr>
-										<td>Documentation and Examples</td>
-										<td width="30%" align="right">
+										<td><ul>Documentation and Examples</ul></td>
+										<td width="40%" align="right">
 										    <a href="http://www.eclipse.org/downloads/download.php?file=/tools/ajdt/aspectj-docs-1.0.6.tgz">
 										    aspectj-docs-1.0.6.tgz</a> <i>(1,715,824 bytes) </i>
 										</td>
 									</tr>
  									<tr>
-										<td>Ant Tasks (released under the <a target="_top" href="http://apache.org/LICENSE.txt">
-		    							Apache License</a>)</td>
-		    							<td width="30%" align="right">
+										<td><ul>Ant Tasks (released under the <a target="_top" href="http://apache.org/LICENSE.txt">
+		    							Apache License</a>)</ul></td>
+		    							<td width="40%" align="right">
 										    <a href="http://www.eclipse.org/downloads/download.php?file=/tools/ajdt/aspectj-antTasks-1.0.6.tgz">
 										    aspectj-antTasks-1.0.6.tgz</a> <i>(83,124 bytes) </i>
 		    							</td>
 									</tr>
-								</tbody>
-							</table>
-						</dd>
-					</dl>
-	 			 </td>
-			</tr>
-		</tbody>
-	</table>
-	
+							</table>	
   
-    <p align="left">Note: All code, documentation and other files in the 1.0.6 release 
+    <p align="left"><i>Note: All code, documentation and other files in the 1.0.6 release 
     are made available under the terms and conditions of the
     <a target="_top" href="http://www.mozilla.org/MPL/MPL-1.1.html">
-    Mozilla Public License version 1.1</a>.</p>
-			
+    Mozilla Public License version 1.1</a>.</i></p>
+		
+		
+	</li>
+	</ul>	
+</div>
+
   <!-- ============ INSTALLATION ======================= -->
 
   <h2 id="install">Installation</h2>
@@ -551,49 +620,15 @@
         -->
 	</dl>
 	
-  <!-- ================ End of page specific content ===================== -->
-</div>
-</div>
-</body>
-</html>
-<?php 
-// Sorts by newest first
-function date_cmp($f1, $f2) {
-   $f1stats=stat($f1);
-   $f2stats=stat($f2);
-   return $f2stats[9]-$f1stats[9];
-}
-// return entries in the directory that represent dev builds
-function GetDevBuildsIn($dir){
-   ini_set("max_execution_time",10);
-   $devtag="aspectj-DEVELOPMENT-2";
-   $root=opendir($dir) or die("Check $dir !");
-   while (false!== ($file=readdir($root))) {
-     if($file=="." || $file=="..") {continue;}
-     // echo "$file<br>";
-     if (substr($file,0,21) == $devtag) {
-       $files[]="$dir/$file";
-     }
-   }
-   @closedir($dir);
-   usort($files, "date_cmp");
-   return $files;
-}
 
-function GetChangesFilesIn($dir){
-   ini_set("max_execution_time",10);
-   $devtag="changes-";
-   $root=opendir($dir) or die("Check $dir !");
-   while (false!== ($file=readdir($root))) {
-     if($file=="." || $file=="..") {continue;}
-     // echo "$file<br>";
-     if (substr($file,0,8) == $devtag) {
-       $files[]="$dir/$file";
-     }
-   }
-   @closedir($dir);
-   usort($files, "date_cmp");
-   return $files;
-}
+	</div>
 
+</div>
+
+
+EOHTML;
+
+
+	# Generate the web page
+	$App->generatePage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html);
 ?>
