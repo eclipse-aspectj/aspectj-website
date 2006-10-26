@@ -141,6 +141,10 @@ AspectJ 1.5.1 is now <a href="downloads.php">available for download</a>. This
 			<h3>Recent Books and Articles</h3>
 	          <ul>
 <li>
+<a href="http://www.regdeveloper.co.uk/2006/10/26/aspects_java_aop/">RegDeveloper: Aspect oriented programming with Java</a>
+</li>	          
+	          
+<li>
 <a target="_top" href="http://www-128.ibm.com/developerworks/java/library/j-aopwork17.html">	
                &quot;AOP@Work: Component Design with Contract4J&quot;</a>
          by n Wampler
