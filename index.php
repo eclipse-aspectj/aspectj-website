@@ -142,6 +142,7 @@ AspectJ 1.5.1 is now <a href="downloads.php">available for download</a>. This
 	          <ul>
 <li>
 <a href="http://www.regdeveloper.co.uk/2006/10/26/aspects_java_aop/">RegDeveloper: Aspect oriented programming with Java</a>
+by John Hunt
 </li>	          
 	          
 <li>
