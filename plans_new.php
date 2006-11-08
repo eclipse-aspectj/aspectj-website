@@ -36,7 +36,7 @@
 	<h1>Plans</h1>
 
 <p>
-<i>Last updated: 20 October 2006</i>
+<i>Last updated: 8 November 2006</i>
 </p>
 
 <p>
