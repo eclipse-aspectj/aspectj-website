@@ -52,7 +52,7 @@
 <div class="homeitem3col">
 	<h3>AspectJ 1.5.3</h3>
 	<p>
-	Status: Planned for October 2006
+	Status: Release candidate available 8th November 2006
 	</p>
 	 <p>
       Release themes:

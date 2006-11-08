@@ -12,14 +12,15 @@
 
 <h1>aspectj: development plan</h1>
 
-<p>Last updated 16th August 2006</p>
+<p>Last updated 8th November 2006</p>
 
 <h2>AspectJ, version 1.6</h2>
-<p>At the end of this year we are planning AspectJ6 - this will incorporate the
+<p>In the first quarter of 2007 we are planning AspectJ 1.6 - this will incorporate the
 Eclipse 3.2 Java6 compiler.</p>
 
 <h2>AspectJ 5, version 1.5.3</h2>
 
+<p>UPDATE: Release candidate available - 8th November 2006</p>
 <p>The next release of AspectJ will include our new compilation pipeline
 structure which drastically reduces maximum memory requirements for building
 projects from source.  It will also include a number of loadtime weaving
