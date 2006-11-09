@@ -5,10 +5,16 @@ Developers
 
 For AspectJ 1.5.3 (so far... not yet shipped):
 component,      bug#,     name,               size,       committer,      description
-...
+compiler,       125981,   Helen Hawkins,      <50,        aclement,       fix for declare soft not working in anonymous class
 various,        141556,   Helen Hawkins,      <500,       aclement,       fix for vanishing warnings
+various,        141730,   Helen Hawkins,      <500,       aclement,       new handleProvider which doesn't depend on sourcelocations
 various,        145963,   Helen Hawkins,      <500,       aclement,       injar aspects added to model correctly
+ajdoc,          148906,   Helen Hawkins,      <500,       aclement,       ajdoc supports compiler options
+docs,           148906,   Helen Hawkins,      <50,        aclement,       doc changes for ajdoc
+ajdtcore,       148908,   Helen Hawkins,      <50,        aclement,       fix source signatures for QualifiedAllocationExpressions
+weaver,         149908,   Helen Hawkins,      <50,        aclement,       bug fix
 docs,           149321,   Steve Park,         <50,        aclement,       doc changes for ltw text
+compiler,       151772,   Helen Hawkins,      <50,        aclement,       fix for declare soft
 loadtime,       152161,   Ron Bodkin,         <50,        aclement,       Xset support for LTW
 loadtime,       152873,   Ron Bodkin,         <500,       aclement,       efficient recognition of aspects
 docs,           149554,   Helen Hawkins,      <50,        aclement,       change to EPL not CPL
@@ -16,9 +22,20 @@ ajdtcore,       150467,   Helen Hawkins,      <50,        aclement,       AST pa
 weaver,         150671,   Helen Hawkins,      <50,        aclement,       fix for deow volatile
 ajdtcore,       110465,   Eduardo Piveta,     <500,       aclement,       AST changes
 ajdtcore,       110465,   Helen Hawkins,      <1000,      aclement,       AST changes
+loadtime,       152366,   Ron Bodkin,         <50,        aclement,       bug fix 
 bcel,           152979,   Ron Bodkin,         <500,       aclement,       bcel class caching
+various,        154054,   Helen Hawkins,      <50,        aclement,       incremental building and change in around advice
+weaver,         155139,   Ron Bodkin,         <50,        aclement,       clarify message for circularDependency
 ajdtcore,       155763,   Helen Hawkins,      <50,        aclement,       porting 3.2 compiler patch
-
+weaver,         156904,   Helen Hawkins,      <50,        aclement,       incorrect warning messages
+loadtime,       158205,   Ron Bodkin,         <50,        mwebster,       bug fix
+weaver,         158573,   Helen Hawkins,      <50,        aclement,       adviceDidNotMatch warnings and incremental builds
+docs,           158719,   Helen Hawkins,      <50,        aclement,       fixing broken link
+weaver,         159896,   Helen Hawkins,      <50,        aclement,       handles and injar aspects
+ajdoc,          160302,   Helen Hawkins,      <50,        aclement,       incorrect output when using "-package"
+weaver,         160469,   Helen Hawkins,      <100,       aclement,       wrong relationship info when binary weaving
+ajdoc,          160496,   Helen Hawkins,      <50,        aclement,       refactoring ajdoc Main class for ease of use
+weaver,         161217,   Helen Hawkins,      <50,        aclement,       bug fix
 
 For AspectJ 1.5.2a:
 component,      bug#,     name,               size,       committer,      description
@@ -85,8 +102,5 @@ Third Party Software
 
 BCEL 5.1 derivative - reworked for performance and updated to support Java5.  The source files still 
 include the standard apache 1.1 software license. (http://jakarta.apache.org/bcel/index.html)
-
-ASM 2.2.1 - jarjar used to transform it to include an org.aspectj package prefix, but no other 
-changes to the code. (http://asm.objectweb.org/)
 
 Eclipse JDT Compiler 3.1 - AspectJ is based on an extended form of this compiler (http://eclipse.org)
