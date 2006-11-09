@@ -3,7 +3,7 @@ aclement,acolyer,mwebster,wisberg,mkersten,avasseur
 
 Developers
 
-For AspectJ 1.5.3 (so far... not yet shipped):
+For AspectJ 1.5.3:
 component,      bug#,     name,               size,       committer,      description
 compiler,       125981,   Helen Hawkins,      <50,        aclement,       fix for declare soft not working in anonymous class
 various,        141556,   Helen Hawkins,      <500,       aclement,       fix for vanishing warnings
