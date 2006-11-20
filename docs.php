@@ -210,7 +210,7 @@ and the stand-alone
 
 <li>
 <h4>Other documentation</h4>
- <p>The <a href="doc/release/pdguide/index.html"/>AspectJ problem diagnosis</a> guide describes the tracing/logging and dump framework.</p>
+ <p>The <a href="doc/released/pdguide/index.html"/>AspectJ problem diagnosis</a> guide describes the tracing/logging and dump framework.</p>
  <p>
  For answers to frequently-asked questions, see the 
   <a href="doc/released/faq.php">FAQ</a> 
