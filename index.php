@@ -146,15 +146,26 @@ AspectJ 1.5.1 is now <a href="downloads.php">available for download</a>. This
 	<div class="homeitem">
 			<h3>Recent Books and Articles</h3>
 	          <ul>
+
+<li>
+<a href="http://www.infoq.com/articles/aspectj-with-ajdt">Making AspectJ development easier with AJDT</a>
+by Matt Chapman
+</li>	          
+	        	          
 <li>
 <a href="http://www.regdeveloper.co.uk/2006/10/26/aspects_java_aop/">RegDeveloper: Aspect oriented programming with Java</a>
 by John Hunt
-</li>	          
+</li>
+	          
+<li>
+<a href="http://www.eclipse.org/articles/Article-Introducing-AJDT/article.html">Introducing AJDT: The AspectJ Development Tools</a>
+by Matt Chapman
+</li>
 	          
 <li>
 <a target="_top" href="http://www-128.ibm.com/developerworks/java/library/j-aopwork17.html">	
                &quot;AOP@Work: Component Design with Contract4J&quot;</a>
-         by n Wampler
+         by Dean Wampler
 </li>
 
 <li>
