@@ -96,12 +96,20 @@
 			<h3>News and Events</h3>
 	                <ul>
 
-   <li>AspectJ 1.5.3rc1 (release candidate 1) is now <a href="downloads.php">available for download</a>.
+   <li>AspectJ 1.5.3 is now <a href="downloads.php">available for download</a>. 
+   It includes <a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=AspectJ&target_milestone=1.5.3&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&status_whiteboard_type=allwordssubstr&status_whiteboard=&keywords_type=allwords&keywords=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&resolution=FIXED&emailtype1=substring&email1=&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&cmdtype=doit&order=Reuse+same+sort+as+last+time&field0-0-0=noop&type0-0-0=noop&value0-0-0=">
+   over 80 fixes and enhancements</a> that have been incorporated since the 1.5.2 
+   release.  For a description of some of the notable changes in 1.5.3, see the 
+   <a href="doc/released/README-153.html">1.5.3 README</a>.
+   <br><div align="right"><span class="dates"><i>posted 22-11-06</i></span></div>
+   </li>
+   
+   <!--li>AspectJ 1.5.3rc1 (release candidate 1) is now <a href="downloads.php">available for download</a>.
    It includes <a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=AspectJ&target_milestone=1.5.3&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&status_whiteboard_type=allwordssubstr&status_whiteboard=&keywords_type=allwords&keywords=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&resolution=FIXED&emailtype1=substring&email1=&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&cmdtype=doit&order=Reuse+same+sort+as+last+time&field0-0-0=noop&type0-0-0=noop&value0-0-0=">
    over 80 fixes and enhancements</a> that have been incorporated since the 1.5.2 
    release.  Please download this release and report any problems you find.
    <br><div align="right"><span class="dates"><i>posted 08-11-06</i></span></div>
-   </li>
+   </li-->
 	<li>
    AspectJ 1.5.2 is now <a href="downloads.php">available for download</a>.
    It includes approximately 60 fixes and enhancements that have been incorporated since the 1.5.1a 

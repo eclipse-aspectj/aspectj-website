@@ -155,12 +155,12 @@ function ListDevBuilds($dir){
   <h3 id="stable_release">Latest Stable Release</h3>
   <ul>
     <li>
-    <b>AspectJ 1.5.3rc1, Released 8th November, 2006</b>
+    <b>AspectJ 1.5.3, Released 22nd November, 2006</b>
  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
     <tr>
       <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
       <td width="30%" align="right">
-          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.5.3rc1.jar">aspectj-1.5.3rc1.jar</a> (~10M)
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.5.3.jar">aspectj-1.5.3.jar</a> (~10M)
       </td>
     </tr>
     </table>
@@ -173,12 +173,12 @@ function ListDevBuilds($dir){
   <h3 id="milestones">AspectJ 5</h3>
   <ul>
     <li>
-    <b>AspectJ 1.5.3rc1, Released 8th November, 2006</b>
+    <b>AspectJ 1.5.3, Released 22nd November, 2006</b>
  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
     <tr>
       <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
       <td width="30%" align="right">
-          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.5.3rc1.jar">aspectj-1.5.3rc1.jar</a> (~10M)
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.5.3.jar">aspectj-1.5.3.jar</a> (~10M)
       </td>
     </tr>
     </table>

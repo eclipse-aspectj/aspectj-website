@@ -102,7 +102,7 @@ signed) are used by default to configure LTW.</p>
 <p>Concrete aspects defined using aop.xml are now exposed for weaving.</p>
  
 <h2>Pertypewithin enhancement - <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=123423">123423</a></h2>
-<p>It is now possible to ask an instance of a ptw aspect which type it is 'attached' to.  The method:</p>
+<p>It is now possible to ask an instance of a ptw aspect which type it has been instantiated for.  The method:</p>
  <code><pre>String getWithinTypeName()</pre></code>
  <p>can be called on an aspect and will return the full qualified name of the type (eg. "com.foo.MyClass")
 </p>
