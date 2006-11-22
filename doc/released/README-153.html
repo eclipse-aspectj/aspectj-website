@@ -20,7 +20,7 @@ All rights reserved.
 
 <h1>AspectJ 5 v1.5.3 Readme</h1>
 
-<p>This release includes a number of bug fixes and a few enhancements (over 80).  The full list of resolved issues can be found with 
+<p>This release includes a number of bug fixes and enhancements (over 80).  The full list of resolved issues can be found with 
 <a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=AspectJ&target_milestone=1.5.3&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&status_whiteboard_type=allwordssubstr&status_whiteboard=&keywords_type=allwords&keywords=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&emailtype1=substring&email1=&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&cmdtype=doit&order=Reuse+same+sort+as+last+time&field0-0-0=noop&type0-0-0=noop&value0-0-0=">
 this bugzilla query</a>.
 </p>
@@ -63,7 +63,7 @@ Xmx  Time
 212M OutOfMemory
 </pre></code>
 
-<p>The times gradually increase as the memory is reduced as the VM is thrashing in garbage collection.
+<p>The times gradually increase as the memory is reduced because the VM starts to thrash in garbage collection.
 
 Here are the results for AspectJ1.5.3:</p>
 <pre><code>
@@ -90,12 +90,25 @@ some <a href="http://www.eclipse.org/aspectj/doc/released/pdguide/index.html">do
 for an AspectJ trace on a future bug report!
 </p>
 
-<h2>LTW enhancements - </h2>
-<p>...
+<h2>LTW enhancements</h2>
+
+<h3>User and System Configuration Files - <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=149289">149289</a></h3>
+<p>The <code>-outxml</code> option now generates a file named <code>META-INF/aop-ajc.xml</code>.
+This no longer clashes with a user defined <code>META-INF/aop.xml</code> configuration file.
+Both file names along with an OSGi-friendly <code>org/aspectj/aop.xml</code> (which can also be
+signed) are used by default to configure LTW.</p>
+
+<h3>Weaving Concrete Aspects Defined in aop.xml - <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=132080">132080</a></h3>
+<p>Concrete aspects defined using aop.xml are now exposed for weaving.</p>
+ 
+<h2>Pertypewithin enhancement - <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=123423">123423</a></h2>
+<p>It is now possible to ask an instance of a ptw aspect which type it is 'attached' to.  The method:</p>
+ <code><pre>String getWithinTypeName()</pre></code>
+ <p>can be called on an aspect and will return the full qualified name of the type (eg. "com.foo.MyClass")
 </p>
 
-<p>For information on bug fixes in AspectJ 5 v1.5.3, see the <a href="changes.html">
-changes</a> document.</p>
+<hr>
+<p>For information on bug fixes in AspectJ 5 v1.5.3, see the <a href="changes.html"> changes</a> document.</p>
 
 </body> 
 </html>
