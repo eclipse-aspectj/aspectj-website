@@ -296,6 +296,7 @@ PARC project page</a>.
 
 </div>
 
+				<hr class="clearer" />
 
 	</div>
 
