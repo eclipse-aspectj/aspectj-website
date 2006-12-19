@@ -30,7 +30,7 @@
 	$html = <<<EOHTML
 
 <div id="maincontent">
-	<div id="midcolumn" style="width: 80%">
+	<div id="midcolumn" style="width: 90%">
 
 <!--
 <p align="center" style="margin-top: 0">
