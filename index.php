@@ -30,7 +30,7 @@
 	$html = <<<EOHTML
 
 <div id="maincontent">
-	<div id="midcolumn">
+	<div id="midcolumn" style="width: 80%">
 
   <!-- ========== "aspectj is... "  ============= -->
     <table id="aspectj-is" borderColor="#111111"
@@ -71,7 +71,7 @@
       </tr>
     </table>
 
-<div class="homeitem" style="width: 97%">
+<div class="homeitem3col">
   <h3>Quick Links</h3>
 	<ul>
 <li>For Eclipse development: <a href="/ajdt">AJDT: The AspectJ Development Tools</a></li>
@@ -83,6 +83,8 @@
 </ul>
 </div>
 		
+				<hr class="clearer" />
+				
 		<div class="homeitem">
 			<h3>News and Events</h3>
 	                <ul>
