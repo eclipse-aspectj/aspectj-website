@@ -9,7 +9,11 @@
 	#$projectInfo = new ProjectInfo("technology.aspectj");
 	#$projectInfo->generate_common_nav( $Nav );
 
-	$branding = <<<EOBRANDING	
+	$branding = <<<EOBRANDING
+<STYLE TYPE="text/css">
+  #midcolumn { margin-top: 5px; }
+  body { font-size: small; }
+</STYLE>	
 <div id="branding">
 <img src="/aspectj/aspectjbanner2.png" width="502" height="42" alt="AspectJ">
 </div>
