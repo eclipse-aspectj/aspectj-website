@@ -30,16 +30,7 @@
 	$html = <<<EOHTML
 
 <div id="maincontent">
-	<div id="midcolumn" style="width: 90%">
-
-<!--
-<p align="center" style="margin-top: 0">
-<img src="aspectjbanner.png" width="340" height="58" alt="AspectJ">
-</p>
--->
-
-<!-- style="position: absolute; top: 0; left: 250px" -->
-
+	<div id="midcolumn">
 
   <!-- ========== "aspectj is... "  ============= -->
     <table id="aspectj-is" borderColor="#111111"
