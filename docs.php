@@ -86,6 +86,8 @@ summarises changes made to the AspectJ language in AspectJ 5. These changes are
 </ul>
 </div>
 
+				<hr class="clearer" />
+
 <div class="homeitem" style="width: 97%">
 <h3>AspectJ Documentation packages</h3>
 <ul>
@@ -236,7 +238,8 @@ and the stand-alone
 
 </div>
 
-<br/>
+				<hr class="clearer" />
+
 
 <div class="homeitem">
 <h3>Online and external resources</h3>
