@@ -89,7 +89,7 @@
 			<h3>News and Events</h3>
 	                <ul>
 
-   <li>The Aspect-oriented C (ACC) team have released version 0.7 of their compiler and 
+   <li>The AspeCt-oriented C (ACC) team have released version 0.7 of their compiler and 
    toolset.  The project can be found <a href="http://www.aspectc.net">here</a>.  The highlights are 
    described in the <a href="http://www.aspectc.net/release_v07.txt">release notes</a>.
    <br><div align="right"><span class="dates"><i>posted 25-09-07</i></span></div>
