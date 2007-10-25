@@ -59,8 +59,7 @@ tools, code generation libraries
 <li><i>more to follow...</i>
 </ul>
 </p>
-<p>
-<h3>Shortcuts for detailed information:</h3>
+<p>Shortcuts for detailed information:
 <ul>
 <li>These <a href="">bugs and enhancements</a> are currently targetted for 1.6.0M1.
 <li>These <a href="">bugs and enhancements</a> are currently targetted for 1.6.0 final.
@@ -73,7 +72,7 @@ tools, code generation libraries
 <p>Status: release date 7th December 2007</p>
 <p>AspectJ 1.5.4 is a service refresh of the AspectJ 1.5 codestream.</p>
 <p>
-<h3>Shortcuts for detailed information:</h3>
+Shortcuts for detailed information:
 <ul>
 <li>These <a href="">bugs and enhancements</a> are currently targetted for 1.5.4.
 <li>These <a href="">bugs and enhancements</a> are already fixed, available in todays DEVELOPMENT builds, and 
