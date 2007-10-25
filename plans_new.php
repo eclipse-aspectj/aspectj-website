@@ -36,7 +36,7 @@
 	<h1>Plans</h1>
 
 <p>
-<i>Last updated: 8 November 2006</i>
+<i>Last updated: 25 October 2007</i>
 </p>
 
 <p>
@@ -48,6 +48,39 @@
   -->
   
 </p>
+
+<div class="homeitem3col">
+<h3>Aspectj1.6.0</h3>
+<p>Status: release date tbd. there are likely to be milestone releases before a final release.</p>
+<p>Release themes:
+<li>Java6 support
+<li>Better support and integration with other common enterprise components: eg. code coverage tools, static code analysis
+tools, code generation libraries
+<li><i>more to follow...</i>
+</ul>
+</p>
+<p>
+<h3>Shortcuts for detailed information:</h3>
+<ul>
+<li>These <a href="">bugs and enhancements</a> are currently targetted for 1.6.0M1.
+<li>These <a href="">bugs and enhancements</a> are currently targetted for 1.6.0 final.
+</ul>
+</p>
+</div>
+
+<div class="homeitem3col">
+<h3>AspectJ 5, version 1.5.4</h3>
+<p>Status: release date 7th December 2007</p>
+<p>AspectJ 1.5.4 is a service refresh of the AspectJ 1.5 codestream.</p>
+<p>
+<h3>Shortcuts for detailed information:</h3>
+<ul>
+<li>These <a href="">bugs and enhancements</a> are currently targetted for 1.5.4.
+<li>These <a href="">bugs and enhancements</a> are already fixed, available in todays DEVELOPMENT builds, and 
+will be packaged in the 1.5.4 release.
+</ul>
+</p>
+</div>
 
 <div class="homeitem3col">
 	<h3>AspectJ 1.5.3</h3>
