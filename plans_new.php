@@ -53,6 +53,7 @@
 <h3>Aspectj1.6.0</h3>
 <p>Status: release date tbd. there are likely to be milestone releases before a final release.</p>
 <p>Release themes:</p>
+<ul>
 <li>Java6 support
 <li>Better support and integration with other common enterprise components: eg. code coverage tools, static code analysis
 tools, code generation libraries
