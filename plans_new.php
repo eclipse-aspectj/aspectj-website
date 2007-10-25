@@ -67,7 +67,7 @@ tools, code generation libraries
 
 <div class="homeitem3col">
 <h3>AspectJ 5, version 1.5.4</h3>
-<p>Status: release date 7th December 2007</p>
+<p>Status: Targeted release date 7th December 2007</p>
 <p>AspectJ 1.5.4 is a service refresh of the AspectJ 1.5 codestream.</p>
 <p>
 Shortcuts for detailed information:</p>
