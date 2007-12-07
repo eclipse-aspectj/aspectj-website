@@ -2,7 +2,13 @@ Committers
 aclement,acolyer,mwebster,wisberg,mkersten,avasseur
 
 Developers
-
+For AspectJ 1.5.4:
+component,      bug#,     name,               size,       committer,      description
+ajde-core,      166580,   Helen Beeken,       <500,       aclement,       fix to ensure we always use the right OutputLocationManager
+ajdoc,          168795,   Arno Schmidmeier,   <500,       aclement,       reactivated the ajdoc Ant task
+ajde,           168840,   Helen Beeken,       <500,       aclement,       fix to detect changes on inpath correctly
+various,        193065,   Linton Ye,          <500,       aclement,       new custommungerfactory support for 'PointcutDoctor'
+ 
 For AspectJ 1.5.3:
 component,      bug#,     name,               size,       committer,      description
 compiler,       125981,   Helen Hawkins,      <50,        aclement,       fix for declare soft not working in anonymous class

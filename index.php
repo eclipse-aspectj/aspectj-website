@@ -87,8 +87,16 @@
 				
 		<div class="homeitem">
 			<h3>News and Events</h3>
-	                <ul>
+   <ul>
 
+   <li>AspectJ 1.5.4 release candidate 1 is now <a href="downloads.php">available for download</a>.
+   It includes <a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=AspectJ&target_milestone=1.5.4&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&status_whiteboard_type=allwordssubstr&status_whiteboard=&keywords_type=allwords&keywords=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&emailtype1=substring&email1=&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&cmdtype=doit&order=Reuse+same+sort+as+last+time&field0-0-0=noop&type0-0-0=noop&value0-0-0=">
+   numerous fixes</a> that have been incorporated since the 1.5.3 release.  
+   <li>AspectJ 1.5.3 is now <a href="downloads.php">available for download</a>.  If no significant problems are reported
+   in the next 7 days, we will release the final version of 1.5.4.
+   <br><div align="right"><span class="dates"><i>posted 7-12-07</i></span></div>
+   </li>
+   
    <li>The AspeCt-oriented C (ACC) team have released version 0.7 of their compiler and 
    toolset.  The project can be found <a href="http://www.aspectc.net">here</a>.  The highlights are 
    described in the <a href="http://www.aspectc.net/release_v07.txt">release notes</a>.
