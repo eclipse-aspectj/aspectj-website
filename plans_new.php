@@ -51,7 +51,7 @@
 
 <div class="homeitem3col">
 <h3>Aspectj1.6.0</h3>
-<p>Status: Mid-January M1, Mid-February M2, Mid-March Final</p>
+<p>Status: Mid-January08 - 1.6.0M1, Mid-February08 -  1.6.0M2, Mid-March08 - 1.6.0Final</p>
 <p>Release themes:</p>
 <ul>
 <li>Java6 support
