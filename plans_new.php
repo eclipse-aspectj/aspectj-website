@@ -51,10 +51,11 @@
 
 <div class="homeitem3col">
 <h3>Aspectj1.6.0</h3>
-<p>Status: release date tbd. there are likely to be milestone releases before a final release.</p>
+<p>Status: Mid-January M1, Mid-February M2, Mid-March Final</p>
 <p>Release themes:</p>
 <ul>
 <li>Java6 support
+<li>Memory usage improvements
 <li>Better support and integration with other common enterprise components: eg. code coverage tools, static code analysis
 tools, code generation libraries
 <li><i>more to follow...</i>
@@ -68,7 +69,7 @@ tools, code generation libraries
 
 <div class="homeitem3col">
 <h3>AspectJ 5, version 1.5.4</h3>
-<p>Status: Targeted release date 7th December 2007</p>
+<p>Status: RC1 -  7th December 2007, Final - Christmas 07</p>
 <p>AspectJ 1.5.4 is a service refresh of the AspectJ 1.5 codestream.</p>
 <p>
 Shortcuts for detailed information:</p>
