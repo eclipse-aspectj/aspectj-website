@@ -69,21 +69,19 @@ tools, code generation libraries
 
 <div class="homeitem3col">
 <h3>AspectJ 5, version 1.5.4</h3>
-<p>Status: RC1 -  7th December 2007, Final - Christmas 07</p>
-<p>AspectJ 1.5.4 is a service refresh of the AspectJ 1.5 codestream.</p>
+<p>Status: RC1 -  7th December 2007, Final - 20th December 2007</p>
+<p>AspectJ 1.5.4 is a service refresh on the AspectJ 1.5 codestream.</p>
 <p>
 Shortcuts for detailed information:</p>
 <ul>
-<li>These <a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=AspectJ&target_milestone=1.5.4&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&status_whiteboard_type=allwordssubstr&status_whiteboard=&keywords_type=allwords&keywords=&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&emailtype1=substring&email1=&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&cmdtype=doit&order=Reuse+same+sort+as+last+time&field0-0-0=noop&type0-0-0=noop&value0-0-0=">bugs and enhancements</a> are currently targetted for 1.5.4.
-<li>These <a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=AspectJ&target_milestone=1.5.4&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&status_whiteboard_type=allwordssubstr&status_whiteboard=&keywords_type=allwords&keywords=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&emailtype1=substring&email1=&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&cmdtype=doit&order=Reuse+same+sort+as+last+time&field0-0-0=noop&type0-0-0=noop&value0-0-0=">bugs and enhancements</a> are already fixed, available in todays DEVELOPMENT builds, and 
-will be packaged in the 1.5.4 release.
+<li>These <a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=AspectJ&target_milestone=1.5.4&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&status_whiteboard_type=allwordssubstr&status_whiteboard=&keywords_type=allwords&keywords=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&emailtype1=substring&email1=&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&cmdtype=doit&order=Reuse+same+sort+as+last+time&field0-0-0=noop&type0-0-0=noop&value0-0-0=">bugs and enhancements</a> are fixed in AspectJ 1.5.4 .
 </ul>
 </div>
 
 <div class="homeitem3col">
 	<h3>AspectJ 1.5.3</h3>
 	<p>
-	Status: Release candidate available 8th November 2006
+	Status: Released 22nd November 2006
 	</p>
 	 <p>
       Release themes:
