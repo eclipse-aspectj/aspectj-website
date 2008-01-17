@@ -42,11 +42,11 @@
 			<table cellpadding="2">
 	  <tr>
         <td><a href="http://aspectprogrammer.org"/>Adrian Colyer</a></td>
-        <td>Interface 21</td>
+        <td>SpringSource</td>
       </tr>
 	  <tr>
         <td>Andy Clement</td>
-        <td>IBM UK Ltd</td>
+        <td>SpringSource</td>
       </tr>
 	  <tr>
         <td>Wes Isberg</td>

@@ -12,11 +12,13 @@
 
 <h1>aspectj: development plan</h1>
 
-<p>Last updated 25th October 2007</p>
+<p>Last updated 16th January 2008</p>
 
 
 <h2>AspectJ, version 1.6</h2>
 <p>AspectJ 1.6 is the first AspectJ release to support the Java6 language.</p>
+<p>
+<p>AspectJ 1.6.0m1 now available (16-Jan-08) - see the downloads page.</p>
 <p>
 <h3>Themes:</h3>
 <ul>
@@ -34,7 +36,7 @@ will be packaged in the 1.5.4 release.
 </ul>
 </p>
 
-<h2>AspectJ 5, version 1.5.4 - targeted date 7th December 2007</h2>
+<h2>AspectJ 5, version 1.5.4 - released 20-Dec-07</h2>
 <p>AspectJ 1.5.4 is a service refresh of the AspectJ 1.5 codestream.
 </p>
 <p>
