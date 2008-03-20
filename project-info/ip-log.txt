@@ -2,6 +2,12 @@ Committers
 aclement,acolyer,mwebster,wisberg,mkersten,avasseur
 
 Developers
+For AspectJ 1.6.0:
+component,      bug#,     name,               size,       committer,      description
+ajdt-core,      164356,   Helen Beeken,       <100,       aclement,       ajdoc problem if code comments mixed up with javadoc
+
+
+Developers
 For AspectJ 1.5.4:
 component,      bug#,     name,               size,       committer,      description
 ajde-core,      166580,   Helen Beeken,       <500,       aclement,       fix to ensure we always use the right OutputLocationManager
@@ -109,4 +115,4 @@ Third Party Software
 BCEL 5.1 derivative - reworked for performance and updated to support Java5.  The source files still 
 include the standard apache 1.1 software license. (http://jakarta.apache.org/bcel/index.html)
 
-Eclipse JDT Compiler 3.1 - AspectJ is based on an extended form of this compiler (http://eclipse.org)
+Eclipse JDT Compiler 3.3 (version 785) - AspectJ is based on an extended form of this compiler (http://eclipse.org)
