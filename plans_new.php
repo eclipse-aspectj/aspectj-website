@@ -51,13 +51,15 @@
 
 <div class="homeitem3col">
 <h3>Aspectj1.6.0</h3>
-<p>Status: Mid-January08 - 1.6.0M1, Mid-February08 -  1.6.0M2, March08 - 1.6.0Final</p>
+<p>Status: Mid-January08 - 1.6.0M1, Mid-February08 -  1.6.0M2, April08 - 1.6.0Final</p>
 <p>Release themes:</p>
 <ul>
 <li>Java6 support
 <li>Memory usage improvements
+<li>Incremental compilation speed in AJDT
 </ul>
-<p>AspectJ 1.6.0m2 available 26-Feb-08 - see the downloads page.</p>
+<p>AspectJ 1.6.0rc1 available 16-Apr-08 - see the downloads page.</p>
+<p>AspectJ 1.6.0m2 available 26-Feb-08.</p>
 <p>AspectJ 1.6.0m1 available 16-Jan-08.</p>
 <p>
 <p>Shortcuts for detailed information:</p>
