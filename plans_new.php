@@ -50,24 +50,32 @@
 </p>
 
 <div class="homeitem3col">
+<h3>AspectJ1.6.1</h3>
+<p>Target: 30-Jun-08</p>
+<p>Release themes:</p>
+<ul>
+<li>load-time weaving footprint 
+<li>load-time weaving in multi-classloader environments
+<li>issues with generics and intertype declarations
+</ul>
+</div>
+
+<div class="homeitem3col">
 <h3>Aspectj1.6.0</h3>
-<p>Status: Mid-January08 - 1.6.0M1, Mid-February08 -  1.6.0M2, April08 - 1.6.0Final</p>
 <p>Release themes:</p>
 <ul>
 <li>Java6 support
-<li>Memory usage improvements
+<li>Further annotation AspectJ language support
 <li>Incremental compilation speed in AJDT
 </ul>
-<p>AspectJ 1.6.0rc1 available 16-Apr-08 - see the downloads page.</p>
+<p>AspectJ 1.6.0 released 23-Apr-08 - see the downloads page.</p>
+<p>AspectJ 1.6.0rc1 available 16-Apr-08.</p>
 <p>AspectJ 1.6.0m2 available 26-Feb-08.</p>
 <p>AspectJ 1.6.0m1 available 16-Jan-08.</p>
 <p>
-<p>Shortcuts for detailed information:</p>
-<ul>
-<li><a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=AspectJ&target_milestone=1.6.0+RC1&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&status_whiteboard_type=allwordssubstr&status_whiteboard=&keywords_type=allwords&keywords=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&emailtype1=substring&email1=&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&cmdtype=doit&order=Reuse+same+sort+as+last+time&field0-0-0=noop&type0-0-0=noop&value0-0-0=">Fixed in 1.6.0rc1</a>
-<li><a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=AspectJ&target_milestone=1.6.0+M2&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&status_whiteboard_type=allwordssubstr&status_whiteboard=&keywords_type=allwords&keywords=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&emailtype1=substring&email1=&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&cmdtype=doit&order=Reuse+same+sort+as+last+time&field0-0-0=noop&type0-0-0=noop&value0-0-0=">Fixed in 1.6.0m2</a>
-<li><a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=AspectJ&target_milestone=1.6.0+M1&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&status_whiteboard_type=allwordssubstr&status_whiteboard=&keywords_type=allwords&keywords=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&emailtype1=substring&email1=&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&cmdtype=doit&order=Reuse+same+sort+as+last+time&field0-0-0=noop&type0-0-0=noop&value0-0-0=">Fixed in 1.6.0m1</a>
-</ul>
+<p>
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=AspectJ&target_milestone=1.6.0+M1&target_milestone=1.6.0+M2&target_milestone=1.6.0+RC1&target_milestone=1.6.0&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&status_whiteboard_type=allwordssubstr&status_whiteboard=&keywords_type=allwords&keywords=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&emailtype1=substring&email1=&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&cmdtype=doit&order=Reuse+same+sort+as+last+time&field0-0-0=noop&type0-0-0=noop&value0-0-0=">Bugs and enhancements addressed in 1.6.0</a>.
+
 </div>
 
 <div class="homeitem3col">

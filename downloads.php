@@ -95,7 +95,7 @@ function ListDevBuilds($dir){
 
 
 <p>The AspectJ compiler produces programs for any version of the Java platform 
-      (jdk1.1 and later). The compiler itself requires Java2 (1.3 or later) to run. 
+      (jdk1.1 and later). The compiler itself requires Java2 (1.4 or later) to run. 
       Consult the <a href="doc/released/faq.html#q:compability">FAQ</a>
       for more details.&nbsp; All releases are provided under the terms and 
       conditions of the <a href="http://www.eclipse.org/legal/notice.html">Eclipse.org 
@@ -155,12 +155,12 @@ function ListDevBuilds($dir){
   <h3 id="stable_release">Latest Stable Release</h3>
   <ul>
     <li>
-    <b>AspectJ 1.5.4, Released 20th December, 2007</b>
+    <b>AspectJ 1.6.0, Released 23rd April, 2008</b>
  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
     <tr>
       <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
       <td width="30%" align="right">
-          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/downloads/aspectj-1.5.4.jar">aspectj-1.5.4.jar</a> (~11M)
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.0.jar">aspectj-1.6.0.jar</a> (~11M)
       </td>
     </tr>
     </table>
@@ -170,8 +170,19 @@ function ListDevBuilds($dir){
 
   <!-- ============ ASPECTJ 6 MILESTONES -->
   <div class="homeitem3col">
-  <h3 id="milestones">Latest Milestone Release</h3>
+  <h3 id="milestones">AspectJ 6</h3>
   <ul>
+    <li>
+    <b>AspectJ 1.6.0, Released 23rd April, 2008</b>
+ 	<table border="0" cellspacing="0" cellpadding="0" width="100%">
+    <tr>
+      <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
+      <td width="30%" align="right">
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.0.jar">aspectj-1.6.0.jar</a> (~11M)
+      </td>
+    </tr>
+    </table>
+    </li>
       <li>
     <b>AspectJ 1.6.0rc1, Released 16th April, 2008</b>
  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
