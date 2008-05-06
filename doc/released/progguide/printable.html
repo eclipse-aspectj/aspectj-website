@@ -1784,7 +1784,7 @@ void around(Point p, int x): target(p)
       <tt>thisJoinPoint</tt> variable can only be used in the
       context of advice, just like <tt>this</tt> can only be used
       in the context of non-static methods and variable initializers. In
-      advice, <tt>thisJoinPoint</tt> is an object of type <a href="../api/org/aspectj/lang/JoinPoint.html" target="_top"><tt>org.aspectj.lang.JoinPoint</tt></a>.
+      advice, <tt>thisJoinPoint</tt> is an object of type <a href="../runtime-api/org/aspectj/lang/JoinPoint.html" target="_top"><tt>org.aspectj.lang.JoinPoint</tt></a>.
     </p><p>
       One way to use it is simply to print it out.  Like all Java objects,
       <tt>thisJoinPoint</tt> has a <tt>toString()</tt>
@@ -1917,7 +1917,7 @@ pointcut execsInProblemClass(): within(ProblemClass)
       </p><p>
         Information about the join point that was matched is available to
         advice through the special variable
-        <tt>thisJoinPoint</tt>, of type <a href="../api/org/aspectj/lang/JoinPoint.html" target="_top"><tt>org.aspectj.lang.JoinPoint</tt></a>.
+        <tt>thisJoinPoint</tt>, of type <a href="../runtime-api/org/aspectj/lang/JoinPoint.html" target="_top"><tt>org.aspectj.lang.JoinPoint</tt></a>.
         Through this object we can access information such as</p><div class="itemizedlist"><ul compact><li><a name="d0e2074"></a>
           the kind of join point that was matched
         </li><li><a name="d0e2076"></a>
@@ -2013,13 +2013,13 @@ cflow(this(Demo)) &amp;&amp; execution(void go())
             advice includes <tt>!execution(* go())</tt> to
             exclude it from the set of executions advised. </p></div><div class="sect4"><a name="d0e2169"></a><div class="titlepage"><div><h5 class="title"><a name="d0e2169"></a>Printing the class and method name</h5></div></div><p>
             The name of the method and that method's defining class are
-            available as parts of the <a href="../api/org/aspectj/lang/Signature.html" target="_top">org.aspectj.lang.Signature</a>
+            available as parts of the <a href="../runtime-api/org/aspectj/lang/Signature.html" target="_top">org.aspectj.lang.Signature</a>
             object returned by calling <tt>getSignature()</tt> on
             either <tt>thisJoinPoint</tt> or
             <tt>thisJoinPointStaticPart</tt>.
           </p></div><div class="sect4"><a name="d0e2186"></a><div class="titlepage"><div><h5 class="title"><a name="d0e2186"></a>Printing the parameters</h5></div></div><p>
             The static portions of the parameter details, the name and
-            types of the parameters, can be accessed through the <a href="../api/org/aspectj/lang/reflect/CodeSignature.html" target="_top"><tt>org.aspectj.lang.reflect.CodeSignature</tt></a>
+            types of the parameters, can be accessed through the <a href="../runtime-api/org/aspectj/lang/reflect/CodeSignature.html" target="_top"><tt>org.aspectj.lang.reflect.CodeSignature</tt></a>
             associated with the join point. All execution join points have code
             signatures, so the cast to <tt>CodeSignature</tt>
             cannot fail. </p><p>
@@ -3854,7 +3854,7 @@ aspect A {
     </p><div class="variablelist"><dl><dt><a name="d0e4121"></a><span class="term">
           <tt>thisJoinPoint</tt>
         </span></dt><dd>
-          an object of type <a href="../api/org/aspectj/lang/JoinPoint.html" target="_top"><tt>org.aspectj.lang.JoinPoint</tt></a>
+          an object of type <a href="../runtime-api/org/aspectj/lang/JoinPoint.html" target="_top"><tt>org.aspectj.lang.JoinPoint</tt></a>
       representing the join point at which the advice is executing.
         </dd><dt><a name="d0e4133"></a><span class="term">
           <tt>thisJoinPointStaticPart</tt>
@@ -3944,7 +3944,7 @@ aspect A {
         </span></dt><dd>
           any <i><tt>Type</tt></i> exception
           that gets thrown at any join point picked out by
-          <i><tt>Pointcut</tt></i> is wrapped in <a href="../api/org/aspectj/lang/SoftException.html" target="_top"><tt>org.aspectj.lang.SoftException</tt></a>.
+          <i><tt>Pointcut</tt></i> is wrapped in <a href="../runtime-api/org/aspectj/lang/SoftException.html" target="_top"><tt>org.aspectj.lang.SoftException</tt></a>.
         </dd><dt><a name="d0e4351"></a><span class="term">
           <tt>
             declare precedence :
@@ -5777,7 +5777,7 @@ ModifiersPattern =
         </p><p>
           There is no general way to detect these kinds of circularities at
           compile time.  If advice runs before its aspect is instantiated,
-          AspectJ will throw a <a href="../api/org/aspectj/lang/NoAspectBoundException.html" target="_top">
+          AspectJ will throw a <a href="../runtime-api/org/aspectj/lang/NoAspectBoundException.html" target="_top">
           <tt>org.aspectj.lang.NoAspectBoundException</tt></a>.
         </p></div></div><div class="sect2"><a name="aspect-privilege"></a><div class="titlepage"><div><h3 class="title"><a name="aspect-privilege"></a>Aspect privilege</h3></div></div><div class="itemizedlist"><ul><li><a name="d0e7226"></a><tt>privileged aspect <i><tt>Id</tt></i> { ... }</tt></li></ul></div><p>
         Code written in aspects is subject to the same access control rules as
