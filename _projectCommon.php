@@ -24,7 +24,7 @@ $Menu->setProjectBranding($branding);
 	# Define your project-wide Nav bars here.
 	# Format is Link text, link URL (can be http://www.someothersite.com/), target (_self, _blank), level (1, 2 or 3)
 	$Nav->addNavSeparator("AspectJ", 	"/aspectj/index.php");
-	$Nav->addCustomNav( "About This Project",
+	$Nav->addCustomNav( "&nbsp;&nbsp;&nbsp;&nbsp;About This Project",
     "/projects/project_summary.php?projectid=aspectj", "", 1  );
 	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;About AspectJ", "/aspectj/description.php", "_self", 1);
 	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Team", "/aspectj/team.php", 	"_self", 1);
