@@ -35,7 +35,7 @@
 	<h1>About</h1>
 		<table border="0" cellpadding="4">
           <tr>
-          	<td valign="top"><img border=0 src="logo.gif" width="164" height="229" alt="AJDT screenshot"></td>
+          	<!--td valign="top"><img border=0 src="logo.gif" width="164" height="229" alt="AJDT screenshot"></td-->
           	<td valign="top">&nbsp;</td>
             <td valign="top">
 
