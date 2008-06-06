@@ -26,7 +26,7 @@ $Menu->setProjectBranding($branding);
 	$Nav->addNavSeparator("AspectJ", 	"/aspectj/index.php");
 	$Nav->addCustomNav( "&nbsp;&nbsp;&nbsp;&nbsp;About This Project",
     "/projects/project_summary.php?projectid=tools.aspectj", "", 1  );
-	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;About AspectJ", "/aspectj/description.php", "_self", 1);
+	#$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;About AspectJ", "/aspectj/description.php", "_self", 1);
 	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Team", "/aspectj/team.php", 	"_self", 1);
 	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Plans", "/aspectj/plans_new.php", 	"_self", 1);
 
