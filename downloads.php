@@ -82,7 +82,8 @@ function ListDevBuilds($dir){
 	# End: page-specific settings	
 	#	
 	# $builds = ListDevBuilds('/home/data/httpd/download.eclipse.org/tools/aspectj/dev');
-	$builds = ListDevBuilds('$App->getDownloadBasePath()/tools/aspectj/devx');
+	$rootDir = $App->getDownloadBasePath();
+	$builds = ListDevBuilds("$rootDir/dev");
 	
 	#$builds = ListDevBuilds('c:/temp');
 		
