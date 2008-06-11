@@ -10,8 +10,7 @@ function date_cmp($f1, $f2) {
 function GetDevBuildsIn($dir){
    ini_set("max_execution_time",10);
    $devtag="aspectj-DEVELOPMENT-2";
-   $dir2=$App->getDownloadBasePath();
-   $root=opendir($dir) or die("Check $dir ! ($dir2)");
+   $root=opendir($dir) or die("Check $dir ! ($App->getDownloadBasePath())");
    while (false!== ($file=readdir($root))) {
      if($file=="." || $file=="..") {continue;}
      // echo "$file<br>";
