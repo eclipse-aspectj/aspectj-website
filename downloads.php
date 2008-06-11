@@ -10,7 +10,7 @@ function date_cmp($f1, $f2) {
 function GetDevBuildsIn($dir){
    ini_set("max_execution_time",10);
    $devtag="aspectj-DEVELOPMENT-2";
-   $root=opendir($dir) or die("Check $dir ! ($App->getDownloadBasePath())");
+   $root=opendir($dir) or die("Check $dir !");
    while (false!== ($file=readdir($root))) {
      if($file=="." || $file=="..") {continue;}
      // echo "$file<br>";
@@ -80,8 +80,10 @@ function ListDevBuilds($dir){
 	# $Nav->addCustomNav("Google", "http://www.google.com/", "_blank", 3);
 
 	# End: page-specific settings	
-		
-	$builds = ListDevBuilds('/home/data/httpd/download.eclipse.org/tools/aspectj/dev');
+	#	
+	# $builds = ListDevBuilds('/home/data/httpd/download.eclipse.org/tools/aspectj/dev');
+	$builds = ListDevBuilds('$App->getDownloadBasePath()/tools/aspectj/dev');
+	
 	#$builds = ListDevBuilds('c:/temp');
 		
 		
