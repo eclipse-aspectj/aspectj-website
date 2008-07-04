@@ -36,7 +36,7 @@
 	<h1>Plans</h1>
 
 <p>
-<i>Last updated: 20 March 2008</i>
+<i>Last updated: 3 July 2008</i>
 </p>
 
 <p>
@@ -49,9 +49,19 @@
   
 </p>
 
+
+<div class="homeitem3col">
+<h3>AspectJ1.6.2</h3>
+<p>Target: 30-September-08</p>
+<p>Release themes:</p>
+<ul>
+<li>being discussed...
+</ul>
+</div>
+
 <div class="homeitem3col">
 <h3>AspectJ1.6.1</h3>
-<p>Target: 30-Jun-08</p>
+<p>Released: 3-Jul-08</p>
 <p>Release themes:</p>
 <ul>
 <li>load-time weaving footprint 

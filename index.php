@@ -89,11 +89,15 @@
 			<h3>News and Events</h3>
    <ul>
 
-   <li>AspectJ 1.6.1rc1 is now <a href="downloads.php">available for download</a>.
+   <li>AspectJ 1.6.1 is now <a href="downloads.php">available for download</a>.
    Please try it out!  See the <a href="doc/released/README-161.html">readme</a>
    for more information.  This release contains over 60 bug fixes as well as a
-   refactored weaver that weaves faster using less memory.  If no major issues
-   are found, the final version of 1.6.1 should be available in a week or so.
+   refactored weaver that weaves faster using less memory.
+   <br><div align="right"><span class="dates"><i>posted 03-07-08</i></span></div>
+   </li>
+   
+   <li>AspectJ 1.6.1rc1 is now <a href="downloads.php">available for download</a>.
+   Please try it out!
    <br><div align="right"><span class="dates"><i>posted 25-06-08</i></span></div>
    </li>
    
