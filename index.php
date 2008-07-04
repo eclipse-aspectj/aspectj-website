@@ -97,33 +97,32 @@
    </li>
    
    <li>AspectJ 1.6.1rc1 is now <a href="downloads.php">available for download</a>.
-   Please try it out!
    <br><div align="right"><span class="dates"><i>posted 25-06-08</i></span></div>
    </li>
    
    <li>AspectJ 1.6.0 final is now <a href="downloads.php">available for download</a>.
-   Please try it out!  See the <a href="doc/released/README-160.html">readme</a> 
+   See the <a href="doc/released/README-160.html">readme</a> 
    for more information.  This release supports parameter annotation matching and
    annotation value matching (see the readme for more information).
    <br><div align="right"><span class="dates"><i>posted 23-04-08</i></span></div>
    </li>
    
    <li>AspectJ 1.6.0rc1 is now <a href="downloads.php">available for download</a>.
-   Please try it out!  See the <a href="doc/released/README-160.html">readme</a> 
+   See the <a href="doc/released/README-160.html">readme</a> 
    for more information.  This release supports parameter annotation matching and
    annotation value matching (see the readme for more information).
    <br><div align="right"><span class="dates"><i>posted 16-04-08</i></span></div>
    </li>
 
    <li>AspectJ 1.6.0m2 is now <a href="downloads.php">available for download</a>.
-   Please try it out!  See the <a href="doc/released/README-160.html">readme</a> 
+   See the <a href="doc/released/README-160.html">readme</a> 
    for more information.  This release supports parameter annotation matching and
    annotation value matching (see the readme for more information).
    <br><div align="right"><span class="dates"><i>posted 26-02-08</i></span></div>
    </li>
    
    <li>AspectJ 1.6.0m1 is now <a href="downloads.php">available for download</a>.
-   This is the first build of AspectJ to support Java6.  Please try it out!
+   This is the first build of AspectJ to support Java6.
    See the <a href="doc/released/README-160.html">readme</a> for more information.
    <br><div align="right"><span class="dates"><i>posted 16-01-08</i></span></div>
    </li>
