@@ -193,7 +193,7 @@ the Ant task
 <img border="0" border="0" height="13" width="13" src="images/next.gif" alt="next"/></a> 
 
 the documentation tool
-<a href="doc/released/devguide/rn01re02.html">AJDoc</a>
+<a href="doc/released/devguide/ajdoc-ref.html">AJDoc</a>
 <a href="doc/next/devguide/ajdoc-ref.html">
 <img border="0" border="0" height="13" width="13" src="images/next.gif" alt="next"/></a> 
 
