@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<?xml-stylesheet type="text/xsl" href="http://www.eclipse.org/projects/project-plan.xsl"?>
+<plan plan-format="1.0" xmlns="http://www.eclipse.org/project/plan" xmlns:html="http://www.w3.org/1999/xhtml"
+      name="AspectJ">
+   <release projectid="tools.aspectj" version="1.0"/>
+   <introduction>
+     <html:div>The AspectJ release versions are intended to line up with the current 'popular' Java version.  Currently
+     Java is on 1.6 and so AspectJ is also on 1.6.  The AspectJ project then releases service refreshes every
+     few months on that main version number.  In 2008 we have released 1.6.0/1.6.1 and are planning two more
+     before year end. This is the release model we plan to continue with. </html:div>
+     <html:div>AspectJ always maintains that HEAD will build clean and pass all the tests we have (currently
+     around 3700).  This means the development builds created from HEAD after every commit are always at least
+     as good as the previous build.</html:div>
+   </introduction>
+   <release_deliverables>
+     <html:div>AspectJ releases are delivered as a single .jar download that installs a compiler and the related
+     tools and documentation when executed.  The packaging of an AspectJ release into plugins consumable in
+     an Eclipse environment is done by the AJDT project.</html:div>
+   </release_deliverables>
+   <release_milestones>
+      <preamble>
+         <html:div></html:div>
+      </preamble>
+      <milestone date="9/30/2008" milestone="1.6.2"><html:div>Service refresh of AspectJ 1.6</html:div></milestone>
+      <milestone date="12/31/2008" milestone="1.6.3"><html:div>Service refresh of AspectJ 1.6</html:div></milestone>
+      <postamble><html:div></html:div></postamble>
+   </release_milestones>
+   <target_environments>
+     <html:div>The AspectJ compiler pre-reqs a Java1.4 environment (it is based on the Eclipse compiler and so
+     Java requirements for AspectJ tend to follow Eclipse compiler requirements).  The woven code produced
+     by AspectJ will run on any VM from Java 1.1 onwards.</html:div>
+     <internationalization>
+          <html:div>We have bundles for many of the messages in the project but they are not translated.</html:div>
+     </internationalization>
+   </target_environments>
+   <compatibility_with_previous_releases>
+       <html:div>AspectJ is strong on compatibility and any level of AspectJ is always intended to parse code/aspects
+       built with any earlier version of AspectJ without requiring recompilation.</html:div>
+   </compatibility_with_previous_releases>
+   <themes_and_priorities>
+     <preamble>
+         <html:div></html:div>
+     </preamble>
+     <theme name="Improving the IDE experience (target 1.6.2)">
+        <description><html:div>One factor limiting the take up of AspectJ is that when converting a Java project to an AspectJ project
+        there is a reduction in responsiveness of incremental builds.  A tiny degradation is reasonable since AspectJ is
+        also weaving in addition to compiling, but currently the degradation is more than is reasonable.</html:div></description>
+        <committed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=%5Bplan%5D+%5Bincremental%5D&amp;product=AspectJ&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
+           <html:div>Planned [incremental] changes</html:div></committed>
+        <proposed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=%5Bplan%5D+%5Bincremental%5D&amp;product=AspectJ&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
+           <html:div>Planned [incremental] changes</html:div></proposed>
+     </theme>
+     <theme name="Memory Usage (target 1.6.3)">
+        <description><html:div>Improving it across all parts of AspectJ: compilation, weaving and load-time weaving</html:div></description>
+        <committed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=%5Bplan%5D+%5Bmemory%5D&amp;product=AspectJ&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
+   		   <html:div>Planned [memory] changes</html:div></committed>
+        <proposed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=%5Bplan%5D+%5Bmemory%5D&amp;product=AspectJ&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
+           <html:div>Planned [memory] changes</html:div></proposed>
+     </theme>
+     <theme name="Reusable Matching (target 1.6.3)">
+        <description><html:div>The weaver currently matches based on a bytecode representation of compiled types.  A reusable pointcut matcher would
+        allow other representations of the types to be used for matching purposes.  A key goal here would be support for a JDT Java Element
+        representation of types - this would mean compilation of code would no longer be required to determine a match.  This would
+        result in faster matching in the IDE (matching as you type..) and enable better support for scenarios where weaving is not done
+        until later - for example development of aspects for use with the Equinox Aspects project. </html:div></description>
+        <committed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=%5Bplan%5D+%5Bsplit%5D&amp;product=AspectJ&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
+   		    <html:div>Planned [split] changes</html:div></committed>
+        <proposed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=%5Bplan%5D+%5Bsplit%5D&amp;product=AspectJ&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
+            <html:div>Planned [split] changes</html:div></proposed>
+     </theme>
+   </themes_and_priorities>
+   <!-- appendix name="Project Refactoring">
+   </appendix-->	
+ </plan>
