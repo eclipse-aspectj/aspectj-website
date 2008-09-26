@@ -2783,7 +2783,10 @@ java -javaagent:aspectjweaver.jar -classpath "aspects.jar:${CLASSPATH}" ..
                 For more information, see the
                 <a href="devguide/index.html" target="_top">
               AspectJ Development Environment Guide</a>.
-            </p></div></div></div><div class="qandadiv"><h3 class="title"><a name="Technology"></a>14 Understanding AspectJ Technology</h3><div class="qandaentry"><div class="question"><p><a name="q:implementation"></a><b>1. </b>Do I need to know how the compiler or weaver works?
+            </p></div></div></div><div class="qandadiv"><h3 class="title"><a name="Technology"></a>14 Understanding AspectJ Technology</h3>
+            
+          <div class="qandaentry"><div class="question"><p><a name="q:implementation"></a>
+            <b>1. </b>Do I need to know how the compiler or weaver works?
           </p></div><div class="answer"><p><a name="d0e2514"></a><b></b>Writing AspectJ programs only requires understanding the
           <a href="progguide/index.html" target="_top">Programming Guide</a>.
           However, current implementations do not control everything in
@@ -2809,7 +2812,10 @@ java -javaagent:aspectjweaver.jar -classpath "aspects.jar:${CLASSPATH}" ..
 		  Then email the list to see if it's been considered. 
 		  For more information, see
 		      <a href="#Developers">AspectJ Project Development</a>.     
-          </p></div></div><div class="qandaentry"><div class="question"><p><a name="q:whitepapers"></a><b>2. </b>How does the compiler/weaver work? Are there any white papers?
+          </p></div></div>
+          
+          
+          <div class="qandaentry"><div class="question"><p><a name="q:whitepapers"></a><b>2. </b>How does the compiler/weaver work? Are there any white papers?
           </p></div><div class="answer"><p><a name="d0e2531"></a><b></b>
           There are currently no documents describing this process in detail.  
           You can compile programs and inspect the generated source or bytecode,
@@ -2909,7 +2915,33 @@ java -javaagent:aspectjweaver.jar -classpath "aspects.jar:${CLASSPATH}" ..
           do not use bytecode weaving, at load-time or otherwise,
           to modify .class files protected by license,
           without permission from the licensor.
-          </p></div></div></div><div class="qandadiv"><h3 class="title"><a name="Developers"></a>15 AspectJ Project Development</h3><div class="qandaentry"><div class="question"><p><a name="q:howitworks"></a><b>1. </b>I'm interested in the code implementing AspectJ.
+          </p></div></div>
+          
+        <div class="qandaentry">
+          <div class="question"><p><a name="q:ltwAppServers"></a>
+          <b>5. </b>How do I get load-time weaving to work in my chosen application server?</p></div><div class="answer><p>
+          You have two choices based on how wide you want the weaving to take effect: application-server wide and application-specific weaving. 
+          You choose between the two by loading aspect artifacts--aspects, associated types, and aop.xml--through the right classloader. 
+          The aop.xml must be in the META-INF directory on the classpath for the chosen classloader. In either case, you modify the 
+          startup script to specify the -javaagent:path-to/aspectjweaver.jar option to the Java virtual machine. Note that it is not 
+          essential that all the artifacts be placed in a single jar.  
+          </p><p>For application-server wide weaving, you make aspect artifacts accessible to the server's classloader. Typically, you 
+          achieve such access by putting these artifacts in the server's lib directory. For example, for Tomcat, you will place 
+          the aspect artifacts in the TOMCAT_HOME/lib directory.</p><p>For application-specific weaving, you make aspect artifacts accessible to application classloader by bundling 
+		  them along with application's classes. For example, for a web application, you will place the aspect artifacts in 
+		  the MY_APP/WEB-INF/lib and/or MY_APP/WEB-INF/classes directory.</p><p>
+		  We recommend that you start with application-specific weaving.
+          Note that you have an additional option if your application is based on the Spring framework. If you deploy in one of 
+          the supported web servers or application servers, you can avoid modifications to the startup script. Please 
+          see <a href="http://static.springframework.org/spring/docs/2.5.x/reference/aop.html#aop-aj-ltw-spring" target="_top">http://static.springframework.org/spring/docs/2.5.x/reference/aop.html#aop-aj-ltw-spring</a> for more details.
+          
+          </div>
+          </div>
+          
+          </div>
+          
+          
+          <div class="qandadiv"><h3 class="title"><a name="Developers"></a>15 AspectJ Project Development</h3><div class="qandaentry"><div class="question"><p><a name="q:howitworks"></a><b>1. </b>I'm interested in the code implementing AspectJ.
           </p></div><div class="answer"><p><a name="d0e2606"></a><b></b>Most people do not need to see the code for AspectJ;
           they can download the binary distribution for documentation
           and tools for writing AspectJ programs.
