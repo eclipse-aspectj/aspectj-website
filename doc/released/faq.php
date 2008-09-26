@@ -2919,7 +2919,8 @@ java -javaagent:aspectjweaver.jar -classpath "aspects.jar:${CLASSPATH}" ..
           
         <div class="qandaentry">
           <div class="question"><p><a name="q:ltwAppServers"></a>
-          <b>5. </b>How do I get load-time weaving to work in my chosen application server?</p></div><div class="answer><p>
+          <b>5. </b>How do I get load-time weaving to work in my chosen application server?</p></div>
+          <div class="answer"><p><a name="ltwAppServers"></a><b></b>
           You have two choices based on how wide you want the weaving to take effect: application-server wide and application-specific weaving. 
           You choose between the two by loading aspect artifacts--aspects, associated types, and aop.xml--through the right classloader. 
           The aop.xml must be in the META-INF directory on the classpath for the chosen classloader. In either case, you modify the 
