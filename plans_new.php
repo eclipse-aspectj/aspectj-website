@@ -52,10 +52,10 @@
 
 <div class="homeitem3col">
 <h3>AspectJ1.6.2</h3>
-<p>Target: 30-September-08</p>
+<p>Target: 3-Oct-08</p>
 <p>Release themes:</p>
 <ul>
-<li>being discussed...
+<li>see <a href="http://www.eclipse.org/projects/project-plan.php?projectid=tools.aspect"/>the new plan page</a>
 </ul>
 </div>
 
