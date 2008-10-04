@@ -1,5 +1,16 @@
 Committers
-aclement,acolyer,mwebster,wisberg,mkersten,avasseur
+aclement,acolyer,mkersten
+
+Developers
+For AspectJ 1.6.2:
+component,      bug#,     name,               size,       committer,      description
+ajdoc,          245286,   Arturo Salazar,     <50,        aclement,       not generating right doc for generic ctor
+ajdoc,          245307,   Arturo Salazar,     <50,        aclement,       missing import in code gen for ajdoc
+
+Developers
+For AspectJ 1.6.1:
+component,      bug#,     name,               size,       committer,      description
+ajdoc,          164340,   Helen Beeken,       <50,        aclement,       class ctor not appearing after using ajdoc
 
 Developers
 For AspectJ 1.6.0:
