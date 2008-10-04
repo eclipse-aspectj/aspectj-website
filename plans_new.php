@@ -51,11 +51,20 @@
 
 
 <div class="homeitem3col">
-<h3>AspectJ1.6.2</h3>
-<p>Target: 3-Oct-08</p>
+<h3>AspectJ1.6.3</h3>
+<p>Target: Dec-08</p>
 <p>Release themes:</p>
 <ul>
 <li>see <a href="http://www.eclipse.org/projects/project-plan.php?projectid=tools.aspect"/>the new plan page</a>
+</ul>
+</div>
+
+<div class="homeitem3col">
+<h3>AspectJ1.6.2</h3>
+<p>Released: 03-Oct-08</p>
+<p>Release themes:</p>
+<ul>
+<li>IDE Incremental compilation
 </ul>
 </div>
 
