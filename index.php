@@ -91,7 +91,8 @@
 
    <li>AspectJ 1.6.2 is now <a href="downloads.php">available for download</a>.
    Please try it out!  See the <a href="doc/released/README-162.html">readme</a>
-   for more information.
+   for more information.  For this release we are also making available the src
+   jar from the download page.
    <br><div align="right"><span class="dates"><i>posted 03-10-08</i></span></div>
    </li>
 
