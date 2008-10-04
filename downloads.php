@@ -189,7 +189,6 @@ function ListDevBuilds($dir){
     </table>
     </li>
     <li>
-    <li>
     <b>AspectJ 1.6.1, Released 3rd July, 2008</b>
  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
     <tr>
