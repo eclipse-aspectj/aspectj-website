@@ -89,6 +89,12 @@
 			<h3>News and Events</h3>
    <ul>
 
+   <li>AspectJ 1.6.3 release candidate 1 is now <a href="downloads.php">available for download</a>.
+   Please try it out!  See the <a href="doc/released/README-163.html">readme</a>
+   for more information.
+   <br><div align="right"><span class="dates"><i>posted 17-Dec-08</i></span></div>
+   </li>
+   
    <li>AspectJ 1.6.2 is now <a href="downloads.php">available for download</a>.
    Please try it out!  See the <a href="doc/released/README-162.html">readme</a>
    for more information.  For this release we are also making available the src
@@ -113,37 +119,11 @@
    annotation value matching (see the readme for more information).
    <br><div align="right"><span class="dates"><i>posted 23-04-08</i></span></div>
    </li>
-   
-   <li>AspectJ 1.6.0rc1 is now <a href="downloads.php">available for download</a>.
-   See the <a href="doc/released/README-160.html">readme</a> 
-   for more information.  This release supports parameter annotation matching and
-   annotation value matching (see the readme for more information).
-   <br><div align="right"><span class="dates"><i>posted 16-04-08</i></span></div>
-   </li>
-
-   <li>AspectJ 1.6.0m2 is now <a href="downloads.php">available for download</a>.
-   See the <a href="doc/released/README-160.html">readme</a> 
-   for more information.  This release supports parameter annotation matching and
-   annotation value matching (see the readme for more information).
-   <br><div align="right"><span class="dates"><i>posted 26-02-08</i></span></div>
-   </li>
-   
-   <li>AspectJ 1.6.0m1 is now <a href="downloads.php">available for download</a>.
-   This is the first build of AspectJ to support Java6.
-   See the <a href="doc/released/README-160.html">readme</a> for more information.
-   <br><div align="right"><span class="dates"><i>posted 16-01-08</i></span></div>
-   </li>
 
    <li>AspectJ 1.5.4 is now <a href="downloads.php">available for download</a>.
    It includes <a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=AspectJ&target_milestone=1.5.4&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&status_whiteboard_type=allwordssubstr&status_whiteboard=&keywords_type=allwords&keywords=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&emailtype1=substring&email1=&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&cmdtype=doit&order=Reuse+same+sort+as+last+time&field0-0-0=noop&type0-0-0=noop&value0-0-0=">
    numerous fixes</a> that have been incorporated since the 1.5.3 release.  
    <br><div align="right"><span class="dates"><i>posted 20-12-07</i></span></div>
-   </li>
-   
-   <li>AspectJ 1.5.4 release candidate 1 is now <a href="downloads.php">available for download</a>.
-   It includes <a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=AspectJ&target_milestone=1.5.4&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&status_whiteboard_type=allwordssubstr&status_whiteboard=&keywords_type=allwords&keywords=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&emailtype1=substring&email1=&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&cmdtype=doit&order=Reuse+same+sort+as+last+time&field0-0-0=noop&type0-0-0=noop&value0-0-0=">
-   numerous fixes</a> that have been incorporated since the 1.5.3 release.  
-   <br><div align="right"><span class="dates"><i>posted 7-12-07</i></span></div>
    </li>
    
    <li>The AspeCt-oriented C (ACC) team have released version 0.7 of their compiler and 

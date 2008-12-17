@@ -163,7 +163,7 @@ function ListDevBuilds($dir){
     <tr>
       <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
       <td width="30%" align="right">
-          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.3rc1.jar">aspectj-1.6.3.jar</a> (~11M)<br>
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.3rc1.jar">aspectj-1.6.3rc1.jar</a> (~11M)<br>
           <!--a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.2-src.jar">aspectj-1.6.2-src.jar</a-->
       </td>
     </tr>
