@@ -198,8 +198,13 @@
 			  The pointcut call(void run()) 
 			  won't pick out a call using reflection, like
 			  ((Method)run).invoke(null, args).
-          </a></dt><dt>23.  <a href="#q:currentbugs">What are the bugs now most affecting users?</a></dt><dt>24.  <a href="#q:runtimeMemory">What extra memory is required at runtime?
-          </a></dt></dl></dd><dt>12 <a href="#aj11">AspectJ 1.1 and eclipse.org</a></dt><dd><dl><dt>1.  <a href="#q:whyeclipse">Why did the AspectJ project move to eclipse.org?
+          </a></dt>
+          <dt>23.  <a href="#q:currentbugs">What are the bugs now most affecting users?</a></dt>
+          <dt>24.  <a href="#q:runtimeMemory">What extra memory is required at runtime?
+          </a></dt>
+          <dt>25.  <a href="#q:verifyError">I get a verify error when I run my code, why is that?
+          </a></dt>
+          </dl></dd><dt>12 <a href="#aj11">AspectJ 1.1 and eclipse.org</a></dt><dd><dl><dt>1.  <a href="#q:whyeclipse">Why did the AspectJ project move to eclipse.org?
           </a></dt><dt>2.  <a href="#q:eclipserequired">Do I have to download Eclipse to use AspectJ?
           </a></dt><dt>3.  <a href="#q:eclipseetc">What are the relationships between AspectJ, JDT, 
                 Eclipse, AJDT, and IDE support generally?
@@ -2565,7 +2570,8 @@ aspect A {
 			  <a href="http://bugs.eclipse.org/bugs/buglist.cgi?product=AspectJ&amp;keywords=info" target="_top">
 						  http://bugs.eclipse.org/bugs/buglist.cgi?product=AspectJ&amp;keywords=info
 						  </a>
-		  </p></div></div><div class="qandaentry"><div class="question"><p><a name="q:runtimeMemory"></a><b>24. </b>What extra memory is required at runtime?
+		  </p></div></div><div class="qandaentry"><div class="question">
+		  <p><a name="q:runtimeMemory"></a><b>24. </b>What extra memory is required at runtime?
           </p></div><div class="answer"><p><a name="d0e2340"></a><b></b>When running classes produced by the AspectJ weaver or compiler,
               there are no significant hidden uses of memory.  As would be expected,
               each aspect is instantiated.  The per-object aspects (like
@@ -2597,7 +2603,35 @@ aspect A {
               strategies for minimizing this (with different trade-off's),
               so the time and memory required for load-time weaving will
               vary as load-time weaving evolves.
-		  </p></div></div></div><div class="qandadiv"><h3 class="title"><a name="aj11"></a>12 AspectJ 1.1 and eclipse.org</h3><div class="qandaentry"><div class="question"><p><a name="q:whyeclipse"></a><b>1. </b>Why did the AspectJ project move to eclipse.org?
+		  </p></div></div></div>
+		  <div class="qandaentry"><div class="question">
+		  <p><a name="q:verifyError"></a><b>25. </b>I get a verify error when I run my code, why is that?
+          </p></div><div class="answer"><p><b></b>
+          When weaving after advice into any piece of code, the AspectJ strategy is to make all exit 
+          points from that code jump to a single exit point that executes the advice before 
+          returning. There is a verifier rule in the JVM specification that specifies that 
+          all routes to a jump destination must have the same height stack when they get there, 
+          regardless of the route taken to get there through the bytecode. The CGLIB generated
+          code has different stack heights at the various exit points. This is not a problem with
+          the CGLIB generated code, it is perfectly valid - it is just unusual and the AspectJ 
+          weaving strategy causes the verify error to trigger when it makes all exits jump to a 
+          single destination. 
+	</p><p>
+AspectJ could cope with this and instead implement after advice by calling the advice and 
+returning at each exit point. However, it is unlikely that the user actually meant 
+to weave the CGLIB generated code in the first place - and so usually the right thing to 
+do is to exclude CGLIB generate code from the weaving process by appropriate use of the 
+exclude element in the aop.xml. A typical clause in the aop.xml might look as follows: 
+</p><p>
+<pre class="programlisting">
+ &lt;weaver&gt;
+   &lt;exclude within="*CGLIB*" /&gt; 
+ &lt;/weaver&gt;
+          
+          </pre><p>
+		  </p></div></div></div>
+		  
+		  <div class="qandadiv"><h3 class="title"><a name="aj11"></a>12 AspectJ 1.1 and eclipse.org</h3><div class="qandaentry"><div class="question"><p><a name="q:whyeclipse"></a><b>1. </b>Why did the AspectJ project move to eclipse.org?
           </p></div><div class="answer"><p><a name="d0e2383"></a><b></b>From the message sent to users:
           </p><p>
             AspectJ has come a long way -- the language has
