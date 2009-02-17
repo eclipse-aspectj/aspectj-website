@@ -202,7 +202,7 @@
           <dt>23.  <a href="#q:currentbugs">What are the bugs now most affecting users?</a></dt>
           <dt>24.  <a href="#q:runtimeMemory">What extra memory is required at runtime?
           </a></dt>
-          <dt>25.  <a href="#q:verifyError">I get a verify error when I run my code, why is that?
+          <dt>25.  <a href="#q:verifyError">I get a VerifyError when running CGLIB generated code that has been woven by AspectJ. Why is this? 
           </a></dt>
           </dl></dd><dt>12 <a href="#aj11">AspectJ 1.1 and eclipse.org</a></dt><dd><dl><dt>1.  <a href="#q:whyeclipse">Why did the AspectJ project move to eclipse.org?
           </a></dt><dt>2.  <a href="#q:eclipserequired">Do I have to download Eclipse to use AspectJ?
@@ -2605,7 +2605,8 @@ aspect A {
               vary as load-time weaving evolves.
 		  </p></div></div></div>
 		  <div class="qandaentry"><div class="question">
-		  <p><a name="q:verifyError"></a><b>25. </b>I get a verify error when I run my code, why is that?
+		  <p><a name="q:verifyError"></a><b>25. </b>I get a VerifyError when running CGLIB generated code that has been woven by AspectJ. Why is this? 
+
           </p></div><div class="answer"><p><b></b>
           When weaving after advice into any piece of code, the AspectJ strategy is to make all exit 
           points from that code jump to a single exit point that executes the advice before 
