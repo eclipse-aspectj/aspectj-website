@@ -100,12 +100,6 @@
    <br><div align="right"><span class="dates"><i>posted 23-Dec-08</i></span></div>
    </li>
    
-   <li>AspectJ 1.6.3 release candidate 1 is now <a href="downloads.php">available for download</a>.
-   Please try it out!  See the <a href="doc/released/README-163.html">readme</a>
-   for more information.
-   <br><div align="right"><span class="dates"><i>posted 17-Dec-08</i></span></div>
-   </li>
-   
    <li>AspectJ 1.6.2 is now <a href="downloads.php">available for download</a>.
    Please try it out!  See the <a href="doc/released/README-162.html">readme</a>
    for more information.  For this release we are also making available the src
@@ -165,24 +159,7 @@
    <br><div align="right"><span class="dates"><i>posted 30-06-06</i></span></div>
    </li>
    
-   <li>
-   AspectJ 1.5.2 release candidate 1 is now <a href="downloads.php">available for download</a>.
-   It includes approximately 60 fixes and enhancements that have been incorporated since the 1.5.1 
-   release.  For full details see the 
-   <a href="doc/released/README-152.html">1.5.2 README</a>.
-   <br><div align="right"><span class="dates"><i>posted 26-06-06</i></span></div>
-	</li>
    
-	<li>
-A podcast <a href="http://www.se-radio.net/index.php?post_id=78154">
-   interview with Gregor Kiczales</a> recorded at this year's AOSD conference
-   is now available at <a href="http://www.se-radio.net">Software Engineering Radio</a>.
-   The interview covers a number of topics including the history of AOP, the
-   relationship of AOP to interceptors, industry acceptance of AOP, early aspects,
-   and adoption strategies.
-
-<br><div align="right"><span class="dates"><i>posted 09-04-06</i></span></div>
-	</li>
 
 <li>
 AspectJ 1.5.1 is now <a href="downloads.php">available for download</a>. This
