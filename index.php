@@ -88,6 +88,11 @@
 		<div class="homeitem">
 			<h3>News and Events</h3>
    <ul>
+   
+   <li>Two new blogs are online for learning more about AJDT and tips and tricks with AspectJ.<br>
+   <a href="http://andrewclement.blogspot.com/">AspectJ Programming</a><br>
+   <a href="http://contraptionsforprogramming.blogspot.com/">Contraptions for Programming</a><br>
+   </li>
 
    <li>AspectJ 1.6.3 is now <a href="downloads.php">available for download</a>.
    Please try it out!  See the <a href="doc/released/README-163.html">readme</a>
