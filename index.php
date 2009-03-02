@@ -75,11 +75,10 @@
   <h3>Quick Links</h3>
 	<ul>
 <li>For Eclipse development: <a href="/ajdt">AJDT: The AspectJ Development Tools</a></li>
+<li><a href="http://andrewclement.blogspot.com/">AspectJ Programming Blog</a></li>
 <li>Popular AspectJ downloads: <a href="/aspectj/downloads.php#most_recent">Latest development build</a> | <a href="/aspectj/downloads.php#stable_release">Latest stable release</a> | <a href="/aspectj/downloads.php">More downloads...</a></li>
-	<li>Popular AspectJ docs: <a href="/aspectj/doc/released/adk15notebook/index.html">AspectJ 5 Developer's Notebook</a> | <a href="/aspectj/doc/released/progguide/index.html">Programming Guide</a> | <a href="/aspectj/docs.php">More docs...</a></li>
-        <li><a href="http://www.amazon.com/exec/obidos/ASIN/0321245873/qid=1112868888/sr=2-3/ref=pd_bbs_b_2_3/103-5274059-2049410">Eclipse AspectJ: </a> the book, by some of the leading AspectJ committers</li>
-        <li><a href="http://aosd.net/">AOSD.net</a></li>
-        <li><a href="http://www.parc.com/research/csl/projects/aspectj/default.html">AspectJ PARC Page</a></li>
+<li>Popular AspectJ docs: <a href="/aspectj/doc/released/adk15notebook/index.html">AspectJ 5 Developer's Notebook</a> | <a href="/aspectj/doc/released/progguide/index.html">Programming Guide</a> | <a href="/aspectj/docs.php">More docs...</a></li>
+<li><a href="http://www.amazon.com/exec/obidos/ASIN/0321245873/qid=1112868888/sr=2-3/ref=pd_bbs_b_2_3/103-5274059-2049410">Eclipse AspectJ: </a> the book, by some of the leading AspectJ committers</li>
 </ul>
 </div>
 		
