@@ -88,6 +88,13 @@
 			<h3>News and Events</h3>
    <ul>
    
+   
+   <li>Two new blogs are online for learning more about AJDT and tips and tricks with AspectJ.<br>
+   <a href="http://andrewclement.blogspot.com/">AspectJ Programming</a><br>
+   <a href="http://contraptionsforprogramming.blogspot.com/">Contraptions for Programming</a><br>
+   <br><div align="right"><span class="dates"><i>posted 01-Mar-09</i></span></div>
+   </li>
+   
    <li>Ramnivas Laddad has updated "AspectJ in Action"!<br>
    <i>AspectJ in Action, Second Edition is a revised and updated edition of the bestselling first edition. 
    This book, now covering AspectJ 6 and Spring 2.5, will guide you through AOP and AspectJ using 
@@ -96,13 +103,8 @@
     <a href="http://manning.com/laddad2/"/>AspectJ in Action, Second Edition</a><br>
 March 2009<br>
 by Ramnivas Laddad<br>
+<div align="right"><span class="dates"><i>posted 01-Mar-09</i></span></div>
 </li>
-   
-   <li>Two new blogs are online for learning more about AJDT and tips and tricks with AspectJ.<br>
-   <a href="http://andrewclement.blogspot.com/">AspectJ Programming</a><br>
-   <a href="http://contraptionsforprogramming.blogspot.com/">Contraptions for Programming</a><br>
-   <br><div align="right"><span class="dates"><i>posted 01-Mar-09</i></span></div>
-   </li>
 
    <li>AspectJ 1.6.3 is now <a href="downloads.php">available for download</a>.
    Please try it out!  See the <a href="doc/released/README-163.html">readme</a>
