@@ -88,6 +88,16 @@
 			<h3>News and Events</h3>
    <ul>
    
+   <li>Ramnivas Laddad has updated "AspectJ in Action"!<br>
+   <i>AspectJ in Action, Second Edition is a revised and updated edition of the bestselling first edition. 
+   This book, now covering AspectJ 6 and Spring 2.5, will guide you through AOP and AspectJ using 
+   practical applications so you can create systems that are easier to understand, implement, and maintain.</i>
+   <br>
+    <a href="http://manning.com/laddad2/"/>AspectJ in Action, Second Edition</a><br>
+March 2009<br>
+by Ramnivas Laddad<br>
+</li>
+   
    <li>Two new blogs are online for learning more about AJDT and tips and tricks with AspectJ.<br>
    <a href="http://andrewclement.blogspot.com/">AspectJ Programming</a><br>
    <a href="http://contraptionsforprogramming.blogspot.com/">Contraptions for Programming</a><br>
@@ -178,6 +188,13 @@ AspectJ 1.5.1 is now <a href="downloads.php">available for download</a>. This
 	<div class="homeitem">
 			<h3>Recent Books and Articles</h3>
 	          <ul>
+
+<li>
+ <br>
+    <a href="http://manning.com/laddad2/"/>AspectJ in Action, Second Edition</a><br>
+March 2009<br>
+by Ramnivas Laddad
+</li>
 
 <li>
 <a href="http://www.infoq.com/articles/aspectj-with-ajdt">Making AspectJ development easier with AJDT</a>
