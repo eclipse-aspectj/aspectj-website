@@ -96,9 +96,9 @@
    </li>
    
    <li>Ramnivas Laddad has updated "AspectJ in Action"!<br>
-   <i>AspectJ in Action, Second Edition is a revised and updated edition of the bestselling first edition. 
+   <i>"AspectJ in Action, Second Edition is a revised and updated edition of the bestselling first edition. 
    This book, now covering AspectJ 6 and Spring 2.5, will guide you through AOP and AspectJ using 
-   practical applications so you can create systems that are easier to understand, implement, and maintain.</i>
+   practical applications so you can create systems that are easier to understand, implement, and maintain."</i>
    <br>
     <a href="http://manning.com/laddad2/"/>AspectJ in Action, Second Edition</a><br>
 March 2009<br>
@@ -192,7 +192,6 @@ AspectJ 1.5.1 is now <a href="downloads.php">available for download</a>. This
 	          <ul>
 
 <li>
- <br>
     <a href="http://manning.com/laddad2/"/>AspectJ in Action, Second Edition</a><br>
 March 2009<br>
 by Ramnivas Laddad
