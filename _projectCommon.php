@@ -28,7 +28,7 @@ $Menu->setProjectBranding($branding);
     "/projects/project_summary.php?projectid=tools.aspectj", "", 1  );
 	#$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;About AspectJ", "/aspectj/description.php", "_self", 1);
 	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Team", "/aspectj/team.php", 	"_self", 1);
-	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Plans", "/aspectj/plans_new.php", 	"_self", 1);
+	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Plans", "http://www.eclipse.org/projects/project-plan.php?projectid=tools.aspectj", 	"_self", 1);
 
 	$Nav->addNavSeparator("Users", "", "_self", 1);
 	#$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Getting Started", 	"/aspectj/gettingstarted.php", 	"_self", 1);
