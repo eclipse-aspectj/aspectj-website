@@ -23,6 +23,7 @@
       </preamble>
       <milestone date="12/31/2008" milestone="1.6.3"><html:div>Service refresh of AspectJ 1.6</html:div></milestone>
       <milestone date="03/31/2008" milestone="1.6.4"><html:div>Service refresh of AspectJ 1.6</html:div></milestone>
+      <milestone date="06/30/2008" milestone="1.6.5"><html:div>Service refresh of AspectJ 1.6</html:div></milestone>
       <postamble><html:div></html:div></postamble>
    </release_milestones>
    <target_environments>
@@ -70,8 +71,8 @@
         <proposed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=%5Bplan%5D+%5Bsplit%5D&amp;product=AspectJ&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
             <html:div>Planned [split] changes</html:div></proposed>
      </theme>
-     <theme name="LTW for Equinox Aspects (target 1.6.4)">
-        <description><html:div>During the 1.6.4 timeframe the intention is to review AspectJ load-time weaving with respect to how
+     <theme name="LTW for Equinox Aspects (target 1.6.5)">
+        <description><html:div>During the 1.6.5 timeframe the intention is to review AspectJ load-time weaving with respect to how
         it behaves in equinox aspects.  The OSGi environment may require changes to current ltw support.</html:div></description>
         <committed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=%5Bplan%5D+AOSGi&amp;product=AspectJ&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
    		    <html:div>Planned [ltw] changes</html:div></committed>
@@ -86,8 +87,8 @@
    		   <html:div>Planned 1.6.4 changes</html:div></committed>
      </theme>
      <theme name="Planned changes for future releases">
-        <description><html:div>Items planned for 1.6.4</html:div></description>
-        <proposed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=%5Bplan%5D&amp;product=AspectJ&amp;target_milestone=1.6.4&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_severity=blocker&amp;bug_severity=critical&amp;bug_severity=major&amp;bug_severity=normal&amp;bug_severity=minor&amp;bug_severity=trivial&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
+        <description><html:div>Items planned for 1.6.5</html:div></description>
+        <proposed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=%5Bplan%5D&amp;product=AspectJ&amp;target_milestone=1.6.5&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_severity=blocker&amp;bug_severity=critical&amp;bug_severity=major&amp;bug_severity=normal&amp;bug_severity=minor&amp;bug_severity=trivial&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
            <html:div>Planned 1.6.4 changes</html:div></proposed>
      </theme>
    </themes_and_priorities>
