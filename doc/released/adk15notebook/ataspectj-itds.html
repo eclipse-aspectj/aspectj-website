@@ -1,28 +1,27 @@
 <html><head>
       <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
    <title>Inter-type Declarations</title><link rel="stylesheet" href="aspectj-docs.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.44"><link rel="home" href="index.html" title="The AspectJTM 5 Development Kit Developer's Notebook"><link rel="up" href="ataspectj.html" title="Chapter 9. An Annotation Based Development Style"><link rel="previous" href="ataspectj-pcadvice.html" title="Pointcuts and Advice"><link rel="next" href="ataspectj-declare.html" title="Declare statements"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Inter-type Declarations</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ataspectj-pcadvice.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter 9. An Annotation Based Development Style</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="ataspectj-declare.html">Next</a></td></tr></table><hr></div><div class="sect1"><a name="ataspectj-itds"></a><div class="titlepage"><div><h2 class="title" style="clear: both"><a name="ataspectj-itds"></a>Inter-type Declarations</h2></div></div><p>
-            Inter-type declarations are challenging to support using an annotation style.  For code style aspects,
+            Inter-type declarations are challenging to support using an annotation style.  For code style aspects
             compiled with the ajc compiler, the entire type system can be made aware of inter-type declarations (new
-            supertypes, new methods, new fields) and the completeness and correctness of it can be guaranteed.
-            
+            supertypes, new methods, new fields) and the completeness and correctness of it can be guaranteed.            
             Achieving this with an annotation style is hard because the source code may simply be compiled with javac
             where the type system cannot be influenced and what is compiled must be 'pure java'.
         </p><p>            
             AspectJ 1.5.0 introduced @DeclareParents, an attempt to offer something like that which is achievable with
             code style declare parents and the other intertype declarations (fields, methods, constructors).  However,
             it has proved too challenging to get close to the expressiveness and capabilities of code style in this area
-            and effectively @DeclareParents is offering a mixin strategy.  The definition of mixin I am using here is that
-            some interface I is mixed into some target type T and that means all the methods from I are added to T and their
+            and effectively @DeclareParents is offering just a mixin strategy.  The definition of mixin I am using here is that when
+            some interface I is mixed into some target type T then this means that all the methods from I are created in T and their
             implementations are simple forwarding methods that call a delegate which that provides an implementation of I.
         </p><p>            
-            The next section here talks about @DeclareParents and what is possible, but moving forward, starting with
-            AspectJ 1.6.4, we are offering @DeclareMixin - an improved approach to defining a mixin and the choice of a different
-            name will hopefully alleviate some of the confusion about why @DeclareParents just doesn't offer the same 
-            semantics as the code style variant.  Offering @DeclareMixin also gives code style developers a new tool for a simple
-            mixin whereas previously they would have avoided @DeclareParents thinking what it could do was already achievable with
-            code style syntax.  
+            The next section covers @DeclareParents but AspectJ 1.6.4 introduces @DeclareMixin - an improved approach to defining 
+            a mixin and the choice of a different name for the annotation will hopefully alleviate some of the confusion about 
+            why @DeclareParents just doesn't offer the same semantics as the code style variant.  Offering @DeclareMixin also gives 
+            code style developers a new tool for a simple mixin whereas previously they would have avoided @DeclareParents 
+            thinking what it could only do was already achievable with code style syntax.  
         </p><p>
-            In future releases the @DeclareParents support may be deprecated if it cannot be made more similar to code style.  
+            The defaultImpl attribute of @DeclareParents may become deprecated if @DeclareMixin proves popular, leaving
+            @DeclareParents purely as a way to introduce a marker interface.
         </p><div class="sect2"><a name="atDeclareParents"></a><div class="titlepage"><div><h3 class="title"><a name="atDeclareParents"></a>@DeclareParents</h3></div></div><p>
             Consider the following aspect:
         </p><pre class="programlisting">
@@ -212,7 +211,7 @@
          </pre><p>
             Sometimes the delegate instance may want to perform differently depending upon the type/instance for
             which it is behaving as a delegate.  To support this it is possible for the factory method to specify a
-            parameter.  If it does, then when the factory method is called this will be the object instance for
+            parameter.  If it does, then when the factory method is called the parameter will be the object instance for
             which a delegate should be created:
         </p><pre class="programlisting">
       

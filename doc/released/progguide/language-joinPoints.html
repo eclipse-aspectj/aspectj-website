@@ -64,44 +64,44 @@ pointcut ioHandler(): within(MyClass) &amp;&amp; handler(IOException);
       happen).  The right-hand side consists of the pointcut itself.
     </p><div class="sect2"><a name="some-example-pointcuts"></a><div class="titlepage"><div><h3 class="title"><a name="some-example-pointcuts"></a>Some Example Pointcuts</h3></div></div><p>
         Here are examples of pointcuts picking out
-      </p><div class="variablelist"><dl><dt><a name="d0e1024"></a><span class="term">when a particular method body executes</span></dt><dd><p><a name="d0e1027"></a>
+      </p><div class="variablelist"><dl><dt><a name="d0e1025"></a><span class="term">when a particular method body executes</span></dt><dd><p><a name="d0e1028"></a>
               <tt>execution(void Point.setX(int))</tt>
-            </p></dd><dt><a name="d0e1033"></a><span class="term">when a method is called</span></dt><dd><p><a name="d0e1036"></a>
+            </p></dd><dt><a name="d0e1034"></a><span class="term">when a method is called</span></dt><dd><p><a name="d0e1037"></a>
               <tt>call(void Point.setX(int))</tt>
-            </p></dd><dt><a name="d0e1042"></a><span class="term">when an exception handler executes</span></dt><dd><p><a name="d0e1045"></a>
+            </p></dd><dt><a name="d0e1043"></a><span class="term">when an exception handler executes</span></dt><dd><p><a name="d0e1046"></a>
               <tt>handler(ArrayOutOfBoundsException)</tt>
-            </p></dd><dt><a name="d0e1051"></a><span class="term">
+            </p></dd><dt><a name="d0e1052"></a><span class="term">
             when the object currently executing
             (i.e. <tt>this</tt>) is of type
             <tt>SomeType</tt>
-          </span></dt><dd><p><a name="d0e1060"></a>
+          </span></dt><dd><p><a name="d0e1061"></a>
               <tt>this(SomeType)</tt>
-            </p></dd><dt><a name="d0e1066"></a><span class="term">
+            </p></dd><dt><a name="d0e1067"></a><span class="term">
             when the target object is of type <tt>SomeType</tt>
-          </span></dt><dd><p><a name="d0e1072"></a>
+          </span></dt><dd><p><a name="d0e1073"></a>
               <tt>target(SomeType)</tt>
-            </p></dd><dt><a name="d0e1078"></a><span class="term">
+            </p></dd><dt><a name="d0e1079"></a><span class="term">
             when the executing code belongs to
             class <tt>MyClass</tt>
-          </span></dt><dd><p><a name="d0e1084"></a>
+          </span></dt><dd><p><a name="d0e1085"></a>
               <tt>within(MyClass)</tt>
-            </p></dd><dt><a name="d0e1090"></a><span class="term">
+            </p></dd><dt><a name="d0e1091"></a><span class="term">
             when the join point is in the control flow of a call to a
             <tt>Test</tt>'s no-argument <tt>main</tt>
             method
-          </span></dt><dd><p><a name="d0e1099"></a>
+          </span></dt><dd><p><a name="d0e1100"></a>
               <tt>cflow(call(void Test.main()))</tt>
             </p></dd></dl></div><p>
         Pointcuts compose through the operations <tt>or</tt>
         ("<tt>||</tt>"), <tt>and</tt>
         ("<tt>&amp;&amp;</tt>") and <tt>not</tt>
         ("<tt>!</tt>").
-      </p><div class="itemizedlist"><ul><li><p><a name="d0e1126"></a>
+      </p><div class="itemizedlist"><ul><li><p><a name="d0e1127"></a>
             It is possible to use wildcards. So
 
-            <div class="orderedlist"><ol type="1"><li><p><a name="d0e1130"></a>
+            <div class="orderedlist"><ol type="1"><li><p><a name="d0e1131"></a>
                   <tt>execution(* *(..))</tt>
-                </p></li><li><p><a name="d0e1136"></a>
+                </p></li><li><p><a name="d0e1137"></a>
                   <tt>call(* set(..))</tt>
                 </p></li></ol></div>
 
@@ -111,15 +111,15 @@ pointcut ioHandler(): within(MyClass) &amp;&amp; handler(IOException);
             -- in case of overloading there may be more than one such
             <tt>set</tt> method; this pointcut picks out calls to
             all of them.
-          </p></li><li><p><a name="d0e1149"></a>
+          </p></li><li><p><a name="d0e1150"></a>
             You can select elements based on types. For example,
-            <div class="orderedlist"><ol type="1"><li><p><a name="d0e1153"></a>
+            <div class="orderedlist"><ol type="1"><li><p><a name="d0e1154"></a>
                   <tt>execution(int *())</tt>
-                </p></li><li><p><a name="d0e1159"></a>
+                </p></li><li><p><a name="d0e1160"></a>
                   <tt>call(* setY(long))</tt>
-                </p></li><li><p><a name="d0e1165"></a>
+                </p></li><li><p><a name="d0e1166"></a>
                   <tt>call(* Point.setY(int))</tt>
-                </p></li><li><p><a name="d0e1171"></a>
+                </p></li><li><p><a name="d0e1172"></a>
                   <tt>call(*.new(int, int))</tt>
                 </p></li></ol></div>
 
@@ -133,15 +133,15 @@ pointcut ioHandler(): within(MyClass) &amp;&amp; handler(IOException);
             return type, and (4) the call to any classes' constructor, so
             long as it takes exactly two <tt>int</tt>s as
             arguments.
-          </p></li><li><p><a name="d0e1199"></a>
+          </p></li><li><p><a name="d0e1200"></a>
             You can compose pointcuts. For example,
-            <div class="orderedlist"><ol type="1"><li><p><a name="d0e1203"></a>
+            <div class="orderedlist"><ol type="1"><li><p><a name="d0e1204"></a>
                   <tt>target(Point) &amp;&amp; call(int *())</tt>
-                </p></li><li><p><a name="d0e1209"></a>
+                </p></li><li><p><a name="d0e1210"></a>
                   <tt>call(* *(..)) &amp;&amp; (within(Line) || within(Point))</tt>
-                </p></li><li><p><a name="d0e1215"></a>
+                </p></li><li><p><a name="d0e1216"></a>
                   <tt>within(*) &amp;&amp; execution(*.new(int))</tt>
-                </p></li><li><p><a name="d0e1221"></a>
+                </p></li><li><p><a name="d0e1222"></a>
                   <tt>
                     !this(Point) &amp;&amp; call(int *(..))
                   </tt>
@@ -156,21 +156,21 @@ pointcut ioHandler(): within(MyClass) &amp;&amp; handler(IOException);
             argument, regardless of where the call is made from, and
             (4) any method call to an <tt>int</tt> method when
             the executing object is any type except <tt>Point</tt>.
-          </p></li><li><p><a name="d0e1249"></a>
+          </p></li><li><p><a name="d0e1250"></a>
             You can select methods and constructors based on their
             modifiers and on negations of modifiers. For example, you can
             say:
-            <div class="orderedlist"><ol type="1"><li><p><a name="d0e1253"></a>
+            <div class="orderedlist"><ol type="1"><li><p><a name="d0e1254"></a>
                   <tt>call(public * *(..))</tt>
-                </p></li><li><p><a name="d0e1259"></a>
+                </p></li><li><p><a name="d0e1260"></a>
                   <tt>execution(!static * *(..))</tt>
-                </p></li><li><p><a name="d0e1265"></a>
+                </p></li><li><p><a name="d0e1266"></a>
                   <tt> execution(public !static * *(..))</tt>
                 </p></li></ol></div>
             which means (1) any call to a public method, (2) any
             execution of a non-static method, and (3) any execution of a
             public, non-static method.
-          </p></li><li><p><a name="d0e1272"></a>
+          </p></li><li><p><a name="d0e1273"></a>
             Pointcuts can also deal with interfaces. For example, given the
             interface </p><pre class="programlisting">
 interface MyInterface { ... }
@@ -426,4 +426,32 @@ pointcut setter(Point p, int newval): target(p) &amp;&amp;
   }
 
   class DeadPartnerException extends RuntimeException {}
-</pre></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="language-anatomy.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="language-advice.html">Next</a></td></tr><tr><td width="40%" align="left">The Anatomy of an Aspect&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="language.html">Up</a></td><td width="40%" align="right">&nbsp;Advice</td></tr></table></div></body></html>
+</pre></div><div class="sect2"><a name="pointcut-best-practice"></a><div class="titlepage"><div><h3 class="title"><a name="pointcut-best-practice"></a>Writing good pointcuts</h3></div></div><p>
+	  During compilation, AspectJ processes pointcuts in order to try and optimize matching performance.  Examining code and determining
+	  if each join point matches (statically or dynamically) a given pointcut is a costly process.
+	  (A dynamic match means the match cannot be fully determined from static analysis and a test will be placed in the code
+	  to determine if there is an actual match when the code is running).
+	  On first encountering a pointcut declaration, AspectJ will rewrite it into an optimal form for the matching process.
+	  What does this mean?  Basically pointcuts are rewritten in DNF (Disjunctive Normal Form) and the components of the pointcut
+	  are sorted such that those components that are cheaper to evaluate are checked first.  This means users do not have to worry
+	  about understanding the performance of various pointcut designators and may supply them in any order in their
+	  pointcut declarations.
+      </p><p>
+      However, AspectJ can only work with what it is told, and for optimal performance of matching the user should think
+      about what they are trying to achieve and narrow the search space for matches as much as they can in the definition.
+      Basically there are three kinds of pointcut designator: kinded, scoping and context:
+      </p><div class="itemizedlist"><ul><li><a name="d0e1604"></a>
+	      Kinded designators are those which select a particular kind of join point. For example: execution, get, set, call, handler
+    	</li><li><a name="d0e1606"></a>
+         Scoping designators are those which select a group of join points of interest (of probably many kinds). For example: within, withincode
+    	</li><li><a name="d0e1608"></a>
+         Contextual designators are those that match (and optionally bind) based on context. For example: this, target, @annotation
+    	</li></ul></div><p>
+      A well written pointcut should 
+      try and include at least the first two types (kinded and scoping), whilst the contextual designators may be included if wishing to
+      match based on join point context, or bind that context for use in the advice.  Supplying either just a kinded designator or 
+      just a contextual designator will work but could affect weaving performance (time and memory used) 
+      due to all the extra processing and analysis. 
+      Scoping designators are very fast to match, they can very quickly dismiss groups of join points that should not be further 
+      processed - that is why a good pointcut should always include one if possible.
+      </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="language-anatomy.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="language-advice.html">Next</a></td></tr><tr><td width="40%" align="left">The Anatomy of an Aspect&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="language.html">Up</a></td><td width="40%" align="right">&nbsp;Advice</td></tr></table></div></body></html>

@@ -52,21 +52,21 @@ pointcut execsInProblemClass(): within(ProblemClass)
         Information about the join point that was matched is available to
         advice through the special variable
         <tt>thisJoinPoint</tt>, of type <a href="../api/org/aspectj/lang/JoinPoint.html" target="_top"><tt>org.aspectj.lang.JoinPoint</tt></a>.
-        Through this object we can access information such as</p><div class="itemizedlist"><ul compact><li><a name="d0e2074"></a>
+        Through this object we can access information such as</p><div class="itemizedlist"><ul compact><li><a name="d0e2091"></a>
           the kind of join point that was matched
-        </li><li><a name="d0e2076"></a>
+        </li><li><a name="d0e2093"></a>
           the source location of the code associated with the join point
-        </li><li><a name="d0e2078"></a>
+        </li><li><a name="d0e2095"></a>
           normal, short and long string representations of the
           current join point
-        </li><li><a name="d0e2080"></a>
+        </li><li><a name="d0e2097"></a>
           the actual argument values of the join point
-        </li><li><a name="d0e2082"></a>
+        </li><li><a name="d0e2099"></a>
           the signature of the member associated with the join point
-        </li><li><a name="d0e2084"></a>the currently executing object</li><li><a name="d0e2086"></a>the target object</li><li><a name="d0e2088"></a>
+        </li><li><a name="d0e2101"></a>the currently executing object</li><li><a name="d0e2103"></a>the target object</li><li><a name="d0e2105"></a>
           an object encapsulating the static information about the join
           point. This is also available through the special variable
-          <tt>thisJoinPointStaticPart</tt>.</li></ul></div><div class="sect3"><a name="d0e2093"></a><div class="titlepage"><div><h4 class="title"><a name="d0e2093"></a>The <tt>Demo</tt> class</h4></div></div><p>The class <tt>tjp.Demo</tt> in
+          <tt>thisJoinPointStaticPart</tt>.</li></ul></div><div class="sect3"><a name="d0e2110"></a><div class="titlepage"><div><h4 class="title"><a name="d0e2110"></a>The <tt>Demo</tt> class</h4></div></div><p>The class <tt>tjp.Demo</tt> in
           <tt>tjp/Demo.java</tt> defines two methods
           <tt>foo</tt> and <tt>bar</tt> with different
           parameter lists and return types. Both are called, with suitable
@@ -96,7 +96,7 @@ public class Demo {
         return "Demo.bar(" + j  + ")";
     }
 }
-</pre></div><div class="sect3"><a name="d0e2124"></a><div class="titlepage"><div><h4 class="title"><a name="d0e2124"></a>The <tt>GetInfo</tt> aspect</h4></div></div><p>
+</pre></div><div class="sect3"><a name="d0e2141"></a><div class="titlepage"><div><h4 class="title"><a name="d0e2141"></a>The <tt>GetInfo</tt> aspect</h4></div></div><p>
           This aspect uses around advice to intercept the execution of
           methods <tt>foo</tt> and <tt>bar</tt> in
           <tt>Demo</tt>, and prints out information garnered
@@ -134,7 +134,7 @@ aspect GetInfo {
       }
    }
 }
-</pre><div class="sect4"><a name="d0e2146"></a><div class="titlepage"><div><h5 class="title"><a name="d0e2146"></a>Defining the scope of a pointcut</h5></div></div><p>The pointcut <tt>goCut</tt> is defined as
+</pre><div class="sect4"><a name="d0e2163"></a><div class="titlepage"><div><h5 class="title"><a name="d0e2163"></a>Defining the scope of a pointcut</h5></div></div><p>The pointcut <tt>goCut</tt> is defined as
 
 <pre class="programlisting">
 cflow(this(Demo)) &amp;&amp; execution(void go())
@@ -145,13 +145,13 @@ cflow(this(Demo)) &amp;&amp; execution(void go())
             from the method <tt>go</tt> includes the execution of
             <tt>go</tt> itself, so the definition of the around
             advice includes <tt>!execution(* go())</tt> to
-            exclude it from the set of executions advised. </p></div><div class="sect4"><a name="d0e2169"></a><div class="titlepage"><div><h5 class="title"><a name="d0e2169"></a>Printing the class and method name</h5></div></div><p>
+            exclude it from the set of executions advised. </p></div><div class="sect4"><a name="d0e2186"></a><div class="titlepage"><div><h5 class="title"><a name="d0e2186"></a>Printing the class and method name</h5></div></div><p>
             The name of the method and that method's defining class are
             available as parts of the <a href="../api/org/aspectj/lang/Signature.html" target="_top">org.aspectj.lang.Signature</a>
             object returned by calling <tt>getSignature()</tt> on
             either <tt>thisJoinPoint</tt> or
             <tt>thisJoinPointStaticPart</tt>.
-          </p></div><div class="sect4"><a name="d0e2186"></a><div class="titlepage"><div><h5 class="title"><a name="d0e2186"></a>Printing the parameters</h5></div></div><p>
+          </p></div><div class="sect4"><a name="d0e2203"></a><div class="titlepage"><div><h5 class="title"><a name="d0e2203"></a>Printing the parameters</h5></div></div><p>
             The static portions of the parameter details, the name and
             types of the parameters, can be accessed through the <a href="../api/org/aspectj/lang/reflect/CodeSignature.html" target="_top"><tt>org.aspectj.lang.reflect.CodeSignature</tt></a>
             associated with the join point. All execution join points have code
@@ -176,11 +176,11 @@ cflow(this(Demo)) &amp;&amp; execution(void go())
       </p><p>
         Aspects can declare inter-type
 
-        <div class="itemizedlist"><ul compact><li><a name="d0e2218"></a>fields</li><li><a name="d0e2220"></a>methods</li><li><a name="d0e2222"></a>constructors</li></ul></div>
+        <div class="itemizedlist"><ul compact><li><a name="d0e2235"></a>fields</li><li><a name="d0e2237"></a>methods</li><li><a name="d0e2239"></a>constructors</li></ul></div>
 
         and can also declare that target types
 
-        <div class="itemizedlist"><ul compact><li><a name="d0e2226"></a>implement new interfaces</li><li><a name="d0e2228"></a>extend new classes</li></ul></div>
+        <div class="itemizedlist"><ul compact><li><a name="d0e2243"></a>implement new interfaces</li><li><a name="d0e2245"></a>extend new classes</li></ul></div>
       </p><p>
         This example provides three illustrations of the use of inter-type
         declarations to encapsulate roles or views of a class. The class
@@ -190,7 +190,7 @@ cflow(this(Demo)) &amp;&amp; execution(void go())
         turn, cloneable, hashable, and comparable. These facilities are
         provided by AspectJ without having to modify the code for the class
         <tt>Point</tt>.
-      </p><div class="sect3"><a name="d0e2242"></a><div class="titlepage"><div><h4 class="title"><a name="d0e2242"></a>The <tt>Point</tt> class</h4></div></div><p>The <tt>Point</tt> class defines geometric points
+      </p><div class="sect3"><a name="d0e2259"></a><div class="titlepage"><div><h4 class="title"><a name="d0e2259"></a>The <tt>Point</tt> class</h4></div></div><p>The <tt>Point</tt> class defines geometric points
           whose interface includes polar and rectangular coordinates, plus some
           simple operations to relocate points. <tt>Point</tt>'s
           implementation has attributes for both its polar and rectangular
@@ -207,7 +207,7 @@ cflow(this(Demo)) &amp;&amp; execution(void go())
           The diagram below gives an overview of the aspects and their
           interaction with the class <tt>Point</tt>.</p><p>
           <span class="inlinemediaobject"><img src="aspects.gif"></span>
-        </p><p></p></div><div class="sect3"><a name="d0e2271"></a><div class="titlepage"><div><h4 class="title"><a name="d0e2271"></a>The <tt>CloneablePoint</tt> aspect</h4></div></div><p>
+        </p><p></p></div><div class="sect3"><a name="d0e2288"></a><div class="titlepage"><div><h4 class="title"><a name="d0e2288"></a>The <tt>CloneablePoint</tt> aspect</h4></div></div><p>
           This first aspect is responsible for
           <tt>Point</tt>'s implementation of the
           <tt>Cloneable</tt> interface.  It declares that
@@ -258,7 +258,7 @@ public aspect CloneablePoint {
       System.out.println("p2 =" + p2 );
    }
 }
-</pre></div><div class="sect3"><a name="d0e2328"></a><div class="titlepage"><div><h4 class="title"><a name="d0e2328"></a>The <tt>ComparablePoint</tt> aspect</h4></div></div><p>
+</pre></div><div class="sect3"><a name="d0e2345"></a><div class="titlepage"><div><h4 class="title"><a name="d0e2345"></a>The <tt>ComparablePoint</tt> aspect</h4></div></div><p>
           <tt>ComparablePoint</tt> is responsible for
           <tt>Point</tt>'s implementation of the
           <tt>Comparable</tt> interface. </p><p>
@@ -311,7 +311,7 @@ public aspect ComparablePoint {
       System.out.println("p1 =?= p2 :" + p1.compareTo(p2));
    }
 }
-</pre></div><div class="sect3"><a name="d0e2388"></a><div class="titlepage"><div><h4 class="title"><a name="d0e2388"></a>The <tt>HashablePoint</tt> aspect</h4></div></div><p>
+</pre></div><div class="sect3"><a name="d0e2405"></a><div class="titlepage"><div><h4 class="title"><a name="d0e2405"></a>The <tt>HashablePoint</tt> aspect</h4></div></div><p>
           Our third aspect is responsible for <tt>Point</tt>'s
           overriding of <tt>Object</tt>'s
           <tt>equals</tt> and <tt>hashCode</tt> methods
