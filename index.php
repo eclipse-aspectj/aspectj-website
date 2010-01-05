@@ -88,6 +88,15 @@
 			<h3>News and Events</h3>
    <ul>
    
+   <li>AspectJ 1.6.7.a is now <a href="downloads.php">available for download</a>.
+   Please try it out!  See the <a href="doc/released/README-167.html">readme</a>
+   for more information.  There is one additional bug fix in 1.6.7.a over 1.6.7
+   related to load time weaving if using a certain combination of include/exclude
+   patterns.  The details are in 
+   <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=298786">Bug 298786</a>.
+   <br><div align="right"><span class="dates"><i>posted 5-Jan-10</i></span></div>
+   </li>
+   
    <li>AspectJ 1.6.7 is now <a href="downloads.php">available for download</a>.
    Please try it out!  See the <a href="doc/released/README-167.html">readme</a>
    for more information.
