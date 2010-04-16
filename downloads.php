@@ -177,7 +177,7 @@ function ListDevBuilds($dir){
   <h3 id="milestones">AspectJ 6</h3>
   <ul>
     <li>
-    <b>AspectJ 1.6.9, Released 16th April, 2010</b>
+    <b>AspectJ 1.6.9M1, Released 16th April, 2010</b>
     <table border="0" cellspacing="0" cellpadding="0" width="100%">
     <tr>
       <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
