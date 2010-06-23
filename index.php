@@ -88,6 +88,12 @@
 			<h3>News and Events</h3>
    <ul>
    
+   <li>AspectJ 1.6.9 release candidate 1 is now <a href="downloads.php">available for download</a>.
+   Please try it out!  See the <a href="doc/released/README-169.html">readme</a>
+   for more information.
+   <br><div align="right"><span class="dates"><i>posted 23-Jun-10</i></span></div>
+   </li>
+
    <li>AspectJ 1.6.9 milestone 2 is now <a href="downloads.php">available for download</a>.
    Please try it out!  See the <a href="doc/released/README-169.html">readme</a>
    for more information.  This release includes bug fixes, some 'overweaving' enhancements
