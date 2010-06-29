@@ -88,6 +88,17 @@
 			<h3>News and Events</h3>
    <ul>
    
+   <li>AspectJ 1.6.9 release candidate 2 is now <a href="downloads.php">available for download</a>.
+   Please try it out!  See the <a href="doc/released/README-169.html">readme</a>
+   for more information.  This includes 3 bug fixes beyond RC1:
+   <ul>
+   <li><a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=317743">317743: improved type lookup and import handling for pointcut type references</a></li>
+   <li><a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=318241">318241: race condition when declare parents using annotation matching</a></li>
+   <li><a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=317139">317139: NPE hides a real problem with a non-abstract generic annotation style aspect</a></li>
+   </ul>
+   <br><div align="right"><span class="dates"><i>posted 29-Jun-10</i></span></div>
+   </li>
+
    <li>AspectJ 1.6.9 release candidate 1 is now <a href="downloads.php">available for download</a>.
    Please try it out!  See the <a href="doc/released/README-169.html">readme</a>
    for more information.
