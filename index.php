@@ -88,6 +88,15 @@
 			<h3>News and Events</h3>
    <ul>
    
+   <li>AspectJ 1.6.9 release candidate 3 is now <a href="downloads.php">available for download</a>.
+   Please try it out!  See the <a href="doc/released/README-169.html">readme</a>
+   for more information.  This includes 1 bug fixes beyond RC2:
+   <ul>
+   <li><a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=318397">318397: caching in EclipseSourceType too aggressive</a></li>
+   </ul>
+   <br><div align="right"><span class="dates"><i>posted 30-Jun-10</i></span></div>
+   </li>
+   
    <li>AspectJ 1.6.9 release candidate 2 is now <a href="downloads.php">available for download</a>.
    Please try it out!  See the <a href="doc/released/README-169.html">readme</a>
    for more information.  This includes 3 bug fixes beyond RC1:
