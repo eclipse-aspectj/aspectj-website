@@ -88,6 +88,12 @@
 			<h3>News and Events</h3>
    <ul>
    
+   <li>AspectJ 1.6.10 release candidate 1 is now <a href="downloads.php">available for download</a>.
+   See the <a href="doc/released/README-1610.html">readme</a>
+   for more information.
+   <br><div align="right"><span class="dates"><i>posted 8-Oct-10</i></span></div>
+   </li>
+
    <li>AspectJ 1.6.9 is now <a href="downloads.php">available for download</a>.
    See the <a href="doc/released/README-169.html">readme</a>
    for more information.
