@@ -158,13 +158,13 @@ function ListDevBuilds($dir){
   <h3 id="stable_release">Latest Stable Release</h3>
   <ul>
     <li>
-    <b>AspectJ 1.6.9, Released 5th July, 2010</b>
+    <b>AspectJ 1.6.10rc1, Released 8th October, 2010</b>
  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
     <tr>
       <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
       <td width="30%" align="right">
-          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.9.jar">aspectj-1.6.9.jar</a> (~12M)<br>
-          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.9-src.jar">aspectj-1.6.9-src.jar</a>
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.10.jar">aspectj-1.6.10.jar</a> (~12M)<br>
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.10-src.jar">aspectj-1.6.10-src.jar</a>
       </td>
     </tr>
     </table>
