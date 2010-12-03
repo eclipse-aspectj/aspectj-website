@@ -3039,17 +3039,17 @@ java -javaagent:aspectjweaver.jar -classpath "aspects.jar:${CLASSPATH}" ..
            with the 1.0 downloads.  It contains instructions for building
            from sources.
           </p><p>AspectJ 1.1+ source code is available through CVS using the 
-                CVS Root <tt>dev.eclipse.org:/cvsroot/technology</tt>. 
+                CVS Root <tt>dev.eclipse.org:/cvsroot/tools</tt>. 
                 For more information on accessing the CVS tree at eclipse.org, 
                 see the documentation from <a href="http://eclipse.org" target="_top">http://eclipse.org</a>. Find 
-                specific instructions in the AspectJ tree at <a href="http://dev.eclipse.org/viewcvs/index.cgi/~checkout~/org.aspectj/modules/build/readme-build-and-test-aspectj.html?rev=HEAD&amp;content-type=text/html&amp;cvsroot=Technology_Project" target="_top"> 
+                specific instructions in the AspectJ tree at <a href="http://dev.eclipse.org/viewcvs/index.cgi/~checkout~/org.aspectj/modules/build/readme-build-and-test-aspectj.html?rev=HEAD&amp;content-type=text/html&amp;cvsroot=Tools_Project" target="_top"> 
                 org.aspectj/modules/build/readme-build-and-test-aspectj.html</a>. 
                 If you would like to use Ant to checkout the sources, build the 
-                distribution, and test everything, see <a href="http://dev.eclipse.org/viewcvs/index.cgi/~checkout~/org.aspectj/modules/build/release/build.xml?rev=HEAD&amp;content-type=text/xml&amp;cvsroot=Technology_Project" target="_top"> 
+                distribution, and test everything, see <a href="http://dev.eclipse.org/viewcvs/index.cgi/~checkout~/org.aspectj/modules/build/release/build.xml?rev=HEAD&amp;content-type=text/xml&amp;cvsroot=Tools_Project" target="_top"> 
                 org.aspectj/modules/build/release/build.xml</a>. </p><p>
           To check out the source code in Eclipse go to (<tt>File &gt; new &gt; Other &gt; CVS &gt; Checkout Projects from CVS</tt>). You'll need about 125 MB of space for the source and build.
             Host: <tt>dev.eclipse.org</tt>,
-            Repository Path: <tt>/cvsroot/technology</tt>,
+            Repository Path: <tt>/cvsroot/tools</tt>,
             user name: <tt>anonymous</tt>,
             password: (your email address),
             connection type: <tt>pserver</tt>,
