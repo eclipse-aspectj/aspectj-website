@@ -87,6 +87,11 @@
 		<div class="homeitem">
 			<h3>News and Events</h3>
    <ul>
+    <li>AspectJ 1.6.11 is now <a href="downloads.php">available for download</a>.
+   See the <a href="doc/released/README-1611.html">readme</a>
+   for more information.
+   <br><div align="right"><span class="dates"><i>posted 15-Mar-11</i></span></div>
+   </li>
    
     <li>AspectJ 1.6.11 milestone 2 is now <a href="downloads.php">available for download</a>.
    See the <a href="doc/released/README-1611.html">readme</a>
@@ -150,44 +155,6 @@
    (see <a href="http://andrewclement.blogspot.com/2010/05/aspectj-overweaving.html"this blog
    article</a> for more info), and load-time weaving aspect scoping.
    <br><div align="right"><span class="dates"><i>posted 13-May-10</i></span></div>
-   </li>
-   
-   <li>AspectJ 1.6.9 milestone 1 is now <a href="downloads.php">available for download</a>.
-   Please try it out!  See the <a href="doc/released/README-169.html">readme</a>
-   for more information.  There are several new features in this release, please
-   see the readme for more info.
-   <br><div align="right"><span class="dates"><i>posted 16-Apr-10</i></span></div>
-   </li>
-
-   <li>AspectJ 1.6.8 is now <a href="downloads.php">available for download</a>.
-   Please try it out!  See the <a href="doc/released/README-168.html">readme</a>
-   for more information.  There are two fixes in 1.6.8 beyond what was in 1.6.7, 
-   they are both documented in detail in the README.
-   <br><div align="right"><span class="dates"><i>posted 8-Jan-10</i></span></div>
-   </li>
-   
-   <li>AspectJ 1.6.7 is now <a href="downloads.php">available for download</a>.
-   Please try it out!  See the <a href="doc/released/README-167.html">readme</a>
-   for more information.
-   <br><div align="right"><span class="dates"><i>posted 31-Dec-09</i></span></div>
-   </li>
-   
-   <li>AspectJ 1.6.6 is now <a href="downloads.php">available for download</a>.
-   Please try it out!  See the <a href="doc/released/README-166.html">readme</a>
-   for more information.
-   <br><div align="right"><span class="dates"><i>posted 30-Sep-09</i></span></div>
-   </li>
-   
-   <li>AspectJ 1.6.5 is now <a href="downloads.php">available for download</a>.
-   Please try it out!  See the <a href="doc/released/README-165.html">readme</a>
-   for more information.
-   <br><div align="right"><span class="dates"><i>posted 17-Jun-09</i></span></div>
-   </li>
-
-   <li>AspectJ 1.6.4 is now <a href="downloads.php">available for download</a>.
-   Please try it out!  See the <a href="doc/released/README-164.html">readme</a>
-   for more information.
-   <br><div align="right"><span class="dates"><i>posted 02-Apr-09</i></span></div>
    </li>
    
    <li>Two new blogs are online for learning more about AJDT and tips and tricks with AspectJ.<br>
