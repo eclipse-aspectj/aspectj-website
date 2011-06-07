@@ -176,8 +176,34 @@ function ListDevBuilds($dir){
   <div class="homeitem3col">
   <h3 id="milestones">AspectJ 6</h3>
   <ul>
+    <li>
+    <b>AspectJ 1.6.12.M1, Released 7-Jun-2011</b>
+    <table border="0" cellspacing="0" cellpadding="0" width="100%">
+    <tr>
+      <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
+      <td width="30%" align="right">
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.12.M1.jar">aspectj-1.6.12.M1.jar</a> (~12M)<br>
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.12.M1-src.jar">aspectj-1.6.12.M1-src.jar</a>
+      </td>
+    </tr>
+    </table>
+    </li>
+    
+    <li>
+    <b>AspectJ 1.6.11, Released 15-Mar-2011</b>
+    <table border="0" cellspacing="0" cellpadding="0" width="100%">
+    <tr>
+      <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
+      <td width="30%" align="right">
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.11.jar">aspectj-1.6.11.jar</a> (~12M)<br>
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.11-src.jar">aspectj-1.6.11-src.jar</a>
+      </td>
+    </tr>
+    </table>
+    </li>
+        
   <li>
-    <b>AspectJ 1.6.10, Released 22nd Oct, 2010</b>
+    <b>AspectJ 1.6.10, Released 22-Oct-2010</b>
     <table border="0" cellspacing="0" cellpadding="0" width="100%">
     <tr>
       <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
@@ -188,32 +214,8 @@ function ListDevBuilds($dir){
     </tr>
     </table>
     </li>
-  <li>
-    <b>AspectJ 1.6.11.M2, Released 2nd Feb, 2011</b>
-    <table border="0" cellspacing="0" cellpadding="0" width="100%">
-    <tr>
-      <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
-      <td width="30%" align="right">
-          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.11.M2.jar">aspectj-1.6.11.M2.jar</a> (~12M)<br>
-          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.11.M2-src.jar">aspectj-1.6.11.M2-src.jar</a>
-      </td>
-    </tr>
-    </table>
-    </li>
     <li>
-    <b>AspectJ 1.6.11.M1, Released 9th Dec, 2010</b>
-    <table border="0" cellspacing="0" cellpadding="0" width="100%">
-    <tr>
-      <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
-      <td width="30%" align="right">
-          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.11.M1.jar">aspectj-1.6.11.M1.jar</a> (~12M)<br>
-          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.11.M1-src.jar">aspectj-1.6.11.M1-src.jar</a>
-      </td>
-    </tr>
-    </table>
-    </li>
-    <li>
-    <b>AspectJ 1.6.9, Released 5th July, 2010</b>
+    <b>AspectJ 1.6.9, Released 5-Jul-2010</b>
     <table border="0" cellspacing="0" cellpadding="0" width="100%">
     <tr>
       <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
@@ -225,7 +227,7 @@ function ListDevBuilds($dir){
     </table>
     </li>
     <li>
-    <b>AspectJ 1.6.8, Released 8th January, 2010</b>
+    <b>AspectJ 1.6.8, Released 8-Jan-2010</b>
     <table border="0" cellspacing="0" cellpadding="0" width="100%">
     <tr>
       <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
