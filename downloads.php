@@ -158,13 +158,13 @@ function ListDevBuilds($dir){
   <h3 id="stable_release">Latest Stable Release</h3>
   <ul>
     <li>
-    <b>AspectJ 1.6.11, Released 15th March, 2011</b>
+    <b>AspectJ 1.6.12, Released 18th October, 2011</b>
  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
     <tr>
       <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
       <td width="30%" align="right">
-          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.11.jar">aspectj-1.6.11.jar</a> (~12M)<br>
-          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.11-src.jar">aspectj-1.6.11-src.jar</a>
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.12.jar">aspectj-1.6.12.jar</a> (~12M)<br>
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.12-src.jar">aspectj-1.6.12-src.jar</a>
       </td>
     </tr>
     </table>
@@ -177,13 +177,13 @@ function ListDevBuilds($dir){
   <h3 id="milestones">AspectJ 6</h3>
   <ul>
   <li>
-    <b>AspectJ 1.6.12.RC1, Released 3-Oct-2011</b>
+    <b>AspectJ 1.6.12, Released 18-Oct-2011</b>
     <table border="0" cellspacing="0" cellpadding="0" width="100%">
     <tr>
       <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
       <td width="30%" align="right">
-          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.12.RC1.jar">aspectj-1.6.12.RC1.jar</a> (~12M)<br>
-          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.12.RC1-src.jar">aspectj-1.6.12.RC1-src.jar</a>
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.12.jar">aspectj-1.6.12.jar</a> (~12M)<br>
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.12-src.jar">aspectj-1.6.12-src.jar</a>
       </td>
     </tr>
     </table>
