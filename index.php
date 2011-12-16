@@ -86,6 +86,12 @@
 				
 		<div class="homeitem">
 			<h3>News and Events</h3>
+
+   <li>AspectJ 1.7.0.M1 is now <a href="downloads.php">available for download</a>.
+   See the <a href="doc/released/README-170.html">readme</a>
+   for more information.  This is our first Java7 compiler based milestone.
+   <br><div align="right"><span class="dates"><i>posted 16-Dec-11</i></span></div>
+   </li>
 			
    <li>AspectJ 1.6.12 is now <a href="downloads.php">available for download</a>.
    See the <a href="doc/released/README-1612.html">readme</a>
