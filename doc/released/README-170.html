@@ -18,14 +18,35 @@
 All rights reserved.
 </small></div>
 
-<h1>AspectJ 1.7.0.M1 Readme</h1>
+<h1>AspectJ 1.7.0 Readme</h1>
 
 <p>The full list of resolved issues in 1.7.0 is available 
 <a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced;bug_status=RESOLVED;bug_status=VERIFIED;bug_status=CLOSED;product=AspectJ;target_milestone=1.7.0;">here</a></h2>.</p>
 
+<h4>1.7.0.RC1 available 25-May-2012</h4>
 <h4>1.7.0.M1 available 16-Dec-2011</h4>
 
 <h2>Notable Changes</h2>
+
+<h3>RC1 - Java 7 bytecode weaving</h3>
+<p>The first milestone of 1.7.0 upgraded the compiler but this still left the weaver with some issues 
+if it had to weave into bytecode containing some of the new features that were allowed by Java 1.7.
+In particular this meant any bytecode containing the INVOKEDYNAMIC (new instruction for 1.7) and 
+the related new constant pool entry types that support it.  RC1 now supports weaving into bytecode
+containing these features.  However, the new INVOKEDYNAMIC instruction does not surface as a join
+point yet so you cannot write a pointcut to match on it. If you use execution() pointcuts
+as opposed to call() then you will still be able to advise what the invokedynamic actually calls.
+</p>
+<h3>RC1 - Bytecode caching for loadtime weaving</h3>
+<p>Under <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=367673">bug 367673</a> we have had
+a contribution (thanks John Kew!) that enables a bytecode cache for loadtime weaving.  The
+details and some rudimentary benchmark numbers are in the bug.  Basically it caches woven 
+bytecode on first start of a system
+using LTW and then reuses that woven bytecode on subsequent starts - this saves weaving time
+and also memory consumption.  To activate it, use the following system properties:</p>
+<pre><code>-Daj.weaving.cache.enabled=true
+-Daj.weaving.cache.dir=/tmp/aspectj-cache/
+</code></pre>
 
 <h3>M1 - upgrade to Java 7</h3>
 <p>
