@@ -172,7 +172,7 @@ function ListDevBuilds($dir){
   </ul>
 </div>
 
-  <!-- ============ ASPECTJ 6 MILESTONES -->
+  <!-- ============ ASPECTJ MILESTONES -->
   <div class="homeitem3col">
   <h3 id="milestones">AspectJ 6</h3>
   <ul>
