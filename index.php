@@ -87,6 +87,14 @@
 		<div class="homeitem">
 			<h3>News and Events</h3>
 
+   <li>AspectJ 1.7.0 is now <a href="downloads.php">available for download</a>.
+   See the <a href="doc/released/README-170.html">readme</a>
+   for more information.  This version of AspectJ is compatible with Java7 - enabling
+   the usage of Java7 constructs in AspectJ source as well as the weaving of
+   Java7 created bytecode.
+   <br><div align="right"><span class="dates"><i>posted 2-Jul-12</i></span></div>
+   </li>
+   
    <li>AspectJ 1.7.0.RC1 is now <a href="downloads.php">available for download</a>.
    See the <a href="doc/released/README-170.html">readme</a>
    for more information.  The AspectJ weaver will now cope with bytecode containing invokedynamic.
