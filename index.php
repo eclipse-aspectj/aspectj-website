@@ -87,6 +87,12 @@
 		<div class="homeitem">
 			<h3>News and Events</h3>
 
+   <li>AspectJ 1.7.1 is now <a href="downloads.php">available for download</a>.
+   See the <a href="doc/released/README-171.html">readme</a>
+   for more information.
+   <br><div align="right"><span class="dates"><i>posted 10-Sep-12</i></span></div>
+   </li>
+   
    <li>AspectJ 1.7.0 is now <a href="downloads.php">available for download</a>.
    See the <a href="doc/released/README-170.html">readme</a>
    for more information.  This version of AspectJ is compatible with Java7 - enabling
