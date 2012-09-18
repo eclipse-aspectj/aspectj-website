@@ -40,7 +40,7 @@ $Menu->setProjectBranding($branding);
 
 	$Nav->addNavSeparator("Developers", "", "_self", 1);
 	#$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;Contributing", "/aspectj/developers.php", 	"_self", 1);
-	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;GIT", "http://git.eclipse.org/c/aspectj/org.aspectj.git", 	"_self", 1);
+	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;Git Repo", "http://git.eclipse.org/c/aspectj/org.aspectj.git", 	"_self", 1);
 	$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;Mailing list", "http://dev.eclipse.org/mailman/listinfo/aspectj-dev", "_self", 1);
 	#$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;Work tasks", "/aspectj/tasks.php", 	"_self", 1);
 
