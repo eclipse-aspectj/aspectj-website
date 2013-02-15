@@ -158,13 +158,13 @@ function ListDevBuilds($dir){
   <h3 id="stable_release">Latest Stable Release</h3>
   <ul>
     <li>
-    <b>AspectJ 1.7.1, Released 10 Sep, 2012</b>
+    <b>AspectJ 1.7.2, Released 15 Feb 2013</b>
  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
     <tr>
       <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
       <td width="30%" align="right">
-          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.7.1.jar">aspectj-1.7.1.jar</a> (~13M)<br>
-          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.7.1-src.jar">aspectj-1.7.1-src.jar</a>
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.7.2.jar">aspectj-1.7.2.jar</a> (~13M)<br>
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.7.2-src.jar">aspectj-1.7.2-src.jar</a>
       </td>
     </tr>
     </table>
@@ -175,6 +175,21 @@ function ListDevBuilds($dir){
   <!-- ============ ASPECTJ MILESTONES -->
   <div class="homeitem3col">
   <h3 id="milestones">AspectJ 7</h3>
+  <ul>
+    <li>
+    <b>AspectJ 1.7.2, Released 15 Feb 2013</b>
+ 	<table border="0" cellspacing="0" cellpadding="0" width="100%">
+    <tr>
+      <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
+      <td width="30%" align="right">
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.7.2.jar">aspectj-1.7.2.jar</a> (~13M)<br>
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.7.2-src.jar">aspectj-1.7.2-src.jar</a>
+      </td>
+    </tr>
+    </table>
+  </li>
+  </ul>
+  <ul>
   <ul>
     <li>
     <b>AspectJ 1.7.1, Released 10 Sep, 2012</b>

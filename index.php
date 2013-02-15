@@ -87,6 +87,12 @@
 		<div class="homeitem">
 			<h3>News and Events</h3>
 
+   <li>AspectJ 1.7.2 is now <a href="downloads.php">available for download</a>.
+   See the <a href="doc/released/README-172.html">readme</a>
+   for more information.
+   <br><div align="right"><span class="dates"><i>posted 15-Feb-13</i></span></div>
+   </li>
+   
    <li>AspectJ 1.7.1 is now <a href="downloads.php">available for download</a>.
    See the <a href="doc/released/README-171.html">readme</a>
    for more information.
@@ -429,7 +435,7 @@ by Matt Chapman
 		</div>
 
 		<div class="sideitem">
-			<h6>Jonas Bonér's blog</h6>
+			<h6>Jonas Bonï¿½r's blog</h6>
 			<ul>
 	   <li><a href="http://feeds.feedburner.com/grubbel?m=44" title="The Optimized Null Check Pattern" target="external">The Optimized Null Check Pattern</a></li>
 <li><a href="http://feeds.feedburner.com/grubbel?m=43" title="Interview" target="external">Interview</a></li>
