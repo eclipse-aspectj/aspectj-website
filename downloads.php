@@ -175,6 +175,20 @@ function ListDevBuilds($dir){
   <!-- ============ ASPECTJ MILESTONES -->
   <div class="homeitem3col">
   <h3 id="milestones">AspectJ 7</h3>
+    <ul>
+    <li>
+    <b>AspectJ 1.8.0.M1, Released 29 Jul 2013</b>
+ 	<table border="0" cellspacing="0" cellpadding="0" width="100%">
+    <tr>
+    <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
+    <td width="30%" align="right">
+    <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.8.0.M1.jar">aspectj-1.8.0.M1.jar</a> (~13M)<br>
+    <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.8.0.M1-src.jar">aspectj-1.8.0.M1-src.jar</a>
+    </td>
+    </tr>
+    </table>
+    </li>
+    </ul>
   <ul>
     <li>
     <b>AspectJ 1.7.3, Released 13 Jun 2013</b>
