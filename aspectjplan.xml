@@ -4,13 +4,13 @@
       name="AspectJ">
    <release projectid="tools.aspectj" version="1.0"/>
    <introduction>
-     <html:div>AspectJ major versions match up with Java versions.  Currently Java is at 1.7 and AspectJ is
-     about to release the 1.7 version after 13 releases at 1.6 (1.6.0 -> 1.6.12). The AspectJ project then releases 
+     <html:div>AspectJ major versions match up with Java versions.  Currently Java is at 1.8 and AspectJ is
+     about to release the 1.8 version. The AspectJ project then releases 
      service refreshes to that major version every
      few months.  The current release model is at least something every 3 months - sometimes a milestone,
      sometimes a full release.</html:div>
      <html:div>AspectJ always maintains that HEAD will build clean and pass all the tests we have (currently
-     around 4400).  This means the development builds created from HEAD after every commit are always at least
+     around 4600).  This means the development builds created from HEAD after every commit are always at least
      as good as the previous build.</html:div>
    </introduction>
    <release_deliverables>
@@ -22,8 +22,8 @@
       <preamble>h
          <html:div></html:div>
       </preamble>
-      <milestone date="10/18/2011" milestone="1.6.12"><html:div>AspectJ 1.6.12 (service refresh on 1.6)</html:div></milestone>
-      <milestone date="12/16/2011" milestone="1.7.0M1"><html:div>AspectJ 1.7.0 milestone 1</html:div></milestone>
+      <milestone date="07/13/2013" milestone="1.8.0M1"><html:div>AspectJ 1.8.0 milestone 1</html:div></milestone>
+      <milestone date="10/25/2013" milestone="1.7.4"><html:div>AspectJ 1.7.4 (service refresh on 1.7 line)</html:div></milestone>
       <postamble><html:div> </html:div></postamble>
    </release_milestones>
    <target_environments>
@@ -31,9 +31,9 @@
      this has improved the quality of the codebase.  However, this means the 1.6.6 weaver (and therefore compiler) now require
      a Java 1.5 runtime.  Previous versions of AspectJ required only Java 1.4</html:div>
      <html:div>The woven code produced by AspectJ will run on any VM from Java 1.3 onwards.</html:div>
-     <html:div>The compiler/weaver will run on 1.5 but with AspectJ 1.7 these have the ability to compile 1.7 source code
-     (using 1.7 features like the diamond operator) or weave into 1.7 bytecode that is exploiting new bytecode
-     features like invokedynamic.</html:div>
+     <html:div>The compiler/weaver will run on 1.5 but with AspectJ 1.8 these have the ability to compile 1.8 source code
+     (using 1.8 features like lambda) or weave into 1.8 bytecode that is exploiting recent bytecode
+     enhancements like invokedynamic.</html:div>
      <internationalization>
           <html:div>We have bundles for many of the messages in the project but they are not translated.</html:div>
      </internationalization>
@@ -46,17 +46,6 @@
      <preamble>
          <html:div>These are the larger themes and priorities right now:</html:div>
      </preamble>
-     <theme name="Improving the IDE experience">
-        <description><html:div>This is about maintaining an expected level of functionality and responsiveness when
-        a user switches from a Java project to an AspectJ project.  The latest requirement
-        in this area is the need to persist project state between eclipse restarts - otherwise a costly full build is necessary
-        each time eclipse is started.  This is *not* easy as the object graph after a build is not currently of the right
-        form to persist. </html:div></description>
-        <committed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;target_milestone=1.7.0&amp;short_desc=%5Bplan%5D+%5Bincremental%5D&amp;product=AspectJ&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
-           <html:div>Planned [incremental] changes</html:div></committed>
-        <proposed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;target_milestone=1.7.0&amp;short_desc=%5Bplan%5D+%5Bincremental%5D&amp;product=AspectJ&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
-           <html:div>Planned [incremental] changes</html:div></proposed>
-     </theme>
      <theme name="Memory Usage">
         <description><html:div>Improving it across all parts of AspectJ: compilation, weaving and load-time weaving.</html:div></description>
         <committed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;target_milestone=1.7.0&amp;short_desc=%5Bplan%5D+%5Bmemory%5D&amp;product=AspectJ&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
@@ -64,34 +53,17 @@
         <proposed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;target_milestone=1.7.0&amp;short_desc=%5Bplan%5D+%5Bmemory%5D&amp;product=AspectJ&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
            <html:div>Planned [memory] changes</html:div></proposed>
      </theme>
-     <theme name="Groovy weaving">
-        <description><html:div>Given the popularity of groovy, these enhancements cover coping with weaving groovy class files</html:div></description>
-        <committed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;target_milestone=1.7.0&amp;short_desc_type=allwordssubstr&amp;short_desc=%5Bplan%5D+%5Bgroovy5D&amp;product=AspectJ&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
-   		    <html:div>Planned [groovy] changes</html:div></committed>
-        <proposed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;target_milestone=1.7.0&amp;short_desc_type=allwordssubstr&amp;short_desc=%5Bplan%5D+%5Bgroovy%5D&amp;product=AspectJ&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
-            <html:div>Planned [groovy] changes</html:div></proposed>
-     </theme>
-     <!-- 
-     <theme name="LTW for Equinox Aspects (target 1.6.5)">
-        <description><html:div>During the 1.6.5 timeframe the intention is to review AspectJ load-time weaving with respect to how
-        it behaves in equinox aspects.  The OSGi environment may require changes to current ltw support.</html:div></description>
-        <committed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=%5Bplan%5D+AOSGi&amp;product=AspectJ&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
-   		    <html:div>Planned [ltw] changes</html:div></committed>
-        <proposed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=%5Bplan%5D+AOSGi&amp;product=AspectJ&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
-            <html:div>Planned [ltw] changes</html:div></proposed>
-     </theme>
-     -->
      <theme name="Full set of work items for next release">
-        <description><html:div>The fixes and enhancements that are in 1.7.0 development builds and those still scheduled to be completed before final release.</html:div></description>
-        <proposed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=%5Bplan%5D&amp;product=AspectJ&amp;target_milestone=1.7.0&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_severity=blocker&amp;bug_severity=critical&amp;bug_severity=major&amp;bug_severity=normal&amp;bug_severity=minor&amp;bug_severity=trivial&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
+        <description><html:div>The fixes and enhancements that are in 1.8.0 development builds and those still scheduled to be completed before final release.</html:div></description>
+        <proposed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=%5Bplan%5D&amp;product=AspectJ&amp;target_milestone=1.8.0&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_severity=blocker&amp;bug_severity=critical&amp;bug_severity=major&amp;bug_severity=normal&amp;bug_severity=minor&amp;bug_severity=trivial&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
            <html:div>Planned 1.6.7 changes</html:div></proposed>
-        <committed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=&amp;product=AspectJ&amp;target_milestone=1.7.0&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
+        <committed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=&amp;product=AspectJ&amp;target_milestone=1.8.0&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
    		   <html:div>Planned 1.6.7 changes</html:div></committed>
      </theme>
      <theme name="Planned changes for future releases">
         <description><html:div>Items planned</html:div></description>
-        <proposed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=%5Bplan%5D&amp;product=AspectJ&amp;target_milestone=1.7.1&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_severity=blocker&amp;bug_severity=critical&amp;bug_severity=major&amp;bug_severity=normal&amp;bug_severity=minor&amp;bug_severity=trivial&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
-           <html:div>Planned 1.7.1 changes</html:div></proposed>
+        <proposed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=%5Bplan%5D&amp;product=AspectJ&amp;target_milestone=1.8.1&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_severity=blocker&amp;bug_severity=critical&amp;bug_severity=major&amp;bug_severity=normal&amp;bug_severity=minor&amp;bug_severity=trivial&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
+           <html:div>Planned 1.8.1 changes</html:div></proposed>
      </theme>
    </themes_and_priorities>
    <!-- appendix name="Project Refactoring">
