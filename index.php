@@ -172,7 +172,7 @@
    for more information.
    <br><div align="right"><span class="dates"><i>posted 7-Jun-11</i></span></div>
    </li>
-   <ul>
+
     <li>AspectJ 1.6.11 is now <a href="downloads.php">available for download</a>.
    See the <a href="doc/released/README-1611.html">readme</a>
    for more information.
