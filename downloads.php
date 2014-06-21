@@ -301,7 +301,6 @@ function ListDevBuilds($dir){
     </tr>
     </table>
     </li>
-    </ul>
   
   
   <h3 id="milestones6">AspectJ 6</h3>
