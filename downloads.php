@@ -219,6 +219,7 @@ function ListDevBuilds($dir){
     </table>
   </li>
   </ul>
+  
   <ul>
     <li>
     <b>AspectJ 1.7.3, Released 13 Jun 2013</b>
@@ -300,9 +301,11 @@ function ListDevBuilds($dir){
     </tr>
     </table>
     </li>
+    </ul>
   
   
   <h3 id="milestones6">AspectJ 6</h3>
+  <ul>
   <li>
     <b>AspectJ 1.6.13, Released 25-Apr-2013</b>
     <table border="0" cellspacing="0" cellpadding="0" width="100%">
