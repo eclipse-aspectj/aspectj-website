@@ -87,6 +87,12 @@
 		<div class="homeitem">
 			<h3>News and Events</h3>
 
+   <li>AspectJ 1.8.4 is now <a href="downloads.php">available for download</a>.
+   See the <a href="doc/released/README-184.html">readme</a>
+   for more information.
+   <br><div align="right"><span class="dates"><i>posted 6-Nov-14</i></span></div>
+   </li>
+
    <li>AspectJ 1.8.3 is now <a href="downloads.php">available for download</a>.
    See the <a href="doc/released/README-183.html">readme</a>
    for more information.
