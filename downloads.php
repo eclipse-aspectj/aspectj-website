@@ -166,11 +166,6 @@ function ListDevBuilds($dir){
 					    
 				</td>
 			</tr>
-			<tr>
-			    <td><br>
-			      <i>This download is updated after every successful build and test cycle.</i>
-			    </td>
-			</tr>
 		</tbody>
 	</table>
 	</li>
