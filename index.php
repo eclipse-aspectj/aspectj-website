@@ -87,6 +87,12 @@
 		<div class="homeitem">
 			<h3>News and Events</h3>
 
+<li>AspectJ 1.9.0 beta3 is <a href="downloads.php">available for download</a>. AspectJ 1.8.9
+will not work with Java 9 and if exploring AspectJ on Java 9 please try out the 1.9.0 beta. 
+Feedback is welcome on the mailing list or in <a href="https://bugs.eclipse.org/bugs/enter_bug.cgi?product=AspectJ">bugzilla</a>.
+<br><div align="right"><span class="dates"><i>posted 20-Oct-16</i></span></div>
+</li>
+
 <li>AspectJ 1.8.9 is now <a href="downloads.php">available for download</a>.
 See the <a href="doc/released/README-189.html">readme</a>
 for more information.

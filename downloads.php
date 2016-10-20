@@ -149,6 +149,31 @@ function ListDevBuilds($dir){
 		</tbody>
 	</table>
 	</li>
+	<li>
+ 	  <b>Last AspectJ 1.9.0 beta - for use on Java 9</b>
+ 	<table border="0" cellspacing="0" cellpadding="0" width="100%">
+ 		<tbody>
+ 			<tr>
+ 				<td>
+				 	<ul>
+						AspectJ Compiler, Browser, Ant tasks, and Documentation. Only download this version if you are prepared to work with a pre-release compiler. 
+					</ul>
+				</td>
+				<td rowspan="2" width="30%" align="right">
+					    <!-- stick out reference to most recent dev build -->
+
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.9.0.BETA-3.jar">aspectj-1.9.0.BETA-3.jar</a> (~15M)<br>
+					    
+				</td>
+			</tr>
+			<tr>
+			    <td><br>
+			      <i>This download is updated after every successful build and test cycle.</i>
+			    </td>
+			</tr>
+		</tbody>
+	</table>
+	</li>
 	</ul>
 </div>
 
