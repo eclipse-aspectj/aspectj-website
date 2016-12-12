@@ -90,7 +90,6 @@
 <li>AspectJ 1.8.10 is <a href="downloads.php">available for download</a>.
 See the <a href="doc/released/README-1810.html">readme</a>
 for more information.
-Feedback is welcome on the mailing list or in <a href="https://bugs.eclipse.org/bugs/enter_bug.cgi?product=AspectJ">bugzilla</a>.
 <br><div align="right"><span class="dates"><i>posted 12-Dec-16</i></span></div>
 </li>
 
