@@ -89,7 +89,7 @@
 
 <li>AspectJ 1.8.10 is <a href="downloads.php">available for download</a>.
 See the <a href="doc/released/README-1810.html">readme</a>
-for more information.
+for more information. This updates AspectJ to the Eclipse Neon.2 JDT compiler.
 <br><div align="right"><span class="dates"><i>posted 12-Dec-16</i></span></div>
 </li>
 
