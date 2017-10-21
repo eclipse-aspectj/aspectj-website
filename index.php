@@ -87,6 +87,18 @@
 		<div class="homeitem">
 			<h3>News and Events</h3>
 
+<li>AspectJ 1.9.0.RC1 is <a href="downloads.php">available for download</a>.
+See the <a href="doc/released/README-190.html">readme</a>
+for more information.
+<br><div align="right"><span class="dates"><i>posted 21-Oct-17</i></span></div>
+</li>
+
+<li>AspectJ 1.8.12 is <a href="downloads.php">available for download</a>.
+See the <a href="doc/released/README-1812.html">readme</a>
+for more information.
+<br><div align="right"><span class="dates"><i>posted 20-Oct-17</i></span></div>
+</li>
+
 <li>AspectJ 1.8.10 is <a href="downloads.php">available for download</a>.
 See the <a href="doc/released/README-1810.html">readme</a>
 for more information. This updates AspectJ to the Eclipse Neon.2 JDT compiler.
