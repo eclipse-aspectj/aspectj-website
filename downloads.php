@@ -150,7 +150,7 @@ function ListDevBuilds($dir){
 	</table>
 	</li>
 	<li>
- 	  <b>Last AspectJ 1.9.0 rc1 - for use on Java 9</b>
+ 	  <b>Last AspectJ 1.9.0 RC2 - for use on Java 9</b>
  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
  		<tbody>
  			<tr>
@@ -160,7 +160,7 @@ function ListDevBuilds($dir){
 					</ul>
 				</td>
 				<td rowspan="2" width="30%" align="right">
- 			         <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.9.0.RC1.jar">aspectj-1.9.0.RC1.jar</a> (~17M)<br>
+ 			         <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.9.0.RC2.jar">aspectj-1.9.0.RC2.jar</a> (~17M)<br>
 				</td>
 			</tr>
 		</tbody>
