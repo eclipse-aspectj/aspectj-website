@@ -149,23 +149,6 @@ function ListDevBuilds($dir){
 		</tbody>
 	</table>
 	</li>
-	<li>
- 	  <b>Last AspectJ 1.9.0 RC4 - for use on Java 9</b>
- 	<table border="0" cellspacing="0" cellpadding="0" width="100%">
- 		<tbody>
- 			<tr>
- 				<td>
-				 	<ul>
-						AspectJ Compiler, Browser, Ant tasks, and Documentation. Only download this version if you are prepared to work with a pre-release compiler. 
-					</ul>
-				</td>
-				<td rowspan="2" width="30%" align="right">
- 			         <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.9.0.RC4.jar">aspectj-1.9.0.RC4.jar</a> (~17M)<br>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	</li>
 	</ul>
 </div>
 
@@ -176,13 +159,13 @@ function ListDevBuilds($dir){
   <h3 id="stable_release">Latest Stable Release</h3>
   <ul>
     <li>
-    <b>AspectJ 1.8.13, Released 15 Nov 2017</b>
+    <b>AspectJ 1.9.0, Released 2 Apr 2018</b>
  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
     <tr>
       <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
       <td width="30%" align="right">
-          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.8.13.jar">aspectj-1.8.13.jar</a> (~15M)<br>
-          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.8.13-src.jar">aspectj-1.8.13-src.jar</a>
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.9.0.jar">aspectj-1.9.0.jar</a> (~17M)<br>
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.9.0-src.jar">aspectj-1.9.0-src.jar</a>
       </td>
     </tr>
     </table>
