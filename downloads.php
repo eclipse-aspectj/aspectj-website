@@ -175,7 +175,7 @@ function ListDevBuilds($dir){
 
   <!-- ============ ASPECTJ MILESTONES -->
   <div class="homeitem3col">
-  <h3 id="milestones">AspectJ 8</h3>
+  <h3 id="milestones">AspectJ 9</h3>
   <ul>
     <li>
     <b>AspectJ 1.9.0, Released 2 Apr 2018</b>
@@ -190,6 +190,7 @@ function ListDevBuilds($dir){
     </table>
   </li>
   </ul>
+  <h3 id="milestones">AspectJ 8</h3>
   <ul>
     <li>
     <b>AspectJ 1.8.13, Released 15 Nov 2017</b>
