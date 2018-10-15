@@ -159,6 +159,25 @@ function ListDevBuilds($dir){
   <h3 id="stable_release">Latest Stable Release</h3>
   <ul>
     <li>
+    <b>AspectJ 1.9.2-rc3, Released 15 Oct 2018</b>
+ 	<table border="0" cellspacing="0" cellpadding="0" width="100%">
+    <tr>
+      <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
+      <td width="30%" align="right">
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.9.2.RC3.jar">aspectj-1.9.2.RC3.jar</a> (~17M)<br>
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.9.2.RC3-src.jar">aspectj-1.9.2.RC3-src.jar</a>
+      </td>
+    </tr>
+    </table>
+  </li>
+  </ul>
+</div>
+
+  <!-- ============ ASPECTJ MILESTONES -->
+  <div class="homeitem3col">
+  <h3 id="milestones">AspectJ 9</h3>
+  <ul>
+    <li>
     <b>AspectJ 1.9.1, Released 20 Apr 2018</b>
  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
     <tr>
@@ -171,11 +190,6 @@ function ListDevBuilds($dir){
     </table>
   </li>
   </ul>
-</div>
-
-  <!-- ============ ASPECTJ MILESTONES -->
-  <div class="homeitem3col">
-  <h3 id="milestones">AspectJ 9</h3>
   <ul>
     <li>
     <b>AspectJ 1.9.0, Released 2 Apr 2018</b>
