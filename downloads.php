@@ -207,6 +207,20 @@ function ListDevBuilds($dir){
   <h3 id="milestones">AspectJ 8</h3>
   <ul>
     <li>
+    <b>AspectJ 1.8.14, Released 6 Mar 2019</b>
+ 	<table border="0" cellspacing="0" cellpadding="0" width="100%">
+    <tr>
+      <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
+      <td width="30%" align="right">
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.8.14.jar">aspectj-1.8.14.jar</a> (~15M)<br>
+          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.8.14-src.jar">aspectj-1.8.14-src.jar</a>
+      </td>
+    </tr>
+    </table>
+  </li>
+  </ul>
+  <ul>
+    <li>
     <b>AspectJ 1.8.13, Released 15 Nov 2017</b>
  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
     <tr>
