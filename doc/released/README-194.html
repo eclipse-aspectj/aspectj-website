@@ -34,6 +34,18 @@ The class cast is because Java8 couldn't understand
 the packaging of system classes post Java9 and so couldn't find java.lang.Object. This has now all been
 tidied up and should work much better. More details in <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=546807">546807</a>,
 thanks to Denys Khanzhyiev for some tips on getting to the right solution.
+<li> If you see this a warning like this:
+<pre><code>
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access using Lookup on org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor (file: aspectjweaver-1.9.2.jar) to class java.lang.ClassLoader
+WARNING: Please consider reporting this to the maintainers of org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+</code></pre>
+It is harmless (at the moment) but if you want to remove it you can run your
+JDK with <tt>--add-opens java.base/java.lang=ALL-UNNAMED</tt>.
+
+</li>
 </ul>
 
 
