@@ -5,7 +5,7 @@
 	# https://dev.eclipse.org/committers/ 
 	$theme = "Lazarus";
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/projects/common/project-info.class.php");
+#	require_once($_SERVER['DOCUMENT_ROOT'] . "/projects/common/project-info.class.php");
 	#$projectInfo = new ProjectInfo("technology.aspectj");
 	#$projectInfo->generate_common_nav( $Nav );
 
