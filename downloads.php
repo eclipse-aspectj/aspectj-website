@@ -173,27 +173,28 @@ function ListDevBuilds($dir){
   </ul>
 </div>
 
-<div class="homeitem3col">
-  <h3 id="stable_release">Latest Stable Release</h3>
-  <ul>
-    <li>
-    <b>AspectJ 1.9.4, Released 10 May 2019</b>
- 	<table border="0" cellspacing="0" cellpadding="0" width="100%">
-    <tr>
-      <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
-      <td width="30%" align="right">
-          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.9.4.jar">aspectj-1.9.4.jar</a> (~17M)<br>
-          <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.9.4-src.jar">aspectj-1.9.4-src.jar</a>
-      </td>
-    </tr>
-    </table>
-  </li>
-  </ul>
-</div>
 
   <!-- ============ ASPECTJ MILESTONES -->
-  <div class="homeitem3col">
+  
+<div class="homeitem3col">
   <h3 id="milestones">AspectJ 9</h3>
+<ul>
+  <li>
+  <b>AspectJ 1.9.4, Released 10 May 2019</b>
+ <table border="0" cellspacing="0" cellpadding="0" width="100%">
+  <tr>
+    <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
+    <td width="30%" align="right">
+        <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.9.4.jar">aspectj-1.9.4.jar</a> (~17M)<br>
+        <a href="http://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.9.4-src.jar">aspectj-1.9.4-src.jar</a>
+    </td>
+  </tr>
+  </table>
+</li>
+</ul>
+</div>
+
+  <div class="homeitem3col">
   <ul>
     <li>
     <b>AspectJ 1.9.3, Released 4 Apr 2019</b>
