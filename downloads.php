@@ -157,7 +157,17 @@ function ListDevBuilds($dir){
 
   <div class="homeitem3col">
   <h3 id="stable_release">Latest Stable Release</h3>
-  <ul>
+  From 1.9.7 onwards, AspectJ releases are now available from GitHub.
+  <br>
+  See the releases page <a href="https://github.com/eclipse/org.aspectj/releases/">here</a>.
+  </div>
+
+
+  <!-- ============ ASPECTJ MILESTONES -->
+  
+<div class="homeitem3col">
+<h3 id="milestones">AspectJ 9</h3>
+<ul>
     <li>
     <b>AspectJ 1.9.6, Released 22 Jul 2020</b>
  	<table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -171,13 +181,7 @@ function ListDevBuilds($dir){
     </table>
   </li>
   </ul>
-</div>
-
-
-  <!-- ============ ASPECTJ MILESTONES -->
   
-<div class="homeitem3col">
-<h3 id="milestones">AspectJ 9</h3>
 <ul>
 <li>
 <b>AspectJ 1.9.5, Released 28 Nov 2019</b>
@@ -192,10 +196,7 @@ function ListDevBuilds($dir){
 </table>
 </li>
 </ul>
-</div> 
 
-<div class="homeitem3col">
-  <h3 id="milestones">AspectJ 9</h3>
 <ul>
   <li>
   <b>AspectJ 1.9.4, Released 10 May 2019</b>
@@ -210,9 +211,7 @@ function ListDevBuilds($dir){
   </table>
 </li>
 </ul>
-</div>
 
-  <div class="homeitem3col">
   <ul>
     <li>
     <b>AspectJ 1.9.3, Released 4 Apr 2019</b>
