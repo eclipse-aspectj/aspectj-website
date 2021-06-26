@@ -87,8 +87,7 @@
 		<div class="homeitem">
 			<h3>News and Events</h3>
  
-      <li>AspectJ 1.9.7 is <a href="https://github.com/eclipse/org.aspectj/releases/tag/V1_9_7">available for download</a>.
-      The installer is accessible from that release page at GitHub.
+      <li>AspectJ 1.9.7 is <a href="https://github.com/eclipse/org.aspectj/releases/tag/V1_9_7">available for download</a> (grab the installer from that page).
       See the <a href="https://htmlpreview.github.io/?https://github.com/eclipse/org.aspectj/blob/master/docs/dist/doc/README-197.html">readme</a>
       for more information.
       <br><div align="right"><span class="dates"><i>posted 25-Jun-2021</i></span></div>
