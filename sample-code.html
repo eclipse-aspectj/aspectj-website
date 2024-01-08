@@ -1,144 +1,165 @@
 <html>
 <title>AspectJ sample code</title>
 <body>
-    <a name="top"></a>
-    <h2>AspectJ sample code</h2>This contains contributions from the AspectJ community of <ul><li>sample code for AspectJ programs,</li><li>sample code for extensions to AspectJ tools using the public API's,</li><li>sample scripts for invoking AspectJ tools, and </li> <li>documentation trails showing how to do given tasks    using AspectJ, AJDT, or various IDE or deployment    environments.</li></ul>
+<a name="top"></a>
+<h2>AspectJ sample code</h2>This contains contributions from the AspectJ community of
+<ul>
+  <li>sample code for AspectJ programs,</li>
+  <li>sample code for extensions to AspectJ tools using the public API's,</li>
+  <li>sample scripts for invoking AspectJ tools, and</li>
+  <li>documentation trails showing how to do given tasks using AspectJ, AJDT, or various IDE or deployment
+    environments.
+  </li>
+</ul>
 <p>
-Find complete source files in the AspectJ CVS repository at
-<code>org.aspectj/modules/docs/sandbox</code>.	
-For instructions on downloading code from the CVS repository,
-see the <a href="doc/faq.html#q:buildingsource">FAQ entry "buildingsource"</a>.
+  Find complete source files in the AspectJ CVS repository at
+  <code>org.aspectj/modules/docs/sandbox</code>.
+  For instructions on downloading code from the CVS repository,
+  see the <a href="doc/faq.html#q:buildingsource">FAQ entry "buildingsource"</a>.
 </p>
 <p><small>
-Copyright 2003 Contributors. All Rights Reserved. This sample code is made available under the Eclipse Public License version 1.0 available at <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a>. Contributors are listed in this document as authors. Permission to republish portions of this sample code is hereby granted if the publication acknowledges the author by name and the source by reference to the AspectJ project home page  at http://eclipse.org/aspectj.
+  Copyright 2003 Contributors. All Rights Reserved. This sample code is made available under the Eclipse Public License
+  version 1.0 available at <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a>. Contributors are
+  listed in this document as authors. Permission to republish portions of this sample code is hereby granted if the
+  publication acknowledges the author by name and the source by reference to the AspectJ project home page at
+  http://eclipse.org/aspectj.
 </small></p>
 <p><small>Generated on Apr 18, 2004 by SamplesGatherer</small>
-    <h2>Contents</h2>
+<h2>Contents</h2>
+<ul>
+  <li><a href="#api">api</a></li>
+  <ul>
+    <li><a href="#api-asm">api-asm</a></li>
     <ul>
-        <li><a href="#api">api</a></li>
-        <ul>
-        <li><a href="#api-asm">api-asm</a></li>
-        <ul>
-        <li><a href="#api-asm-listAffectedFiles">Walk model to list affected files</a></li>
-        </ul>
-        </ul>
-        <li><a href="#caching">caching</a></li>
-        <ul>
-        <li><a href="#caching-dirty">caching-dirty</a></li>
-        <ul>
-        <li><a href="#caching-dirty-reflectiveSetters">Use getter/setter pattern to track dirtiness</a></li>
-        </ul>
-        </ul>
-        <li><a href="#declares">declares</a></li>
-        <ul>
-        <li><a href="#declares-exceptionSpelunking">Using declare warning to find Exception-related code</a></li>
-        <li><a href="#declares-inoculated">declares-inoculated</a></li>
-        <ul>
-        <li><a href="#declares-inoculated-nonSetterWrites">Warn when setting non-public field</a></li>
-        <li><a href="#declares-inoculated-prohibitNonprivateConstructors">Error to have accessible sub-Point constructors</a></li>
-        <li><a href="#declares-inoculated-validExceptionHandlingMethod">Error when subclass method handles exception</a></li>
-        <li><a href="#declares-inoculated-validPointConstruction">Error when factory not used</a></li>
-        </ul>
-        <li><a href="#declares-softenRemoteException">declares-softenRemoteException</a></li>
-        <li><a href="#declares-threadFactoryRequired">Error when not using Thread factory</a></li>
-        <li><a href="#declares-typeConstraints">Using declare to enforce type constraints</a></li>
-        </ul>
-        <li><a href="#j2ee">j2ee</a></li>
-        <ul>
-        <li><a href="#j2ee-myeclipseide">j2ee-myeclipseide</a></li>
-        <ul>
-        <li><a href="#j2ee-myeclipseide-generally">Using MyEclipseIDE to develop AspectJ programs for J2EE</a></li>
-        </ul>
-        <li><a href="#j2ee-servlets">j2ee-servlets</a></li>
-        <ul>
-        <li><a href="#j2ee-servlets-generally">Using AspectJ in servlets</a></li>
-        </ul>
-        <li><a href="#j2ee-tomcat4">j2ee-tomcat4</a></li>
-        <ul>
-        <li><a href="#j2ee-tomcat4-jsp">Running AspectJ JSP's in Tomcat 4.x</a></li>
-        <li><a href="#j2ee-tomcat4-precompileJsp">Precompile JSP's for Tomcat 4.x using AspectJ</a></li>
-        <li><a href="#j2ee-tomcat4-servlets">Running AspectJ servlets in Tomcat 4.x</a></li>
-        </ul>
-        </ul>
-        <li><a href="#language">language</a></li>
-        <ul>
-        <li><a href="#language-cflowRecursionBasic">Pick out latest and original recursive call</a></li>
-        <li><a href="#language-doubleDispatch">Implementing double-dispatch</a></li>
-        <li><a href="#language-fieldSetContext">Check input and result for a field set.</a></li>
-        <li><a href="#language-handlerContext">Log exception being handled</a></li>
-        <li><a href="#language-initialization">Understanding object creation join points</a></li>
-        </ul>
-        <li><a href="#library">library</a></li>
-        <ul>
-        <li><a href="#library-classPointcutLibrary">Defining library pointcuts in a class</a></li>
-        <li><a href="#library-pointcutIdioms">Standard pointcut idioms</a></li>
-        </ul>
-        <li><a href="#pubs">pubs</a></li>
-        <ul>
-        <li><a href="#pubs-all">pubs-all</a></li>
-        <ul>
-        <li><a href="#pubs-all-links">List of AspectJ publications</a></li>
-        </ul>
-        <li><a href="#pubs-books">pubs-books</a></li>
-        <ul>
-        <li><a href="#pubs-books-aspectjinaction">AspectJ in Action</a></li>
-        </ul>
-        <li><a href="#pubs-papers">pubs-papers</a></li>
-        <ul>
-        <li><a href="#pubs-papers-aodesignpatterns">Aspect-Oriented Design Pattern Implementations</a></li>
-        </ul>
-        <li><a href="#pubs-projects">pubs-projects</a></li>
-        <ul>
-        <li><a href="#pubs-projects-atrack">ATrack bug tracker</a></li>
-        </ul>
-        </ul>
-        <li><a href="#scripts">scripts</a></li>
-        <ul>
-        <li><a href="#scripts-weaveLibraries">Shell script to use ajc to weave jars and then run</a></li>
-        </ul>
-        <li><a href="#testing">testing</a></li>
-        <ul>
-        <li><a href="#testing-inoculated">testing-inoculated</a></li>
-        <ul>
-        <li><a href="#testing-inoculated-adviseProxyCallsOnly">Advise calls to the proxy object only</a></li>
-        <li><a href="#testing-inoculated-failureCapture">Log failures</a></li>
-        <li><a href="#testing-inoculated-injectIOException">Inject IOException on test driver command</a></li>
-        <li><a href="#testing-inoculated-permitWritesDuringConstruction">Constructor execution</a></li>
-        <li><a href="#testing-inoculated-proceedVariants">Using around for integration testing</a></li>
-        <li><a href="#testing-inoculated-prohibitWritesByOthers">Prohibit field writes by other instances</a></li>
-        <li><a href="#testing-inoculated-prohibitWritesEvenByStaticOthers">Prohibit writes by other instances and static methods</a></li>
-        <li><a href="#testing-inoculated-prohibitWritesEvenBySubclasses">Prohibit writes by subclasses</a></li>
-        <li><a href="#testing-inoculated-prohibitWritesExceptWhenConstructing">Prohibit field writes after construction</a></li>
-        <li><a href="#testing-inoculated-replaceWithProxy">Replace object with proxy on constructiono</a></li>
-        <li><a href="#testing-inoculated-roundTrip">Round-trip integration testing</a></li>
-        <li><a href="#testing-inoculated-runtimeErrorWhenNullReturnedFromFactory">Throw Error when factory returns null</a></li>
-        </ul>
-        </ul>
-        <li><a href="#tracing">tracing</a></li>
-        <ul>
-        <li><a href="#tracing-simpleTiming">Record time to execute public methods</a></li>
-        <li><a href="#tracing-traceJoinPoints">Trace join points executed to log</a></li>
-        </ul>
-        <li><a href="#trails">trails</a></li>
-        <ul>
-        <li><a href="#trails-debugging">trails-debugging</a></li>
-        <ul>
-        <li><a href="#trails-debugging-aspectj10">Debugging AspectJ 1.0 Programs</a></li>
-        <li><a href="#trails-debugging-aspectj11">Debugging AspectJ 1.1 Programs</a></li>
-        </ul>        </ul>        </ul>    <li><a href="#authorIndex">Author Index</a></li>    </ul>    <h2>Listings</h2>
-    <a name="api"></a>
-    <h3>api</h3>
+      <li><a href="#api-asm-listAffectedFiles">Walk model to list affected files</a></li>
+    </ul>
+  </ul>
+  <li><a href="#caching">caching</a></li>
+  <ul>
+    <li><a href="#caching-dirty">caching-dirty</a></li>
+    <ul>
+      <li><a href="#caching-dirty-reflectiveSetters">Use getter/setter pattern to track dirtiness</a></li>
+    </ul>
+  </ul>
+  <li><a href="#declares">declares</a></li>
+  <ul>
+    <li><a href="#declares-exceptionSpelunking">Using declare warning to find Exception-related code</a></li>
+    <li><a href="#declares-inoculated">declares-inoculated</a></li>
+    <ul>
+      <li><a href="#declares-inoculated-nonSetterWrites">Warn when setting non-public field</a></li>
+      <li><a href="#declares-inoculated-prohibitNonprivateConstructors">Error to have accessible sub-Point
+        constructors</a></li>
+      <li><a href="#declares-inoculated-validExceptionHandlingMethod">Error when subclass method handles exception</a>
+      </li>
+      <li><a href="#declares-inoculated-validPointConstruction">Error when factory not used</a></li>
+    </ul>
+    <li><a href="#declares-softenRemoteException">declares-softenRemoteException</a></li>
+    <li><a href="#declares-threadFactoryRequired">Error when not using Thread factory</a></li>
+    <li><a href="#declares-typeConstraints">Using declare to enforce type constraints</a></li>
+  </ul>
+  <li><a href="#j2ee">j2ee</a></li>
+  <ul>
+    <li><a href="#j2ee-myeclipseide">j2ee-myeclipseide</a></li>
+    <ul>
+      <li><a href="#j2ee-myeclipseide-generally">Using MyEclipseIDE to develop AspectJ programs for J2EE</a></li>
+    </ul>
+    <li><a href="#j2ee-servlets">j2ee-servlets</a></li>
+    <ul>
+      <li><a href="#j2ee-servlets-generally">Using AspectJ in servlets</a></li>
+    </ul>
+    <li><a href="#j2ee-tomcat4">j2ee-tomcat4</a></li>
+    <ul>
+      <li><a href="#j2ee-tomcat4-jsp">Running AspectJ JSP's in Tomcat 4.x</a></li>
+      <li><a href="#j2ee-tomcat4-precompileJsp">Precompile JSP's for Tomcat 4.x using AspectJ</a></li>
+      <li><a href="#j2ee-tomcat4-servlets">Running AspectJ servlets in Tomcat 4.x</a></li>
+    </ul>
+  </ul>
+  <li><a href="#language">language</a></li>
+  <ul>
+    <li><a href="#language-cflowRecursionBasic">Pick out latest and original recursive call</a></li>
+    <li><a href="#language-doubleDispatch">Implementing double-dispatch</a></li>
+    <li><a href="#language-fieldSetContext">Check input and result for a field set.</a></li>
+    <li><a href="#language-handlerContext">Log exception being handled</a></li>
+    <li><a href="#language-initialization">Understanding object creation join points</a></li>
+  </ul>
+  <li><a href="#library">library</a></li>
+  <ul>
+    <li><a href="#library-classPointcutLibrary">Defining library pointcuts in a class</a></li>
+    <li><a href="#library-pointcutIdioms">Standard pointcut idioms</a></li>
+  </ul>
+  <li><a href="#pubs">pubs</a></li>
+  <ul>
+    <li><a href="#pubs-all">pubs-all</a></li>
+    <ul>
+      <li><a href="#pubs-all-links">List of AspectJ publications</a></li>
+    </ul>
+    <li><a href="#pubs-books">pubs-books</a></li>
+    <ul>
+      <li><a href="#pubs-books-aspectjinaction">AspectJ in Action</a></li>
+    </ul>
+    <li><a href="#pubs-papers">pubs-papers</a></li>
+    <ul>
+      <li><a href="#pubs-papers-aodesignpatterns">Aspect-Oriented Design Pattern Implementations</a></li>
+    </ul>
+    <li><a href="#pubs-projects">pubs-projects</a></li>
+    <ul>
+      <li><a href="#pubs-projects-atrack">ATrack bug tracker</a></li>
+    </ul>
+  </ul>
+  <li><a href="#scripts">scripts</a></li>
+  <ul>
+    <li><a href="#scripts-weaveLibraries">Shell script to use ajc to weave jars and then run</a></li>
+  </ul>
+  <li><a href="#testing">testing</a></li>
+  <ul>
+    <li><a href="#testing-inoculated">testing-inoculated</a></li>
+    <ul>
+      <li><a href="#testing-inoculated-adviseProxyCallsOnly">Advise calls to the proxy object only</a></li>
+      <li><a href="#testing-inoculated-failureCapture">Log failures</a></li>
+      <li><a href="#testing-inoculated-injectIOException">Inject IOException on test driver command</a></li>
+      <li><a href="#testing-inoculated-permitWritesDuringConstruction">Constructor execution</a></li>
+      <li><a href="#testing-inoculated-proceedVariants">Using around for integration testing</a></li>
+      <li><a href="#testing-inoculated-prohibitWritesByOthers">Prohibit field writes by other instances</a></li>
+      <li><a href="#testing-inoculated-prohibitWritesEvenByStaticOthers">Prohibit writes by other instances and static
+        methods</a></li>
+      <li><a href="#testing-inoculated-prohibitWritesEvenBySubclasses">Prohibit writes by subclasses</a></li>
+      <li><a href="#testing-inoculated-prohibitWritesExceptWhenConstructing">Prohibit field writes after
+        construction</a></li>
+      <li><a href="#testing-inoculated-replaceWithProxy">Replace object with proxy on constructiono</a></li>
+      <li><a href="#testing-inoculated-roundTrip">Round-trip integration testing</a></li>
+      <li><a href="#testing-inoculated-runtimeErrorWhenNullReturnedFromFactory">Throw Error when factory returns
+        null</a></li>
+    </ul>
+  </ul>
+  <li><a href="#tracing">tracing</a></li>
+  <ul>
+    <li><a href="#tracing-simpleTiming">Record time to execute public methods</a></li>
+    <li><a href="#tracing-traceJoinPoints">Trace join points executed to log</a></li>
+  </ul>
+  <li><a href="#trails">trails</a></li>
+  <ul>
+    <li><a href="#trails-debugging">trails-debugging</a></li>
+    <ul>
+      <li><a href="#trails-debugging-aspectj10">Debugging AspectJ 1.0 Programs</a></li>
+      <li><a href="#trails-debugging-aspectj11">Debugging AspectJ 1.1 Programs</a></li>
+    </ul>
+  </ul>
+</ul>
+<li><a href="#authorIndex">Author Index</a></li>
+</ul>    <h2>Listings</h2>
+<a name="api"></a>
+<h3>api</h3>
 <a href="#top">back to top</a>
-    <a name="api-asm"></a>
-    <h3>api-asm</h3>
+<a name="api-asm"></a>
+<h3>api-asm</h3>
 <a href="#top">back to top</a>
-    <a name="api-asm-listAffectedFiles"></a>
-    <h3>Walk model to list affected files</h3>
+<a name="api-asm-listAffectedFiles"></a>
+<h3>Walk model to list affected files</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; api-clients org/aspectj/samples/AffectedFilesReporter.java:3 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; api-clients org/aspectj/samples/AffectedFilesReporter.java:3 &nbsp;|
 <p>
-    <pre>
+<pre>
 
 package org.aspectj.samples;
 
@@ -149,10 +170,9 @@ import org.aspectj.bridge.*;
 import java.io.*;
 import java.util.*;
 
-
 /**
- * Run ajc and list files affected by advice or inter-type declarations.  
- * 
+ * Run ajc and list files affected by advice or inter-type declarations.
+ *
  * WARNING: Does not emit info messages for uses-pointcut dependencies.
  * @author Wes Isberg
  */
@@ -188,15 +208,15 @@ public class AffectedFilesReporter implements Runnable {
         main.runMain(args, false);
         if (null != fin) {
             fin.close();
-        }        
+        }
     }
-    
+
     final PrintStream sink;
-    
+
     public AffectedFilesReporter(PrintStream sink) {
         this.sink = (null == sink ? System.out : sink);
     }
-    
+
     public void run() {
         IHierarchy hierarchy = AsmManager.getDefault().getHierarchy();
         if (null == hierarchy) {
@@ -234,18 +254,18 @@ public class AffectedFilesReporter implements Runnable {
      * @return true if affected.
      */
     private boolean isAffected(final IProgramElement fileNode) {
-        final IRelationshipMap map  = 
-            AsmManager.getDefault().getRelationshipMap();     
+        final IRelationshipMap map  =
+            AsmManager.getDefault().getRelationshipMap();
         List /*IProgramElement*/ nodes = new LinkedList();
         List /*IProgramElement*/ newNodes = new LinkedList();
         nodes.add(fileNode);
         while (0 < nodes.size()) {
-            for (ListIterator iter = nodes.listIterator(); 
+            for (ListIterator iter = nodes.listIterator();
                  iter.hasNext();) {
                 IProgramElement node = (IProgramElement) iter.next();
                 List relations = map.get(node);
                 if (null != relations) {
-                    for (Iterator riter = relations.iterator(); 
+                    for (Iterator riter = relations.iterator();
                         riter.hasNext();) {
                         IRelationship.Kind kind =
                         ((IRelationship) riter.next()).getKind();
@@ -265,19 +285,19 @@ public class AffectedFilesReporter implements Runnable {
     }
 }
     </pre>
-    <a name="caching"></a>
-    <h3>caching</h3>
+<a name="caching"></a>
+<h3>caching</h3>
 <a href="#top">back to top</a>
-    <a name="caching-dirty"></a>
-    <h3>caching-dirty</h3>
+<a name="caching-dirty"></a>
+<h3>caching-dirty</h3>
 <a href="#top">back to top</a>
-    <a name="caching-dirty-reflectiveSetters"></a>
-    <h3>Use getter/setter pattern to track dirtiness</h3>
+<a name="caching-dirty-reflectiveSetters"></a>
+<h3>Use getter/setter pattern to track dirtiness</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Ricardo Giacomin, Wes Isberg
- &nbsp;|&nbsp; common caching/WatchSetters.java:5 &nbsp;|
+<p>| &nbsp; Ricardo Giacomin, Wes Isberg
+  &nbsp;|&nbsp; common caching/WatchSetters.java:5 &nbsp;|
 <p>
-    <pre>
+<pre>
 package caching;
 
 import java.lang.reflect.Method;
@@ -295,15 +315,15 @@ import java.lang.reflect.Method;
  * ...
  * if (!foo.isDirtyValid() || foo.isDirty()) {
  *    foo.write();
- * } 
+ * }
  * &lt;/pre>
- * 
+ *
  * (Initial draft was sent to aspectj-users@eclipse.org by
- * Ricardo on 5/13/2003 
+ * Ricardo on 5/13/2003
  * (http://dev.eclipse.org/mhonarc/lists/aspectj-users/msg00482.html)
  * but his email fails now, so we
  * did not get explicit authorization to post.)
- * 
+ *
  * @author Ricardo Giacomin, Wes Isberg
  */
 public aspect WatchSetters {
@@ -334,7 +354,7 @@ public aspect WatchSetters {
     public boolean IWatched.isDirtyValid() {
         return dirtyValid;
     }
-    
+
     /** Setters are instance methods returning void,
      * prefixed "set..." and taking exactly 1 argument.
      * Does not use args(id), since that requires the
@@ -350,7 +370,7 @@ public aspect WatchSetters {
      * there wasn't a corresponding setter, we didn't
      * have the right security permissions, etc.
      */
-    void around(IWatched watched) : setters(watched) 
+    void around(IWatched watched) : setters(watched)
             && if(watched.dirtyValid) {
         // get value by invoking getter method
         Object value = NONE;
@@ -361,7 +381,7 @@ public aspect WatchSetters {
                 .getMethod(getterName, GETTER_ARG_TYPES);
             value = method.invoke(watched, GETTER_ARGS);
         } catch (Throwable t) {
-            // NoSuchMethodException, SecurityException, 
+            // NoSuchMethodException, SecurityException,
             // InvocationTargetException...
         }
         if (NONE == value) {
@@ -385,17 +405,17 @@ class Timer implements WatchSetters.IWatched {
     private static int ID;
     public final int id = ++ID;
     private int counter;
-    public int getCounter() { 
+    public int getCounter() {
         return counter;
     }
-    public void setCounter(int i) { 
+    public void setCounter(int i) {
         counter = i;
     }
     public void write() {
         System.out.println("writing " + this);
     }
     public String toString() {
-        return "Timer " + id + "==" + counter;  
+        return "Timer " + id + "==" + counter;
     }
 }
 
@@ -412,14 +432,14 @@ class Client {
        }
    }
 }
- 
+
 // ---- aspects use dirty to implement cache, etc.
 // Volatile things are flushed when dirty
 abstract aspect Volatile {
     // subaspects declare targets using Volatile.ITag
     protected interface ITag {}
     declare precedence : Volatile+, WatchSetters;
-    after(WatchSetters.IWatched watched) returning : 
+    after(WatchSetters.IWatched watched) returning :
             WatchSetters.setters(watched) {
         if (!watched.isDirtyValid() || watched.isDirty()) {
             flushCache(watched);
@@ -438,28 +458,28 @@ aspect VolatileTimer extends Volatile {
 }
 
     </pre>
-    <a name="declares"></a>
-    <h3>declares</h3>
+<a name="declares"></a>
+<h3>declares</h3>
 <a href="#top">back to top</a>
-    <a name="declares-exceptionSpelunking"></a>
-    <h3>Using declare warning to find Exception-related code</h3>
+<a name="declares-exceptionSpelunking"></a>
+<h3>Using declare warning to find Exception-related code</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; common declares/Declares.java:44 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; common declares/Declares.java:44 &nbsp;|
 <p>
-    <pre>
+<pre>
 
 /**
- * List AppException catch blocks and callers as a way 
+ * List AppException catch blocks and callers as a way
  * of investigating a possibly-large code base.
  */
 aspect SeekAppExceptions {
     pointcut withinScope() : within(com.company..*);
-      
+
     /**
      * Find calls to stuff that throws AppException.
      */
-    declare warning : withinScope() && 
+    declare warning : withinScope() &&
         (call(* *(..) throws AppException+)
          || call(new(..) throws AppException+)) :
         "fyi, another call to something that can throw IOException";
@@ -471,79 +491,79 @@ aspect SeekAppExceptions {
         "fyi, code that handles AppException";
 }
     </pre>
-    <a name="declares-inoculated"></a>
-    <h3>declares-inoculated</h3>
+<a name="declares-inoculated"></a>
+<h3>declares-inoculated</h3>
 <a href="#top">back to top</a>
-    <a name="declares-inoculated-nonSetterWrites"></a>
-    <h3>Warn when setting non-public field</h3>
+<a name="declares-inoculated-nonSetterWrites"></a>
+<h3>Warn when setting non-public field</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; inoculated/src com/xerox/printing/CompileTime.java:46 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; inoculated/src com/xerox/printing/CompileTime.java:46 &nbsp;|
 <p>
-    <pre>
+<pre>
     /** warn if setting non-public field outside a setter */
-    declare warning : 
-        within(com.xerox.printing..*) 
-        && set(!public * *) && !withincode(* set*(..)) 
+    declare warning :
+        within(com.xerox.printing..*)
+        && set(!public * *) && !withincode(* set*(..))
         : "writing field outside setter" ;
     </pre>
-    <a name="declares-inoculated-prohibitNonprivateConstructors"></a>
-    <h3>Error to have accessible sub-Point constructors</h3>
+<a name="declares-inoculated-prohibitNonprivateConstructors"></a>
+<h3>Error to have accessible sub-Point constructors</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; inoculated/src RunTime.java:29 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; inoculated/src RunTime.java:29 &nbsp;|
 <p>
-    <pre>
+<pre>
     /** We make it an error for any Point subclasses to have non-private constructors */
-    declare error : execution(!private Point+.new(..)) 
+    declare error : execution(!private Point+.new(..))
         && !within(java*..*) :
         "non-private Point subclass constructor";
     </pre>
-    <a name="declares-inoculated-validExceptionHandlingMethod"></a>
-    <h3>Error when subclass method handles exception</h3>
+<a name="declares-inoculated-validExceptionHandlingMethod"></a>
+<h3>Error when subclass method handles exception</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; inoculated/src com/xerox/printing/CompileTime.java:55 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; inoculated/src com/xerox/printing/CompileTime.java:55 &nbsp;|
 <p>
-    <pre>
-    declare error : handler(IOException+) 
+<pre>
+    declare error : handler(IOException+)
             && withincode(* PrinterStream+.delegate(..))
         : "do not handle IOException in this method";
     </pre>
-    <a name="declares-inoculated-validPointConstruction"></a>
-    <h3>Error when factory not used</h3>
+<a name="declares-inoculated-validPointConstruction"></a>
+<h3>Error when factory not used</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; inoculated/src com/xerox/printing/CompileTime.java:61 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; inoculated/src com/xerox/printing/CompileTime.java:61 &nbsp;|
 <p>
-    <pre>
-    declare error  : !withincode(Point+ SubPoint+.create(..)) 
-            && within(com.xerox..*) 
+<pre>
+    declare error  : !withincode(Point+ SubPoint+.create(..))
+            && within(com.xerox..*)
             && call(Point+.new(..))
         : "use SubPoint.create() to create Point";
     </pre>
-    <a name="declares-softenRemoteException"></a>
-    <h3>declares-softenRemoteException</h3>
+<a name="declares-softenRemoteException"></a>
+<h3>declares-softenRemoteException</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Jim Hugunin, Wes Isberg
- &nbsp;|&nbsp; common declares/Declares.java:78 &nbsp;|
+<p>| &nbsp; Jim Hugunin, Wes Isberg
+  &nbsp;|&nbsp; common declares/Declares.java:78 &nbsp;|
 <p>
-    <pre>
+<pre>
 
 /**
- * Convert RemoteExceptions to RuntimeRemoteException 
+ * Convert RemoteExceptions to RuntimeRemoteException
  * and log them. Enable clients that don't handle
- * RemoteException. 
+ * RemoteException.
  */
 aspect HandleRemoteException {
     /**
-     * Declare RemoteException soft to enable use by clients 
-     * that are not declared to handle RemoteException. 
+     * Declare RemoteException soft to enable use by clients
+     * that are not declared to handle RemoteException.
      */
     declare soft: RemoteException: throwsRemoteException();
 
     /**
-     * Pick out join points to convert RemoteException to 
+     * Pick out join points to convert RemoteException to
      * RuntimeRemoteException.
      * This implementation picks out
      * execution of any method declared to throw RemoteException
@@ -552,7 +572,7 @@ aspect HandleRemoteException {
     pointcut throwsRemoteException(): within(com.company.lib..*)
        && execution(* *(..) throws RemoteException+);
 
-    /** 
+    /**
      * This around advice converts RemoteException to
      * RuntimeRemoteException at all join points picked out
      * by <code>throwsRemoteException()</code>.
@@ -568,136 +588,134 @@ aspect HandleRemoteException {
             throw new RuntimeRemoteException(re);
         }
     }
-}        
+}
     </pre>
-    <a name="declares-threadFactoryRequired"></a>
-    <h3>Error when not using Thread factory</h3>
+<a name="declares-threadFactoryRequired"></a>
+<h3>Error when not using Thread factory</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; common declares/Declares.java:13 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; common declares/Declares.java:13 &nbsp;|
 <p>
-    <pre>
+<pre>
     /** signal error if Thread constructor called outside our Thread factory */
     declare error : call(Thread+.new(..)) && within(com.company..*)
         && !withincode(Thread com.company.lib.Factory.makeThread(..)) :
         "constructing threads prohibited - use Factory.makeThread(..)";
     </pre>
-    <a name="declares-typeConstraints"></a>
-    <h3>Using declare to enforce type constraints</h3>
+<a name="declares-typeConstraints"></a>
+<h3>Using declare to enforce type constraints</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; common declares/Declares.java:28 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; common declares/Declares.java:28 &nbsp;|
 <p>
-    <pre>
+<pre>
 protected interface SoughtException {}
 // XXX ajc broken here?
 /**
- * Require that any SoughtException implementation be 
+ * Require that any SoughtException implementation be
  * a subclass of Throwable.  This picks out the mistake
  * of declaring SoughtException a parent of something
  * that is not an exception at all.
  */
-declare error : staticinitialization(SoughtException+) 
-    && ! staticinitialization(SoughtException)    
+declare error : staticinitialization(SoughtException+)
+    && ! staticinitialization(SoughtException)
     && ! staticinitialization(Throwable+) :
     "all SoughtException must be subclasses of Throwable";
     </pre>
-    <a name="j2ee"></a>
-    <h3>j2ee</h3>
+<a name="j2ee"></a>
+<h3>j2ee</h3>
 <a href="#top">back to top</a>
-    <a name="j2ee-myeclipseide"></a>
-    <h3>j2ee-myeclipseide</h3>
+<a name="j2ee-myeclipseide"></a>
+<h3>j2ee-myeclipseide</h3>
 <a href="#top">back to top</a>
-    <a name="j2ee-myeclipseide-generally"></a>
-    <h3>Using MyEclipseIDE to develop AspectJ programs for J2EE</h3>
+<a name="j2ee-myeclipseide-generally"></a>
+<h3>Using MyEclipseIDE to develop AspectJ programs for J2EE</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; trails myeclipseide.html:5 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; trails myeclipseide.html:5 &nbsp;|
 <p>
 
-MyEclipseIde
-(<a href="http://www.myeclipseide.com/">http://www.myeclipseide.com</a>)
-aims to make it easy to develop J2EE applications using Eclipse.
-AJDT 
-(<a href="http://eclipse.org/ajdt">http://eclipse.org/ajdt</a>)
-is an Eclipse plug-in that supports AspectJ. 
+  MyEclipseIde
+  (<a href="http://www.myeclipseide.com/">http://www.myeclipseide.com</a>)
+  aims to make it easy to develop J2EE applications using Eclipse.
+  AJDT
+  (<a href="http://eclipse.org/ajdt">http://eclipse.org/ajdt</a>)
+  is an Eclipse plug-in that supports AspectJ.
 <ul>
-<li>To install AJDT with MyEclipseIDE, direct the Eclipse update manager to
-<a href="http://download.eclipse.org/technology/ajdt/dev/update">
+  <li>To install AJDT with MyEclipseIDE, direct the Eclipse update manager to
+    <a href="http://download.eclipse.org/technology/ajdt/dev/update">
       http://download.eclipse.org/technology/ajdt/dev/update</a>,
-install the plug-in, and follow any post-install instructions.
-</li>
+    install the plug-in, and follow any post-install instructions.
+  </li>
 
-<li>To enable a project to use aspects, first
-select <code>Convert to AspectJ project</code>
-from the project's context menu (select project, right click).
-(XXX Bug: AJDT reverts perspective to Java; go back to MyEclipseIDE)
-Note that you must convert each project;
-converting the master J2EE project will not affect
-the child components (XXX RFE: option to convert child if parent).
-</li>
+  <li>To enable a project to use aspects, first
+    select <code>Convert to AspectJ project</code>
+    from the project's context menu (select project, right click).
+    (XXX Bug: AJDT reverts perspective to Java; go back to MyEclipseIDE)
+    Note that you must convert each project;
+    converting the master J2EE project will not affect
+    the child components (XXX RFE: option to convert child if parent).
+  </li>
 
-<li>To build, select the menu item <code>Project &gt; Rebuild Project</code>.
-AJDT creates <code>default.lst</code> which lists all source files and
-compiles them.  
-You can also recompile by clicking the AJDT build button.
-(XXX Bug:  only available in the Java perspective)
-</li>
+  <li>To build, select the menu item <code>Project &gt; Rebuild Project</code>.
+    AJDT creates <code>default.lst</code> which lists all source files and
+    compiles them.
+    You can also recompile by clicking the AJDT build button.
+    (XXX Bug: only available in the Java perspective)
+  </li>
 
-<li>To deploy, first add <code>aspectjrt.jar</code> to the project's
-library directory.  
-For servlets and JSP's, that is in <code>{Web Root}/WEB-INF/lib</code>.
-For EJB's, it's XXX todo.
-Then deploy as usual for your application server.
-</li>
-<li>If you are using AspectJ in more than one project,
-you might instead deploy <code>aspectjrt.jar</code>
-whereever shared libraries belong for your server.
-</li>
+  <li>To deploy, first add <code>aspectjrt.jar</code> to the project's
+    library directory.
+    For servlets and JSP's, that is in <code>{Web Root}/WEB-INF/lib</code>.
+    For EJB's, it's XXX todo.
+    Then deploy as usual for your application server.
+  </li>
+  <li>If you are using AspectJ in more than one project,
+    you might instead deploy <code>aspectjrt.jar</code>
+    whereever shared libraries belong for your server.
+  </li>
 </ul>
 
-
-    <a name="j2ee-servlets"></a>
-    <h3>j2ee-servlets</h3>
+<a name="j2ee-servlets"></a>
+<h3>j2ee-servlets</h3>
 <a href="#top">back to top</a>
-    <a name="j2ee-servlets-generally"></a>
-    <h3>Using AspectJ in servlets</h3>
+<a name="j2ee-servlets-generally"></a>
+<h3>Using AspectJ in servlets</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; trails j2ee.html:11 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; trails j2ee.html:11 &nbsp;|
 <p>
 
-AspectJ programs work if run in the same namespace and with aspectjrt.jar.
-Servlet runners and J2EE web containers should run AspectJ programs fine
-if the classes and required libraries are deployed as usual.  
+  AspectJ programs work if run in the same namespace and with aspectjrt.jar.
+  Servlet runners and J2EE web containers should run AspectJ programs fine
+  if the classes and required libraries are deployed as usual.
 
-As with any shared library, if more than one application is using AspectJ, 
-then the aspectjrt.jar should be deployed where it will be loaded by a 
-common classloader. The same is true of any shared aspects.
+  As with any shared library, if more than one application is using AspectJ,
+  then the aspectjrt.jar should be deployed where it will be loaded by a
+  common classloader. The same is true of any shared aspects.
 
-
-    <a name="j2ee-tomcat4"></a>
-    <h3>j2ee-tomcat4</h3>
+  <a name="j2ee-tomcat4"></a>
+<h3>j2ee-tomcat4</h3>
 <a href="#top">back to top</a>
-    <a name="j2ee-tomcat4-jsp"></a>
-    <h3>Running AspectJ JSP's in Tomcat 4.x</h3>
+<a name="j2ee-tomcat4-jsp"></a>
+<h3>Running AspectJ JSP's in Tomcat 4.x</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; trails j2ee.html:44 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; trails j2ee.html:44 &nbsp;|
 <p>
 
-Tomcat 4.x uses the Jasper engine based on Ant to compile JSP's.
-To set up ajc as the compiler, do the following before starting Tomcat:
-<ol>  
-<li>Put <code>aspectjtools.jar</code> in
-<code>${CATALINA_HOME}/common/lib</code> so that it can be loaded
-by Jasper.
-</li>
-<li>Update Jasper servlet parameters in
-  <code>${CATALINA_HOME}/conf/web.xml</code> to tell Ant to use
-  <code>ajc</code> by setting the compiler property to the
-  AspectJ compiler adapter:
-  <pre>
+  Tomcat 4.x uses the Jasper engine based on Ant to compile JSP's.
+  To set up ajc as the compiler, do the following before starting Tomcat:
+<ol>
+  <li>Put <code>aspectjtools.jar</code> in
+    <code>${CATALINA_HOME}/common/lib</code> so that it can be loaded
+    by Jasper.
+  </li>
+  <li>Update Jasper servlet parameters in
+    <code>${CATALINA_HOME}/conf/web.xml</code> to tell Ant to use
+    <code>ajc</code> by setting the compiler property to the
+    AspectJ compiler adapter:
+    <pre>
     &lt;servlet>
         &lt;servlet-name>jsp&lt;/servlet-name>
         &lt;servlet-class>org.apache.jasper.servlet.JspServlet&lt;/servlet-class>
@@ -707,34 +725,34 @@ by Jasper.
             &lt;param-value>org.aspectj.tools.ant.taskdefs.Ajc11CompilerAdapter&lt;/param-value>
         &lt;/init-param>
 	</pre>
-</li>
-<li>The classpath is dynamically generated from the webapp deployment,
-so <code>aspectjrt.jar</code> should be in 
-<code>{webapp}/WEB-INF/lib</code> or some shared or common
-directory supported by the server.
-</li>
+  </li>
+  <li>The classpath is dynamically generated from the webapp deployment,
+    so <code>aspectjrt.jar</code> should be in
+    <code>{webapp}/WEB-INF/lib</code> or some shared or common
+    directory supported by the server.
+  </li>
 
-<li>Alternatively, you can precompile JSP's using 
-<a href="#j2ee-tomcat4-precompileJsp">this Ant script</a>.
-That involves manually updating the <code>web.xml</code> file 
-with the <code>Jasper</code>-generated servlet mappings.
-</li>
+  <li>Alternatively, you can precompile JSP's using
+    <a href="#j2ee-tomcat4-precompileJsp">this Ant script</a>.
+    That involves manually updating the <code>web.xml</code> file
+    with the <code>Jasper</code>-generated servlet mappings.
+  </li>
 </ol>
 
-    <a name="j2ee-tomcat4-precompileJsp"></a>
-    <h3>Precompile JSP's for Tomcat 4.x using AspectJ</h3>
+<a name="j2ee-tomcat4-precompileJsp"></a>
+<h3>Precompile JSP's for Tomcat 4.x using AspectJ</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; scripts precompile-jsp.build.xml:2 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; scripts precompile-jsp.build.xml:2 &nbsp;|
 <p>
-    <pre>
-&lt;project name="Precompile Tomcat JSPs" default="all" basedir="."> 
+<pre>
+&lt;project name="Precompile Tomcat JSPs" default="all" basedir=".">
 
     &lt;target name="all" depends="jspc,compile"/>
 
     &lt;target name="info">
         &lt;echo>
-This Ant script precompiles deployed .jsp files in Tomcat 
+This Ant script precompiles deployed .jsp files in Tomcat
 using AspectJ 1.1.
 
 Usage:
@@ -743,13 +761,12 @@ Usage:
     -Dtomcat.home=/home/tomcat \
     -Dwebapp.name=launchWeb \
     -DASPECTJ_HOME=/dev/tools/aspectj-1.1.0
-        
 
 This defines the web application deployment $${webapp.dir} as
 
    $${tomcat.home}/webapps/$${webapp.name}
 
-, generates the Java source files to 
+, generates the Java source files to
 
    $${webapp.dir}/WEB-INF/src
 
@@ -761,31 +778,31 @@ This defines the web application deployment $${webapp.dir} as
 
    $${webapp.dir}/WEB-INF/generated_web.xml,
 
-which must be manually inserted into 
+which must be manually inserted into
 
    $${webapp.dir}/WEB-INF/generated_web.xml,
 
 at which point the web application can be reloaded.
 
-This assumes that aspectjrt.jar is already deployed in 
-any of places on the Tomcat application classpath 
+This assumes that aspectjrt.jar is already deployed in
+any of places on the Tomcat application classpath
 (the application, shared, or common classpath).
 If ASPECTJ_HOME is not defined, it assumes that
-aspectjtools.jar is in 
+aspectjtools.jar is in
 
    ${CATALINA_HOME}/common/lib
 
 &lt;/echo>
     &lt;/target>
-    
-  &lt;target name="init"> 
+
+  &lt;target name="init">
     &lt;!-- declare these two on command-line -->
     &lt;property name="webapp.name"
         value="launchWeb"/>
-        
+
     &lt;property name="tomcat.home"
         location="i:/home/tomcat"/>
-    
+
     &lt;property name="webapp.path"
         location="${tomcat.home}/webapps/${webapp.name}"/>
     &lt;property name="webapp.src.dir"
@@ -793,53 +810,53 @@ aspectjtools.jar is in
 
     &lt;property name="ASPECTJ_HOME"
         location="${tomcat.home}/common"/>
-    
-  &lt;/target>
-    
-  &lt;target name="jspc" depends="init"> 
 
-    &lt;taskdef classname="org.apache.jasper.JspC" name="jasper2" > 
-      &lt;classpath id="jspc.classpath"> 
-        &lt;pathelement location="${java.home}/../lib/tools.jar"/> 
-        &lt;fileset dir="${tomcat.home}/server/lib"> 
-          &lt;include name="*.jar"/> 
-        &lt;/fileset> 
-        &lt;fileset dir="${tomcat.home}/common/lib"> 
-          &lt;include name="*.jar"/> 
-        &lt;/fileset> 
-      &lt;/classpath> 
-    &lt;/taskdef> 
+  &lt;/target>
+
+  &lt;target name="jspc" depends="init">
+
+    &lt;taskdef classname="org.apache.jasper.JspC" name="jasper2" >
+      &lt;classpath id="jspc.classpath">
+        &lt;pathelement location="${java.home}/../lib/tools.jar"/>
+        &lt;fileset dir="${tomcat.home}/server/lib">
+          &lt;include name="*.jar"/>
+        &lt;/fileset>
+        &lt;fileset dir="${tomcat.home}/common/lib">
+          &lt;include name="*.jar"/>
+        &lt;/fileset>
+      &lt;/classpath>
+    &lt;/taskdef>
 
     &lt;mkdir dir="${webapp.src.dir}"/>
-    &lt;jasper2 
-         validateXml="true" 
-         uriroot="${webapp.path}" 
-         webXmlFragment="${webapp.path}/WEB-INF/generated_web.xml" 
-         outputDir="${webapp.src.dir}" /> 
+    &lt;jasper2
+         validateXml="true"
+         uriroot="${webapp.path}"
+         webXmlFragment="${webapp.path}/WEB-INF/generated_web.xml"
+         outputDir="${webapp.src.dir}" />
 
-  &lt;/target> 
+  &lt;/target>
 
   &lt;target name="compile" depends="init">
 
     &lt;mkdir dir="${webapp.path}/WEB-INF/classes"/>
     &lt;mkdir dir="${webapp.path}/WEB-INF/lib"/>
-    
-      &lt;path id="iajc.classpath"> 
-        &lt;fileset dir="${ASPECTJ_HOME}/lib"> 
-          &lt;include name="aspectjtools.jar"/> 
-        &lt;/fileset> 
-      &lt;/path> 
-    &lt;taskdef 
+
+      &lt;path id="iajc.classpath">
+        &lt;fileset dir="${ASPECTJ_HOME}/lib">
+          &lt;include name="aspectjtools.jar"/>
+        &lt;/fileset>
+      &lt;/path>
+    &lt;taskdef
       resource="org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties">
-      &lt;classpath refid="iajc.classpath"/> 
-    &lt;/taskdef> 
+      &lt;classpath refid="iajc.classpath"/>
+    &lt;/taskdef>
 
     &lt;!-- forking compile so it runs in Eclipse -->
     &lt;iajc destdir="${webapp.path}/WEB-INF/classes"
            sourceroots="${webapp.src.dir}"
-           debug="on" 
+           debug="on"
            verbose="true"
-           fork="true" 
+           fork="true"
            forkclasspathRef="iajc.classpath"
            failonerror="true"
            >
@@ -864,68 +881,68 @@ aspectjtools.jar is in
 &lt;/project>
 
     </pre>
-    <a name="j2ee-tomcat4-servlets"></a>
-    <h3>Running AspectJ servlets in Tomcat 4.x</h3>
+<a name="j2ee-tomcat4-servlets"></a>
+<h3>Running AspectJ servlets in Tomcat 4.x</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; trails j2ee.html:24 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; trails j2ee.html:24 &nbsp;|
 <p>
 
-In Tomcat, you can deploy application servlets in WAR's 
-or in exploded web directories and share code across
-applications.
-<ol>  
-<li>Use <code>ajc</code> to compile the servlets, 
+  In Tomcat, you can deploy application servlets in WAR's
+  or in exploded web directories and share code across
+  applications.
+<ol>
+  <li>Use <code>ajc</code> to compile the servlets,
     and deploy the classes as usual into
     <code>{WebRoot}/WEB-INF/classes</code>.
-    </li>
+  </li>
 
-<li>If your web applications or aspects do not interact, deploy
+  <li>If your web applications or aspects do not interact, deploy
     <code>aspectjrt.jar</code> into
     <code>{WebRoot}/WEB-INF/lib</code>.
-    </li>
-<li>If your web applications or aspects might interact, deploy
+  </li>
+  <li>If your web applications or aspects might interact, deploy
     them to <code>${CATALINA_BASE}/shared/lib</code>.
-    </li>
-</ol>  
+  </li>
+</ol>
 
-    <a name="language"></a>
-    <h3>language</h3>
+<a name="language"></a>
+<h3>language</h3>
 <a href="#top">back to top</a>
-    <a name="language-cflowRecursionBasic"></a>
-    <h3>Pick out latest and original recursive call</h3>
+<a name="language-cflowRecursionBasic"></a>
+<h3>Pick out latest and original recursive call</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Erik Hilsdale
- &nbsp;|&nbsp; common language/ControlFlow.java:27 &nbsp;|
+<p>| &nbsp; Erik Hilsdale
+  &nbsp;|&nbsp; common language/ControlFlow.java:27 &nbsp;|
 <p>
-    <pre>
+<pre>
     /** call to factorial, with argument */
     pointcut f(int i) : call(int Fact.factorial(int)) && args(i);
 
     /** print most-recent recursive call */
-    before(int i, final int j) : f(i) && cflowbelow(f(j)) { 
+    before(int i, final int j) : f(i) && cflowbelow(f(j)) {
         System.err.println(i + "-" + j);
     }
 
     /** print initial/topmost recursive call */
-    before(int i, final int j) : f(i) 
-        && cflowbelow(cflow(f(j)) && !cflowbelow(f(int))) { 
+    before(int i, final int j) : f(i)
+        && cflowbelow(cflow(f(j)) && !cflowbelow(f(int))) {
         System.err.println(i + "@" + j);
     }
     </pre>
-    <a name="language-doubleDispatch"></a>
-    <h3>Implementing double-dispatch</h3>
+<a name="language-doubleDispatch"></a>
+<h3>Implementing double-dispatch</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; common language/DoubleDispatch.java:30 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; common language/DoubleDispatch.java:30 &nbsp;|
 <p>
-    <pre>
+<pre>
 
 /**
  * By hypothesis, there is a working class with
- * methods taking a supertype and subtypes. 
+ * methods taking a supertype and subtypes.
  * The goal of double-dispatch is to execute the
- * subtype method rather than the supertype 
+ * subtype method rather than the supertype
  * method selected when the compile-time
  * reference is of the super's type.
  */
@@ -942,10 +959,10 @@ class SubTypeTwo extends SuperType {}
 /** Implement double-dispatch for Worker.run(..) */
 aspect DoubleDispatchWorker {
 
-    /** 
+    /**
      * Replace a call to the Worker.run(SuperType)
-     * by delegating to a target method.  
-     * Each target subtype in this method dispatches back 
+     * by delegating to a target method.
+     * Each target subtype in this method dispatches back
      * to the subtype-specific Worker.run(SubType..) method,
      * to implement double-dispatch.
      */
@@ -970,17 +987,17 @@ aspect DoubleDispatchWorker {
 }
 
     </pre>
-    <a name="language-fieldSetContext"></a>
-    <h3>Check input and result for a field set.</h3>
+<a name="language-fieldSetContext"></a>
+<h3>Check input and result for a field set.</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Erik Hilsdale, Wes Isberg
- &nbsp;|&nbsp; common language/Context.java:42 &nbsp;|
+<p>| &nbsp; Erik Hilsdale, Wes Isberg
+  &nbsp;|&nbsp; common language/Context.java:42 &nbsp;|
 <p>
-    <pre>
-    /** 
+<pre>
+    /**
      * Check input and result for a field set.
      */
-    void around(int input, C targ) : set(int C.i) 
+    void around(int input, C targ) : set(int C.i)
             && args(input) && target(targ) {
         String m = "setting C.i="  + targ.i  + " to " + input;
         System.out.println(m);
@@ -990,31 +1007,31 @@ aspect DoubleDispatchWorker {
         }
     }
     </pre>
-    <a name="language-handlerContext"></a>
-    <h3>Log exception being handled</h3>
+<a name="language-handlerContext"></a>
+<h3>Log exception being handled</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Erik Hilsdale, Wes Isberg
- &nbsp;|&nbsp; common language/Context.java:57 &nbsp;|
+<p>| &nbsp; Erik Hilsdale, Wes Isberg
+  &nbsp;|&nbsp; common language/Context.java:57 &nbsp;|
 <p>
-    <pre>
-    /** 
+<pre>
+    /**
      * Log exception being handled
      */
-    before (C.MoreError e) : handler(C.MoreError) 
+    before (C.MoreError e) : handler(C.MoreError)
             && args(e) && within(C) {
         System.out.println("handling " + e);
     }
     </pre>
-    <a name="language-initialization"></a>
-    <h3>Understanding object creation join points</h3>
+<a name="language-initialization"></a>
+<h3>Understanding object creation join points</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Erik Hilsdale, Wes Isberg
- &nbsp;|&nbsp; common language/Initialization.java:36 &nbsp;|
+<p>| &nbsp; Erik Hilsdale, Wes Isberg
+  &nbsp;|&nbsp; common language/Initialization.java:36 &nbsp;|
 <p>
-    <pre>
+<pre>
 /*
  * To work with an object right when it is constructed,
- * understand the differences between the join points for 
+ * understand the differences between the join points for
  * constructor call, constructor execution, and initialization.
  */
  // ------- examples of constructors and the ways they invoke each other.
@@ -1032,7 +1049,7 @@ class AnotherThing extends Thing {
     AnotherThing() {
         super(); // this does not append to message as the one below does.
     }
-    
+
     AnotherThing(String message) {
         super(message + " from-AnotherThing");
     }
@@ -1042,17 +1059,17 @@ aspect InitializationSample {
     // -------- constructor-call picks out the calls
     /**
      * After any call to any constructor, fix up the thing.
-     * When creating an object, there is only one call to 
+     * When creating an object, there is only one call to
      * construct it, so use call(..) avoid duplicate advice.
      * There is no target for the call, but the object
      * constructed is returned from the call.
      * In AspectJ 1.1, this only picks  out callers in the input
      * classes or source files, and it does not pick out
-     * invocations via <code>super(..)</code> 
+     * invocations via <code>super(..)</code>
      * or <code>this(..)</code>.
      */
-    after() returning (Thing thing): 
-            call(Thing.new(..)) { 
+    after() returning (Thing thing):
+            call(Thing.new(..)) {
         thing.message += " after-any-constructor-call";
     }
 
@@ -1061,17 +1078,17 @@ aspect InitializationSample {
      * After executing the String constructor, fix up the thing.
      * The object being-constructed is available as either
      * <code>this</code> or <code>target</code>.
-     * This works even if the constructor was invoked using 
-     * <code>super()</code> or <code>this()</code> or by code 
+     * This works even if the constructor was invoked using
+     * <code>super()</code> or <code>this()</code> or by code
      * outside the control of the AspectJ compiler.
      * However, if you advise multiple constructors, you'll advise
-     * a single instance being constructed multiple times 
+     * a single instance being constructed multiple times
      * if the constructors call each other.
      * In AspectJ 1.1, this only affects constructors in the input
      * classes or source files.
      */
-    after(Thing thing) returning : target(thing) && 
-            execution(Thing.new(String)) { 
+    after(Thing thing) returning : target(thing) &&
+            execution(Thing.new(String)) {
         thing.message += " after-String-constructor-execution";
     }
 
@@ -1079,35 +1096,35 @@ aspect InitializationSample {
      * DANGER -- BAD!!  Before executing the String constructor,
      * this uses the target object, which is not constructed.
      */
-    before (Thing thing): this(thing) && execution(Thing.new(String)) { 
+    before (Thing thing): this(thing) && execution(Thing.new(String)) {
         // DANGER!! thing not constructed yet.
         //thing.message += " before-String-constructor-execution";
     }
-    
+
     // -------- initialization picks out any construction, once
     /**
-     * This advises all Thing constructors in one join point, 
+     * This advises all Thing constructors in one join point,
      * even if they call each other with <code>this()</code>, etc.
      * The object being-constructed is available as either
      * <code>this</code> or <code>target</code>.
      * In AspectJ 1.1, this only affects types input to the compiler.
      */
-    after(Thing thing) returning: this(thing) 
+    after(Thing thing) returning: this(thing)
             && initialization(Thing.new(..)) {
         thing.message += " after-initialization";
     }
 }
     </pre>
-    <a name="library"></a>
-    <h3>library</h3>
+<a name="library"></a>
+<h3>library</h3>
 <a href="#top">back to top</a>
-    <a name="library-classPointcutLibrary"></a>
-    <h3>Defining library pointcuts in a class</h3>
+<a name="library-classPointcutLibrary"></a>
+<h3>Defining library pointcuts in a class</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; common libraries/PointcutLibraryTest.java:18 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; common libraries/PointcutLibraryTest.java:18 &nbsp;|
 <p>
-    <pre>
+<pre>
 /** private default implementation of library */
 class PrivatePointcutLibrary {
     pointcut adviceCflow() : cflow(adviceexecution());
@@ -1125,7 +1142,7 @@ class PointcutLibrary extends PrivatePointcutLibrary {
 /** client by external reference to library */
 aspect ExternalClientOfLibrary {
   before() : PointcutLibrary.publicCalls() {
-      System.out.println("XCL: " 
+      System.out.println("XCL: "
           + thisJoinPointStaticPart);
   }
 }
@@ -1133,7 +1150,7 @@ aspect ExternalClientOfLibrary {
 /** use library by inheriting scope in aspect */
 aspect AEL extends PointcutLibrary {
     before() : publicCalls() {
-        System.out.println("AEL: " 
+        System.out.println("AEL: "
             + thisJoinPointStaticPart);
     }
 }
@@ -1142,7 +1159,7 @@ aspect AEL extends PointcutLibrary {
 class CEL extends PointcutLibrary {
     static aspect A {
         before() : publicCalls() {
-            System.out.println("CEL: " 
+            System.out.println("CEL: "
                 + thisJoinPointStaticPart);
         }
     }
@@ -1151,11 +1168,10 @@ class CEL extends PointcutLibrary {
 /** more clients by inheritance */
 aspect CELSubAspect extends CEL {
     before() : publicCalls() {
-        System.out.println("CSA: " 
+        System.out.println("CSA: "
             + thisJoinPointStaticPart);
     }
 }
-
 
 // ---- redefining library pointcuts
 
@@ -1166,7 +1182,7 @@ class VendorPointcutLibrary extends PrivatePointcutLibrary {
     pointcut publicCalls() : PrivatePointcutLibrary.publicCalls()
         || (call(public new(..)) && !adviceCflow());
     static aspect A {
-        declare parents: 
+        declare parents:
             PointcutLibrary extends VendorPointcutLibrary;
     }
 }
@@ -1184,13 +1200,13 @@ class CPlus extends PointcutLibrary {
     }
 }
     </pre>
-    <a name="library-pointcutIdioms"></a>
-    <h3>Standard pointcut idioms</h3>
+<a name="library-pointcutIdioms"></a>
+<h3>Standard pointcut idioms</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; common org/aspectj/langlib/Pointcuts.java:13 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; common org/aspectj/langlib/Pointcuts.java:13 &nbsp;|
 <p>
-    <pre>
+<pre>
 package org.aspectj.langlib;
 
 import java.io.*;
@@ -1199,7 +1215,7 @@ import java.util.*;
 /**
  * Library of pointcut idioms to use in combination with
  * other pointcuts.
- * 
+ *
  * @author Wes Isberg
  */
 public final class Pointcuts {
@@ -1216,54 +1232,54 @@ public final class Pointcuts {
 
     public pointcut mainExecution() :
         execution(public static void main(String[]));
-        
+
     /** staticly-determinable to never match any join point */
     public pointcut never();
        // if(false) && execution(ThreadDeath *(ThreadDeath, ThreadDeath));
-    
+
     public pointcut afterAdviceSupported() : !handler(*);
 
     public pointcut aroundAdviceSupported() : !handler(*)
         && !initialization(new(..)) && !preinitialization(new(..));
 
-    public pointcut anyMethodExecution() : 
+    public pointcut anyMethodExecution() :
         execution(* *(..));
 
-    public pointcut anyPublicMethodExecution() : 
+    public pointcut anyPublicMethodExecution() :
         execution(public * *(..));
 
-    public pointcut anyNonPrivateMethodExecution() : 
+    public pointcut anyNonPrivateMethodExecution() :
         execution(!private * *(..));
 
-    public pointcut anyConstructorExecution() : 
+    public pointcut anyConstructorExecution() :
         execution(new(..));
 
-    public pointcut anyPublicConstructorExecution() : 
+    public pointcut anyPublicConstructorExecution() :
         execution(public new(..));
 
     public pointcut anyNonPrivateConstructorExecution() :
         execution(!private new(..));
 
-    public pointcut anyPublicFieldGet() : 
+    public pointcut anyPublicFieldGet() :
         get(public * *);
 
-    public pointcut anyNonPrivateFieldGet() : 
+    public pointcut anyNonPrivateFieldGet() :
         get(!private * *);
 
-    public pointcut anyPublicFieldSet() : 
+    public pointcut anyPublicFieldSet() :
         set(public * *);
 
-    public pointcut anyNonPrivateFieldSet() : 
+    public pointcut anyNonPrivateFieldSet() :
         set(!private * *); // also !transient?
 
     public pointcut withinSetter() :  // require !static?
         withincode(void set*(*)); // use any return type? multiple parms?
 
-    public pointcut withinGetter() : 
+    public pointcut withinGetter() :
         withincode(!void get*()); // permit parms? require !static?
-    
-    public pointcut anyNonPublicFieldSetOutsideConstructorOrSetter() : 
-        set(!public * *) && !withincode(new(..)) 
+
+    public pointcut anyNonPublicFieldSetOutsideConstructorOrSetter() :
+        set(!public * *) && !withincode(new(..))
         && !withinSetter();
 
     public pointcut anyRunnableImplementation() :
@@ -1274,7 +1290,7 @@ public final class Pointcuts {
 
     public pointcut anySetSystemErrOut() :
         call(void System.setOut(..)) || call(void System.setErr(..));
-    
+
     public pointcut withinAnyJavaCode() :
         within(java..*) || within(javax..*);
 
@@ -1288,15 +1304,15 @@ public final class Pointcuts {
     public pointcut anyThreadConstruction() :
         call(Thread+.new(..)) || execution(Thread+.new(..));
 
-    /** 
-     * Any calls to java.io classes 
+    /**
+     * Any calls to java.io classes
      * (but not methods declared only on their subclasses).
      */
     public pointcut anyJavaIOCalls() :
         call(* java.io..*.*(..)) || call(java.io..*.new(..));
 
-    /** 
-     * Any calls to java.awt or javax.swing methods or constructors 
+    /**
+     * Any calls to java.awt or javax.swing methods or constructors
      * (but not methods declared only on their subclasses).
      */
     public pointcut anyJavaAWTOrSwingCalls() :
@@ -1305,10 +1321,10 @@ public final class Pointcuts {
 
     public pointcut cloneImplementationsInNonCloneable() :
         execution(Object !Cloneable+.clone());
-        
+
     public pointcut runImplementationsInNonRunnable() :
         execution(void !Runnable+.run());
-        
+
     /** any calls to java.lang.reflect or Class.get* (except getName()) */
     public pointcut anySystemReflectiveCalls() :
         call(* java.lang.reflect..*.*(..))
@@ -1332,13 +1348,13 @@ public final class Pointcuts {
      * an Iterator can remove elements.
      */
     public pointcut anyCollectionWriteCalls() :
-        call(boolean Collection+.add(Object)) 
-        || call(boolean Collection+.addAll(Collection)) 
+        call(boolean Collection+.add(Object))
+        || call(boolean Collection+.addAll(Collection))
         || call(void Collection+.clear())
         || call(boolean Collection+.remove(Object))
         || call(boolean Collection+.removeAll(Collection))
         || call(boolean Collection+.retainAll(Collection));
-        
+
     public pointcut mostThrowableReadCalls() :
         call(* Throwable+.get*(..))
         || call(* Throwable+.print*(..))
@@ -1347,117 +1363,114 @@ public final class Pointcuts {
     public pointcut exceptionWrappingCalls() :
         (args(Throwable+,..) || args(.., Throwable+))
         && (set(Throwable+ Throwable+.*)
-            || (call(* Throwable+.*(..)) 
+            || (call(* Throwable+.*(..))
                 || call(Throwable+.new(..))));
 
     public pointcut anyCodeThrowingException() :
         execution(* *(..) throws Exception+)
             || execution(new(..) throws Exception+);
-            
+
     private Pointcuts() {} // XXX avoid this? else pointcuts match it...
 }
     </pre>
-    <a name="pubs"></a>
-    <h3>pubs</h3>
+<a name="pubs"></a>
+<h3>pubs</h3>
 <a href="#top">back to top</a>
-    <a name="pubs-all"></a>
-    <h3>pubs-all</h3>
+<a name="pubs-all"></a>
+<h3>pubs-all</h3>
 <a href="#top">back to top</a>
-    <a name="pubs-all-links"></a>
-    <h3>List of AspectJ publications</h3>
+<a name="pubs-all-links"></a>
+<h3>List of AspectJ publications</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; AspectJ community
- &nbsp;|&nbsp; trails links.html:17 &nbsp;|
+<p>| &nbsp; AspectJ community
+  &nbsp;|&nbsp; trails links.html:17 &nbsp;|
 <p>
 
 <p>
-For a list of publications about AspectJ that might contain
-sample code, see the publications link off the AspectJ web site at
-<a href="http://eclipse.org/aspectj">
-         http://eclipse.org/aspectj</a>
+  For a list of publications about AspectJ that might contain
+  sample code, see the publications link off the AspectJ web site at
+  <a href="http://eclipse.org/aspectj">
+    http://eclipse.org/aspectj</a>
 </p>
 
-    <a name="pubs-books"></a>
-    <h3>pubs-books</h3>
+<a name="pubs-books"></a>
+<h3>pubs-books</h3>
 <a href="#top">back to top</a>
-    <a name="pubs-books-aspectjinaction"></a>
-    <h3>AspectJ in Action</h3>
+<a name="pubs-books-aspectjinaction"></a>
+<h3>AspectJ in Action</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Ramnivas Laddad
- &nbsp;|&nbsp; trails links.html:28 &nbsp;|
+<p>| &nbsp; Ramnivas Laddad
+  &nbsp;|&nbsp; trails links.html:28 &nbsp;|
 <p>
 
-<u>AspectJ in Action</u> by Ramnivas Laddad has sample code
-including four patterns: 
-the worker object creation pattern,
-the exception introduction pattern, 
-the participant pattern,
-and the wormhole pattern.
+  <u>AspectJ in Action</u> by Ramnivas Laddad has sample code
+  including four patterns:
+  the worker object creation pattern,
+  the exception introduction pattern,
+  the participant pattern,
+  and the wormhole pattern.
 
-Find the code at
-<a href="http://www.manning.com/laddad/">
-         http://www.manning.com/laddad/</a>.
+  Find the code at
+  <a href="http://www.manning.com/laddad/">
+    http://www.manning.com/laddad/</a>.
 </p>
 
-
-    <a name="pubs-papers"></a>
-    <h3>pubs-papers</h3>
+<a name="pubs-papers"></a>
+<h3>pubs-papers</h3>
 <a href="#top">back to top</a>
-    <a name="pubs-papers-aodesignpatterns"></a>
-    <h3>Aspect-Oriented Design Pattern Implementations</h3>
+<a name="pubs-papers-aodesignpatterns"></a>
+<h3>Aspect-Oriented Design Pattern Implementations</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Jan Hanneman
- &nbsp;|&nbsp; trails links.html:45 &nbsp;|
+<p>| &nbsp; Jan Hanneman
+  &nbsp;|&nbsp; trails links.html:45 &nbsp;|
 <p>
 
-In the OOPSLA 2002 paper
-	<u>Design Pattern Implementation in Java and AspectJ</u>
-Jan Hannemann and Gregor Kiczales discuss the implementation in
-AspectJ of 23 of the traditional "gang of four" design patterns
-(from the book <u>Design Patterns: elements of reusable object-oriented
-	software</u> by Gamma, Helm, Johnson, and Vlissides).
-Their paper and the code for those patterns are available from
+  In the OOPSLA 2002 paper
+  <u>Design Pattern Implementation in Java and AspectJ</u>
+  Jan Hannemann and Gregor Kiczales discuss the implementation in
+  AspectJ of 23 of the traditional "gang of four" design patterns
+  (from the book <u>Design Patterns: elements of reusable object-oriented
+  software</u> by Gamma, Helm, Johnson, and Vlissides).
+  Their paper and the code for those patterns are available from
   <a target="_top" href="http://www.cs.ubc.ca/~jan/AODPs/">
-  	http://www.cs.ubc.ca/~jan/AODPs/
+    http://www.cs.ubc.ca/~jan/AODPs/
   </a>.
-The code is also available from the AspectJ web site
+  The code is also available from the AspectJ web site
   as <a href="ubc-design-patterns.zip">ubc-design-patterns.zip</a>.
   The latest version is checked into the CVS repository along with
-  other sample code at 
+  other sample code at
   <code>org.aspectj/modules/docs/sandbox/ubc-design-patterns</code>.
   For instructions on downloading code from the CVS repository,
   see the <a href="doc/faq.html#q:buildingsource">FAQ entry "buildingsource"</a>.
 </p>
 
-
-    <a name="pubs-projects"></a>
-    <h3>pubs-projects</h3>
+<a name="pubs-projects"></a>
+<h3>pubs-projects</h3>
 <a href="#top">back to top</a>
-    <a name="pubs-projects-atrack"></a>
-    <h3>ATrack bug tracker</h3>
+<a name="pubs-projects-atrack"></a>
+<h3>ATrack bug tracker</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Ron Bodkin and others
- &nbsp;|&nbsp; trails links.html:69 &nbsp;|
+<p>| &nbsp; Ron Bodkin and others
+  &nbsp;|&nbsp; trails links.html:69 &nbsp;|
 <p>
 
-The <a href="https://atrack.dev.java.net/">aTrack project</a>
-aims to create an open source bug tracking application that 
-demonstrates use of Aspect-Oriented Programming (AOP) with AspectJ. 
-It uses AOP pragmatically to provide systematic support for 
-technical, middleware, and business concerns.
+  The <a href="https://atrack.dev.java.net/">aTrack project</a>
+  aims to create an open source bug tracking application that
+  demonstrates use of Aspect-Oriented Programming (AOP) with AspectJ.
+  It uses AOP pragmatically to provide systematic support for
+  technical, middleware, and business concerns.
 </p>
 
-
-    <a name="scripts"></a>
-    <h3>scripts</h3>
+<a name="scripts"></a>
+<h3>scripts</h3>
 <a href="#top">back to top</a>
-    <a name="scripts-weaveLibraries"></a>
-    <h3>Shell script to use ajc to weave jars and then run</h3>
+<a name="scripts-weaveLibraries"></a>
+<h3>Shell script to use ajc to weave jars and then run</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; scripts snippets.sh:6 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; scripts snippets.sh:6 &nbsp;|
 <p>
-    <pre>
+<pre>
 ASPECTJ_HOME="${ASPECTJ_HOME:-c:/aspectj-1.1.0}"
 ajc="$ASPECTJ_HOME/bin/ajc"
 
@@ -1473,19 +1486,19 @@ $ajc -classpath "$ASPECTJ_HOME/lib/aspectjrt.jar" \
 java -classpath "aspects.jar;system.jar" com.company.app.Main
 
     </pre>
-    <a name="testing"></a>
-    <h3>testing</h3>
+<a name="testing"></a>
+<h3>testing</h3>
 <a href="#top">back to top</a>
-    <a name="testing-inoculated"></a>
-    <h3>testing-inoculated</h3>
+<a name="testing-inoculated"></a>
+<h3>testing-inoculated</h3>
 <a href="#top">back to top</a>
-    <a name="testing-inoculated-adviseProxyCallsOnly"></a>
-    <h3>Advise calls to the proxy object only</h3>
+<a name="testing-inoculated-adviseProxyCallsOnly"></a>
+<h3>Advise calls to the proxy object only</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; inoculated/src StubReplace.java:37 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; inoculated/src StubReplace.java:37 &nbsp;|
 <p>
-    <pre>
+<pre>
     pointcut stubWrite() : printerStreamTestCalls() && target(StubStream);
 
     pointcut printerStreamTestCalls() : call(* PrinterStream.write());
@@ -1494,34 +1507,34 @@ java -classpath "aspects.jar;system.jar" com.company.app.Main
         System.err.println("picking out stubWrite" );
     }
     </pre>
-    <a name="testing-inoculated-failureCapture"></a>
-    <h3>Log failures</h3>
+<a name="testing-inoculated-failureCapture"></a>
+<h3>Log failures</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; inoculated/src MainFailure.java:28 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; inoculated/src MainFailure.java:28 &nbsp;|
 <p>
-    <pre>
+<pre>
     /** log after failure, but do not affect exception */
     after(String[] args) throwing (Throwable t) : main(args) {
         logFailureCase(args, t, thisJoinPoint);
     }
     </pre>
-    <a name="testing-inoculated-injectIOException"></a>
-    <h3>Inject IOException on test driver command</h3>
+<a name="testing-inoculated-injectIOException"></a>
+<h3>Inject IOException on test driver command</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; inoculated/src Injection.java:24 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; inoculated/src Injection.java:24 &nbsp;|
 <p>
-    <pre>
+<pre>
     /** the test starts when the driver starts executing */
     pointcut testEntryPoint(TestDriver driver) :
         target(driver) && execution(* TestDriver.startTest());
 
-    /** 
+    /**
      * The fault may be injected at the execution of any
      * (non-static) PrinterStream  method that throws an IOException
      */
-    pointcut testCheckPoint(PrinterStream stream) : target(stream) 
+    pointcut testCheckPoint(PrinterStream stream) : target(stream)
         && execution(public * PrinterStream+.*(..) throws IOException);
 
     /**
@@ -1529,7 +1542,7 @@ java -classpath "aspects.jar;system.jar" com.company.app.Main
      * test driver to see if we should instead throw
      * an exception ("inject" the fault).
      */
-    after (TestDriver driver, PrinterStream stream) returning 
+    after (TestDriver driver, PrinterStream stream) returning
             throws IOException :
             cflowbelow(testEntryPoint(driver))
             && testCheckPoint(stream) {
@@ -1546,31 +1559,31 @@ java -classpath "aspects.jar;system.jar" com.company.app.Main
 
        Since the advice might throw the injected fault, it
        must declare that it throws IOException. When advice declares
-       exceptions thrown, the compiler will emit an error if any 
-       join point is not also declared to throw an IOException.  
+       exceptions thrown, the compiler will emit an error if any
+       join point is not also declared to throw an IOException.
 
-       In this case, the testCheckPoint pointcut only picks out 
+       In this case, the testCheckPoint pointcut only picks out
        methods that throw IOException, so the compile will not
        signal any errors.
     */
     </pre>
-    <a name="testing-inoculated-permitWritesDuringConstruction"></a>
-    <h3>Constructor execution</h3>
+<a name="testing-inoculated-permitWritesDuringConstruction"></a>
+<h3>Constructor execution</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; inoculated/src RuntimeWrites.java:47 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; inoculated/src RuntimeWrites.java:47 &nbsp;|
 <p>
-    <pre>
+<pre>
     /** execution of any constructor for PrinterStream */
     pointcut init() : execution(PrinterStream+.new(..));
     </pre>
-    <a name="testing-inoculated-proceedVariants"></a>
-    <h3>Using around for integration testing</h3>
+<a name="testing-inoculated-proceedVariants"></a>
+<h3>Using around for integration testing</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; inoculated/src BufferTest.java:23 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; inoculated/src BufferTest.java:23 &nbsp;|
 <p>
-    <pre>
+<pre>
     /**
      * When PrinterBuffer.capacity(int) is called,
      * test it with repeatedly with a set of input
@@ -1580,7 +1593,7 @@ java -classpath "aspects.jar;system.jar" com.company.app.Main
      * This assumes that the capacity method causes no
      * relevant state changes in the buffer.
      */
-    int around(int original, PrinterBuffer buffer) : 
+    int around(int original, PrinterBuffer buffer) :
         call(int PrinterBuffer.capacity(int)) && args(original) && target(buffer) {
         int[] input = new int[] { 0, 1, 10, 1000, -1, 4096 };
         for (int i = 0; i < input.length; i++) {
@@ -1590,113 +1603,112 @@ java -classpath "aspects.jar;system.jar" com.company.app.Main
         return proceed(original, buffer);           // continue with original processing
     }
     </pre>
-    <a name="testing-inoculated-prohibitWritesByOthers"></a>
-    <h3>Prohibit field writes by other instances</h3>
+<a name="testing-inoculated-prohibitWritesByOthers"></a>
+<h3>Prohibit field writes by other instances</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; inoculated/src RuntimeWrites.java:66 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; inoculated/src RuntimeWrites.java:66 &nbsp;|
 <p>
-    <pre>
-    /** 
+<pre>
+    /**
      * Handle any situation where fields are written
      * by another object.
      */
-    before(Object caller, PrinterStream targ) : this(caller) 
+    before(Object caller, PrinterStream targ) : this(caller)
         && target(targ) && fieldWrites() {
         if (caller != targ) {
-            String err = "variation 1: caller (" + caller 
+            String err = "variation 1: caller (" + caller
                 + ") setting fields in targ (" + targ + ")";
             handle(err, thisJoinPointStaticPart);
         }
     }
     </pre>
-    <a name="testing-inoculated-prohibitWritesEvenByStaticOthers"></a>
-    <h3>Prohibit writes by other instances and static methods</h3>
+<a name="testing-inoculated-prohibitWritesEvenByStaticOthers"></a>
+<h3>Prohibit writes by other instances and static methods</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; inoculated/src RuntimeWrites.java:91 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; inoculated/src RuntimeWrites.java:91 &nbsp;|
 <p>
-    <pre>
-    /** 
+<pre>
+    /**
      * Handle any situation where fields are written
      * other than by the same object.
      */
     before(PrinterStream targ) : target(targ) && fieldWrites() {
         Object caller = thisJoinPoint.getThis();
         if (targ != caller) {
-            String err = "variation 2: caller (" + caller 
+            String err = "variation 2: caller (" + caller
                 + ") setting fields in targ (" + targ + ")";
             handle(err, thisJoinPointStaticPart);
         }
     }
     </pre>
-    <a name="testing-inoculated-prohibitWritesEvenBySubclasses"></a>
-    <h3>Prohibit writes by subclasses</h3>
+<a name="testing-inoculated-prohibitWritesEvenBySubclasses"></a>
+<h3>Prohibit writes by subclasses</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; inoculated/src RuntimeWrites.java:82 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; inoculated/src RuntimeWrites.java:82 &nbsp;|
 <p>
-    <pre>
+<pre>
     /** any write to a non-static field in PrinterStream or any subclasses */
     //pointcut fieldWrites() : set(!static * PrinterStream+.*);
 
     /** execution of any constructor for PrinterStream or any subclasses */
     //pointcut init() : execution(PrinterStream+.new(..));
     </pre>
-    <a name="testing-inoculated-prohibitWritesExceptWhenConstructing"></a>
-    <h3>Prohibit field writes after construction</h3>
+<a name="testing-inoculated-prohibitWritesExceptWhenConstructing"></a>
+<h3>Prohibit field writes after construction</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; inoculated/src RuntimeWrites.java:52 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; inoculated/src RuntimeWrites.java:52 &nbsp;|
 <p>
-    <pre>
+<pre>
     /** any write to a non-static field in PrinterStream itself */
     pointcut fieldWrites() : set(!static * PrinterStream.*);
 
-
-    /** 
+    /**
      * Handle any situation where fields are written
      * outside of the control flow of initialization
      */
-    before() : fieldWrites() && !cflow(init()) { 
+    before() : fieldWrites() && !cflow(init()) {
         handle("field set outside of init", thisJoinPointStaticPart);
     }
     </pre>
-    <a name="testing-inoculated-replaceWithProxy"></a>
-    <h3>Replace object with proxy on constructiono</h3>
+<a name="testing-inoculated-replaceWithProxy"></a>
+<h3>Replace object with proxy on constructiono</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; inoculated/src StubReplace.java:25 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; inoculated/src StubReplace.java:25 &nbsp;|
 <p>
-    <pre>
+<pre>
     /**
      * Replace all PrintStream with our StubStream
-     * by replacing the call to any constructor of 
+     * by replacing the call to any constructor of
      * PrinterStream or any subclasses.
      */
-    PrinterStream around () : within(PrintJob) 
+    PrinterStream around () : within(PrintJob)
         && call (PrinterStream+.new(..)) && !call (StubStream+.new(..)) {
         return new StubStream(thisJoinPoint.getArgs());
-    }  
+    }
     </pre>
-    <a name="testing-inoculated-roundTrip"></a>
-    <h3>Round-trip integration testing</h3>
+<a name="testing-inoculated-roundTrip"></a>
+<h3>Round-trip integration testing</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; inoculated/src com/xerox/printing/RoundTrip.java:28 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; inoculated/src com/xerox/printing/RoundTrip.java:28 &nbsp;|
 <p>
-    <pre>
+<pre>
     /**
      * After returning a PrinterStream from any call in our
      * packages, verify it by doing a round-trip between
      * PrinterStream and BufferedPrinterStream.
      * This uses a round-trip as a way to verify the
      * integrity of PrinterStream, but one could also use
-     * a self-test (built-in or otherwise) coded specifically 
+     * a self-test (built-in or otherwise) coded specifically
      * for validating the object (without changing state).
      */
     after () returning (PrinterStream stream) :
-        call (PrinterStream+ com.xerox.printing..*(..)) 
+        call (PrinterStream+ com.xerox.printing..*(..))
         && !call (PrinterStream PrinterStream.make(BufferedPrinterStream)) {
         BufferedPrinterStream bufferStream = new BufferedPrinterStream(stream);
         PrinterStream newStream = PrinterStream.make(bufferStream);
@@ -1705,26 +1717,26 @@ java -classpath "aspects.jar;system.jar" com.company.app.Main
         } else {
             System.err.println("round-trip passed for " + stream);
         }
-    }  
+    }
     </pre>
-    <a name="testing-inoculated-runtimeErrorWhenNullReturnedFromFactory"></a>
-    <h3>Throw Error when factory returns null</h3>
+<a name="testing-inoculated-runtimeErrorWhenNullReturnedFromFactory"></a>
+<h3>Throw Error when factory returns null</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; inoculated/src RunTime.java:37 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; inoculated/src RunTime.java:37 &nbsp;|
 <p>
-    <pre>
+<pre>
     /** Throw Error if a factory method for creating a Point returns null */
-    after () returning (Point p) : 
+    after () returning (Point p) :
         call(Point+ SubPoint+.create(..)) {
         if (null == p) {
-            String err = "Null Point constructed when this (" 
-                + thisJoinPoint.getThis() 
-                + ") called target (" 
-                + thisJoinPoint.getTarget() 
-                + ") at join point (" 
-                + thisJoinPoint.getSignature() 
-                + ") from source location (" 
+            String err = "Null Point constructed when this ("
+                + thisJoinPoint.getThis()
+                + ") called target ("
+                + thisJoinPoint.getTarget()
+                + ") at join point ("
+                + thisJoinPoint.getSignature()
+                + ") from source location ("
                 + thisJoinPoint.getSourceLocation()
                 + ") with args ("
                 + Arrays.asList(thisJoinPoint.getArgs())
@@ -1733,16 +1745,16 @@ java -classpath "aspects.jar;system.jar" com.company.app.Main
         }
     }
     </pre>
-    <a name="tracing"></a>
-    <h3>tracing</h3>
+<a name="tracing"></a>
+<h3>tracing</h3>
 <a href="#top">back to top</a>
-    <a name="tracing-simpleTiming"></a>
-    <h3>Record time to execute public methods</h3>
+<a name="tracing-simpleTiming"></a>
+<h3>Record time to execute public methods</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; common tracing/Logging.java:10 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; common tracing/Logging.java:10 &nbsp;|
 <p>
-    <pre>
+<pre>
     /** record time to execute my public methods */
     Object around() : execution(public * com.company..*.* (..)) {
         long start = System.currentTimeMillis();
@@ -1750,19 +1762,19 @@ java -classpath "aspects.jar;system.jar" com.company.app.Main
             return proceed();
         } finally {
             long end = System.currentTimeMillis();
-            recordTime(start, end, 
+            recordTime(start, end,
                 thisJoinPointStaticPart.getSignature());
         }
     }
     // implement recordTime...
     </pre>
-    <a name="tracing-traceJoinPoints"></a>
-    <h3>Trace join points executed to log</h3>
+<a name="tracing-traceJoinPoints"></a>
+<h3>Trace join points executed to log</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Jim Hugunin, Wes Isberg
- &nbsp;|&nbsp; common tracing/TraceJoinPoints.java:2 &nbsp;|
+<p>| &nbsp; Jim Hugunin, Wes Isberg
+  &nbsp;|&nbsp; common tracing/TraceJoinPoints.java:2 &nbsp;|
 <p>
-    <pre>
+<pre>
 /* TraceJoinPoints.java */
 
 package tracing;
@@ -1776,11 +1788,11 @@ import java.io.*;
  * To use this, define the abstract pointcuts in a subaspect.
  * @author Jim Hugunin, Wes Isberg
  */
-public abstract aspect TraceJoinPoints 
+public abstract aspect TraceJoinPoints
     extends TraceJoinPointsBase {
 
     // abstract protected pointcut entry();
-    
+
     PrintStream out;
     int logs = 0;
     int depth = 0;
@@ -1798,11 +1810,11 @@ public abstract aspect TraceJoinPoints
     protected void startLog() {
         makeLogStream();
     }
-    
+
     protected void completeLog() {
         closeLogStream();
     }
-    
+
     protected void logEnter(JoinPoint.StaticPart jp) {
         if (terminal) out.println(">");
         indent(depth);
@@ -1813,91 +1825,95 @@ public abstract aspect TraceJoinPoints
         depth += 1;
         terminal = true;
     }
-    
+
     protected void logExit(JoinPoint.StaticPart jp) {
         depth -= 1;
         if (terminal) {
             getOut().println("/>");
         } else {
             indent(depth);
-            getOut().println("</" + jp.getKind() + ">");
-        }
-        terminal = false;
-    }
-    
-    protected PrintStream getOut() {
-        if (null == out) {
-            String m = "not in the control flow of entry()";
-            throw new IllegalStateException(m);
-        }
-        return out;
-    }
-
-    protected void makeLogStream() {
-        try {
-            String name = "log" + logs++ + ".xml";
-            out = new PrintStream(new FileOutputStream(name));
-        } catch (IOException ioe) {
-            out = System.err;
-        }
-    }
-
-    protected void closeLogStream() {
-        PrintStream out = this.out;
-        if (null != out) {
-            out.close();
-            // this.out = null;
-        }
-    }
-
-    /** @return input String formatted for XML */
-    protected String prepareMessage(String s) {  // XXX unimplemented
-        return s; 
-    } 
-    
-    void message(String sink, String s) {
-        if (null == sink) {
-            message(s);
-        } else {
-            getOut().println("<message sink=" + quoteXml(sink)
-                        + " >" + prepareMessage(s) + "</message>");
-        }
-    }
-    
-    void writeSig(JoinPoint.StaticPart jp) {
-        PrintStream out = getOut();
-        out.print(" sig=");
-        out.print(quoteXml(jp.getSignature().toShortString()));
-    }
-
-    void writePos(JoinPoint.StaticPart jp) {
-        SourceLocation loc = jp.getSourceLocation();
-        if (loc == null) return;
-        PrintStream out = getOut();
-
-        out.print(" pos=");
-        out.print(quoteXml(loc.getFileName() +
-                           ":" + loc.getLine() +
-                           ":" + loc.getColumn()));
-    }
-
-    protected String quoteXml(String s) { // XXX weak
-        return "\"" + s.replace('<', '_').replace('>', '_') + "\"";
-    }
-
-    protected void indent(int i) {
-        PrintStream out = getOut();
-        while (i-- > 0) out.print("  ");
-    }
+            getOut().println("</
+" + jp.getKind() + ">");
 }
-    </pre>
-    <a name="tracing-traceJoinPoints"></a>
-    <h3>Trace join points executed</h3>
+terminal = false;
+}
+
+protected PrintStream getOut() {
+if (null == out) {
+String m = "not in the control flow of entry()";
+throw new IllegalStateException(m);
+}
+return out;
+}
+
+protected void makeLogStream() {
+try {
+String name = "log" + logs++ + ".xml";
+out = new PrintStream(new FileOutputStream(name));
+} catch (IOException ioe) {
+out = System.err;
+}
+}
+
+protected void closeLogStream() {
+PrintStream out = this.out;
+if (null != out) {
+out.close();
+// this.out = null;
+}
+}
+
+/** @return input String formatted for XML */
+protected String prepareMessage(String s) { // XXX unimplemented
+return s;
+}
+
+void message(String sink, String s) {
+if (null == sink) {
+message(s);
+} else {
+getOut().println("
+<message sink=" + quoteXml(sink)
+                        + ">" + prepareMessage(s) + "
+</message>
+");
+}
+}
+
+void writeSig(JoinPoint.StaticPart jp) {
+PrintStream out = getOut();
+out.print(" sig=");
+out.print(quoteXml(jp.getSignature().toShortString()));
+}
+
+void writePos(JoinPoint.StaticPart jp) {
+SourceLocation loc = jp.getSourceLocation();
+if (loc == null) return;
+PrintStream out = getOut();
+
+out.print(" pos=");
+out.print(quoteXml(loc.getFileName() +
+":" + loc.getLine() +
+":" + loc.getColumn()));
+}
+
+protected String quoteXml(String s) { // XXX weak
+return "\"" + s.replace('<', '_').replace('>', '_') + "\"";
+}
+
+protected void indent(int i) {
+PrintStream out = getOut();
+while (i-- > 0) out.print(" ");
+}
+}
+</pre>
+<a name="tracing-traceJoinPoints"></a>
+<h3>Trace join points executed</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Jim Hugunin, Wes Isberg
- &nbsp;|&nbsp; common tracing/TraceJoinPointsBase.java:2 &nbsp;|
+<p>| &nbsp; Jim Hugunin, Wes Isberg
+  &nbsp;|&nbsp; common tracing/TraceJoinPointsBase.java:2 &nbsp;|
 <p>
-    <pre>
+<pre>
 /* TraceJoinPointsBase.java */
 
 package tracing;
@@ -1922,7 +1938,7 @@ abstract aspect TraceJoinPointsBase {
 
     final pointcut start(): entry() && !cflowbelow(entry());
 
-    final pointcut trace(): cflow(entry()) 
+    final pointcut trace(): cflow(entry())
         && !cflowbelow(exit()) && !within(TraceJoinPointsBase+);
 
     private pointcut supportsAfterAdvice() : !handler(*)
@@ -1930,16 +1946,16 @@ abstract aspect TraceJoinPointsBase {
 
     before(): start() { startLog(); }
 
-    before(): trace() && supportsAfterAdvice(){ 
-        logEnter(thisJoinPointStaticPart); 
+    before(): trace() && supportsAfterAdvice(){
+        logEnter(thisJoinPointStaticPart);
     }
 
-    after(): trace() && supportsAfterAdvice() { 
-        logExit(thisJoinPointStaticPart); 
+    after(): trace() && supportsAfterAdvice() {
+        logExit(thisJoinPointStaticPart);
     }
 
     after(): start() { completeLog(); }
-    
+
     abstract protected void logEnter(JoinPoint.StaticPart jp);
     abstract protected void logExit(JoinPoint.StaticPart jp);
     abstract protected void startLog();
@@ -1947,13 +1963,13 @@ abstract aspect TraceJoinPointsBase {
 }
 
     </pre>
-    <a name="tracing-traceJoinPoints"></a>
-    <h3>Trace to log join points executed by main method</h3>
+<a name="tracing-traceJoinPoints"></a>
+<h3>Trace to log join points executed by main method</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Jim Hugunin, Wes Isberg
- &nbsp;|&nbsp; common tracing/TraceMyJoinPoints.java:3 &nbsp;|
+<p>| &nbsp; Jim Hugunin, Wes Isberg
+  &nbsp;|&nbsp; common tracing/TraceMyJoinPoints.java:3 &nbsp;|
 <p>
-    <pre>
+<pre>
 /* TraceMyJoinPoints.java */
 
 package tracing;
@@ -1968,91 +1984,156 @@ aspect TraceMyJoinPoints extends TraceJoinPoints {
     protected pointcut entry() : execution(void Main.runMain(String[]));
 }
     </pre>
-    <a name="trails"></a>
-    <h3>trails</h3>
+<a name="trails"></a>
+<h3>trails</h3>
 <a href="#top">back to top</a>
-    <a name="trails-debugging"></a>
-    <h3>trails-debugging</h3>
+<a name="trails-debugging"></a>
+<h3>trails-debugging</h3>
 <a href="#top">back to top</a>
-    <a name="trails-debugging-aspectj10"></a>
-    <h3>Debugging AspectJ 1.0 Programs</h3>
+<a name="trails-debugging-aspectj10"></a>
+<h3>Debugging AspectJ 1.0 Programs</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; trails debugging.html:10 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; trails debugging.html:10 &nbsp;|
 <p>
 
-
-The AspectJ 1.0 compiler produces .class files that have the
-normal source file attribute and line information as well
-as the information specified by JSR-045 required to debug
-.class files composed of multiple source files.  
-This permits the compiler to inline advice code 
-into the .class files of the target classes; 
-the advice code in the target class can have source 
-attributes that point back to the aspect file.
+  The AspectJ 1.0 compiler produces .class files that have the
+  normal source file attribute and line information as well
+  as the information specified by JSR-045 required to debug
+  .class files composed of multiple source files.
+  This permits the compiler to inline advice code
+  into the .class files of the target classes;
+  the advice code in the target class can have source
+  attributes that point back to the aspect file.
 
 <p>
-Support for JSR-45 varies.
-At the time of this writing, Sun's VM supports it, 
-but not some others, which means that the Sun VM
-must be used as the runtime VM.
+  Support for JSR-45 varies.
+  At the time of this writing, Sun's VM supports it,
+  but not some others, which means that the Sun VM
+  must be used as the runtime VM.
 
-Because the VM does all the work of associating the
-source line with the code being debugged,
-debuggers should be able to operate normally with
-AspectJ 1.0 source files even if they weren't written
-with that in mind, if they use the correct
-API's to the debugger.  Unfortunately, some debuggers
-take shortcuts based on the default case of one file
-per class in order to avoid having the VM calculate
-the file suffix or package prefix.  These debuggers
-do not support JSR-45 and thus AspectJ.
+  Because the VM does all the work of associating the
+  source line with the code being debugged,
+  debuggers should be able to operate normally with
+  AspectJ 1.0 source files even if they weren't written
+  with that in mind, if they use the correct
+  API's to the debugger. Unfortunately, some debuggers
+  take shortcuts based on the default case of one file
+  per class in order to avoid having the VM calculate
+  the file suffix or package prefix. These debuggers
+  do not support JSR-45 and thus AspectJ.
 
-
-    <a name="trails-debugging-aspectj11"></a>
-    <h3>Debugging AspectJ 1.1 Programs</h3>
+  <a name="trails-debugging-aspectj11"></a>
+<h3>Debugging AspectJ 1.1 Programs</h3>
 <a href="#top">back to top</a>
-    <p>| &nbsp; Wes Isberg
- &nbsp;|&nbsp; trails debugging.html:43 &nbsp;|
+<p>| &nbsp; Wes Isberg
+  &nbsp;|&nbsp; trails debugging.html:43 &nbsp;|
 <p>
 
-The AspectJ 1.1 compiler usually implements advice as 
-call-backs to the aspect, which means that most
-AspectJ programs do not require JSR-45 support in
-order to be debugged.  However, it does do a limited
-amount of advice inlining; to avoid this, use the
-<code>-XnoInline</code> flag.
+  The AspectJ 1.1 compiler usually implements advice as
+  call-backs to the aspect, which means that most
+  AspectJ programs do not require JSR-45 support in
+  order to be debugged. However, it does do a limited
+  amount of advice inlining; to avoid this, use the
+  <code>-XnoInline</code> flag.
 <p>
-Because inlined advice can be more efficient, we
-plan to support JSR-45 as soon as feasible. 
-This will require upgrading the BCEL library we
-use to pass around the correct source attributes.
+  Because inlined advice can be more efficient, we
+  plan to support JSR-45 as soon as feasible.
+  This will require upgrading the BCEL library we
+  use to pass around the correct source attributes.
 
 <p>
-Sometimes debuggers correctly get the source line information,
-but fail when they attempt to parse AspectJ source files
-expected to contain Java code.  For these it might be possible
-to step into AspectJ code, but not to set breakpoints, or to
-work around the parse errors by using <code>.aj</code> rather 
-than <code>.java</code> as a file extension.
+  Sometimes debuggers correctly get the source line information,
+  but fail when they attempt to parse AspectJ source files
+  expected to contain Java code. For these it might be possible
+  to step into AspectJ code, but not to set breakpoints, or to
+  work around the parse errors by using <code>.aj</code> rather
+  than <code>.java</code> as a file extension.
 
-
-<h2><a name="authorIndex"></a>Author Index</h2><li>AspectJ community
-<ul>
-    <li><a href="#pubs-all-links">List of AspectJ publications</a></li></li></ul><li>Erik Hilsdale
-<ul>
-    <li><a href="#language-cflowRecursionBasic">Pick out latest and original recursive call</a></li></li></ul><li>Erik Hilsdale, Wes Isberg
-<ul>
-    <li><a href="#language-fieldSetContext">Check input and result for a field set.</a></li>    <li><a href="#language-handlerContext">Log exception being handled</a></li>    <li><a href="#language-initialization">Understanding object creation join points</a></li></li></ul><li>Jan Hanneman
-<ul>
-    <li><a href="#pubs-papers-aodesignpatterns">Aspect-Oriented Design Pattern Implementations</a></li></li></ul><li>Jim Hugunin, Wes Isberg
-<ul>
-    <li><a href="#declares-softenRemoteException">declares-softenRemoteException</a></li>    <li><a href="#tracing-traceJoinPoints">Trace join points executed to log</a></li>    <li><a href="#tracing-traceJoinPoints">Trace join points executed</a></li>    <li><a href="#tracing-traceJoinPoints">Trace to log join points executed by main method</a></li></li></ul><li>Ramnivas Laddad
-<ul>
-    <li><a href="#pubs-books-aspectjinaction">AspectJ in Action</a></li></li></ul><li>Ricardo Giacomin, Wes Isberg
-<ul>
-    <li><a href="#caching-dirty-reflectiveSetters">Use getter/setter pattern to track dirtiness</a></li></li></ul><li>Ron Bodkin and others
-<ul>
-    <li><a href="#pubs-projects-atrack">ATrack bug tracker</a></li></li></ul><li>Wes Isberg
-<ul>
-    <li><a href="#api-asm-listAffectedFiles">Walk model to list affected files</a></li>    <li><a href="#declares-exceptionSpelunking">Using declare warning to find Exception-related code</a></li>    <li><a href="#declares-inoculated-nonSetterWrites">Warn when setting non-public field</a></li>    <li><a href="#declares-inoculated-prohibitNonprivateConstructors">Error to have accessible sub-Point constructors</a></li>    <li><a href="#declares-inoculated-validExceptionHandlingMethod">Error when subclass method handles exception</a></li>    <li><a href="#declares-inoculated-validPointConstruction">Error when factory not used</a></li>    <li><a href="#declares-threadFactoryRequired">Error when not using Thread factory</a></li>    <li><a href="#declares-typeConstraints">Using declare to enforce type constraints</a></li>    <li><a href="#j2ee-myeclipseide-generally">Using MyEclipseIDE to develop AspectJ programs for J2EE</a></li>    <li><a href="#j2ee-servlets-generally">Using AspectJ in servlets</a></li>    <li><a href="#j2ee-tomcat4-jsp">Running AspectJ JSP's in Tomcat 4.x</a></li>    <li><a href="#j2ee-tomcat4-precompileJsp">Precompile JSP's for Tomcat 4.x using AspectJ</a></li>    <li><a href="#j2ee-tomcat4-servlets">Running AspectJ servlets in Tomcat 4.x</a></li>    <li><a href="#language-doubleDispatch">Implementing double-dispatch</a></li>    <li><a href="#library-classPointcutLibrary">Defining library pointcuts in a class</a></li>    <li><a href="#library-pointcutIdioms">Standard pointcut idioms</a></li>    <li><a href="#scripts-weaveLibraries">Shell script to use ajc to weave jars and then run</a></li>    <li><a href="#testing-inoculated-adviseProxyCallsOnly">Advise calls to the proxy object only</a></li>    <li><a href="#testing-inoculated-failureCapture">Log failures</a></li>    <li><a href="#testing-inoculated-injectIOException">Inject IOException on test driver command</a></li>    <li><a href="#testing-inoculated-permitWritesDuringConstruction">Constructor execution</a></li>    <li><a href="#testing-inoculated-proceedVariants">Using around for integration testing</a></li>    <li><a href="#testing-inoculated-prohibitWritesByOthers">Prohibit field writes by other instances</a></li>    <li><a href="#testing-inoculated-prohibitWritesEvenByStaticOthers">Prohibit writes by other instances and static methods</a></li>    <li><a href="#testing-inoculated-prohibitWritesEvenBySubclasses">Prohibit writes by subclasses</a></li>    <li><a href="#testing-inoculated-prohibitWritesExceptWhenConstructing">Prohibit field writes after construction</a></li>    <li><a href="#testing-inoculated-replaceWithProxy">Replace object with proxy on constructiono</a></li>    <li><a href="#testing-inoculated-roundTrip">Round-trip integration testing</a></li>    <li><a href="#testing-inoculated-runtimeErrorWhenNullReturnedFromFactory">Throw Error when factory returns null</a></li>    <li><a href="#tracing-simpleTiming">Record time to execute public methods</a></li>    <li><a href="#trails-debugging-aspectj10">Debugging AspectJ 1.0 Programs</a></li>    <li><a href="#trails-debugging-aspectj11">Debugging AspectJ 1.1 Programs</a></li></body></html>
+<h2><a name="authorIndex"></a>Author Index</h2>
+<li>AspectJ community
+  <ul>
+    <li><a href="#pubs-all-links">List of AspectJ publications</a></li>
+</li>
+</ul>
+<li>Erik Hilsdale
+  <ul>
+    <li><a href="#language-cflowRecursionBasic">Pick out latest and original recursive call</a></li>
+</li>
+</ul>
+<li>Erik Hilsdale, Wes Isberg
+  <ul>
+    <li><a href="#language-fieldSetContext">Check input and result for a field set.</a></li>
+    <li><a href="#language-handlerContext">Log exception being handled</a></li>
+    <li><a href="#language-initialization">Understanding object creation join points</a></li>
+</li>
+</ul>
+<li>Jan Hanneman
+  <ul>
+    <li><a href="#pubs-papers-aodesignpatterns">Aspect-Oriented Design Pattern Implementations</a></li>
+</li>
+</ul>
+<li>Jim Hugunin, Wes Isberg
+  <ul>
+    <li><a href="#declares-softenRemoteException">declares-softenRemoteException</a></li>
+    <li><a href="#tracing-traceJoinPoints">Trace join points executed to log</a></li>
+    <li><a href="#tracing-traceJoinPoints">Trace join points executed</a></li>
+    <li><a href="#tracing-traceJoinPoints">Trace to log join points executed by main method</a></li>
+</li>
+</ul>
+<li>Ramnivas Laddad
+  <ul>
+    <li><a href="#pubs-books-aspectjinaction">AspectJ in Action</a></li>
+</li>
+</ul>
+<li>Ricardo Giacomin, Wes Isberg
+  <ul>
+    <li><a href="#caching-dirty-reflectiveSetters">Use getter/setter pattern to track dirtiness</a></li>
+</li>
+</ul>
+<li>Ron Bodkin and others
+  <ul>
+    <li><a href="#pubs-projects-atrack">ATrack bug tracker</a></li>
+</li>
+</ul>
+<li>Wes Isberg
+  <ul>
+    <li><a href="#api-asm-listAffectedFiles">Walk model to list affected files</a></li>
+    <li><a href="#declares-exceptionSpelunking">Using declare warning to find Exception-related code</a></li>
+    <li><a href="#declares-inoculated-nonSetterWrites">Warn when setting non-public field</a></li>
+    <li><a href="#declares-inoculated-prohibitNonprivateConstructors">Error to have accessible sub-Point
+      constructors</a></li>
+    <li><a href="#declares-inoculated-validExceptionHandlingMethod">Error when subclass method handles exception</a>
+    </li>
+    <li><a href="#declares-inoculated-validPointConstruction">Error when factory not used</a></li>
+    <li><a href="#declares-threadFactoryRequired">Error when not using Thread factory</a></li>
+    <li><a href="#declares-typeConstraints">Using declare to enforce type constraints</a></li>
+    <li><a href="#j2ee-myeclipseide-generally">Using MyEclipseIDE to develop AspectJ programs for J2EE</a></li>
+    <li><a href="#j2ee-servlets-generally">Using AspectJ in servlets</a></li>
+    <li><a href="#j2ee-tomcat4-jsp">Running AspectJ JSP's in Tomcat 4.x</a></li>
+    <li><a href="#j2ee-tomcat4-precompileJsp">Precompile JSP's for Tomcat 4.x using AspectJ</a></li>
+    <li><a href="#j2ee-tomcat4-servlets">Running AspectJ servlets in Tomcat 4.x</a></li>
+    <li><a href="#language-doubleDispatch">Implementing double-dispatch</a></li>
+    <li><a href="#library-classPointcutLibrary">Defining library pointcuts in a class</a></li>
+    <li><a href="#library-pointcutIdioms">Standard pointcut idioms</a></li>
+    <li><a href="#scripts-weaveLibraries">Shell script to use ajc to weave jars and then run</a></li>
+    <li><a href="#testing-inoculated-adviseProxyCallsOnly">Advise calls to the proxy object only</a></li>
+    <li><a href="#testing-inoculated-failureCapture">Log failures</a></li>
+    <li><a href="#testing-inoculated-injectIOException">Inject IOException on test driver command</a></li>
+    <li><a href="#testing-inoculated-permitWritesDuringConstruction">Constructor execution</a></li>
+    <li><a href="#testing-inoculated-proceedVariants">Using around for integration testing</a></li>
+    <li><a href="#testing-inoculated-prohibitWritesByOthers">Prohibit field writes by other instances</a></li>
+    <li><a href="#testing-inoculated-prohibitWritesEvenByStaticOthers">Prohibit writes by other instances and static
+      methods</a></li>
+    <li><a href="#testing-inoculated-prohibitWritesEvenBySubclasses">Prohibit writes by subclasses</a></li>
+    <li><a href="#testing-inoculated-prohibitWritesExceptWhenConstructing">Prohibit field writes after construction</a>
+    </li>
+    <li><a href="#testing-inoculated-replaceWithProxy">Replace object with proxy on constructiono</a></li>
+    <li><a href="#testing-inoculated-roundTrip">Round-trip integration testing</a></li>
+    <li><a href="#testing-inoculated-runtimeErrorWhenNullReturnedFromFactory">Throw Error when factory returns null</a>
+    </li>
+    <li><a href="#tracing-simpleTiming">Record time to execute public methods</a></li>
+    <li><a href="#trails-debugging-aspectj10">Debugging AspectJ 1.0 Programs</a></li>
+    <li><a href="#trails-debugging-aspectj11">Debugging AspectJ 1.1 Programs</a></li>
+</body>
+</html>

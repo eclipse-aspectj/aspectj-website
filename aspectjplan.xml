@@ -1,84 +1,103 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <?xml-stylesheet type="text/xsl" href="http://www.eclipse.org/projects/project-plan.xsl"?>
 <plan plan-format="1.0" xmlns="http://www.eclipse.org/project/plan" xmlns:html="http://www.w3.org/1999/xhtml"
-      name="AspectJ">
-   <release projectid="tools.aspectj" version="1.0"/>
-   <introduction>
-     <html:div>AspectJ major versions match up with Java versions.  Currently Java is at 9 (1.9) and AspectJ is
-     about to release the 1.9 version. The AspectJ project then releases 
-     service refreshes to that major version every
-     few months.  The current release model is at least something every 3 months - sometimes a milestone,
-     sometimes a full release.</html:div>
-     <html:div>AspectJ always maintains that HEAD will build clean and pass all the tests we have (currently
-     around 4700).  This means the development builds created from HEAD after every commit are always at least
-     as good as the previous build.</html:div>
-   </introduction>
-   <release_deliverables>
-     <html:div>AspectJ releases are delivered as a single .jar download that installs a compiler and the related
-     tools and documentation when executed.  The packaging of an AspectJ release into plugins consumable in
-     an Eclipse environment is done by the AJDT project.</html:div>
-   </release_deliverables>
-   <release_milestones>
-      <preamble>h
-         <html:div></html:div>
-      </preamble>
-      <milestone date="11/15/2017" milestone="1.9.0.RC3"><html:div>AspectJ 1.9.0 release candidate 1</html:div></milestone>
-      <milestone date="11/15/2017" milestone="1.8.13"><html:div>AspectJ 1.8.13 release</html:div></milestone>
-      <milestone date="11/09/2017" milestone="1.9.0.RC2"><html:div>AspectJ 1.9.0 release candidate 1</html:div></milestone>
-      <milestone date="10/21/2017" milestone="1.9.0.RC1"><html:div>AspectJ 1.9.0 release candidate 1</html:div></milestone>
-      <milestone date="10/20/2017" milestone="1.8.12"><html:div>AspectJ 1.8.12 release</html:div></milestone>
-      <postamble><html:div> </html:div></postamble>
-   </release_milestones>
-   <target_environments>
-   	<html:div>During AspectJ 1.8 we moved to a baseline requirement of Java8.  AspectJ 1.9 will run on Java8 or Java9.
-	   If using purely the pointcut matching parts of AspectJ (like Spring AOP does) it is possible to use that
-	   part of AspectJ 1.8 running on Java 9, but for proper operation of all AspectJ features, if using Java 9
-	   then users should be using AspectJ 1.9.
-     </html:div>
-     <internationalization>
-          <html:div>We have bundles for many of the messages in the project but they are not translated.</html:div>
-     </internationalization>
-   </target_environments>
-   <compatibility_with_previous_releases>
-       <html:div>AspectJ is strong on compatibility and any level of AspectJ is always intended to parse code/aspects
-       built with any earlier version of AspectJ without requiring recompilation.</html:div>
-   </compatibility_with_previous_releases>
-   <themes_and_priorities>
-     <preamble>
-         <html:div>These are the larger themes and priorities right now:</html:div>
-     </preamble>
-     <theme name="Maintenance and JDK chasing">
-	     <description><html:div>AspectJ is effectly in a maintenance mode right node, this means periodic
-			     bug fix releases and updates to consume the latest fixes from JDT. With the increase in 
-	     	velocity of JDK releases, we need to think about the best way to handle that in AspectJ.</html:div></description>
-	     <!--
-        <committed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;target_milestone=1.8.0&amp;short_desc=%5Bplan%5D+%5Bmemory%5D&amp;product=AspectJ&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
-   		   <html:div>Planned [memory] changes</html:div></committed>
-        <proposed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;target_milestone=1.8.0&amp;short_desc=%5Bplan%5D+%5Bmemory%5D&amp;product=AspectJ&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
-           <html:div>Planned [memory] changes</html:div></proposed>
+  name="AspectJ">
+  <release projectid="tools.aspectj" version="1.0"/>
+  <introduction>
+    <html:div>AspectJ major versions match up with Java versions. Currently Java is at 9 (1.9) and AspectJ is
+      about to release the 1.9 version. The AspectJ project then releases
+      service refreshes to that major version every
+      few months. The current release model is at least something every 3 months - sometimes a milestone,
+      sometimes a full release.
+    </html:div>
+    <html:div>AspectJ always maintains that HEAD will build clean and pass all the tests we have (currently
+      around 4700). This means the development builds created from HEAD after every commit are always at least
+      as good as the previous build.
+    </html:div>
+  </introduction>
+  <release_deliverables>
+    <html:div>AspectJ releases are delivered as a single .jar download that installs a compiler and the related
+      tools and documentation when executed. The packaging of an AspectJ release into plugins consumable in
+      an Eclipse environment is done by the AJDT project.
+    </html:div>
+  </release_deliverables>
+  <release_milestones>
+    <preamble>h
+      <html:div></html:div>
+    </preamble>
+    <milestone date="11/15/2017" milestone="1.9.0.RC3">
+      <html:div>AspectJ 1.9.0 release candidate 1</html:div>
+    </milestone>
+    <milestone date="11/15/2017" milestone="1.8.13">
+      <html:div>AspectJ 1.8.13 release</html:div>
+    </milestone>
+    <milestone date="11/09/2017" milestone="1.9.0.RC2">
+      <html:div>AspectJ 1.9.0 release candidate 1</html:div>
+    </milestone>
+    <milestone date="10/21/2017" milestone="1.9.0.RC1">
+      <html:div>AspectJ 1.9.0 release candidate 1</html:div>
+    </milestone>
+    <milestone date="10/20/2017" milestone="1.8.12">
+      <html:div>AspectJ 1.8.12 release</html:div>
+    </milestone>
+    <postamble>
+      <html:div></html:div>
+    </postamble>
+  </release_milestones>
+  <target_environments>
+    <html:div>During AspectJ 1.8 we moved to a baseline requirement of Java8. AspectJ 1.9 will run on Java8 or Java9.
+      If using purely the pointcut matching parts of AspectJ (like Spring AOP does) it is possible to use that
+      part of AspectJ 1.8 running on Java 9, but for proper operation of all AspectJ features, if using Java 9
+      then users should be using AspectJ 1.9.
+    </html:div>
+    <internationalization>
+      <html:div>We have bundles for many of the messages in the project but they are not translated.</html:div>
+    </internationalization>
+  </target_environments>
+  <compatibility_with_previous_releases>
+    <html:div>AspectJ is strong on compatibility and any level of AspectJ is always intended to parse code/aspects
+      built with any earlier version of AspectJ without requiring recompilation.
+    </html:div>
+  </compatibility_with_previous_releases>
+  <themes_and_priorities>
+    <preamble>
+      <html:div>These are the larger themes and priorities right now:</html:div>
+    </preamble>
+    <theme name="Maintenance and JDK chasing">
+      <description>
+        <html:div>AspectJ is effectly in a maintenance mode right node, this means periodic
+          bug fix releases and updates to consume the latest fixes from JDT. With the increase in
+          velocity of JDK releases, we need to think about the best way to handle that in AspectJ.
+        </html:div>
+      </description>
+      <!--
+       <committed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;target_milestone=1.8.0&amp;short_desc=%5Bplan%5D+%5Bmemory%5D&amp;product=AspectJ&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
+         <html:div>Planned [memory] changes</html:div></committed>
+       <proposed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;target_milestone=1.8.0&amp;short_desc=%5Bplan%5D+%5Bmemory%5D&amp;product=AspectJ&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
+          <html:div>Planned [memory] changes</html:div></proposed>
 -->
-     </theme>
-     <!--
-     <theme name="Full set of work items for next release">
-        <description><html:div>The fixes and enhancements that are in 1.8.0 development builds and those still scheduled to be completed before final release.</html:div></description>
-        <proposed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=%5Bplan%5D&amp;product=AspectJ&amp;target_milestone=1.8.0&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_severity=blocker&amp;bug_severity=critical&amp;bug_severity=major&amp;bug_severity=normal&amp;bug_severity=minor&amp;bug_severity=trivial&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
-           <html:div>Planned 1.6.7 changes</html:div></proposed>
-        <committed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=&amp;product=AspectJ&amp;target_milestone=1.8.0&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
-   		   <html:div>Planned 1.6.7 changes</html:div></committed>
-     </theme>
-     <theme name="Planned changes for future releases">
-        <description><html:div>Items planned</html:div></description>
-        <proposed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=%5Bplan%5D&amp;product=AspectJ&amp;target_milestone=1.8.1&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_severity=blocker&amp;bug_severity=critical&amp;bug_severity=major&amp;bug_severity=normal&amp;bug_severity=minor&amp;bug_severity=trivial&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
-           <html:div>Planned 1.8.1 changes</html:div></proposed>
-     </theme>
+    </theme>
+    <!--
+    <theme name="Full set of work items for next release">
+       <description><html:div>The fixes and enhancements that are in 1.8.0 development builds and those still scheduled to be completed before final release.</html:div></description>
+       <proposed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=%5Bplan%5D&amp;product=AspectJ&amp;target_milestone=1.8.0&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_severity=blocker&amp;bug_severity=critical&amp;bug_severity=major&amp;bug_severity=normal&amp;bug_severity=minor&amp;bug_severity=trivial&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
+          <html:div>Planned 1.6.7 changes</html:div></proposed>
+       <committed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=&amp;product=AspectJ&amp;target_milestone=1.8.0&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
+         <html:div>Planned 1.6.7 changes</html:div></committed>
+    </theme>
+    <theme name="Planned changes for future releases">
+       <description><html:div>Items planned</html:div></description>
+       <proposed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=%5Bplan%5D&amp;product=AspectJ&amp;target_milestone=1.8.1&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_severity=blocker&amp;bug_severity=critical&amp;bug_severity=major&amp;bug_severity=normal&amp;bug_severity=minor&amp;bug_severity=trivial&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
+          <html:div>Planned 1.8.1 changes</html:div></proposed>
+    </theme>
 <theme name="Work completed for 1.8.0">
-  <description><html:div>Fixed issues, including folded in fixes from 1.7.4</html:div></description>
-        <committed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;product=AspectJ&amp;target_milestone=1.8.0&amp;target_milestone=1.8.0.M1&amp;target_milestone=1.7.4&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;bug_severity=blocker&amp;bug_severity=critical&amp;bug_severity=major&amp;bug_severity=normal&amp;bug_severity=minor&amp;bug_severity=trivial&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
-           <html:div>Fixed</html:div></committed>
-     </theme>
+ <description><html:div>Fixed issues, including folded in fixes from 1.7.4</html:div></description>
+       <committed bugzilla="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;product=AspectJ&amp;target_milestone=1.8.0&amp;target_milestone=1.8.0.M1&amp;target_milestone=1.7.4&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;bug_severity=blocker&amp;bug_severity=critical&amp;bug_severity=major&amp;bug_severity=normal&amp;bug_severity=minor&amp;bug_severity=trivial&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">
+          <html:div>Fixed</html:div></committed>
+    </theme>
 -->
-   </themes_and_priorities>
-  
-   <!-- appendix name="Project Refactoring">
-   </appendix-->	
- </plan>
+  </themes_and_priorities>
+
+  <!-- appendix name="Project Refactoring">
+  </appendix-->
+</plan>

@@ -1,36 +1,36 @@
 <project>
-	<short-name>AspectJ</short-name>
-	<bugzilla>
-		<product name="AspectJ"/>
-	</bugzilla>
-	<committers url="/aspectj/committers.php"/>
-	<contributors url="/aspectj/contributors.php"/>
-	<leaders url="/aspectj/committers.php"/>
-	
-	<cvs repository="/cvsroot/tools/">
-		<module path="org.aspectj/modules"/>
-	</cvs>
+  <short-name>AspectJ</short-name>
+  <bugzilla>
+    <product name="AspectJ"/>
+  </bugzilla>
+  <committers url="/aspectj/committers.php"/>
+  <contributors url="/aspectj/contributors.php"/>
+  <leaders url="/aspectj/committers.php"/>
 
-	<description url="/aspectj/description.php" paragraph-url="/aspectj/project-info/project-page-paragraph.html"/>
+  <cvs repository="/cvsroot/tools/">
+    <module path="org.aspectj/modules"/>
+  </cvs>
 
-	<summary paragraph-url="/aspectj/project-info/executive-summary.html"/>
+  <description url="/aspectj/description.php" paragraph-url="/aspectj/project-info/project-page-paragraph.html"/>
 
-	<getting-started url="/aspectj/faq.php"/>
+  <summary paragraph-url="/aspectj/project-info/executive-summary.html"/>
 
-	<!--
-	<ip-log url=""/>
-	-->
-	
-	<mailing-lists>
-		<list name="aspectj-users"/>
-		<list name="aspectj-dev"/>
-	</mailing-lists>
-	
-	<project-plan url="/aspectj/plans.php"/>
-	
-	<releases>
-		<release status="completed" name="1.5.0" date="20/12/2005" download="/aspectj/downloads/"/>
-		<release status="completed" name="1.5.1a" date="10/4/2006" download="/aspectj/downloads/"/>
-		<release status="tentative" name="1.5.2" date="06/2006"/>
-	</releases>
+  <getting-started url="/aspectj/faq.php"/>
+
+  <!--
+  <ip-log url=""/>
+  -->
+
+  <mailing-lists>
+    <list name="aspectj-users"/>
+    <list name="aspectj-dev"/>
+  </mailing-lists>
+
+  <project-plan url="/aspectj/plans.php"/>
+
+  <releases>
+    <release status="completed" name="1.5.0" date="20/12/2005" download="/aspectj/downloads/"/>
+    <release status="completed" name="1.5.1a" date="10/4/2006" download="/aspectj/downloads/"/>
+    <release status="tentative" name="1.5.2" date="06/2006"/>
+  </releases>
 </project>
