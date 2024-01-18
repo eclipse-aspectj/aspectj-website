@@ -22,6 +22,16 @@
 
   # Paste your HTML content between the HTML markers!
   $html = <<<HTML
+<style> 
+  /* FIXME: Temporary workaround for Hugo Solstice theme */
+  th, td {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+</style>
+
 <div id="maincontent">
   <div id="midcolumn">
     <div align="center"><h1>%name</h1></div>
