@@ -28,39 +28,46 @@
     <p>We are grateful to the following for their contributions to the AspectJ project:</p>
 
     <div class="homeitem">
+
       <h3>Committers</h3>
+
       <table cellpadding="2">
         <tr>
-          <td><a href="http://aspectprogrammer.org"/>Adrian Colyer</a></td>
-          <td>SpringSource</td>
+          <td><a href="https://scrum-master.de"/>Alexander Kriegisch</a></td>
+          <td>Scrum-Master.de - Agile Project Management</td>
         </tr>
         <tr>
           <td>Andy Clement</td>
-          <td>SpringSource</td>
+          <td>IBM UK Ltd</td>
+        </tr>
+        <tr>
+          <td>Matthew Webster</td>
+          <td>IBM UK Ltd</td>
         </tr>
         <tr>
           <td>Wes Isberg</td>
           <td></td>
         </tr>
         <tr>
-          <td><a href="http://kerstens.org/mik">Mik Kersten</a></td>
-          <td>University of British Columbia</td>
+          <td><a href="http://aspectprogrammer.org"/>Adrian Colyer</a></td>
+          <td>Interface 21</td>
         </tr>
         <tr>
           <td>Alex Vasseur</td>
           <td>BEA</td>
         </tr>
         <tr>
-          <td>Matthew Webster</td>
-          <td>IBM UK Ltd</td>
+          <td><a href="http://kerstens.org/mik">Mik Kersten</a></td>
+          <td>University of British Columbia</td>
         </tr>
-        <tr></tr>
-
       </table>
+
     </div>
 
     <div class="homeitem">
+
       <h3>Contributors</h3>
+
       <table cellpadding="2">
         <tr>
           <td>Helen Hawkins</td>

@@ -31,7 +31,9 @@
     </p>
 
     <div class="homeitem">
+
       <h3>Contributors</h3>
+
       <table cellpadding="2">
         <tr>
           <td>Helen Hawkins</td>
