@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>AspectJ 1.7.0</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>AspectJ 1.7.0</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_notable_changes">Notable Changes</a>
+<ul class="sectlevel2">
+<li><a href="#_java_7_bytecode_weaving">Java 7 bytecode weaving</a></li>
+<li><a href="#_bytecode_caching_for_loadtime_weaving">Bytecode caching for loadtime weaving</a></li>
+<li><a href="#_upgrade_to_java_7">Upgrade to Java 7</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>© Copyright 2011 Contributors. All rights reserved.</em></p>
+</div>
+<div class="paragraph">
+<p>The full list of resolved issues in 1.7.0 is available
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced;bug_status=RESOLVED;bug_status=VERIFIED;bug_status=CLOSED;product=AspectJ;target_milestone=1.7.0;">here</a></p>
+</div>
+<div class="paragraph">
+<p><em>Release info:</em></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>1.7.0 available 2-Jul-2012</em></p>
+</li>
+<li>
+<p><em>1.7.0.RC1 available 25-May-2012</em></p>
+</li>
+<li>
+<p><em>1.7.0.M1 available 16-Dec-2011</em></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_notable_changes">Notable Changes</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_java_7_bytecode_weaving">Java 7 bytecode weaving</h3>
+<div class="paragraph">
+<p>The first milestone of 1.7.0 upgraded the compiler but this still left
+the weaver with some issues if it had to weave into bytecode containing
+some of the new features that were allowed by Java 1.7. In particular
+this meant any bytecode containing the INVOKEDYNAMIC (new instruction
+for 1.7) and the related new constant pool entry types that support it.
+RC1 now supports weaving into bytecode containing these features.
+However, the new INVOKEDYNAMIC instruction does not surface as a join
+point yet so you cannot write a pointcut to match on it. If you use
+execution() pointcuts as opposed to call() then you will still be able
+to advise what the invokedynamic actually calls.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_bytecode_caching_for_loadtime_weaving">Bytecode caching for loadtime weaving</h3>
+<div class="paragraph">
+<p>Under <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=367673">bug 367673</a>
+we have had a contribution (thanks John Kew!) that enables a bytecode
+cache for loadtime weaving. The details and some rudimentary benchmark
+numbers are in the bug. Basically it caches woven bytecode on first
+start of a system using LTW and then reuses that woven bytecode on
+subsequent starts - this saves weaving time and also memory consumption.
+To activate it, use the following system properties:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">-Daj.weaving.cache.enabled=true
+-Daj.weaving.cache.dir=/tmp/aspectj-cache/</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_upgrade_to_java_7">Upgrade to Java 7</h3>
+<div class="paragraph">
+<p>For AspectJ 1.7.0, AspectJ moved from Eclipse JDT Core 0.785_R33x
+(Eclipse 3.3) to Eclipse JDT Core 0.B79_R37x (Eclipse 3.7). This is a
+big change where AspectJ is picking up four years of change from the
+Eclipse compiler.</p>
+</div>
+<div class="paragraph">
+<p>It means that you can now use the new Java 7 language constructs in your
+programs:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Diamond operator in advice:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">aspect Foo {
+  before(): execution(* *(..)) {
+    <span class="predefined-type">List</span> ls = <span class="keyword">new</span> <span class="predefined-type">ArrayList</span>&lt;&gt;();
+  }
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Diamond operator in ITD:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="predefined-type">List</span> DiamondITD.ls = <span class="keyword">new</span> <span class="predefined-type">ArrayList</span>&lt;&gt;();</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Underscore literals and binary literals in advice:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">before(): execution(* *(..)) {
+  <span class="type">int</span> onemill = <span class="integer">1</span>_000_000;
+  <span class="type">int</span> four =<span class="integer">0</span>b100;
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Multi-catch:``</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">before(): execution(* main(..)) {
+  <span class="keyword">try</span> {
+    foo(<span class="string"><span class="delimiter">&quot;</span><span class="content">abc</span><span class="delimiter">&quot;</span></span>);
+  } <span class="keyword">catch</span> (ExceptionA | ExceptionB ex) {
+    bar(ex);
+  }
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>String switch:``</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">before(<span class="predefined-type">String</span> s): execution(* *(..)) &amp;&amp; args(s) {
+  <span class="keyword">switch</span>(s) {
+    <span class="keyword">case</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">quux</span><span class="delimiter">&quot;</span></span>:
+      foo();
+      <span class="keyword">break</span>;
+    <span class="keyword">case</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">bar</span><span class="delimiter">&quot;</span></span>:
+      foo();
+      <span class="keyword">break</span>;
+    <span class="keyword">default</span>:
+      foo();
+      <span class="keyword">break</span>;
+  }
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Try with resources:``</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">try</span> (
+  <span class="predefined-type">InputStream</span> in = <span class="keyword">new</span> <span class="predefined-type">FileInputStream</span>(src);
+  <span class="predefined-type">OutputStream</span> out = <span class="keyword">new</span> <span class="predefined-type">FileOutputStream</span>(dest))
+{
+  <span class="comment">// code</span>
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:11 +0700
+</div>
+</div>
+</body>
+</html>

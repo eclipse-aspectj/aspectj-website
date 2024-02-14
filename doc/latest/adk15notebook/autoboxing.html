@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>Autoboxing and Unboxing</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body id="autoboxing" class="article toc2 toc-left">
+<div id="header">
+<h1>Autoboxing and Unboxing</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#boxing-inJava5">Autoboxing and Unboxing in Java 5</a></li>
+<li><a href="#autoboxing-in-aspectj5">Autoboxing and Join Point matching in AspectJ 5</a></li>
+<li><a href="#autoboxing-and-method-dispatch">Inter-type method declarations and method dispatch</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="boxing-inJava5">Autoboxing and Unboxing in Java 5</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Java 5 (and hence AspectJ 1.5) supports automatic conversion of
+primitive types (<code>int</code>, <code>float</code>, <code>double</code> etc.) to their object equivalents
+(<code>Integer</code>, <code>Float</code>, <code>Double</code> etc.) in assignments and method and constructor
+invocations. This conversion is know as autoboxing.</p>
+</div>
+<div class="paragraph">
+<p>Java 5 also supports automatic unboxing, where wrapper types are
+automatically converted into their primitive equivalents if needed for
+assignments or method or constructor invocations.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">int</span> i = <span class="integer">0</span>;
+i = <span class="keyword">new</span> <span class="predefined-type">Integer</span>(<span class="integer">5</span>);  <span class="comment">// auto-unboxing</span>
+<span class="predefined-type">Integer</span> i2 = <span class="integer">5</span>;      <span class="comment">// autoboxing</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="autoboxing-in-aspectj5">Autoboxing and Join Point matching in AspectJ 5</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Most of the pointcut designators match based on signatures, and hence
+are unaffected by autoboxing. For example, a call to a method</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> foo(<span class="predefined-type">Integer</span> i);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>is <em>not</em> matched by a pointcut <code>call(void foo(int))</code> since the signature
+declares a single <code>Integer</code> parameter, not an <code>int</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>args</code> pointcut designator is affected by autoboxing since it
+matches based on the runtime type of the arguments. AspectJ 5 applies
+autoboxing and unboxing in determining argument matching. In other
+words, <code>args(Integer)</code> will match any join point at which there is a
+single argument of type <code>Integer</code> or of type <code>int</code>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>args(Integer)</code> and <code>args(int)</code> are equivalent</p>
+</li>
+<li>
+<p><code>args(Float)</code> and <code>args(float)</code> are equivalent</p>
+</li>
+<li>
+<p><code>args(Double)</code> and <code>args(double)</code> are equivalent</p>
+</li>
+<li>
+<p><code>args(Short)</code> and <code>args(short)</code> are equivalent</p>
+</li>
+<li>
+<p><code>args(Byte)</code> and <code>args(byte)</code> are equivalent</p>
+</li>
+<li>
+<p><code>args(Long)</code> and <code>args(long)</code> are equivalent</p>
+</li>
+<li>
+<p><code>args(Boolean)</code> and <code>args(boolean)</code> are equivalent</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Autoboxing and unboxing are also applied when binding pointcut or advice
+parameters, for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut foo(<span class="type">int</span> i) : args(i);
+
+before(<span class="predefined-type">Integer</span> i) : foo(i) {
+  <span class="comment">// ...</span>
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="autoboxing-and-method-dispatch">Inter-type method declarations and method dispatch</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Autoboxing, unboxing, and also varargs all affect the method dispatch
+algorithm used in Java 5. In AspectJ 5, the target method of a call is
+selected according to the following algorithm:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Attempt to locate a matching method or inter-type declared method
+without considering autoboxing, unboxing, or vararg invocations.</p>
+</li>
+<li>
+<p>If no match is found, try again considering autoboxing and unboxing.</p>
+</li>
+<li>
+<p>Finally try again considering both autoboxing, unboxing, and varargs.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>One consequence is that a directly matching inter-type declared method
+will take precedence over a method declared locally in the target class
+but that only matches via autoboxing.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

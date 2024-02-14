@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>Varargs</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>Varargs</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#varargs-inJava5">Variable-length Argument Lists in Java 5</a>
+<ul class="sectlevel2">
+<li><a href="#_calling_methods_and_constructors_with_variable_length_arguments">Calling Methods and Constructors with variable-length arguments</a></li>
+</ul>
+</li>
+<li><a href="#varargs-in-pcds">Using Variable-length arguments in advice and pointcut expressions</a>
+<ul class="sectlevel2">
+<li><a href="#_matching_signatures_based_on_variable_length_argument_types">Matching signatures based on variable length argument types</a></li>
+<li><a href="#_exposing_variable_length_arguments_as_context_in_pointcuts_and_advice">Exposing variable-length arguments as context in pointcuts and advice</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="varargs-inJava5">Variable-length Argument Lists in Java 5</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Java 5 (and hence AspectJ 5) allows you to specify methods that take a
+variable number of arguments of a specified type. This is achieved using
+an ellipsis (<code>&#8230;&#8203;</code>) in the method signature as shown:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> foo(<span class="type">int</span> i, <span class="predefined-type">String</span>... strings) {}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A method or constructor may take at most one variable length argument,
+and this must always be the last declared argument in the signature.</p>
+</div>
+<div class="sect2">
+<h3 id="_calling_methods_and_constructors_with_variable_length_arguments">Calling Methods and Constructors with variable-length arguments</h3>
+<div class="paragraph">
+<p>A <em>varargs</em> method may be called with zero or more arguments in the
+variable argument position. For example, given the definition of <code>foo</code>
+above, the following calls are all legal:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">foo(<span class="integer">5</span>);
+foo(<span class="integer">5</span>,<span class="string"><span class="delimiter">&quot;</span><span class="content">One String</span><span class="delimiter">&quot;</span></span>);
+foo(<span class="integer">7</span>,<span class="string"><span class="delimiter">&quot;</span><span class="content">One String</span><span class="delimiter">&quot;</span></span>,<span class="string"><span class="delimiter">&quot;</span><span class="content">Two Strings</span><span class="delimiter">&quot;</span></span>);
+foo(<span class="integer">3</span>,<span class="string"><span class="delimiter">&quot;</span><span class="content">One String</span><span class="delimiter">&quot;</span></span>,<span class="string"><span class="delimiter">&quot;</span><span class="content">Two Strings</span><span class="delimiter">&quot;</span></span>,<span class="string"><span class="delimiter">&quot;</span><span class="content">Three Strings</span><span class="delimiter">&quot;</span></span>);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A <em>varargs</em> parameter is treated as an array within the defining member.
+So in the body of <code>foo</code> we could write for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> foo(<span class="type">int</span> i, <span class="predefined-type">String</span>... strings) {
+  <span class="predefined-type">String</span><span class="type">[]</span> someStrings = strings;
+  <span class="comment">// rest of method body</span>
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>One consequence of this treatment of a varargs parameter as an array is
+that you can also call a varargs method with an array:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">foo(<span class="integer">7</span>,<span class="keyword">new</span> <span class="predefined-type">String</span><span class="type">[]</span> {<span class="string"><span class="delimiter">&quot;</span><span class="content">One String</span><span class="delimiter">&quot;</span></span>,<span class="string"><span class="delimiter">&quot;</span><span class="content">Two Strings</span><span class="delimiter">&quot;</span></span>});</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="varargs-in-pcds">Using Variable-length arguments in advice and pointcut expressions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>AspectJ 5 allows variable-length arguments to be used for methods
+declared within aspects, and for inter-type declared methods and
+constructors, in accordance with the rules outlined in the previous
+section.</p>
+</div>
+<div class="paragraph">
+<p>AspectJ 5 also allows variable length arguments to be matched by
+pointcut expressions and bound as formals in advice.</p>
+</div>
+<div class="sect2">
+<h3 id="_matching_signatures_based_on_variable_length_argument_types">Matching signatures based on variable length argument types</h3>
+<div class="paragraph">
+<p>Recall from the definition of signature patterns given in the chapter on
+annotations (<a href="annotations.html#signaturePatterns">Signature Patterns</a>), that <code>MethodPattern</code> and
+<code>ConstructorPattern</code> are extended to allow a <code>varargs</code> pattern in the
+last argument position of a method or constructor signature.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">FormalsPattern :=
+  '..' (',' FormalsPatternAfterDotDot)? |
+  OptionalParensTypePattern (',' FormalsPattern)* |
+  TypePattern '...'
+
+FormalsPatternAfterDotDot :=
+  OptionalParensTypePattern (',' FormalsPatternAfterDotDot)* |
+  TypePattern '...'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Method and constructor patterns are used in the <code>call</code>, <code>execution</code>,
+<code>initialization</code>, <code>preinitialization</code>, and <code>withincode</code> pointcut
+designators. Some examples of usage follow:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>call(* org.xyz.<strong>.</strong>(int, String&#8230;&#8203;))</code></dt>
+<dd>
+<p>Matches a call join point for a call to a method defined in the
+<code>org.xyz</code> package, taking an <code>int</code> and a <code>String</code> <em>vararg</em>.</p>
+</dd>
+<dt class="hdlist1"><code>execution(* org.xyz.<strong>.</strong>(Integer&#8230;&#8203;))</code></dt>
+<dd>
+<p>Matches an execution join point for the execution of a method defined
+in the <code>org.xyz</code> package, taking an <code>Integer</code> <em>vararg</em>.</p>
+</dd>
+<dt class="hdlist1"><code>initialization(org.xyz.*.newFoo || Goo)&#8230;&#8203;</code></dt>
+<dd>
+<p>Matches the initialization join point for the construction of an
+object in the <code>org.xyz</code> package via a constructor taking either a
+variable number of <code>Foo</code> parameters or a variable number of <code>Goo</code>
+parameters. (This example illustrating the use of a type pattern with
+<code>&#8230;&#8203;</code>).</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>A variable argument parameter and an array parameter are treated as
+distinct signature elements, so given the method definitions:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">void</span> foo(<span class="predefined-type">String</span>...);
+<span class="type">void</span> bar(<span class="predefined-type">String</span><span class="type">[]</span>);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The pointcut <code>execution(* <strong>.</strong>(String&#8230;&#8203;))</code> matches the execution join
+point for <code>foo</code>, but not <code>bar</code>. The pointcut
+<code>execution(* <strong>.</strong>(String[]))</code> matches the execution join point for <code>bar</code>
+but not <code>foo</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exposing_variable_length_arguments_as_context_in_pointcuts_and_advice">Exposing variable-length arguments as context in pointcuts and advice</h3>
+<div class="paragraph">
+<p>When a varargs parameter is used within the body of a method, it has an
+array type, as discussed in the introduction to this section. We follow
+the same convention when binding a varargs parameter via the <code>args</code>
+pointcut designator. Given a method</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> foo(<span class="type">int</span> i, <span class="predefined-type">String</span>... strings) {}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The call or execution join points for <code>foo</code> will be matched by the
+pointcut <code>args(int,String[])</code>. It is not permitted to use the varargs
+syntax within an args pointcut designator - so you <em>cannot</em> write
+<code>args(int,String&#8230;&#8203;)</code>.</p>
+</div>
+<div class="paragraph">
+<p>Binding of a varargs parameter in an advice statement is
+straightforward:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">before(<span class="type">int</span> i, <span class="predefined-type">String</span><span class="type">[]</span> ss) : call(* foo(<span class="type">int</span>,<span class="predefined-type">String</span>...)) &amp;&amp; args(i,ss) {
+  <span class="comment">// varargs String... argument is accessible in advice body through ss</span>
+  <span class="comment">// ...</span>
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Since you cannot use the varargs syntax in the <code>args</code> pointcut
+designator, you also cannot use the varargs syntax to declare advice
+parameters.</p>
+</div>
+<div class="paragraph">
+<p>Note: the proposal in this section does not allow you to distinguish
+between a join point with a signature <code>(int, String&#8230;&#8203;)</code> and a join point
+with a signature <code>(int, String[])</code> based <em>solely</em> on the use of the <code>args</code>
+pointcut designator. If this distinction is required, <code>args</code> can always
+be coupled with <code>call</code> or <code>execution</code>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

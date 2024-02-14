@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>AspectJTM</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>AspectJ<sup>TM</sup></h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_1_contents_of_this_package">1 Contents of this Package</a></li>
+<li><a href="#_2_install_procedure">2 Install Procedure</a></li>
+<li><a href="#_3_running_the_tools">3. Running the Tools</a></li>
+<li><a href="#configInstructions">4. Configuration Instructions</a>
+<ul class="sectlevel2">
+<li><a href="#_4_1_adding_aspectj_install_dirlibaspectjrt_jar_to_your_classpath">4.1 Adding <code>&lt;aspectj install dir&gt;/lib/aspectjrt.jar</code> to your classpath</a></li>
+<li><a href="#_4_2_setting_the_environment_variables_on_windows">4.2 <span id="6" class="1">Setting the Environment Variables on Windows</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>Version @build.version.long@ released on @build.date@.</em></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_1_contents_of_this_package">1 Contents of this Package</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>the <a href="bin"><code>&lt;aspectj install dir&gt;/bin</code></a> directory has scripts for</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>ajc</code>: the compiler for the AspectJ language</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>the directory <a href="lib"><code>&lt;aspectj install dir&gt;/lib</code></a> has the AspectJ
+binaries,</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>aspectjtools.jar</code>: libraries for <code>ajc</code> and the Ant tasks</p>
+</li>
+<li>
+<p><code>aspectjrt.jar</code>: runtime library for AspectJ programs</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>the directory <a href="doc"><code>&lt;aspectj install dir&gt;/doc</code></a> has examples,
+programming and development environment guides, instructions for the Ant
+tasks, a README for 1.1 changes, and a quick reference, all linked from
+the <a href="doc/index.html">index</a> page.</p>
+</li>
+<li>
+<p>this README-AspectJ.adoc, and</p>
+</li>
+<li>
+<p>the LICENSE-AspectJ.adoc applying to this distribution.</p>
+</li>
+</ul>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2_install_procedure">2 Install Procedure</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The AspectJ tool <code>ajc</code> is a Java program that can be
+run indirectly from the scripts or directly from <code>aspectjtools.jar</code>. The
+<code>aspectjrt.jar</code> needs to be on the classpath when compiling or running
+programs compiled by <code>ajc</code>. This procedure shows ways to do that.</p>
+</div>
+<div class="paragraph">
+<p>After finishing automatic installation, we recommend that the following
+steps to complete your installation:</p>
+</div>
+<div class="paragraph">
+<p><strong>2.1 Add <code>&lt;aspectj install dir&gt;/lib/aspectjrt.jar</code> to your class path</strong></p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>This small .jar file contains classes required to compile programs with
+the ajc compiler, and to run programs compiled with the ajc compiler.
+You must have these classes somewhere on your class path when running
+programs compiled with ajc. For detailed instructions please see the
+<a href="#configInstructions">Configuration Instructions</a> at the bottom of
+this document.</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p><strong>2.2 Put the AspectJ <code>bin</code> directory on your PATH</strong></p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Modify your PATH to include <code>&lt;aspectj install   dir&gt;/bin</code>. This will
+make it easier to run ajc. For detailed instructions please see the
+<a href="#configInstructions">Configuration Instructions</a> at the bottom of
+this document.</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p><strong>2.3 Review the documentation and examples</strong></p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Development and programming guides are available in
+<a href="doc/index.html">docs</a>, and example programs and an Ant script are
+available in <a href="doc/examples/">examples</a>.</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>If you did not use the automatic installation process, you may wish to
+create short launch scripts to start ajc easily (section 3).</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_3_running_the_tools">3. Running the Tools</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you did not use the automatic installation process or the default
+launch scripts do not work on your system, you may wish to create short
+launch scripts to start ajc easily.</p>
+</div>
+<div class="paragraph">
+<p>You can also run the <code>aspectjtools.jar</code> directly using java&#8217;s -jar
+option:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p><code>C:\jdk1.3\bin\java.exe -jar D:\aspectj\lib\aspectjtools.jar %*</code></p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>This will run <code>ajc</code>, the AspectJ compiler.</p>
+</div>
+<div class="paragraph">
+<p>You can also create scripts like those created by the installer. These
+scripts use full paths that are system dependent so you will likely have
+to change these.</p>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s a sample launch script for WinNT and Win2K (note that this is
+single line in the .bat file):</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p><code>C:\jdk1.3\bin\java.exe -classpath D:\aspectj\lib\aspectjtools.jar -Xmx64M org.aspectj.tools.ajc.Main %*</code></p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s a sample launch script for a Unix shell (on Linux using Sun&#8217;s
+JDK1.3):</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p><code>/usr/java/jdk1.3/jre/bin/java -classpath /home/aspectj/lib/aspectjtools.jar -Xmx64M org.aspectj.tools.ajc.Main "$@"</code></p>
+</div>
+</blockquote>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configInstructions">4. Configuration Instructions</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_4_1_adding_aspectj_install_dirlibaspectjrt_jar_to_your_classpath">4.1 Adding <code>&lt;aspectj install dir&gt;/lib/aspectjrt.jar</code> to your classpath</h3>
+<div class="paragraph">
+<p>There are several ways to add this jar file to your classpath:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>copy <code>aspectjrt.jar</code> to the <code>jdk/jre/lib/ext</code> directory</p>
+</li>
+<li>
+<p>add <code>aspectjrt.jar</code> to your CLASSPATH environment variable (see the
+next section for details)</p>
+</li>
+<li>
+<p>always use the &#8220;-classpath aspectjrt.jar&#8221; option when running
+programs compiled with ajc</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_4_2_setting_the_environment_variables_on_windows">4.2 <span id="6" class="1">Setting the Environment Variables on Windows</span></h3>
+<div class="paragraph">
+<p>The following instructions use the PATH variable as an example, but this
+process is identical for the CLASSPATH variable.</p>
+</div>
+<div class="paragraph">
+<p>You can do the variables permanently for all the shells that you will
+run or temporarily only for the current shell. To change the PATH only
+in the current shell, and assuming you&#8217;ve installed AspectJ in
+<code>C:\apps\aspectj</code>, type:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p><code>&gt; set PATH=%PATH%;C:\apps\aspectj\bin</code></p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p><strong>Changing Environment Variables Permanently on WinNT and Win2000</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>open the Environment Variables dialog</p>
+<div class="ulist">
+<ul>
+<li>
+<p>WinNT: in "Control Panels" double-click "System" and select the
+"Environment" tab</p>
+</li>
+<li>
+<p>Win2K: in "Control Panels" double-click "System", select the
+"Advanced" tab and click the "Environment Variables&#8230;&#8203;" button</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>select the environment variable for editing, or add it using the
+"New&#8230;&#8203;" button if it does not exist</p>
+</li>
+<li>
+<p>add the new entry separated from the others by a semi-colon (;) and
+close the dialog</p>
+</li>
+<li>
+<p>note that the change will not affect shells that were already running</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Changing Environment Variables Permanently on Win9x</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>open the AUTOEXEC.BAT with an editor such as NotePad</p>
+</li>
+<li>
+<p>edit the PATH statement to include the new entry and save the file,
+e.g.<br></p>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p><code>PATH C:\WINDOWS;C:\WINDOWS\COMMAND;C:\;C:\DOS;C:\apps\aspectj\bin</code></p>
+</div>
+</blockquote>
+</div>
+</li>
+<li>
+<p>note that the change will not affect shells that were already running</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

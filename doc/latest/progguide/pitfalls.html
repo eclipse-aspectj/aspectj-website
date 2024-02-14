@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>Pitfalls</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>Pitfalls</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#pitfalls-intro">Introduction</a></li>
+<li><a href="#pitfalls-infiniteLoops">Infinite loops</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="pitfalls-intro">Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This chapter consists of a few AspectJ programs that may lead to
+surprising behavior and how to understand them.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="pitfalls-infiniteLoops">Infinite loops</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Here is a Java program with peculiar behavior</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Main</span> {
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
+    foo();
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">done with call to foo</span><span class="delimiter">&quot;</span></span>);
+  }
+
+  <span class="directive">static</span> <span class="type">void</span> foo() {
+    <span class="keyword">try</span> {
+      foo();
+    } <span class="keyword">finally</span> {
+      foo();
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This program will never reach the <code>println</code> call, but when it aborts may
+have no stack trace.</p>
+</div>
+<div class="paragraph">
+<p>This silence is caused by multiple <code>StackOverflowException</code>s. First the
+infinite loop in the body of the method generates one, which the finally
+clause tries to handle. But this finally clause also generates an
+infinite loop which the current JVMs can&#8217;t handle gracefully leading to
+the completely silent abort.</p>
+</div>
+<div class="paragraph">
+<p>The following short aspect will also generate this behavior:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">aspect A {
+  before(): call(* *(..)) { <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">before</span><span class="delimiter">&quot;</span></span>); }
+  after():  call(* *(..)) { <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">after</span><span class="delimiter">&quot;</span></span>); }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Why? Because the call to println is also a call matched by the pointcut
+<code>call (* *(..))</code>. We get no output because we used simple <code>after()</code>
+advice. If the aspect were changed to</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">aspect A {
+  before(): call(* *(..)) { <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">before</span><span class="delimiter">&quot;</span></span>); }
+  after() returning:  call(* *(..)) { <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">after</span><span class="delimiter">&quot;</span></span>); }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>then at least a <code>StackOverflowException</code> with a stack trace would be seen.
+In both cases, though, the overall problem is advice applying within its
+own body.</p>
+</div>
+<div class="paragraph">
+<p>There&#8217;s a simple idiom to use if you ever have a worry that your advice
+might apply in this way. Just restrict the advice from occurring in join
+points caused within the aspect. So:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">aspect A {
+  before(): call(* *(..)) &amp;&amp; !within(A) { <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">before</span><span class="delimiter">&quot;</span></span>); }
+  after() returning:  call(* *(..)) &amp;&amp; !within(A) { <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">after</span><span class="delimiter">&quot;</span></span>); }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Other solutions might be to more closely restrict the pointcut in other
+ways, for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">aspect A {
+  before(): call(* MyObject.*(..))  { <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">before</span><span class="delimiter">&quot;</span></span>); }
+  after() returning:  call(* MyObject.*(..))  { <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">after</span><span class="delimiter">&quot;</span></span>); }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The moral of the story is that unrestricted generic pointcuts can pick
+out more join points than intended.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

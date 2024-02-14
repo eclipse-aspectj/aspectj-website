@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>AspectJ 1.6.6</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>AspectJ 1.6.6</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#bugsfixed">Bugs fixed</a></li>
+<li><a href="#_changes">Changes</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>© Copyright 2009 Contributors. All rights reserved.</em></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="bugsfixed">Bugs fixed</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The complete list of issues resolved for AspectJ 1.6.6 can be found with
+this bugzilla query:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=&amp;product=AspectJ&amp;target_milestone=1.6.6&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">Bugs
+resolved</a></p>
+</li>
+</ul>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_changes">Changes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Java5</strong></p>
+</div>
+<div class="paragraph">
+<p>The features of Java5 (generics, autoboxing, covariance, etc) are being
+exploited in the AspectJ codebase. This does not in any way change the
+generated code or supported source code, or the dependencies that code
+has, but it <strong>does</strong> mean that AspectJ requires Java5 in order to run. The
+ability to use typed collections has already flushed out a few issues
+within the codebase, improving the quality of AspectJ.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>+</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Closing streams</strong></p>
+</div>
+<div class="paragraph">
+<p>Some routes through AspectJ were leaving inputstreams open and this has
+now been fixed. For example if supplying a user written configuration
+file for Lint options. Thanks to Michael Pradel for supplying patches to
+fix these issues.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>+</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Concurrency (281654)</strong></p>
+</div>
+<div class="paragraph">
+<p>Fix to address a problem seen when using the weaver in a highly
+concurrent environment. Thanks to Kristian Rosenvold for the patch.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>+</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Incremental compilation</strong></p>
+</div>
+<div class="paragraph">
+<p>A few fixes to problems seen only on incremental builds, problem areas
+included:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>problems when fully qualifying the target type in an intertype
+declaration (269652)</p>
+</li>
+<li>
+<p>problems when using annotation style pointcuts and reference pointcuts
+together (286341)</p>
+<div class="literalblock">
+<div class="content">
+<pre>+</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>JavadocRunner in NetBeans</strong></p>
+</div>
+<div class="paragraph">
+<p>Fixed by a patch from Joseph A. Levin - thanks!</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>+</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Various fixes/enhancements to the structure model to fix issues with
+feedback on weaving in AJDT</strong></p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:11 +0700
+</div>
+</div>
+</body>
+</html>

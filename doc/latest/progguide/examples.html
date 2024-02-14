@@ -1,0 +1,2218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>Examples</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body id="examples" class="article toc2 toc-left">
+<div id="header">
+<h1>Examples</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#examples-intro">Introduction</a></li>
+<li><a href="#examples-howto">Obtaining, Compiling and Running the Examples</a></li>
+<li><a href="#examples-basic">Basic Techniques</a>
+<ul class="sectlevel2">
+<li><a href="#examples-joinPoints">Join Points and <code>thisJoinPoint</code></a></li>
+<li><a href="#examples-roles">Roles and Views</a></li>
+</ul>
+</li>
+<li><a href="#examples-development">Development Aspects</a>
+<ul class="sectlevel2">
+<li><a href="#_tracing_using_aspects">Tracing using aspects</a></li>
+</ul>
+</li>
+<li><a href="#examples-production">Production Aspects</a>
+<ul class="sectlevel2">
+<li><a href="#_a_bean_aspect">A Bean Aspect</a></li>
+<li><a href="#the-subject-observer-protocol">The Subject/Observer Protocol</a></li>
+<li><a href="#_a_simple_telecom_simulation">A Simple Telecom Simulation</a></li>
+</ul>
+</li>
+<li><a href="#examples-reusable">Reusable Aspects</a>
+<ul class="sectlevel2">
+<li><a href="#_tracing_using_aspects_revisited">Tracing using Aspects, Revisited</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="examples-intro">Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This chapter consists entirely of examples of AspectJ use.</p>
+</div>
+<div class="paragraph">
+<p>The examples can be grouped into four categories:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">technique</dt>
+<dd>
+<p>Examples which illustrate how to use one or more features of the language</p>
+</dd>
+<dt class="hdlist1">development</dt>
+<dd>
+<p>Examples of using AspectJ during the development phase of a project</p>
+</dd>
+<dt class="hdlist1">production</dt>
+<dd>
+<p>Examples of using AspectJ to provide functionality in an application</p>
+</dd>
+<dt class="hdlist1">reusable</dt>
+<dd>
+<p>Examples of reuse of aspects and pointcuts</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="examples-howto">Obtaining, Compiling and Running the Examples</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The examples source code is part of the AspectJ distribution which may
+be downloaded from the <a href="https://eclipse.org/aspectj">AspectJ project page</a>.</p>
+</div>
+<div class="paragraph">
+<p>Compiling most examples is straightforward. Go the <code>InstallDir/examples</code>
+directory, and look for a <code>.lst</code> file in one of the example
+subdirectories. Use the <code>-arglist</code> option to <code>ajc</code> to compile the
+example. For instance, to compile the telecom example with billing, type</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">ajc -argfile telecom/billing.lst</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To run the examples, your classpath must include the AspectJ run-time
+Java archive (<code>aspectjrt.jar</code>). You may either set the <code>CLASSPATH</code>
+environment variable or use the <code>-classpath</code> command line option to the
+Java interpreter:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">(In Unix use a : in the CLASSPATH)
+java -classpath &quot;.:InstallDir/lib/aspectjrt.jar&quot; telecom.billingSimulation</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">(In Windows use a ; in the CLASSPATH)
+java -classpath &quot;.;InstallDir/lib/aspectjrt.jar&quot; telecom.billingSimulation</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="examples-basic">Basic Techniques</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section presents two basic techniques of using AspectJ, one each
+from the two fundamental ways of capturing crosscutting concerns: with
+dynamic join points and advice, and with static introduction. Advice
+changes an application&#8217;s behavior. Introduction changes both an
+application&#8217;s behavior and its structure.</p>
+</div>
+<div class="paragraph">
+<p>The first example, <a href="#examples-joinPoints">Join Points and <code>thisJoinPoint</code></a>, is about
+gathering and using information about the join point that has triggered
+some advice. The second example, <a href="#examples-roles">Roles and Views</a>,
+concerns a crosscutting view of an existing class hierarchy.</p>
+</div>
+<div class="sect2">
+<h3 id="examples-joinPoints">Join Points and <code>thisJoinPoint</code></h3>
+<div class="paragraph">
+<p>(The code for this example is in <code>InstallDir/examples/tjp</code>.)</p>
+</div>
+<div class="paragraph">
+<p>A join point is some point in the execution of a program together with a
+view into the execution context when that point occurs. Join points are
+picked out by pointcuts. When a program reaches a join point, advice on
+that join point may run in addition to (or instead of) the join point
+itself.</p>
+</div>
+<div class="paragraph">
+<p>When using a pointcut that picks out join points of a single kind by
+name, typicaly the the advice will know exactly what kind of join point
+it is associated with. The pointcut may even publish context about the
+join point. Here, for example, since the only join points picked out by
+the pointcut are calls of a certain method, we can get the target value
+and one of the argument values of the method calls directly.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">before(<span class="predefined-type">Point</span> p, <span class="type">int</span> x):
+  target(p) &amp;&amp;
+  args(x) &amp;&amp;
+  call(<span class="type">void</span> setX(<span class="type">int</span>))
+{
+  <span class="keyword">if</span> (!p.assertX(x))
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Illegal value for x</span><span class="delimiter">&quot;</span></span>); <span class="keyword">return</span>;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>But sometimes the shape of the join point is not so clear. For instance,
+suppose a complex application is being debugged, and we want to trace
+when any method of some class is executed. The pointcut</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut execsInProblemClass():
+  within(ProblemClass) &amp;&amp;
+  execution(* *(..));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>will pick out each execution join point of every method defined within
+<code>ProblemClass</code>. Since advice executes at each join point picked out by
+the pointcut, we can reasonably ask which join point was reached.</p>
+</div>
+<div class="paragraph">
+<p>Information about the join point that was matched is available to advice
+through the special variable <code>thisJoinPoint</code>, of type
+<a href="../runtime-api/org/aspectj/lang/JoinPoint.html"><code>org.aspectj.lang.JoinPoint</code></a>.
+Through this object we can access information such as</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the kind of join point that was matched</p>
+</li>
+<li>
+<p>the source location of the code associated with the join point</p>
+</li>
+<li>
+<p>normal, short and long string representations of the current join
+point</p>
+</li>
+<li>
+<p>the actual argument values of the join point</p>
+</li>
+<li>
+<p>the signature of the member associated with the join point</p>
+</li>
+<li>
+<p>the currently executing object</p>
+</li>
+<li>
+<p>the target object</p>
+</li>
+<li>
+<p>an object encapsulating the static information about the join point.
+This is also available through the special variable <code>thisJoinPointStaticPart</code>.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_the_demo_class">The <code>Demo</code> class</h4>
+<div class="paragraph">
+<p>The class <code>tjp.Demo</code> in <code>tjp/Demo.java</code> defines two methods <code>foo</code> and
+<code>bar</code> with different parameter lists and return types. Both are called,
+with suitable arguments, by <code>Demo</code>'s <code>go</code> method which was invoked from
+within its <code>main</code> method.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Demo</span> {
+  <span class="directive">static</span> Demo d;
+
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
+    <span class="keyword">new</span> Demo().go();
+  }
+
+  <span class="type">void</span> go() {
+    d = <span class="keyword">new</span> Demo();
+    d.foo(<span class="integer">1</span>,d);
+    <span class="predefined-type">System</span>.out.println(d.bar(<span class="keyword">new</span> <span class="predefined-type">Integer</span>(<span class="integer">3</span>)));
+  }
+
+  <span class="type">void</span> foo(<span class="type">int</span> i, <span class="predefined-type">Object</span> o) {
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Demo.foo(</span><span class="delimiter">&quot;</span></span> + i + <span class="string"><span class="delimiter">&quot;</span><span class="content">, </span><span class="delimiter">&quot;</span></span> + o + <span class="string"><span class="delimiter">&quot;</span><span class="content">)</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>);
+  }
+
+  <span class="predefined-type">String</span> bar (<span class="predefined-type">Integer</span> j)  {
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Demo.bar(</span><span class="delimiter">&quot;</span></span> + j + <span class="string"><span class="delimiter">&quot;</span><span class="content">)</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>);
+    <span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">Demo.bar(</span><span class="delimiter">&quot;</span></span> + j  + <span class="string"><span class="delimiter">&quot;</span><span class="content">)</span><span class="delimiter">&quot;</span></span>;
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_getinfo_aspect">The <code>GetInfo</code> aspect</h4>
+<div class="paragraph">
+<p>This aspect uses around advice to intercept the execution of methods
+<code>foo</code> and <code>bar</code> in <code>Demo</code>, and prints out information garnered from
+<code>thisJoinPoint</code> to the console.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">aspect GetInfo {
+
+  <span class="directive">static</span> <span class="directive">final</span> <span class="type">void</span> println(<span class="predefined-type">String</span> s){ <span class="predefined-type">System</span>.out.println(s); }
+
+  pointcut goCut(): cflow(<span class="local-variable">this</span>(Demo) &amp;&amp; execution(<span class="type">void</span> go()));
+
+  pointcut demoExecs(): within(Demo) &amp;&amp; execution(* *(..));
+
+  <span class="predefined-type">Object</span> around(): demoExecs() &amp;&amp; !execution(* go()) &amp;&amp; goCut() {
+    println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Intercepted message: </span><span class="delimiter">&quot;</span></span> +
+      thisJoinPointStaticPart.getSignature().getName());
+    println(<span class="string"><span class="delimiter">&quot;</span><span class="content">in class: </span><span class="delimiter">&quot;</span></span> +
+      thisJoinPointStaticPart.getSignature().getDeclaringType().getName());
+    printParameters(thisJoinPoint);
+    println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Running original method: </span><span class="char">\n</span><span class="delimiter">&quot;</span></span> );
+    <span class="predefined-type">Object</span> result = proceed();
+    println(<span class="string"><span class="delimiter">&quot;</span><span class="content">  result: </span><span class="delimiter">&quot;</span></span> + result );
+    <span class="keyword">return</span> result;
+  }
+
+  <span class="directive">static</span> <span class="directive">private</span> <span class="type">void</span> printParameters(JoinPoint jp) {
+    println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Arguments: </span><span class="delimiter">&quot;</span></span> );
+    <span class="predefined-type">Object</span><span class="type">[]</span> args = jp.getArgs();
+    <span class="predefined-type">String</span><span class="type">[]</span> names = ((CodeSignature)jp.getSignature()).getParameterNames();
+    <span class="predefined-type">Class</span><span class="type">[]</span> types = ((CodeSignature)jp.getSignature()).getParameterTypes();
+    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="integer">0</span>; i &lt; args.length; i++) {
+      println(
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">  </span><span class="delimiter">&quot;</span></span>  + i + <span class="string"><span class="delimiter">&quot;</span><span class="content">. </span><span class="delimiter">&quot;</span></span> + names[i] +
+        <span class="string"><span class="delimiter">&quot;</span><span class="content"> : </span><span class="delimiter">&quot;</span></span> +            types[i].getName() +
+        <span class="string"><span class="delimiter">&quot;</span><span class="content"> = </span><span class="delimiter">&quot;</span></span> +            args[i]);
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_defining_the_scope_of_a_pointcut">Defining the scope of a pointcut</h5>
+<div class="paragraph">
+<p>The pointcut <code>goCut</code> is defined as</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">cflow(<span class="local-variable">this</span>(Demo)) &amp;&amp; execution(<span class="type">void</span> go())</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>so that only executions made in the control flow of <code>Demo.go</code> are
+intercepted. The control flow from the method <code>go</code> includes the
+execution of <code>go</code> itself, so the definition of the around advice
+includes <code>!execution(* go())</code> to exclude it from the set of executions
+advised.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_printing_the_class_and_method_name">Printing the class and method name</h5>
+<div class="paragraph">
+<p>The name of the method and that method&#8217;s defining class are available as
+parts of the
+<a href="../runtime-api/org/aspectj/lang/Signature.html"><code>org.aspectj.lang.Signature</code></a>
+object returned by calling <code>getSignature()</code> on either <code>thisJoinPoint</code> or
+<code>thisJoinPointStaticPart</code>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_printing_the_parameters">Printing the parameters</h5>
+<div class="paragraph">
+<p>The static portions of the parameter details, the name and types of the
+parameters, can be accessed through the
+<a href="../runtime-api/org/aspectj/lang/reflect/CodeSignature.html"><code>org.aspectj.lang.reflect.CodeSignature</code></a>
+associated with the join point. All execution join points have code
+signatures, so the cast to <code>CodeSignature</code> cannot fail.</p>
+</div>
+<div class="paragraph">
+<p>The dynamic portions of the parameter details, the actual values of the
+parameters, are accessed directly from the execution join point object.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="examples-roles">Roles and Views</h3>
+<div class="paragraph">
+<p>(The code for this example is in <code>InstallDir/examples/introduction</code>.)</p>
+</div>
+<div class="paragraph">
+<p>Like advice, inter-type declarations are members of an aspect. They
+declare members that act as if they were defined on another class.
+Unlike advice, inter-type declarations affect not only the behavior of
+the application, but also the structural relationship between an
+application&#8217;s classes.</p>
+</div>
+<div class="paragraph">
+<p>This is crucial: Publically affecting the class structure of an
+application makes these modifications available to other components of
+the application.</p>
+</div>
+<div class="paragraph">
+<p>Aspects can declare inter-type</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>fields</p>
+</li>
+<li>
+<p>methods</p>
+</li>
+<li>
+<p>constructors</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>and can also declare that target types</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>implement new interfaces</p>
+</li>
+<li>
+<p>extend new classes</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This example provides three illustrations of the use of inter-type
+declarations to encapsulate roles or views of a class. The class our
+aspect will be dealing with, <code>Point</code>, is a simple class with rectangular
+and polar coordinates. Our inter-type declarations will make the class
+<code>Point</code>, in turn, cloneable, hashable, and comparable. These facilities
+are provided by AspectJ without having to modify the code for the class
+<code>Point</code>.</p>
+</div>
+<div class="sect3">
+<h4 id="_the_point_class">The <code>Point</code> class</h4>
+<div class="paragraph">
+<p>The <code>Point</code> class defines geometric points whose interface includes
+polar and rectangular coordinates, plus some simple operations to
+relocate points. <code>Point</code>'s implementation has attributes for both its
+polar and rectangular coordinates, plus flags to indicate which
+currently reflect the position of the point. Some operations cause the
+polar coordinates to be updated from the rectangular, and some have the
+opposite effect. This implementation, which is in intended to give the
+minimum number of conversions between coordinate systems, has the
+property that not all the attributes stored in a <code>Point</code> object are
+necessary to give a canonical representation such as might be used for
+storing, comparing, cloning or making hash codes from points. Thus the
+aspects, though simple, are not totally trivial.</p>
+</div>
+<div class="paragraph">
+<p>The diagram below gives an overview of the aspects and their interaction
+with the class <code>Point</code>.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="images/aspects.png" alt="image"></span></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_cloneablepoint_aspect">The <code>CloneablePoint</code> aspect</h4>
+<div class="paragraph">
+<p>This first aspect is responsible for <code>Point</code>'s implementation of the
+<code>Cloneable</code> interface. It declares that <code>Point implements Cloneable</code>
+with a <code>declare parents</code> form, and also publically declares a
+specialized <code>Point</code>'s <code>clone()</code> method. In Java, all objects inherit the
+method <code>clone</code> from the class <code>Object</code>, but an object is not cloneable
+unless its class also implements the interface <code>Cloneable</code>. In addition,
+classes frequently have requirements over and above the simple
+bit-for-bit copying that <code>Object.clone</code> does. In our case, we want to
+update a <code>Point</code>'s coordinate systems before we actually clone the
+<code>Point</code>. So our aspect makes sure that <code>Point</code> overrides <code>Object.clone</code>
+with a new method that does what we want.</p>
+</div>
+<div class="paragraph">
+<p>We also define a test <code>main</code> method in the aspect for convenience.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> aspect CloneablePoint {
+
+  declare parents: <span class="predefined-type">Point</span> <span class="directive">implements</span> <span class="predefined-type">Cloneable</span>;
+
+  <span class="directive">public</span> <span class="predefined-type">Object</span> <span class="predefined-type">Point</span>.clone() <span class="directive">throws</span> <span class="exception">CloneNotSupportedException</span> {
+    <span class="comment">// we choose to bring all fields up to date before cloning.</span>
+    makeRectangular();
+    makePolar();
+    <span class="keyword">return</span> <span class="local-variable">super</span>.clone();
+  }
+
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
+    <span class="predefined-type">Point</span> p1 = <span class="keyword">new</span> <span class="predefined-type">Point</span>();
+    <span class="predefined-type">Point</span> p2 = <span class="predefined-constant">null</span>;
+
+    p1.setPolar(<span class="predefined-type">Math</span>.PI, <span class="float">1.0</span>);
+    <span class="keyword">try</span> {
+      p2 = (<span class="predefined-type">Point</span>)p1.clone();
+    } <span class="keyword">catch</span> (<span class="exception">CloneNotSupportedException</span> e) {}
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">p1 =</span><span class="delimiter">&quot;</span></span> + p1);
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">p2 =</span><span class="delimiter">&quot;</span></span> + p2);
+
+    p1.rotate(<span class="predefined-type">Math</span>.PI / -<span class="integer">2</span>);
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">p1 =</span><span class="delimiter">&quot;</span></span> + p1);
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">p2 =</span><span class="delimiter">&quot;</span></span> + p2);
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_comparablepoint_aspect">The <code>ComparablePoint</code> aspect</h4>
+<div class="paragraph">
+<p><code>ComparablePoint</code> is responsible for <code>Point</code>'s implementation of the
+<code>Comparable</code> interface.</p>
+</div>
+<div class="paragraph">
+<p>The interface <code>Comparable</code> defines the single method <code>compareTo</code> which
+can be use to define a natural ordering relation among the objects of a
+class that implement it.</p>
+</div>
+<div class="paragraph">
+<p><code>ComparablePoint</code> uses <code>declare parents</code> to declare that <code>Point implements Comparable</code>,
+and also publically declares the appropriate <code>compareTo(Object)</code> method:
+A <code>Point</code> <code>p1</code> is said to be less than another <code>Point p2</code> if <code>p1</code> is closer to the origin.</p>
+</div>
+<div class="paragraph">
+<p>We also define a test <code>main</code> method in the aspect for convenience.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> aspect ComparablePoint {
+
+  declare parents: <span class="predefined-type">Point</span> <span class="directive">implements</span> <span class="predefined-type">Comparable</span>;
+
+  <span class="directive">public</span> <span class="type">int</span> <span class="predefined-type">Point</span>.compareTo(<span class="predefined-type">Object</span> o) {
+    <span class="keyword">return</span> (<span class="type">int</span>) (<span class="local-variable">this</span>.getRho() - ((<span class="predefined-type">Point</span>)o).getRho());
+  }
+
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
+    <span class="predefined-type">Point</span> p1 = <span class="keyword">new</span> <span class="predefined-type">Point</span>();
+    <span class="predefined-type">Point</span> p2 = <span class="keyword">new</span> <span class="predefined-type">Point</span>();
+
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">p1 =?= p2 :</span><span class="delimiter">&quot;</span></span> + p1.compareTo(p2));
+
+    p1.setRectangular(<span class="integer">2</span>,<span class="integer">5</span>);
+    p2.setRectangular(<span class="integer">2</span>,<span class="integer">5</span>);
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">p1 =?= p2 :</span><span class="delimiter">&quot;</span></span> + p1.compareTo(p2));
+
+    p2.setRectangular(<span class="integer">3</span>,<span class="integer">6</span>);
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">p1 =?= p2 :</span><span class="delimiter">&quot;</span></span> + p1.compareTo(p2));
+
+    p1.setPolar(<span class="predefined-type">Math</span>.PI, <span class="integer">4</span>);
+    p2.setPolar(<span class="predefined-type">Math</span>.PI, <span class="integer">4</span>);
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">p1 =?= p2 :</span><span class="delimiter">&quot;</span></span> + p1.compareTo(p2));
+
+    p1.rotate(<span class="predefined-type">Math</span>.PI / <span class="float">4.0</span>);
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">p1 =?= p2 :</span><span class="delimiter">&quot;</span></span> + p1.compareTo(p2));
+
+    p1.offset(<span class="integer">1</span>,<span class="integer">1</span>);
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">p1 =?= p2 :</span><span class="delimiter">&quot;</span></span> + p1.compareTo(p2));
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_hashablepoint_aspect">The <code>HashablePoint</code> aspect</h4>
+<div class="paragraph">
+<p>Our third aspect is responsible for <code>Point</code>'s overriding of <code>Object</code>'s
+<code>equals</code> and <code>hashCode</code> methods in order to make <code>Point</code>s hashable.</p>
+</div>
+<div class="paragraph">
+<p>The method <code>Object.hashCode</code> returns an integer, suitable for use as a
+hash table key. It is not required that two objects which are not equal
+(according to the <code>equals</code> method) return different integer results from
+<code>hashCode</code> but it can improve performance when the integer is used as a
+key into a data structure. However, any two objects which are equal must
+return the same integer value from a call to <code>hashCode</code>. Since the
+default implementation of <code>Object.equals</code> returns <code>true</code> only when two
+objects are identical, we need to redefine both <code>equals</code> and <code>hashCode</code>
+to work correctly with objects of type <code>Point</code>. For example, we want two
+<code>Point</code> objects to test equal when they have the same <code>x</code> and <code>y</code>
+values, or the same <code>rho</code> and <code>theta</code> values, not just when they refer
+to the same object. We do this by overriding the methods <code>equals</code> and
+<code>hashCode</code> in the class <code>Point</code>.</p>
+</div>
+<div class="paragraph">
+<p>So <code>HashablePoint</code> declares <code>Point</code>'s <code>hashCode</code> and <code>equals</code> methods,
+using <code>Point</code>'s rectangular coordinates to generate a hash code and to
+test for equality. The <code>x</code> and <code>y</code> coordinates are obtained using the
+appropriate get methods, which ensure the rectangular coordinates are
+up-to-date before returning their values.</p>
+</div>
+<div class="paragraph">
+<p>And again, we supply a <code>main</code> method in the aspect for testing.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> aspect HashablePoint {
+
+  <span class="directive">public</span> <span class="type">int</span> <span class="predefined-type">Point</span>.hashCode() {
+    <span class="keyword">return</span> (<span class="type">int</span>) (getX() + getY() % <span class="predefined-type">Integer</span>.MAX_VALUE);
+  }
+
+  <span class="directive">public</span> <span class="type">boolean</span> <span class="predefined-type">Point</span>.equals(<span class="predefined-type">Object</span> o) {
+    <span class="keyword">if</span> (o == <span class="local-variable">this</span>) <span class="keyword">return</span> <span class="predefined-constant">true</span>;
+    <span class="keyword">if</span> (!(o <span class="keyword">instanceof</span> <span class="predefined-type">Point</span>)) <span class="keyword">return</span> <span class="predefined-constant">false</span>;
+    <span class="predefined-type">Point</span> other = (<span class="predefined-type">Point</span>)o;
+    <span class="keyword">return</span> (getX() == other.getX()) &amp;&amp; (getY() == other.getY());
+  }
+
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
+    <span class="predefined-type">Hashtable</span> h = <span class="keyword">new</span> <span class="predefined-type">Hashtable</span>();
+    <span class="predefined-type">Point</span> p1 = <span class="keyword">new</span> <span class="predefined-type">Point</span>();
+
+    p1.setRectangular(<span class="integer">10</span>, <span class="integer">10</span>);
+    <span class="predefined-type">Point</span> p2 = <span class="keyword">new</span> <span class="predefined-type">Point</span>();
+
+    p2.setRectangular(<span class="integer">10</span>, <span class="integer">10</span>);
+
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">p1 = </span><span class="delimiter">&quot;</span></span> + p1);
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">p2 = </span><span class="delimiter">&quot;</span></span> + p2);
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">p1.hashCode() = </span><span class="delimiter">&quot;</span></span> + p1.hashCode());
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">p2.hashCode() = </span><span class="delimiter">&quot;</span></span> + p2.hashCode());
+
+    h.put(p1, <span class="string"><span class="delimiter">&quot;</span><span class="content">P1</span><span class="delimiter">&quot;</span></span>);
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Got: </span><span class="delimiter">&quot;</span></span> + h.get(p2));
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="examples-development">Development Aspects</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_tracing_using_aspects">Tracing using aspects</h3>
+<div class="paragraph">
+<p>(The code for this example is in <code>InstallDir/examples/tracing</code>.)</p>
+</div>
+<div class="paragraph">
+<p>Writing a class that provides tracing functionality is easy: a couple of
+functions, a boolean flag for turning tracing on and off, a choice for
+an output stream, maybe some code for formatting the output&#8201;&#8212;&#8201;these are
+all elements that <code>Trace</code> classes have been known to have. <code>Trace</code>
+classes may be highly sophisticated, too, if the task of tracing the
+execution of a program demands it.</p>
+</div>
+<div class="paragraph">
+<p>But developing the support for tracing is just one part of the effort of
+inserting tracing into a program, and, most likely, not the biggest
+part. The other part of the effort is calling the tracing functions at
+appropriate times. In large systems, this interaction with the tracing
+support can be overwhelming. Plus, tracing is one of those things that
+slows the system down, so these calls should often be pulled out of the
+system before the product is shipped. For these reasons, it is not
+unusual for developers to write ad-hoc scripting programs that rewrite
+the source code by inserting/deleting trace calls before and after the
+method bodies.</p>
+</div>
+<div class="paragraph">
+<p>AspectJ can be used for some of these tracing concerns in a less ad-hoc
+way. Tracing can be seen as a concern that crosscuts the entire system
+and as such is amenable to encapsulation in an aspect. In addition, it
+is fairly independent of what the system is doing. Therefore tracing is
+one of those kind of system aspects that can potentially be plugged in
+and unplugged without any side-effects in the basic functionality of the
+system.</p>
+</div>
+<div class="sect3">
+<h4 id="_an_example_application">An Example Application</h4>
+<div class="paragraph">
+<p>Throughout this example we will use a simple application that contains
+only four classes. The application is about shapes. The <code>TwoDShape</code>
+class is the root of the shape hierarchy:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">class</span> <span class="class">TwoDShape</span> {
+  <span class="directive">protected</span> <span class="type">double</span> x, y;
+  <span class="directive">protected</span> TwoDShape(<span class="type">double</span> x, <span class="type">double</span> y) {
+    <span class="local-variable">this</span>.x = x; <span class="local-variable">this</span>.y = y;
+  }
+  <span class="directive">public</span> <span class="type">double</span> getX() { <span class="keyword">return</span> x; }
+  <span class="directive">public</span> <span class="type">double</span> getY() { <span class="keyword">return</span> y; }
+  <span class="directive">public</span> <span class="type">double</span> distance(TwoDShape s) {
+    <span class="type">double</span> dx = <span class="predefined-type">Math</span>.abs(s.getX() - x);
+    <span class="type">double</span> dy = <span class="predefined-type">Math</span>.abs(s.getY() - y);
+    <span class="keyword">return</span> <span class="predefined-type">Math</span>.sqrt(dx*dx + dy*dy);
+  }
+  <span class="directive">public</span> <span class="directive">abstract</span> <span class="type">double</span> perimeter();
+  <span class="directive">public</span> <span class="directive">abstract</span> <span class="type">double</span> area();
+  <span class="directive">public</span> <span class="predefined-type">String</span> toString() {
+    <span class="keyword">return</span> (<span class="string"><span class="delimiter">&quot;</span><span class="content"> @ (</span><span class="delimiter">&quot;</span></span> + <span class="predefined-type">String</span>.valueOf(x) + <span class="string"><span class="delimiter">&quot;</span><span class="content">, </span><span class="delimiter">&quot;</span></span> + <span class="predefined-type">String</span>.valueOf(y) + <span class="string"><span class="delimiter">&quot;</span><span class="content">) </span><span class="delimiter">&quot;</span></span>);
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>TwoDShape</code> has two subclasses, <code>Circle</code> and <code>Square</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Circle</span> <span class="directive">extends</span> TwoDShape {
+  <span class="directive">protected</span> <span class="type">double</span> r;
+  <span class="directive">public</span> Circle(<span class="type">double</span> x, <span class="type">double</span> y, <span class="type">double</span> r) {
+    <span class="local-variable">super</span>(x, y); <span class="local-variable">this</span>.r = r;
+  }
+  <span class="directive">public</span> Circle(<span class="type">double</span> x, <span class="type">double</span> y) { <span class="local-variable">this</span>(  x,   y, <span class="float">1.0</span>); }
+  <span class="directive">public</span> Circle(<span class="type">double</span> r)           { <span class="local-variable">this</span>(<span class="float">0.0</span>, <span class="float">0.0</span>,   r); }
+  <span class="directive">public</span> Circle()                   { <span class="local-variable">this</span>(<span class="float">0.0</span>, <span class="float">0.0</span>, <span class="float">1.0</span>); }
+  <span class="directive">public</span> <span class="type">double</span> perimeter() {
+    <span class="keyword">return</span> <span class="integer">2</span> * <span class="predefined-type">Math</span>.PI * r;
+  }
+  <span class="directive">public</span> <span class="type">double</span> area() {
+    <span class="keyword">return</span> <span class="predefined-type">Math</span>.PI * r*r;
+  }
+  <span class="directive">public</span> <span class="predefined-type">String</span> toString() {
+    <span class="keyword">return</span> (<span class="string"><span class="delimiter">&quot;</span><span class="content">Circle radius = </span><span class="delimiter">&quot;</span></span> + <span class="predefined-type">String</span>.valueOf(r) + <span class="local-variable">super</span>.toString());
+  }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Square</span> <span class="directive">extends</span> TwoDShape {
+  <span class="directive">protected</span> <span class="type">double</span> s;  <span class="comment">// side</span>
+  <span class="directive">public</span> Square(<span class="type">double</span> x, <span class="type">double</span> y, <span class="type">double</span> s) {
+    <span class="local-variable">super</span>(x, y); <span class="local-variable">this</span>.s = s;
+  }
+  <span class="directive">public</span> Square(<span class="type">double</span> x, <span class="type">double</span> y) { <span class="local-variable">this</span>(  x,   y, <span class="float">1.0</span>); }
+  <span class="directive">public</span> Square(<span class="type">double</span> s)           { <span class="local-variable">this</span>(<span class="float">0.0</span>, <span class="float">0.0</span>,   s); }
+  <span class="directive">public</span> Square()                   { <span class="local-variable">this</span>(<span class="float">0.0</span>, <span class="float">0.0</span>, <span class="float">1.0</span>); }
+  <span class="directive">public</span> <span class="type">double</span> perimeter() {
+    <span class="keyword">return</span> <span class="integer">4</span> * s;
+  }
+  <span class="directive">public</span> <span class="type">double</span> area() {
+    <span class="keyword">return</span> s*s;
+  }
+  <span class="directive">public</span> <span class="predefined-type">String</span> toString() {
+    <span class="keyword">return</span> (<span class="string"><span class="delimiter">&quot;</span><span class="content">Square side = </span><span class="delimiter">&quot;</span></span> + <span class="predefined-type">String</span>.valueOf(s) + <span class="local-variable">super</span>.toString());
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To run this application, compile the classes. You can do it with or
+without ajc, the AspectJ compiler. If you&#8217;ve installed AspectJ, go to
+the directory <code>InstallDir/examples</code> and type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">ajc -argfile tracing/notrace.lst</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To run the program, type</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">java tracing.ExampleMain</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(we don&#8217;t need anything special on the classpath since this is pure Java
+code). You should see the following output:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">c1.perimeter() = 12.566370614359172
+c1.area() = 12.566370614359172
+s1.perimeter() = 4.0
+s1.area() = 1.0
+c2.distance(c1) = 4.242640687119285
+s1.distance(c1) = 2.23606797749979
+s1.toString(): Square side = 1.0 @ (1.0, 2.0)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_tracing_version_1">Tracing - Version 1</h4>
+<div class="paragraph">
+<p>In a first attempt to insert tracing in this application, we will start
+by writing a <code>Trace</code> class that is exactly what we would write if we
+didn&#8217;t have aspects. The implementation is in <code>version1/Trace.java</code>. Its
+public interface is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Trace</span> {
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">int</span> TRACELEVEL = <span class="integer">0</span>;
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> initStream(<span class="predefined-type">PrintStream</span> s) {...}
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> traceEntry(<span class="predefined-type">String</span> str) {...}
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> traceExit(<span class="predefined-type">String</span> str) {...}
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If we didn&#8217;t have AspectJ, we would have to insert calls to <code>traceEntry</code>
+and <code>traceExit</code> in all methods and constructors we wanted to trace, and
+to initialize <code>TRACELEVEL</code> and the stream. If we wanted to trace all the
+methods and constructors in our example, that would amount to around 40
+calls, and we would hope we had not forgotten any method. But we can do
+that more consistently and reliably with the following aspect (found in
+<code>version1/TraceMyClasses.java</code>):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> aspect TraceMyClasses {
+  pointcut myClass(): within(TwoDShape) || within(Circle) || within(Square);
+  pointcut myConstructor(): myClass() &amp;&amp; execution(<span class="keyword">new</span>(..));
+  pointcut myMethod(): myClass() &amp;&amp; execution(* *(..));
+
+  before (): myConstructor() {
+    Trace.traceEntry(<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span> + thisJoinPointStaticPart.getSignature());
+  }
+  after(): myConstructor() {
+    Trace.traceExit(<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span> + thisJoinPointStaticPart.getSignature());
+  }
+
+  before (): myMethod() {
+    Trace.traceEntry(<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span> + thisJoinPointStaticPart.getSignature());
+  }
+  after(): myMethod() {
+    Trace.traceExit(<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span> + thisJoinPointStaticPart.getSignature());
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This aspect performs the tracing calls at appropriate times. According
+to this aspect, tracing is performed at the entrance and exit of every
+method and constructor defined within the shape hierarchy.</p>
+</div>
+<div class="paragraph">
+<p>What is printed at before and after each of the traced join points is
+the signature of the method executing. Since the signature is static
+information, we can get it through <code>thisJoinPointStaticPart</code>.</p>
+</div>
+<div class="paragraph">
+<p>To run this version of tracing, go to the directory
+<code>InstallDir/examples</code> and type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">ajc -argfile tracing/tracev1.lst</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Running the main method of <code>tracing.version1.TraceMyClasses</code> should
+produce the output:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">  --&gt; tracing.TwoDShape(double, double)
+  &lt;-- tracing.TwoDShape(double, double)
+  --&gt; tracing.Circle(double, double, double)
+  &lt;-- tracing.Circle(double, double, double)
+  --&gt; tracing.TwoDShape(double, double)
+  &lt;-- tracing.TwoDShape(double, double)
+  --&gt; tracing.Circle(double, double, double)
+  &lt;-- tracing.Circle(double, double, double)
+  --&gt; tracing.Circle(double)
+  &lt;-- tracing.Circle(double)
+  --&gt; tracing.TwoDShape(double, double)
+  &lt;-- tracing.TwoDShape(double, double)
+  --&gt; tracing.Square(double, double, double)
+  &lt;-- tracing.Square(double, double, double)
+  --&gt; tracing.Square(double, double)
+  &lt;-- tracing.Square(double, double)
+  --&gt; double tracing.Circle.perimeter()
+  &lt;-- double tracing.Circle.perimeter()
+c1.perimeter() = 12.566370614359172
+  --&gt; double tracing.Circle.area()
+  &lt;-- double tracing.Circle.area()
+c1.area() = 12.566370614359172
+  --&gt; double tracing.Square.perimeter()
+  &lt;-- double tracing.Square.perimeter()
+s1.perimeter() = 4.0
+  --&gt; double tracing.Square.area()
+  &lt;-- double tracing.Square.area()
+s1.area() = 1.0
+  --&gt; double tracing.TwoDShape.distance(TwoDShape)
+    --&gt; double tracing.TwoDShape.getX()
+    &lt;-- double tracing.TwoDShape.getX()
+    --&gt; double tracing.TwoDShape.getY()
+    &lt;-- double tracing.TwoDShape.getY()
+  &lt;-- double tracing.TwoDShape.distance(TwoDShape)
+c2.distance(c1) = 4.242640687119285
+  --&gt; double tracing.TwoDShape.distance(TwoDShape)
+    --&gt; double tracing.TwoDShape.getX()
+    &lt;-- double tracing.TwoDShape.getX()
+    --&gt; double tracing.TwoDShape.getY()
+    &lt;-- double tracing.TwoDShape.getY()
+  &lt;-- double tracing.TwoDShape.distance(TwoDShape)
+s1.distance(c1) = 2.23606797749979
+  --&gt; String tracing.Square.toString()
+    --&gt; String tracing.TwoDShape.toString()
+    &lt;-- String tracing.TwoDShape.toString()
+  &lt;-- String tracing.Square.toString()
+s1.toString(): Square side = 1.0 @ (1.0, 2.0)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When <code>TraceMyClasses.java</code> is not provided to <code>ajc</code>, the aspect does not
+have any affect on the system and the tracing is unplugged.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_tracing_version_2">Tracing - Version 2</h4>
+<div class="paragraph">
+<p>Another way to accomplish the same thing would be to write a reusable
+tracing aspect that can be used not only for these application classes,
+but for any class. One way to do this is to merge the tracing
+functionality of <code>Trace - version1</code> with the crosscutting support of
+<code>TraceMyClasses - version1</code>. We end up with a <code>Trace</code> aspect (found in
+<code>version2/Trace.java</code>) with the following public interface</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">abstract</span> aspect Trace {
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">int</span> TRACELEVEL = <span class="integer">2</span>;
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> initStream(<span class="predefined-type">PrintStream</span> s) {...}
+  <span class="directive">protected</span> <span class="directive">static</span> <span class="type">void</span> traceEntry(<span class="predefined-type">String</span> str) {...}
+  <span class="directive">protected</span> <span class="directive">static</span> <span class="type">void</span> traceExit(<span class="predefined-type">String</span> str) {...}
+  <span class="directive">abstract</span> pointcut myClass();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In order to use it, we need to define our own subclass that knows about
+our application classes, in <code>version2/TraceMyClasses.java</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> aspect TraceMyClasses <span class="directive">extends</span> Trace {
+  pointcut myClass(): within(TwoDShape) || within(Circle) || within(Square);
+
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
+    Trace.TRACELEVEL = <span class="integer">2</span>;
+    Trace.initStream(<span class="predefined-type">System</span>.err);
+    ExampleMain.main(args);
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice that we&#8217;ve simply made the pointcut <code>classes</code>, that was an
+abstract pointcut in the super-aspect, concrete. To run this version of
+tracing, go to the directory <code>examples</code> and type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">ajc -argfile tracing/tracev2.lst</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The file <code>tracev2.lst</code> lists the application classes as well as this
+version of the files Trace.java and TraceMyClasses.java. Running the
+main method of <code>tracing.version2.TraceMyClasses</code> should output exactly
+the same trace information as that from version 1.</p>
+</div>
+<div class="paragraph">
+<p>The entire implementation of the new <code>Trace</code> class is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">abstract</span> aspect Trace {
+
+  <span class="comment">// implementation part</span>
+
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">int</span> TRACELEVEL = <span class="integer">2</span>;
+  <span class="directive">protected</span> <span class="directive">static</span> <span class="predefined-type">PrintStream</span> stream = <span class="predefined-type">System</span>.err;
+  <span class="directive">protected</span> <span class="directive">static</span> <span class="type">int</span> callDepth = <span class="integer">0</span>;
+
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> initStream(<span class="predefined-type">PrintStream</span> s) {
+    stream = s;
+  }
+  <span class="directive">protected</span> <span class="directive">static</span> <span class="type">void</span> traceEntry(<span class="predefined-type">String</span> str) {
+    <span class="keyword">if</span> (TRACELEVEL == <span class="integer">0</span>) <span class="keyword">return</span>;
+    <span class="keyword">if</span> (TRACELEVEL == <span class="integer">2</span>) callDepth++;
+    printEntering(str);
+  }
+  <span class="directive">protected</span> <span class="directive">static</span> <span class="type">void</span> traceExit(<span class="predefined-type">String</span> str) {
+    <span class="keyword">if</span> (TRACELEVEL == <span class="integer">0</span>) <span class="keyword">return</span>;
+    printExiting(str);
+    <span class="keyword">if</span> (TRACELEVEL == <span class="integer">2</span>) callDepth--;
+  }
+  <span class="directive">private</span> <span class="directive">static</span> <span class="type">void</span> printEntering(<span class="predefined-type">String</span> str) {
+    printIndent();
+    stream.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">--&gt; </span><span class="delimiter">&quot;</span></span> + str);
+  }
+  <span class="directive">private</span> <span class="directive">static</span> <span class="type">void</span> printExiting(<span class="predefined-type">String</span> str) {
+    printIndent();
+    stream.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">&lt;-- </span><span class="delimiter">&quot;</span></span> + str);
+  }
+  <span class="directive">private</span> <span class="directive">static</span> <span class="type">void</span> printIndent() {
+    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="integer">0</span>; i &lt; callDepth; i++)
+      stream.print(<span class="string"><span class="delimiter">&quot;</span><span class="content">  </span><span class="delimiter">&quot;</span></span>);
+  }
+
+  <span class="comment">// protocol part</span>
+
+  <span class="directive">abstract</span> pointcut myClass();
+
+  pointcut myConstructor(): myClass() &amp;&amp; execution(<span class="keyword">new</span>(..));
+  pointcut myMethod(): myClass() &amp;&amp; execution(* *(..));
+
+  before(): myConstructor() {
+    traceEntry(<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span> + thisJoinPointStaticPart.getSignature());
+  }
+  after(): myConstructor() {
+    traceExit(<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span> + thisJoinPointStaticPart.getSignature());
+  }
+
+  before(): myMethod() {
+    traceEntry(<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span> + thisJoinPointStaticPart.getSignature());
+  }
+  after(): myMethod() {
+    traceExit(<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span> + thisJoinPointStaticPart.getSignature());
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This version differs from version 1 in several subtle ways. The first
+thing to notice is that this <code>Trace</code> class merges the functional part of
+tracing with the crosscutting of the tracing calls. That is, in version
+1, there was a sharp separation between the tracing support (the class
+<code>Trace</code>) and the crosscutting usage of it (by the class
+<code>TraceMyClasses</code>). In this version those two things are merged. That&#8217;s
+why the description of this class explicitly says that "Trace messages
+are printed before and after constructors and methods are," which is
+what we wanted in the first place. That is, the placement of the calls,
+in this version, is established by the aspect class itself, leaving less
+opportunity for misplacing calls.</p>
+</div>
+<div class="paragraph">
+<p>A consequence of this is that there is no need for providing
+<code>traceEntry</code> and <code>traceExit</code> as public operations of this class. You can
+see that they were classified as protected. They are supposed to be
+internal implementation details of the advice.</p>
+</div>
+<div class="paragraph">
+<p>The key piece of this aspect is the abstract pointcut classes that
+serves as the base for the definition of the pointcuts constructors and
+methods. Even though <code>classes</code> is abstract, and therefore no concrete
+classes are mentioned, we can put advice on it, as well as on the
+pointcuts that are based on it. The idea is "we don&#8217;t know exactly what
+the pointcut will be, but when we do, here&#8217;s what we want to do with
+it." In some ways, abstract pointcuts are similar to abstract methods.
+Abstract methods don&#8217;t provide the implementation, but you know that the
+concrete subclasses will, so you can invoke those methods.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="examples-production">Production Aspects</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_a_bean_aspect">A Bean Aspect</h3>
+<div class="paragraph">
+<p>(The code for this example is in <code>InstallDir/examples/bean</code>.)</p>
+</div>
+<div class="paragraph">
+<p>This example examines an aspect that makes Point objects into Java beans
+with bound properties.</p>
+</div>
+<div class="paragraph">
+<p>Java beans are reusable software components that can be visually
+manipulated in a builder tool. The requirements for an object to be a
+bean are few. Beans must define a no-argument constructor and must be
+either <code>Serializable</code> or <code>Externalizable</code>. Any properties of the object
+that are to be treated as bean properties should be indicated by the
+presence of appropriate <code>get</code> and <code>set</code> methods whose names are
+<code>get<em>property</em></code> and <code>set<em>property</em></code> where <code><em>property</em></code> is the name of
+a field in the bean class. Some bean properties, known as bound
+properties, fire events whenever their values change so that any
+registered listeners (such as, other beans) will be informed of those
+changes. Making a bound property involves keeping a list of registered
+listeners, and creating and dispatching event objects in methods that
+change the property values, such as <code>set<em>property</em></code> methods.</p>
+</div>
+<div class="paragraph">
+<p><code>Point</code> is a simple class representing points with rectangular
+coordinates. <code>Point</code> does not know anything about being a bean: there
+are set methods for <code>x</code> and <code>y</code> but they do not fire events, and the
+class is not serializable. Bound is an aspect that makes <code>Point</code> a
+serializable class and makes its <code>get</code> and <code>set</code> methods support the
+bound property protocol.</p>
+</div>
+<div class="sect3">
+<h4 id="_the_point_class_2">The <code>Point</code> class</h4>
+<div class="paragraph">
+<p>The <code>Point</code> class is a very simple class with trivial getters and
+setters, and a simple vector offset method.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">Point</span> {
+
+  <span class="directive">protected</span> <span class="type">int</span> x = <span class="integer">0</span>;
+  <span class="directive">protected</span> <span class="type">int</span> y = <span class="integer">0</span>;
+
+  <span class="directive">public</span> <span class="type">int</span> getX() {
+    <span class="keyword">return</span> x;
+  }
+
+  <span class="directive">public</span> <span class="type">int</span> getY() {
+    <span class="keyword">return</span> y;
+  }
+
+  <span class="directive">public</span> <span class="type">void</span> setRectangular(<span class="type">int</span> newX, <span class="type">int</span> newY) {
+    setX(newX);
+    setY(newY);
+  }
+
+  <span class="directive">public</span> <span class="type">void</span> setX(<span class="type">int</span> newX) {
+    x = newX;
+  }
+
+  <span class="directive">public</span> <span class="type">void</span> setY(<span class="type">int</span> newY) {
+    y = newY;
+  }
+
+  <span class="directive">public</span> <span class="type">void</span> offset(<span class="type">int</span> deltaX, <span class="type">int</span> deltaY) {
+    setRectangular(x + deltaX, y + deltaY);
+  }
+
+  <span class="directive">public</span> <span class="predefined-type">String</span> toString() {
+    <span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">(</span><span class="delimiter">&quot;</span></span> + getX() + <span class="string"><span class="delimiter">&quot;</span><span class="content">, </span><span class="delimiter">&quot;</span></span> + getY() + <span class="string"><span class="delimiter">&quot;</span><span class="content">)</span><span class="delimiter">&quot;</span></span> ;
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_boundpoint_aspect">The <code>BoundPoint</code> aspect</h4>
+<div class="paragraph">
+<p>The <code>BoundPoint</code> aspect is responsible for <code>Point</code>'s "beanness". The
+first thing it does is privately declare that each <code>Point</code> has a
+<code>support</code> field that holds reference to an instance of
+<code>PropertyChangeSupport</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> <span class="predefined-type">PropertyChangeSupport</span> <span class="predefined-type">Point</span>.support = <span class="keyword">new</span> <span class="predefined-type">PropertyChangeSupport</span>(<span class="local-variable">this</span>);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The property change support object must be constructed with a reference
+to the bean for which it is providing support, so it is initialized by
+passing it <code>this</code>, an instance of <code>Point</code>. Since the <code>support</code> field is
+private declared in the aspect, only the code in the aspect can refer to
+it.</p>
+</div>
+<div class="paragraph">
+<p>The aspect also declares <code>Point</code>'s methods for registering and managing
+listeners for property change events, which delegate the work to the
+property change support object:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> <span class="predefined-type">Point</span>.addPropertyChangeListener(<span class="predefined-type">PropertyChangeListener</span> listener){
+  support.addPropertyChangeListener(listener);
+}
+<span class="directive">public</span> <span class="type">void</span> <span class="predefined-type">Point</span>.addPropertyChangeListener(<span class="predefined-type">String</span> propertyName, <span class="predefined-type">PropertyChangeListener</span> listener) {
+  support.addPropertyChangeListener(propertyName, listener);
+}
+<span class="directive">public</span> <span class="type">void</span> <span class="predefined-type">Point</span>.removePropertyChangeListener(<span class="predefined-type">String</span> propertyName, <span class="predefined-type">PropertyChangeListener</span> listener) {
+  support.removePropertyChangeListener(propertyName, listener);
+}
+<span class="directive">public</span> <span class="type">void</span> <span class="predefined-type">Point</span>.removePropertyChangeListener(<span class="predefined-type">PropertyChangeListener</span> listener) {
+  support.removePropertyChangeListener(listener);
+}
+<span class="directive">public</span> <span class="type">void</span> <span class="predefined-type">Point</span>.hasListeners(<span class="predefined-type">String</span> propertyName) {
+  support.hasListeners(propertyName);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The aspect is also responsible for making sure <code>Point</code> implements the
+<code>Serializable</code> interface:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">declare parents: <span class="predefined-type">Point</span> <span class="directive">implements</span> <span class="predefined-type">Serializable</span>;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Implementing this interface in Java does not require any methods to be
+implemented. Serialization for <code>Point</code> objects is provided by the
+default serialization method.</p>
+</div>
+<div class="paragraph">
+<p>The <code>setters</code> pointcut picks out calls to the <code>Point</code>'s <code>set</code> methods:
+any method whose name begins with &#8220;set&#8221; and takes one parameter. The
+around advice on <code>setters()</code> stores the values of the <code>X</code> and <code>Y</code>
+properties, calls the original <code>set</code> method and then fires the
+appropriate property change event according to which set method was
+called.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">aspect BoundPoint {
+  <span class="directive">private</span> <span class="predefined-type">PropertyChangeSupport</span> <span class="predefined-type">Point</span>.support = <span class="keyword">new</span> <span class="predefined-type">PropertyChangeSupport</span>(<span class="local-variable">this</span>);
+
+  <span class="directive">public</span> <span class="type">void</span> <span class="predefined-type">Point</span>.addPropertyChangeListener(<span class="predefined-type">PropertyChangeListener</span> listener) {
+    support.addPropertyChangeListener(listener);
+  }
+  <span class="directive">public</span> <span class="type">void</span> <span class="predefined-type">Point</span>.addPropertyChangeListener(<span class="predefined-type">String</span> propertyName, <span class="predefined-type">PropertyChangeListener</span> listener) {
+    support.addPropertyChangeListener(propertyName, listener);
+  }
+  <span class="directive">public</span> <span class="type">void</span> <span class="predefined-type">Point</span>.removePropertyChangeListener(<span class="predefined-type">String</span> propertyName, <span class="predefined-type">PropertyChangeListener</span> listener) {
+    support.removePropertyChangeListener(propertyName, listener);
+  }
+  <span class="directive">public</span> <span class="type">void</span> <span class="predefined-type">Point</span>.removePropertyChangeListener(<span class="predefined-type">PropertyChangeListener</span> listener) {
+    support.removePropertyChangeListener(listener);
+  }
+  <span class="directive">public</span> <span class="type">void</span> <span class="predefined-type">Point</span>.hasListeners(<span class="predefined-type">String</span> propertyName) {
+    support.hasListeners(propertyName);
+  }
+
+  declare parents: <span class="predefined-type">Point</span> <span class="directive">implements</span> <span class="predefined-type">Serializable</span>;
+
+  pointcut setter(<span class="predefined-type">Point</span> p): call(<span class="type">void</span> <span class="predefined-type">Point</span>.set*(*)) &amp;&amp; target(p);
+
+  <span class="type">void</span> around(<span class="predefined-type">Point</span> p): setter(p) {
+    <span class="predefined-type">String</span> propertyName =
+    thisJoinPointStaticPart.getSignature().getName().substring(<span class="string"><span class="delimiter">&quot;</span><span class="content">set</span><span class="delimiter">&quot;</span></span>.length());
+    <span class="type">int</span> oldX = p.getX();
+    <span class="type">int</span> oldY = p.getY();
+    proceed(p);
+    <span class="keyword">if</span> (propertyName.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">X</span><span class="delimiter">&quot;</span></span>)){
+      firePropertyChange(p, propertyName, oldX, p.getX());
+    } <span class="keyword">else</span> {
+      firePropertyChange(p, propertyName, oldY, p.getY());
+    }
+  }
+
+  <span class="type">void</span> firePropertyChange(<span class="predefined-type">Point</span> p, <span class="predefined-type">String</span> property, <span class="type">double</span> oldval, <span class="type">double</span> newval) {
+    p.support.firePropertyChange(property, <span class="keyword">new</span> <span class="predefined-type">Double</span>(oldval), <span class="keyword">new</span> <span class="predefined-type">Double</span>(newval));
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_test_program">The Test Program</h4>
+<div class="paragraph">
+<p>The test program registers itself as a property change listener to a
+<code>Point</code> object that it creates and then performs simple manipulation of
+that point: calling its set methods and the offset method. Then it
+serializes the point and writes it to a file and then reads it back. The
+result of saving and restoring the point is that a new point is created.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">Demo</span> <span class="directive">implements</span> <span class="predefined-type">PropertyChangeListener</span> {
+
+  <span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">String</span> fileName = <span class="string"><span class="delimiter">&quot;</span><span class="content">test.tmp</span><span class="delimiter">&quot;</span></span>;
+
+  <span class="directive">public</span> <span class="type">void</span> propertyChange(<span class="predefined-type">PropertyChangeEvent</span> e){
+    <span class="predefined-type">System</span>.out.println(
+      <span class="string"><span class="delimiter">&quot;</span><span class="content">Property </span><span class="delimiter">&quot;</span></span> + e.getPropertyName() + <span class="string"><span class="delimiter">&quot;</span><span class="content"> changed from </span><span class="delimiter">&quot;</span></span> +
+      e.getOldValue() + <span class="string"><span class="delimiter">&quot;</span><span class="content"> to </span><span class="delimiter">&quot;</span></span> + e.getNewValue()
+    );
+  }
+
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
+    <span class="predefined-type">Point</span> p1 = <span class="keyword">new</span> <span class="predefined-type">Point</span>();
+    p1.addPropertyChangeListener(<span class="keyword">new</span> Demo());
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">p1 =</span><span class="delimiter">&quot;</span></span> + p1);
+    p1.setRectangular(<span class="integer">5</span>,<span class="integer">2</span>);
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">p1 =</span><span class="delimiter">&quot;</span></span> + p1);
+    p1.setX( <span class="integer">6</span> );
+    p1.setY( <span class="integer">3</span> );
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">p1 =</span><span class="delimiter">&quot;</span></span> + p1);
+    p1.offset(<span class="integer">6</span>,<span class="integer">4</span>);
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">p1 =</span><span class="delimiter">&quot;</span></span> + p1);
+    save(p1, fileName);
+    <span class="predefined-type">Point</span> p2 = (<span class="predefined-type">Point</span>) restore(fileName);
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Had: </span><span class="delimiter">&quot;</span></span> + p1);
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Got: </span><span class="delimiter">&quot;</span></span> + p2);
+  }
+  <span class="comment">// ...</span>
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_compiling_and_running_the_example">Compiling and Running the Example</h4>
+<div class="paragraph">
+<p>To compile and run this example, go to the examples directory and type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">ajc -argfile bean/files.lst
+java bean.Demo</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="the-subject-observer-protocol">The Subject/Observer Protocol</h3>
+<div class="paragraph">
+<p>(The code for this example is in <code>InstallDir/examples/observer</code>.)</p>
+</div>
+<div class="paragraph">
+<p>This demo illustrates how the Subject/Observer design pattern can be
+coded with aspects.</p>
+</div>
+<div class="paragraph">
+<p>The demo consists of the following: A colored label is a renderable
+object that has a color that cycles through a set of colors, and a
+number that records the number of cycles it has been through. A button
+is an action item that records when it is clicked.</p>
+</div>
+<div class="paragraph">
+<p>With these two kinds of objects, we can build up a Subject/Observer
+relationship in which colored labels observe the clicks of buttons; that
+is, where colored labels are the observers and buttons are the subjects.</p>
+</div>
+<div class="paragraph">
+<p>The demo is designed and implemented using the Subject/Observer design
+pattern. The remainder of this example explains the classes and aspects
+of this demo, and tells you how to run it.</p>
+</div>
+<div class="sect3">
+<h4 id="_generic_components">Generic Components</h4>
+<div class="paragraph">
+<p>The generic parts of the protocol are the interfaces <code>Subject</code> and
+<code>Observer</code>, and the abstract aspect <code>SubjectObserverProtocol</code>. The
+<code>Subject</code> interface is simple, containing methods to add, remove, and
+view <code>Observer</code> objects, and a method for getting data about state
+changes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">interface</span> <span class="class">Subject</span> {
+  <span class="type">void</span> addObserver(<span class="predefined-type">Observer</span> obs);
+  <span class="type">void</span> removeObserver(<span class="predefined-type">Observer</span> obs);
+  <span class="predefined-type">Vector</span> getObservers();
+  <span class="predefined-type">Object</span> getData();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>Observer</code> interface is just as simple, with methods to set and get
+<code>Subject</code> objects, and a method to call when the subject gets updated.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">interface</span> <span class="class">Observer</span> {
+  <span class="type">void</span> setSubject(<span class="predefined-type">Subject</span> s);
+  <span class="predefined-type">Subject</span> getSubject();
+  <span class="type">void</span> update();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>SubjectObserverProtocol</code> aspect contains within it all of the
+generic parts of the protocol, namely, how to fire the <code>Observer</code>
+objects' update methods when some state changes in a subject.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">abstract</span> aspect SubjectObserverProtocol {
+
+  <span class="directive">abstract</span> pointcut stateChanges(<span class="predefined-type">Subject</span> s);
+
+  after(<span class="predefined-type">Subject</span> s): stateChanges(s) {
+    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="integer">0</span>; i &lt; s.getObservers().size(); i++) {
+      ((<span class="predefined-type">Observer</span>)s.getObservers().elementAt(i)).update();
+    }
+  }
+
+  <span class="directive">private</span> <span class="predefined-type">Vector</span> <span class="predefined-type">Subject</span>.observers = <span class="keyword">new</span> <span class="predefined-type">Vector</span>();
+  <span class="directive">public</span> <span class="type">void</span>    <span class="predefined-type">Subject</span>.addObserver(<span class="predefined-type">Observer</span> obs) {
+    observers.addElement(obs);
+    obs.setSubject(<span class="local-variable">this</span>);
+  }
+  <span class="directive">public</span> <span class="type">void</span>    <span class="predefined-type">Subject</span>.removeObserver(<span class="predefined-type">Observer</span> obs) {
+    observers.removeElement(obs);
+    obs.setSubject(<span class="predefined-constant">null</span>);
+  }
+  <span class="directive">public</span> <span class="predefined-type">Vector</span>  <span class="predefined-type">Subject</span>.getObservers() { <span class="keyword">return</span> observers; }
+
+  <span class="directive">private</span> <span class="predefined-type">Subject</span> <span class="predefined-type">Observer</span>.subject = <span class="predefined-constant">null</span>;
+  <span class="directive">public</span> <span class="type">void</span>     <span class="predefined-type">Observer</span>.setSubject(<span class="predefined-type">Subject</span> s) { subject = s; }
+  <span class="directive">public</span> <span class="predefined-type">Subject</span>  <span class="predefined-type">Observer</span>.getSubject() { <span class="keyword">return</span> subject; }
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that this aspect does three things. It define an abstract pointcut
+that extending aspects can override. It defines advice that should run
+after the join points of the pointcut. And it declares an inter-type
+field and two inter-type methods so that each <code>Observer</code> can hold onto
+its <code>Subject</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_application_classes">Application Classes</h4>
+<div class="paragraph">
+<p><code>Button</code> objects extend <code>java.awt.Button</code>, and all they do is make sure
+the <code>void click()</code> method is called whenever a button is clicked.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">Button</span> <span class="directive">extends</span> java.awt.Button {
+
+  <span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Color</span>  defaultBackgroundColor = <span class="predefined-type">Color</span>.gray;
+  <span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Color</span>  defaultForegroundColor = <span class="predefined-type">Color</span>.black;
+  <span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">String</span> defaultText = <span class="string"><span class="delimiter">&quot;</span><span class="content">cycle color</span><span class="delimiter">&quot;</span></span>;
+
+  <span class="predefined-type">Button</span>(Display display) {
+    <span class="local-variable">super</span>();
+    setLabel(defaultText);
+    setBackground(defaultBackgroundColor);
+    setForeground(defaultForegroundColor);
+    addActionListener(<span class="keyword">new</span> <span class="predefined-type">ActionListener</span>() {
+      <span class="directive">public</span> <span class="type">void</span> actionPerformed(<span class="predefined-type">ActionEvent</span> e) {
+        <span class="predefined-type">Button</span>.this.click();
+      }
+    });
+    display.addToFrame(<span class="local-variable">this</span>);
+  }
+
+  <span class="directive">public</span> <span class="type">void</span> click() {}
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that this class knows nothing about being a Subject.</p>
+</div>
+<div class="paragraph">
+<p>ColorLabel objects are labels that support the void colorCycle() method.
+Again, they know nothing about being an observer.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">ColorLabel</span> <span class="directive">extends</span> <span class="predefined-type">Label</span> {
+
+  ColorLabel(Display display) {
+    <span class="local-variable">super</span>();
+    display.addToFrame(<span class="local-variable">this</span>);
+  }
+
+  <span class="directive">final</span> <span class="directive">static</span> <span class="predefined-type">Color</span><span class="type">[]</span> colors =
+    { <span class="predefined-type">Color</span>.red, <span class="predefined-type">Color</span>.blue, <span class="predefined-type">Color</span>.green, <span class="predefined-type">Color</span>.magenta };
+  <span class="directive">private</span> <span class="type">int</span> colorIndex = <span class="integer">0</span>;
+  <span class="directive">private</span> <span class="type">int</span> cycleCount = <span class="integer">0</span>;
+  <span class="type">void</span> colorCycle() {
+    cycleCount++;
+    colorIndex = (colorIndex + <span class="integer">1</span>) % colors.length;
+    setBackground(colors[colorIndex]);
+    setText(<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span> + cycleCount);
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, the <code>SubjectObserverProtocolImpl</code> implements the
+subject/observer protocol, with <code>Button</code> objects as subjects and
+<code>ColorLabel</code> objects as observers:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">observer</span>;
+
+<span class="keyword">import</span> <span class="include">java.util.Vector</span>;
+
+aspect SubjectObserverProtocolImpl <span class="directive">extends</span> SubjectObserverProtocol {
+
+  declare parents: <span class="predefined-type">Button</span> <span class="directive">implements</span> <span class="predefined-type">Subject</span>;
+  <span class="directive">public</span> <span class="predefined-type">Object</span>    <span class="predefined-type">Button</span>.getData() { <span class="keyword">return</span> <span class="local-variable">this</span>; }
+
+  declare parents: ColorLabel <span class="directive">implements</span> <span class="predefined-type">Observer</span>;
+  <span class="directive">public</span> <span class="type">void</span>      ColorLabel.update() {
+    colorCycle();
+  }
+
+  pointcut stateChanges(<span class="predefined-type">Subject</span> s):
+    target(s) &amp;&amp;
+    call(<span class="type">void</span> <span class="predefined-type">Button</span>.click());
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It does this by assuring that <code>Button</code> and <code>ColorLabel</code> implement the
+appropriate interfaces, declaring that they implement the methods
+required by those interfaces, and providing a definition for the
+abstract <code>stateChanges</code> pointcut. Now, every time a <code>Button</code> is clicked,
+all <code>ColorLabel</code> objects observing that button will <code>colorCycle</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_compiling_and_running">Compiling and Running</h4>
+<div class="paragraph">
+<p><code>Demo</code> is the top class that starts this demo. It instantiates a two
+buttons and three observers and links them together as subjects and
+observers. So to run the demo, go to the <code>examples</code> directory and type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">ajc -argfile observer/files.lst
+java observer.Demo</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_a_simple_telecom_simulation">A Simple Telecom Simulation</h3>
+<div class="paragraph">
+<p>(The code for this example is in <code>InstallDir/examples/telecom</code>.)</p>
+</div>
+<div class="paragraph">
+<p>This example illustrates some ways that dependent concerns can be
+encoded with aspects. It uses an example system comprising a simple
+model of telephone connections to which timing and billing features are
+added using aspects, where the billing feature depends upon the timing
+feature.</p>
+</div>
+<div class="sect3">
+<h4 id="_the_application">The Application</h4>
+<div class="paragraph">
+<p>The example application is a simple simulation of a telephony system in
+which customers make, accept, merge and hang-up both local and long
+distance calls. The application architecture is in three layers.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The basic objects provide basic functionality to simulate customers,
+calls and connections (regular calls have one connection, conference
+calls have more than one).</p>
+</li>
+<li>
+<p>The timing feature is concerned with timing the connections and
+keeping the total connection time per customer. Aspects are used to add
+a timer to each connection and to manage the total time per customer.</p>
+</li>
+<li>
+<p>The billing feature is concerned with charging customers for the calls
+they make. Aspects are used to calculate a charge per connection and,
+upon termination of a connection, to add the charge to the appropriate
+customer&#8217;s bill. The billing aspect builds upon the timing aspect: it
+uses a pointcut defined in Timing and it uses the timers that are
+associated with connections.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The simulation of system has three configurations: basic, timing and
+billing. Programs for the three configurations are in classes
+<code>BasicSimulation</code>, <code>TimingSimulation</code> and <code>BillingSimulation</code>. These
+share a common superclass <code>AbstractSimulation</code>, which defines the method
+run with the simulation itself and the method wait used to simulate
+elapsed time.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_basic_objects">The Basic Objects</h4>
+<div class="paragraph">
+<p>The telecom simulation comprises the classes <code>Customer</code>, <code>Call</code> and the
+abstract class <code>Connection</code> with its two concrete subclasses <code>Local</code> and
+<code>LongDistance</code>. Customers have a name and a numeric area code. They also
+have methods for managing calls. Simple calls are made between one
+customer (the caller) and another (the receiver), a <code>Connection</code> object
+is used to connect them. Conference calls between more than two
+customers will involve more than one connection. A customer may be
+involved in many calls at one time.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="images/telecom.png" alt="image"></span></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_customer_class">The <code>Customer</code> class</h4>
+<div class="paragraph">
+<p><code>Customer</code> has methods <code>call</code>, <code>pickup</code>, <code>hangup</code> and <code>merge</code> for
+managing calls.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Customer</span> {
+
+  <span class="directive">private</span> <span class="predefined-type">String</span> name;
+  <span class="directive">private</span> <span class="type">int</span> areacode;
+  <span class="directive">private</span> <span class="predefined-type">Vector</span> calls = <span class="keyword">new</span> <span class="predefined-type">Vector</span>();
+
+  <span class="directive">protected</span> <span class="type">void</span> removeCall(Call c){
+    calls.removeElement(c);
+  }
+
+  <span class="directive">protected</span> <span class="type">void</span> addCall(Call c){
+    calls.addElement(c);
+  }
+
+  <span class="directive">public</span> Customer(<span class="predefined-type">String</span> name, <span class="type">int</span> areacode) {
+    <span class="local-variable">this</span>.name = name;
+    <span class="local-variable">this</span>.areacode = areacode;
+  }
+
+  <span class="directive">public</span> <span class="predefined-type">String</span> toString() {
+    <span class="keyword">return</span> name + <span class="string"><span class="delimiter">&quot;</span><span class="content">(</span><span class="delimiter">&quot;</span></span> + areacode + <span class="string"><span class="delimiter">&quot;</span><span class="content">)</span><span class="delimiter">&quot;</span></span>;
+  }
+
+  <span class="directive">public</span> <span class="type">int</span> getAreacode(){
+    <span class="keyword">return</span> areacode;
+  }
+
+  <span class="directive">public</span> <span class="type">boolean</span> localTo(Customer other){
+    <span class="keyword">return</span> areacode == other.areacode;
+  }
+
+  <span class="directive">public</span> Call call(Customer receiver) {
+    Call call = <span class="keyword">new</span> Call(<span class="local-variable">this</span>, receiver);
+    addCall(call);
+    <span class="keyword">return</span> call;
+  }
+
+  <span class="directive">public</span> <span class="type">void</span> pickup(Call call) {
+    call.pickup();
+    addCall(call);
+  }
+
+  <span class="directive">public</span> <span class="type">void</span> hangup(Call call) {
+    call.hangup(<span class="local-variable">this</span>);
+    removeCall(call);
+  }
+
+  <span class="directive">public</span> <span class="type">void</span> merge(Call call1, Call call2){
+    call1.merge(call2);
+    removeCall(call2);
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_call_class">The <code>Call</code> class</h4>
+<div class="paragraph">
+<p>Calls are created with a caller and receiver who are customers. If the
+caller and receiver have the same area code then the call can be
+established with a <code>Local</code> connection (see below), otherwise a
+<code>LongDistance</code> connection is required. A call comprises a number of
+connections between customers. Initially there is only the connection
+between the caller and receiver but additional connections can be added
+if calls are merged to form conference calls.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_connection_class">The <code>Connection</code> class</h4>
+<div class="paragraph">
+<p>The class <code>Connection</code> models the physical details of establishing a
+connection between customers. It does this with a simple state machine
+(connections are initially <code>PENDING</code>, then <code>COMPLETED</code> and finally
+<code>DROPPED</code>). Messages are printed to the console so that the state of
+connections can be observed. Connection is an abstract class with two
+concrete subclasses: <code>Local</code> and <code>LongDistance</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">abstract</span> <span class="type">class</span> <span class="class">Connection</span> {
+
+  <span class="directive">public</span> <span class="directive">static</span> <span class="directive">final</span> <span class="type">int</span> PENDING = <span class="integer">0</span>;
+  <span class="directive">public</span> <span class="directive">static</span> <span class="directive">final</span> <span class="type">int</span> COMPLETE = <span class="integer">1</span>;
+  <span class="directive">public</span> <span class="directive">static</span> <span class="directive">final</span> <span class="type">int</span> DROPPED = <span class="integer">2</span>;
+
+  Customer caller, receiver;
+  <span class="directive">private</span> <span class="type">int</span> state = PENDING;
+
+  <span class="predefined-type">Connection</span>(Customer a, Customer b) {
+    <span class="local-variable">this</span>.caller = a;
+    <span class="local-variable">this</span>.receiver = b;
+  }
+
+  <span class="directive">public</span> <span class="type">int</span> getState(){
+    <span class="keyword">return</span> state;
+  }
+
+  <span class="directive">public</span> Customer getCaller() { <span class="keyword">return</span> caller; }
+
+  <span class="directive">public</span> Customer getReceiver() { <span class="keyword">return</span> receiver; }
+
+  <span class="type">void</span> complete() {
+    state = COMPLETE;
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">connection completed</span><span class="delimiter">&quot;</span></span>);
+  }
+
+  <span class="type">void</span> drop() {
+    state = DROPPED;
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">connection dropped</span><span class="delimiter">&quot;</span></span>);
+  }
+
+  <span class="directive">public</span> <span class="type">boolean</span> connects(Customer c){
+    <span class="keyword">return</span> (caller == c || receiver == c);
+  }
+
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_local_and_longdistance_classes">The <code>Local</code> and <code>LongDistance</code> classes</h4>
+<div class="paragraph">
+<p>The two kinds of connections supported by our simulation are <code>Local</code> and
+<code>LongDistance</code> connections.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">Local</span> <span class="directive">extends</span> <span class="predefined-type">Connection</span> {
+  Local(Customer a, Customer b) {
+    <span class="local-variable">super</span>(a, b);
+    <span class="predefined-type">System</span>.out.println(
+      <span class="string"><span class="delimiter">&quot;</span><span class="content">[new local connection from </span><span class="delimiter">&quot;</span></span> + a + <span class="string"><span class="delimiter">&quot;</span><span class="content"> to </span><span class="delimiter">&quot;</span></span> + b + <span class="string"><span class="delimiter">&quot;</span><span class="content">]</span><span class="delimiter">&quot;</span></span>
+    );
+  }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">LongDistance</span> <span class="directive">extends</span> <span class="predefined-type">Connection</span> {
+  LongDistance(Customer a, Customer b) {
+    <span class="local-variable">super</span>(a, b);
+    <span class="predefined-type">System</span>.out.println(
+      <span class="string"><span class="delimiter">&quot;</span><span class="content">[new long distance connection from </span><span class="delimiter">&quot;</span></span> + a + <span class="string"><span class="delimiter">&quot;</span><span class="content"> to </span><span class="delimiter">&quot;</span></span> + b + <span class="string"><span class="delimiter">&quot;</span><span class="content">]</span><span class="delimiter">&quot;</span></span>
+    );
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_compiling_and_running_the_basic_simulation">Compiling and Running the Basic Simulation</h4>
+<div class="paragraph">
+<p>The source files for the basic system are listed in the file
+<code>basic.lst</code>. To build and run the basic system, in a shell window, type
+these commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">ajc -argfile telecom/basic.lst
+java telecom.BasicSimulation</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_timing_aspect">The Timing aspect</h4>
+<div class="paragraph">
+<p>The <code>Timing</code> aspect keeps track of total connection time for each
+<code>Customer</code> by starting and stopping a timer associated with each
+connection. It uses some helper classes:</p>
+</div>
+<div class="sect4">
+<h5 id="_the_timer_class">The <code>Timer</code> class</h5>
+<div class="paragraph">
+<p>A <code>Timer</code> object simply records the current time when it is started and
+stopped, and returns their difference when asked for the elapsed time.
+The aspect <code>TimerLog</code> (below) can be used to cause the start and stop
+times to be printed to standard output.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">Timer</span> {
+  <span class="type">long</span> startTime, stopTime;
+
+  <span class="directive">public</span> <span class="type">void</span> start() {
+    startTime = <span class="predefined-type">System</span>.currentTimeMillis();
+    stopTime = startTime;
+  }
+
+  <span class="directive">public</span> <span class="type">void</span> stop() {
+    stopTime = <span class="predefined-type">System</span>.currentTimeMillis();
+  }
+
+  <span class="directive">public</span> <span class="type">long</span> getTime() {
+    <span class="keyword">return</span> stopTime - startTime;
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_timerlog_aspect">The <code>TimerLog</code> aspect</h4>
+<div class="paragraph">
+<p>The <code>TimerLog</code> aspect can be included in a build to get the timer to
+announce when it is started and stopped.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> aspect TimerLog {
+
+  after(<span class="predefined-type">Timer</span> t): target(t) &amp;&amp; call(* <span class="predefined-type">Timer</span>.start())  {
+    <span class="predefined-type">System</span>.err.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Timer started: </span><span class="delimiter">&quot;</span></span> + t.startTime);
+  }
+
+  after(<span class="predefined-type">Timer</span> t): target(t) &amp;&amp; call(* <span class="predefined-type">Timer</span>.stop()) {
+    <span class="predefined-type">System</span>.err.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Timer stopped: </span><span class="delimiter">&quot;</span></span> + t.stopTime);
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_timing_aspect_2">The <code>Timing</code> aspect</h4>
+<div class="paragraph">
+<p>The <code>Timing</code> aspect is declares an inter-type field <code>totalConnectTime</code>
+for <code>Customer</code> to store the accumulated connection time per <code>Customer</code>.
+It also declares that each <code>Connection</code> object has a timer.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">long</span> Customer.totalConnectTime = <span class="integer">0</span>;
+<span class="directive">private</span> <span class="predefined-type">Timer</span> <span class="predefined-type">Connection</span>.timer = <span class="keyword">new</span> <span class="predefined-type">Timer</span>();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Two pieces of after advice ensure that the timer is started when a
+connection is completed and and stopped when it is dropped. The pointcut
+<code>endTiming</code> is defined so that it can be used by the <code>Billing</code> aspect.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> aspect Timing {
+
+  <span class="directive">public</span> <span class="type">long</span> Customer.totalConnectTime = <span class="integer">0</span>;
+
+  <span class="directive">public</span> <span class="type">long</span> getTotalConnectTime(Customer cust) {
+    <span class="keyword">return</span> cust.totalConnectTime;
+  }
+  <span class="directive">private</span> <span class="predefined-type">Timer</span> <span class="predefined-type">Connection</span>.timer = <span class="keyword">new</span> <span class="predefined-type">Timer</span>();
+  <span class="directive">public</span> <span class="predefined-type">Timer</span> getTimer(<span class="predefined-type">Connection</span> conn) { <span class="keyword">return</span> conn.timer; }
+
+  after (<span class="predefined-type">Connection</span> c): target(c) &amp;&amp; call(<span class="type">void</span> <span class="predefined-type">Connection</span>.complete()) {
+    getTimer(c).start();
+  }
+
+  pointcut endTiming(<span class="predefined-type">Connection</span> c): target(c) &amp;&amp;
+    call(<span class="type">void</span> <span class="predefined-type">Connection</span>.drop());
+
+  after(<span class="predefined-type">Connection</span> c): endTiming(c) {
+    getTimer(c).stop();
+    c.getCaller().totalConnectTime += getTimer(c).getTime();
+    c.getReceiver().totalConnectTime += getTimer(c).getTime();
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_billing_aspect">The <code>Billing</code> aspect</h4>
+<div class="paragraph">
+<p>The Billing system adds billing functionality to the telecom application
+on top of timing.</p>
+</div>
+<div class="paragraph">
+<p>The <code>Billing</code> aspect declares that each <code>Connection</code> has a <code>payer</code>
+inter-type field to indicate who initiated the call and therefore who is
+responsible to pay for it. It also declares the inter-type method
+<code>callRate</code> of <code>Connection</code> so that local and long distance calls can be
+charged differently. The call charge must be calculated after the timer
+is stopped; the after advice on pointcut <code>Timing.endTiming</code> does this,
+and <code>Billing</code> is declared to be more precedent than <code>Timing</code> to make
+sure that this advice runs after <code>Timing</code>'s advice on the same join
+point. Finally, it declares inter-type methods and fields for <code>Customer</code>
+to handle the <code>totalCharge</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> aspect Billing {
+  <span class="comment">// precedence required to get advice on endtiming in the right order</span>
+  declare precedence: Billing, Timing;
+
+  <span class="directive">public</span> <span class="directive">static</span> <span class="directive">final</span> <span class="type">long</span> LOCAL_RATE = <span class="integer">3</span>;
+  <span class="directive">public</span> <span class="directive">static</span> <span class="directive">final</span> <span class="type">long</span> LONG_DISTANCE_RATE = <span class="integer">10</span>;
+
+  <span class="directive">public</span> Customer <span class="predefined-type">Connection</span>.payer;
+  <span class="directive">public</span> Customer getPayer(<span class="predefined-type">Connection</span> conn) { <span class="keyword">return</span> conn.payer; }
+
+  after(Customer cust) returning (<span class="predefined-type">Connection</span> conn):
+  args(cust, ..) &amp;&amp; call(<span class="predefined-type">Connection</span>+.new(..)) {
+    conn.payer = cust;
+  }
+
+  <span class="directive">public</span> <span class="directive">abstract</span> <span class="type">long</span> <span class="predefined-type">Connection</span>.callRate();
+
+  <span class="directive">public</span> <span class="type">long</span> LongDistance.callRate() { <span class="keyword">return</span> LONG_DISTANCE_RATE; }
+  <span class="directive">public</span> <span class="type">long</span> Local.callRate() { <span class="keyword">return</span> LOCAL_RATE; }
+
+  after(<span class="predefined-type">Connection</span> conn): Timing.endTiming(conn) {
+    <span class="type">long</span> time = Timing.aspectOf().getTimer(conn).getTime();
+    <span class="type">long</span> rate = conn.callRate();
+    <span class="type">long</span> cost = rate * time;
+    getPayer(conn).addCharge(cost);
+  }
+
+  <span class="directive">public</span> <span class="type">long</span> Customer.totalCharge = <span class="integer">0</span>;
+  <span class="directive">public</span> <span class="type">long</span> getTotalCharge(Customer cust) { <span class="keyword">return</span> cust.totalCharge; }
+
+  <span class="directive">public</span> <span class="type">void</span> Customer.addCharge(<span class="type">long</span> charge) {
+    totalCharge += charge;
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_accessing_the_inter_type_state">Accessing the inter-type state</h4>
+<div class="paragraph">
+<p>Both the aspects <code>Timing</code> and <code>Billing</code> contain the definition of
+operations that the rest of the system may want to access. For example,
+when running the simulation with one or both aspects, we want to find
+out how much time each customer spent on the telephone and how big their
+bill is. That information is also stored in the classes, but they are
+accessed through static methods of the aspects, since the state they
+refer to is private to the aspect.</p>
+</div>
+<div class="paragraph">
+<p>Take a look at the file <code>TimingSimulation.java</code>. The most important
+method of this class is the method <code>report(Customer)</code>, which is used in
+the method run of the superclass <code>AbstractSimulation</code>. This method is
+intended to print out the status of the customer, with respect to the
+<code>Timing</code> feature.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">protected</span> <span class="type">void</span> report(Customer c){
+  Timing t = Timing.aspectOf();
+  <span class="predefined-type">System</span>.out.println(c + <span class="string"><span class="delimiter">&quot;</span><span class="content"> spent </span><span class="delimiter">&quot;</span></span> + t.getTotalConnectTime(c));
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_compiling_and_running_2">Compiling and Running</h4>
+<div class="paragraph">
+<p>The files timing.lst and billing.lst contain file lists for the timing
+and billing configurations. To build and run the application with only
+the timing feature, go to the directory examples and type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">ajc -argfile telecom/timing.lst
+java telecom.TimingSimulation</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To build and run the application with the timing and billing features,
+go to the directory examples and type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">ajc -argfile telecom/billing.lst
+java telecom.BillingSimulation</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_discussion">Discussion</h4>
+<div class="paragraph">
+<p>There are some explicit dependencies between the aspects <code>Billing</code> and
+<code>Timing</code>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Billing</code> is declared more precedent than <code>Timing</code> so that <code>Billing</code>'s after
+advice runs after that of <code>Timing</code> when they are on the same join point.</p>
+</li>
+<li>
+<p><code>Billing</code> uses the pointcut <code>Timing.endTiming</code>.</p>
+</li>
+<li>
+<p><code>Billing</code> needs access to the timer associated with a connection.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="examples-reusable">Reusable Aspects</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_tracing_using_aspects_revisited">Tracing using Aspects, Revisited</h3>
+<div class="paragraph">
+<p>(The code for this example is in <code>InstallDir/examples/tracing</code>.)</p>
+</div>
+<div class="sect3">
+<h4 id="_tracing_version_3">Tracing - Version 3</h4>
+<div class="paragraph">
+<p>One advantage of not exposing the methods <code>traceEntry</code> and <code>traceExit</code> as
+public operations is that we can easily change their interface without
+any dramatic consequences in the rest of the code.</p>
+</div>
+<div class="paragraph">
+<p>Consider, again, the program without AspectJ. Suppose, for example, that
+at some point later the requirements for tracing change, stating that
+the trace messages should always include the string representation of
+the object whose methods are being traced. This can be achieved in at
+least two ways. One way is keep the interface of the methods
+<code>traceEntry</code> and <code>traceExit</code> as it was before,</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> traceEntry(<span class="predefined-type">String</span> str);
+<span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> traceExit(<span class="predefined-type">String</span> str);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this case, the caller is responsible for ensuring that the string
+representation of the object is part of the string given as argument.
+So, calls must look like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">Trace.traceEntry(<span class="string"><span class="delimiter">&quot;</span><span class="content">Square.distance in </span><span class="delimiter">&quot;</span></span> + toString());</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Another way is to enforce the requirement with a second argument in the
+trace operations, e.g.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> traceEntry(<span class="predefined-type">String</span> str, <span class="predefined-type">Object</span> obj);
+<span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> traceExit(<span class="predefined-type">String</span> str, <span class="predefined-type">Object</span> obj);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this case, the caller is still responsible for sending the right
+object, but at least there is some guarantees that some object will be
+passed. The calls will look like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">Trace.traceEntry(<span class="string"><span class="delimiter">&quot;</span><span class="content">Square.distance</span><span class="delimiter">&quot;</span></span>, <span class="local-variable">this</span>);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In either case, this change to the requirements of tracing will have
+dramatic consequences in the rest of the code&#8201;&#8212;&#8201;every call to the trace
+operations <code>traceEntry</code> and <code>traceExit</code> must be changed!</p>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s another advantage of doing tracing with an aspect. We&#8217;ve already
+seen that in version 2 <code>traceEntry</code> and <code>traceExit</code> are not publicly
+exposed. So changing their interfaces, or the way they are used, has
+only a small effect inside the <code>Trace</code> class. Here&#8217;s a partial view at
+the implementation of <code>Trace</code>, version 3. The differences with respect
+to version 2 are stressed in the comments:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">abstract</span> aspect Trace {
+
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">int</span> TRACELEVEL = <span class="integer">0</span>;
+  <span class="directive">protected</span> <span class="directive">static</span> <span class="predefined-type">PrintStream</span> stream = <span class="predefined-constant">null</span>;
+  <span class="directive">protected</span> <span class="directive">static</span> <span class="type">int</span> callDepth = <span class="integer">0</span>;
+
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> initStream(<span class="predefined-type">PrintStream</span> s) {
+    stream = s;
+  }
+
+  <span class="directive">protected</span> <span class="directive">static</span> <span class="type">void</span> traceEntry(<span class="predefined-type">String</span> str, <span class="predefined-type">Object</span> o) {
+    <span class="keyword">if</span> (TRACELEVEL == <span class="integer">0</span>) <span class="keyword">return</span>;
+    <span class="keyword">if</span> (TRACELEVEL == <span class="integer">2</span>) callDepth++;
+    printEntering(str + <span class="string"><span class="delimiter">&quot;</span><span class="content">: </span><span class="delimiter">&quot;</span></span> + o.toString());
+  }
+
+  <span class="directive">protected</span> <span class="directive">static</span> <span class="type">void</span> traceExit(<span class="predefined-type">String</span> str, <span class="predefined-type">Object</span> o) {
+    <span class="keyword">if</span> (TRACELEVEL == <span class="integer">0</span>) <span class="keyword">return</span>;
+    printExiting(str + <span class="string"><span class="delimiter">&quot;</span><span class="content">: </span><span class="delimiter">&quot;</span></span> + o.toString());
+    <span class="keyword">if</span> (TRACELEVEL == <span class="integer">2</span>) callDepth--;
+  }
+
+  <span class="directive">private</span> <span class="directive">static</span> <span class="type">void</span> printEntering(<span class="predefined-type">String</span> str) {
+    printIndent();
+    stream.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Entering </span><span class="delimiter">&quot;</span></span> + str);
+  }
+
+  <span class="directive">private</span> <span class="directive">static</span> <span class="type">void</span> printExiting(<span class="predefined-type">String</span> str) {
+    printIndent();
+    stream.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Exiting </span><span class="delimiter">&quot;</span></span> + str);
+  }
+
+  <span class="directive">private</span> <span class="directive">static</span> <span class="type">void</span> printIndent() {
+    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="integer">0</span>; i &lt; callDepth; i++)
+      stream.print(<span class="string"><span class="delimiter">&quot;</span><span class="content">  </span><span class="delimiter">&quot;</span></span>);
+  }
+
+  <span class="directive">abstract</span> pointcut myClass(<span class="predefined-type">Object</span> obj);
+
+  pointcut myConstructor(<span class="predefined-type">Object</span> obj): myClass(obj) &amp;&amp; execution(<span class="keyword">new</span>(..));
+  pointcut myMethod(<span class="predefined-type">Object</span> obj):
+    myClass(obj) &amp;&amp; execution(* *(..)) &amp;&amp; !execution(<span class="predefined-type">String</span> toString());
+
+  before(<span class="predefined-type">Object</span> obj): myConstructor(obj) {
+    traceEntry(<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span> + thisJoinPointStaticPart.getSignature(), obj);
+  }
+  after(<span class="predefined-type">Object</span> obj): myConstructor(obj) {
+    traceExit(<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span> + thisJoinPointStaticPart.getSignature(), obj);
+  }
+
+  before(<span class="predefined-type">Object</span> obj): myMethod(obj) {
+    traceEntry(<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span> + thisJoinPointStaticPart.getSignature(), obj);
+  }
+  after(<span class="predefined-type">Object</span> obj): myMethod(obj) {
+    traceExit(<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span> + thisJoinPointStaticPart.getSignature(), obj);
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see, we decided to apply the first design by preserving the
+interface of the methods <code>traceEntry</code> and <code>traceExit</code>. But it doesn&#8217;t
+matter - we could as easily have applied the second design (the code in
+the directory <code>examples/tracing/version3</code> has the second design). The
+point is that the effects of this change in the tracing requirements are
+limited to the <code>Trace</code> aspect class.</p>
+</div>
+<div class="paragraph">
+<p>One implementation change worth noticing is the specification of the
+pointcuts. They now expose the object. To maintain full consistency with
+the behavior of version 2, we should have included tracing for static
+methods, by defining another pointcut for static methods and advising
+it. We leave that as an exercise.</p>
+</div>
+<div class="paragraph">
+<p>Moreover, we had to exclude the execution join point of the method
+<code>toString</code> from the <code>methods</code> pointcut. The problem here is that
+<code>toString</code> is being called from inside the advice. Therefore if we trace
+it, we will end up in an infinite recursion of calls. This is a subtle
+point, and one that you must be aware when writing advice. If the advice
+calls back to the objects, there is always the possibility of recursion.
+Keep that in mind!</p>
+</div>
+<div class="paragraph">
+<p>In fact, esimply excluding the execution join point may not be enough,
+if there are calls to other traced methods within it - in which case,
+the restriction should be</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">&amp;&amp; !cflow(execution(<span class="predefined-type">String</span> toString()))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>excluding both the execution of <code>toString</code> methods and all join points
+under that execution.</p>
+</div>
+<div class="paragraph">
+<p>In summary, to implement the change in the tracing requirements we had
+to make a couple of changes in the implementation of the <code>Trace</code> aspect
+class, including changing the specification of the pointcuts. That&#8217;s
+only natural. But the implementation changes were limited to this
+aspect. Without aspects, we would have to change the implementation of
+every application class.</p>
+</div>
+<div class="paragraph">
+<p>Finally, to run this version of tracing, go to the directory <code>examples</code>
+and type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">ajc -argfile tracing/tracev3.lst</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The file <code>tracev3.lst</code> lists the application classes as well as this
+version of the files <code>Trace.java</code> and <code>TraceMyClasses.java</code>. To run the
+program, type</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">java tracing.version3.TraceMyClasses</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output should be:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">  --&gt; tracing.TwoDShape(double, double)
+  &lt;-- tracing.TwoDShape(double, double)
+  --&gt; tracing.Circle(double, double, double)
+  &lt;-- tracing.Circle(double, double, double)
+  --&gt; tracing.TwoDShape(double, double)
+  &lt;-- tracing.TwoDShape(double, double)
+  --&gt; tracing.Circle(double, double, double)
+  &lt;-- tracing.Circle(double, double, double)
+  --&gt; tracing.Circle(double)
+  &lt;-- tracing.Circle(double)
+  --&gt; tracing.TwoDShape(double, double)
+  &lt;-- tracing.TwoDShape(double, double)
+  --&gt; tracing.Square(double, double, double)
+  &lt;-- tracing.Square(double, double, double)
+  --&gt; tracing.Square(double, double)
+  &lt;-- tracing.Square(double, double)
+  --&gt; double tracing.Circle.perimeter()
+  &lt;-- double tracing.Circle.perimeter()
+c1.perimeter() = 12.566370614359172
+  --&gt; double tracing.Circle.area()
+  &lt;-- double tracing.Circle.area()
+c1.area() = 12.566370614359172
+  --&gt; double tracing.Square.perimeter()
+  &lt;-- double tracing.Square.perimeter()
+s1.perimeter() = 4.0
+  --&gt; double tracing.Square.area()
+  &lt;-- double tracing.Square.area()
+s1.area() = 1.0
+  --&gt; double tracing.TwoDShape.distance(TwoDShape)
+    --&gt; double tracing.TwoDShape.getX()
+    &lt;-- double tracing.TwoDShape.getX()
+    --&gt; double tracing.TwoDShape.getY()
+    &lt;-- double tracing.TwoDShape.getY()
+  &lt;-- double tracing.TwoDShape.distance(TwoDShape)
+c2.distance(c1) = 4.242640687119285
+  --&gt; double tracing.TwoDShape.distance(TwoDShape)
+    --&gt; double tracing.TwoDShape.getX()
+    &lt;-- double tracing.TwoDShape.getX()
+    --&gt; double tracing.TwoDShape.getY()
+    &lt;-- double tracing.TwoDShape.getY()
+  &lt;-- double tracing.TwoDShape.distance(TwoDShape)
+s1.distance(c1) = 2.23606797749979
+  --&gt; String tracing.Square.toString()
+    --&gt; String tracing.TwoDShape.toString()
+    &lt;-- String tracing.TwoDShape.toString()
+  &lt;-- String tracing.Square.toString()
+s1.toString(): Square side = 1.0 @ (1.0, 2.0)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 15:02:44 +0700
+</div>
+</div>
+</body>
+</html>

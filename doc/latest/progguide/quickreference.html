@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>AspectJ Quick Reference</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body id="quick" class="article toc2 toc-left">
+<div id="header">
+<h1>AspectJ Quick Reference</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#quick-pointcuts">Pointcuts</a></li>
+<li><a href="#quick-typePatterns">Type Patterns</a></li>
+<li><a href="#quick-advice">Advice</a></li>
+<li><a href="#quick-interType">Inter-type member declarations</a></li>
+<li><a href="#quick-other">Other declarations</a></li>
+<li><a href="#quick-aspectAssociations">Aspects</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="quick-pointcuts">Pointcuts</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Methods and Constructors</strong></th>
+<th class="tableblock halign-left valign-top"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>call(Signature)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">every call to any method or constructor matching
+<code>Signature</code> at the call site</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>execution(Signature)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">every execution of any method or constructor
+matching <code>Signature</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Fields</strong></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>get(Signature)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">every reference to any field matching <code>Signature</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>set(Signature)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">every assignment to any field matching <code>Signature</code>.
+The assigned value can be exposed with an <code>args</code> pointcut</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Exception Handlers</strong></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>handler(TypePattern)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">every exception handler for any <code>Throwable</code>
+type in <code>TypePattern</code>. The exception value can be exposed with an <code>args</code>
+pointcut</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Advice</strong></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adviceexecution()</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">every execution of any piece of advice</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Initialization</strong></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>staticinitialization(TypePattern)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">every execution of a static
+initializer for any type in <code>TypePattern</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>initialization(Signature)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">every initialization of an object when the
+first constructor called in the type matches <code>Signature</code>, encompassing
+the return from the super constructor call to the return of the
+first-called constructor</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>preinitialization(Signature)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">every pre-initialization of an object
+when the first constructor called in the type matches <code>Signature</code>,
+encompassing the entry of the first-called constructor to the call to
+the super constructor</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Lexical</strong></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>within(TypePattern)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">every join point from code defined in a type in
+<code>TypePattern</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>withincode(Signature)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">every join point from code defined in a method
+or constructor matching <code>Signature</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="quick-typePatterns">Type Patterns</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A type pattern is one of</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Type pattern</strong></th>
+<th class="tableblock halign-left valign-top"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TypeNamePattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">all types in <code>TypeNamePattern</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SubtypePattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">all types in <code>SubtypePattern</code>, a pattern with a <code>+</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ArrayTypePattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">all types in <code>ArrayTypePattern</code>, a pattern with one or more <code>[]</code>s.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>!TypePattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">all types not in <code>TypePattern</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TypePattern0 &amp;&amp; TypePattern1</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">all types in both <code>TypePattern0</code> and <code>TypePattern1</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TypePattern0 || TypePattern1</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">all types in either <code>TypePattern0</code> or <code>TypePattern1</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>( TypePattern )</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">all types in <code>TypePattern</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>where <code>TypeNamePattern</code> can either be a plain type name, the wildcard
+<code>*</code> (indicating all types), or an identifier with embedded <code>*</code> and <code>..</code>
+wildcards.</p>
+</div>
+<div class="paragraph">
+<p>An embedded <code>*</code> in an identifier matches any sequence of characters, but
+does not match the package (or inner-type) separator <code>.</code>.</p>
+</div>
+<div class="paragraph">
+<p>An embedded <code>..</code> in an identifier matches any sequence of characters
+that starts and ends with the package (or inner-type) separator <code>.</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="quick-advice">Advice</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Each piece of advice is of the form</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">[ strictfp ] AdviceSpec [ throws TypeList ] : Pointcut { Body }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>AdviceSpec</code> is one of</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>before( Formals )</code></dt>
+<dd>
+<p>runs before each join point</p>
+</dd>
+<dt class="hdlist1"><code>after( Formals ) returning [ ( Formal ) ]</code></dt>
+<dd>
+<p>runs after each join point that returns normally. The optional formal
+gives access to the returned value</p>
+</dd>
+<dt class="hdlist1"><code>after( Formals ) throwing [ ( Formal ) ]</code></dt>
+<dd>
+<p>runs after each join point that throws a <code>Throwable</code>.
+If the optional formal is present, runs only after each join point
+that throws a <code>Throwable</code> of the type of <code>Formal</code>, and <code>Formal</code> gives access to the
+<code>Throwable</code> exception value</p>
+</dd>
+<dt class="hdlist1"><code>after( Formals )</code></dt>
+<dd>
+<p>runs after each join point regardless of whether it returns normally
+or throws a <code>Throwable</code></p>
+</dd>
+<dt class="hdlist1"><code>Type around( Formals )</code></dt>
+<dd>
+<p>runs in place of each join point. The join point can be executed by
+calling <code>proceed</code>, which takes the same number and types of arguments as the around
+advice.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Three special variables are available inside of advice bodies:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>thisJoinPoint</code></dt>
+<dd>
+<p>an object of type <code>org.aspectj.lang.JoinPoint</code> representing the join point
+at which the advice is executing</p>
+</dd>
+<dt class="hdlist1"><code>thisJoinPointStaticPart</code></dt>
+<dd>
+<p>equivalent to <code>thisJoinPoint.getStaticPart()</code>, but may use fewer runtime resources</p>
+</dd>
+<dt class="hdlist1"><code>thisEnclosingJoinPointStaticPart</code></dt>
+<dd>
+<p>the static part of the dynamically enclosing join point</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="quick-interType">Inter-type member declarations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Each inter-type member is one of</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>Modifiers ReturnType OnType . Id ( Formals ) [ throws TypeList ] { Body }</code></dt>
+<dd>
+<p>a method on <code>OnType</code></p>
+</dd>
+<dt class="hdlist1"><code>abstract Modifiers ReturnType OnType . Id ( Formals ) [ throws TypeList ] ;</code></dt>
+<dd>
+<p>an abstract method on <code>OnType</code></p>
+</dd>
+<dt class="hdlist1"><code>Modifiers OnType .  new ( Formals ) [ throws TypeList ] { Body }</code></dt>
+<dd>
+<p>a constructor on <code>OnType</code></p>
+</dd>
+<dt class="hdlist1"><code>Modifiers Type OnType . Id [ = Expression ] ;</code></dt>
+<dd>
+<p>a field on <code>OnType</code></p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="quick-other">Other declarations</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>declare parents : TypePattern extends Type ;</code></dt>
+<dd>
+<p>the types in <code>TypePattern</code> extend <code>Type</code></p>
+</dd>
+<dt class="hdlist1"><code>declare parents : TypePattern implements TypeList ;</code></dt>
+<dd>
+<p>the types in <code>TypePattern</code> implement the types in <code>TypeList</code></p>
+</dd>
+<dt class="hdlist1"><code>declare warning : Pointcut : String ;</code></dt>
+<dd>
+<p>if any of the join points in <code>Pointcut</code> possibly exist in the program,
+the compiler emits the warning <code>String</code></p>
+</dd>
+<dt class="hdlist1"><code>declare error : Pointcut : String ;</code></dt>
+<dd>
+<p>if any of the join points in <code>Pointcut</code> could possibly exist in the program,
+the compiler emits the error <code>String</code></p>
+</dd>
+<dt class="hdlist1"><code>declare soft : Type : Pointcut ;</code></dt>
+<dd>
+<p>any <code>Type</code> exception that gets thrown at any join point picked out by <code>Pointcut</code>
+is wrapped in <code>org.aspectj.lang.SoftException</code></p>
+</dd>
+<dt class="hdlist1"><code>declare precedence : TypePatternList ;</code></dt>
+<dd>
+<p>at any join point where multiple pieces of advice apply, the advice
+precedence at that join point is in <code>TypePatternList</code> order</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="quick-aspectAssociations">Aspects</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Each aspect is of the form</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">[ privileged ] Modifiers aspect Id [ extends Type ] [ implements TypeList ] [ PerClause ] { Body }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>PerClause</code> defines how the aspect is instantiated and associated
+(<code>issingleton()</code> by default):</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">PerClause</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Accessor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[ <code>issingleton()</code> ]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">One instance of the aspect is made. This is the
+default.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aspectOf()</code> at all join points</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>perthis(Pointcut)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An instance is associated with each object that is
+the currently executing object at any join point in <code>Pointcut</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aspectOf(Object)</code> at all join points</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pertarget(Pointcut)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An instance is associated with each object that
+is the target object at any join point in <code>Pointcut</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aspectOf(Object)</code> at all join points</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>percflow(Pointcut)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The aspect is defined for each entrance to the
+control flow of the join points defined by <code>Pointcut</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aspectOf()</code> at
+join points in <code>cflow(Pointcut)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>percflowbelow(Pointcut)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The aspect is defined for each entrance to
+the control flow below the join points defined by <code>Pointcut</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aspectOf()</code> at join points in <code>cflowbelow(Pointcut)</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>AspectJ 1.1</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body id="readme-1_1" class="article toc2 toc-left">
+<div id="header">
+<h1>AspectJ 1.1</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#language">The Language</a></li>
+<li><a href="#compiler">The Compiler</a></li>
+<li><a href="#tools">Support Tools</a></li>
+<li><a href="#runtime">The Runtime Library</a></li>
+<li><a href="#devenv">The AJDE Tools</a></li>
+<li><a href="#sources">The Sources and the Licenses</a></li>
+<li><a href="#distribution">The AspectJ distribution</a></li>
+<li><a href="#details">Details of some language and compiler changes</a>
+<ul class="sectlevel2">
+<li><a href="#ASPECT_INSTANTIATION_AND_ADVICE">Aspect Instantiation and Advice</a></li>
+<li><a href="#THROWS_PATTERN">Matching based on throws</a></li>
+<li><a href="#NEW_PCDS">New kinded pointcut designators</a></li>
+<li><a href="#PER_TYPE">New pertype aspect specifier (not in 1.1)</a></li>
+<li><a href="#SINGLE_INTERCLASS_TARGET">One target for intertype declarations</a></li>
+<li><a href="#UNAVAILABLE_JOIN_POINTS">No initializer execution join points</a></li>
+<li><a href="#AFTER_HANDLER">No after or around advice on handler join points</a></li>
+<li><a href="#CONSTRUCTOR_EXECUTION_IS_BIGGER">Initializers run inside constructor execution join points</a></li>
+<li><a href="#INTER_TYPE_FIELD_INITIALIZERS">Inter-type field initializers</a></li>
+<li><a href="#WITHIN_MEMBER_TYPES">Small limitations of the within pointcut</a></li>
+<li><a href="#WITHIN_CODE">Small limitations of the withincode pointcut</a></li>
+<li><a href="#INSTANCEOF_ON_WILD">Can&#8217;t do instanceof matching on type patterns with wildcard</a></li>
+<li><a href="#NO_SOURCE_COLUMN">SourceLocation.getColumn()</a></li>
+<li><a href="#ASPECT_PRECEDENCE">Aspect precedence</a></li>
+<li><a href="#SOURCEROOT">The -sourceroots option</a></li>
+<li><a href="#BYTECODE_WEAVING">The -injars option</a></li>
+<li><a href="#OUTJAR">The -outjar option</a></li>
+<li><a href="#INCREMENTAL">Incremental compilation</a></li>
+<li><a href="#XNOWEAVE">-XnoWeave, a compiler option to suppress weaving</a></li>
+<li><a href="#BINARY_ASPECTS">-aspectpath, working with aspects in .class/.jar form</a></li>
+<li><a href="#NO_CALLEE_SIDE_CALL">Callee-side call join points</a></li>
+<li><a href="#OTHER_X_OPTIONS">Various -X options</a></li>
+<li><a href="#ERROR_MESSAGES">Some confusing error messages</a></li>
+<li><a href="#MESSAGE_CONTEXT">Source code context is not shown for errors and warnings detected during bytecode weaving</a></li>
+<li><a href="#XLINT">The -Xlint option</a></li>
+<li><a href="#NO_SOURCE">Source-specific options</a></li>
+<li><a href="#NO_STRICT_LENIENT">The -strict and -lenient options</a></li>
+<li><a href="#NO_PORTING">The -porting option</a></li>
+<li><a href="#_13_REQUIRED">J2SE 1.3 required</a></li>
+<li><a href="#DEFAULT_CONSTRUCTOR_CONFLICT">Default constructors</a></li>
+<li><a href="#SUPER_IFACE_INITS">Initialization join points for super-interfaces</a></li>
+<li><a href="#VOID_FIELD_SET">Field Set Join Points</a></li>
+<li><a href="#XNOINLINE">The -XnoInline Option</a></li>
+<li><a href="#TARGET_TYPES_MADE_PUBLIC">Target types made public</a></li>
+<li><a href="#STRINGBUFFER">String + now advised</a></li>
+<li><a href="#ONE_FOUR_METHOD_SIGNATURES">The -1.4 flag and method signatures</a></li>
+</ul>
+</li>
+<li><a href="#knownLimitations">Known limitations</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>© Copyright 2002 Palo Alto Research Center, Incorporated, 2003
+Contributors. All rights reserved.</em></p>
+</div>
+<div class="paragraph">
+<p>This is the initial release of AspectJ 1.1. It includes a small number
+of new language features as well as major improvements to the
+functionality of the tools.</p>
+</div>
+<div class="paragraph">
+<p>This document describes the differences between AspectJ versions 1.1 and
+1.0.6. Users new to AspectJ need only read the
+<a href="progguide/index.html">AspectJ Programming Guide</a> since it describes
+the 1.1 language. Users familiar with AspectJ 1.0 may find this document
+a quicker way to learn what changed in the language and tools, and
+should use it as a guide for porting programs from 1.0 to 1.1.</p>
+</div>
+<div class="paragraph">
+<p>This document first summarizes changes from the 1.0 release in</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#language">the language</a>,</p>
+</li>
+<li>
+<p><a href="#compiler">the compiler</a>,</p>
+</li>
+<li>
+<p><a href="#tools">the support tools</a>,</p>
+</li>
+<li>
+<p><a href="#runtime">the runtime</a>,</p>
+</li>
+<li>
+<p><a href="#devenv">the development environment support</a>,</p>
+</li>
+<li>
+<p><a href="#sources">the sources</a>, and</p>
+</li>
+<li>
+<p><a href="#distribution">the distribution</a>,</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>then <a href="#details">details</a> some of the language and compiler changes,
+and finally points readers to the bug database for any
+<a href="#knownLimitations">known limitations</a>.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="language">The Language</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>AspectJ 1.1 is a slightly different language than AspectJ 1.0. In all
+but a few cases, programs written in AspectJ 1.0 should compile
+correctly in AspectJ 1.1. In many cases, there are new or preferred
+forms in AspectJ 1.1. However, some AspectJ 1.0 features have changed in
+1.1, so some 1.0 programs will not compile or will run differently in
+1.1. The corresponding features are marked below as compile-time or
+run-time incompatible (<em>CTI</em> or <em>RTI</em>, respectively). When the language
+change involves a move in the static shadow effective at run-time but
+also apparent at compile-time (e.g., in declare error or warning
+statements), it is marked <em>CRTI</em>. Programs using run-time incompatible
+forms should be verified that they are behaving as expected in 1.1.</p>
+</div>
+<div class="paragraph">
+<p>Most changes to the language are additions to expressibility requested
+by our users:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#THROWS_PATTERN">Matching based on throws</a>: You can now make finer
+discriminations between methods based on declared exceptions.</p>
+</li>
+<li>
+<p><a href="#NEW_PCDS">New kinded pointcut designators</a>: Now every kind of
+join point has a corresponding kinded pointcut designator.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Some are have different behavior in edge cases but offer improved power
+and clarity:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#ASPECT_PRECEDENCE">New aspect precedence form</a>: AspectJ 1.1 has a
+new declare form, <code>declare     precedence</code>, that replaces the
+"dominates" clause on aspects. (<em>CTI</em>)</p>
+</li>
+<li>
+<p>The order of <a href="#SUPER_IFACE_INITS">initialization join points for
+super-interfaces</a> has been clarified. (<em>RTI</em>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>But in order to support weaving into bytecode effectively, several
+incompatible changes had to be made to the language:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A class&#8217;s default constructor may
+<a href="#DEFAULT_CONSTRUCTOR_CONFLICT">conflict</a> with an inter-type
+constructor. (<em>CTI</em>)</p>
+</li>
+<li>
+<p><a href="#NO_CALLEE_SIDE_CALL">No callee-side call join points</a>: The
+AspectJ 1.1 compiler does not expose call join points unless it is given
+the calling code. (<em>CRTI</em>)</p>
+</li>
+<li>
+<p><a href="#SINGLE_INTERCLASS_TARGET">One target for intertype declarations</a>.
+(<em>CTI</em>)</p>
+</li>
+<li>
+<p><a href="#UNAVAILABLE_JOIN_POINTS">No initializer execution join points</a>.
+(<em>RTI</em>)</p>
+</li>
+<li>
+<p><a href="#AFTER_HANDLER">No after or around advice on handler join points</a>.
+(<em>CTI</em>)</p>
+</li>
+<li>
+<p><a href="#CONSTRUCTOR_EXECUTION_IS_BIGGER">Initializers run inside
+constructor execution join points</a>. (<em>RTI</em>)</p>
+</li>
+<li>
+<p><a href="#INTER_TYPE_FIELD_INITIALIZERS">inter-type field initializers</a> run
+before class-local field initializers. (<em>RTI</em>)</p>
+</li>
+<li>
+<p><a href="#WITHIN_MEMBER_TYPES">Small limitations of the within pointcut.</a>
+(<em>CRTI</em>)</p>
+</li>
+<li>
+<p><a href="#WITHIN_CODE">Small limitations of the withincode pointcut.</a>
+(<em>CRTI</em>)</p>
+</li>
+<li>
+<p><a href="#INSTANCEOF_ON_WILD">Can&#8217;t do instanceof matching on type patterns
+with wildcards</a>. (<em>CTI</em>)</p>
+</li>
+<li>
+<p><a href="#NO_SOURCE_COLUMN">SourceLocation.getColumn() is deprecated and
+will always return 0</a>. (<em>RTI</em>)</p>
+</li>
+<li>
+<p>The interaction between aspect instantiation and advice has been
+<a href="#ASPECT_INSTANTIATION_AND_ADVICE">clarified</a>. (<em>RTI</em>)</p>
+</li>
+<li>
+<p><a href="#STRINGBUFFER">The String + operator is now correctly advised</a>.
+(<em>CRTI</em>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span id="NEW_LIMITATIONS">There</span> are a couple of language limitations for
+things that are rarely used that make the implementation simpler, so we
+have restricted the language accordingly.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#VOID_FIELD_SET">Field set join points now have a <code>void</code> return
+type.</a> This will require porting of code that uses the <code>set</code> PCD in
+conjunction with after-returning or around advice. (<em>CTI</em>)</p>
+</li>
+<li>
+<p>'declare soft: TYPE: POINTCUT;' - AspectJ 1.1 only accepts TYPE rather
+than a TYPE_PATTERN. This limitation makes declare soft much easier to
+implement efficiently. (<em>CTI</em>)</p>
+</li>
+<li>
+<p>Inter-type field declarations only allow a single field per line, i.e.
+this is now illegal 'int C.field1, D.field2;' This must instead be, 'int
+C.field1; int D.field2;' (<em>CTI</em>)</p>
+</li>
+<li>
+<p>We did not implement the handling of more than one <code>..</code> wildcard in
+args PCD&#8217;s (rarely encountered in the wild) because we didn&#8217;t have the
+time. This might be available in later releases if there is significant
+outcry. (<em>CTI</em>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We did not implement the long-awaited <a href="#PER_TYPE">new pertype aspect
+specifier</a> in this release, but it may well be in a future release.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="compiler">The Compiler</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The compiler for AspectJ 1.1 is different than the compiler for AspectJ
+1.0. While this document describes the differences in the compiler, it&#8217;s
+worthwhile noting that much effort has been made to make sure that the
+interface to ajc 1.1 is, as much as possible, the same as the interface
+to ajc 1.0. There are two important changes under the hood, however.</p>
+</div>
+<div class="paragraph">
+<p>First, the 1.1 compiler is implemented on top of the open-source Eclipse
+compiler. This has two benefits: It allows us to concentrate on the
+AspectJ extensions to Java and let the Eclipse team worry about making
+sure the Java edge cases work, and it allows us to piggyback on
+Eclipse&#8217;s already mature incremental compilation facilities.</p>
+</div>
+<div class="paragraph">
+<p>Second, ajc now cleanly delineates compilation of source code from
+assembly (or "weaving") of bytecode. The compiler still accepts source
+code, but internally it transforms it into bytecode format before
+weaving.</p>
+</div>
+<div class="paragraph">
+<p>This new architecture, and other changes to the compiler, allows us to
+implement some features that were defined in the AspectJ 1.0 language
+but not implementable in the 1.1 compiler. It also makes some new
+features available:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#SOURCEROOT">The -sourceroots option</a> takes one or more
+directories, and indicates that all the source files in those
+directories should be passed to the compiler.</p>
+</li>
+<li>
+<p><a href="#BYTECODE_WEAVING">The -injars option</a> takes one or more jar
+files, and indicates that all the classfiles in the jar files should be
+woven into.</p>
+</li>
+<li>
+<p><a href="#BINARY_ASPECTS">The -aspectpath option</a> takes one or more jar
+files, and weaves any aspects in .class form into the sources.</p>
+</li>
+<li>
+<p><a href="#OUTJAR">The -outjar option</a> indicates that the result classfiles
+of compiling and weaving should be placed in the specified jar file.</p>
+</li>
+<li>
+<p><a href="#XLINT">The -Xlint option</a> allows control over warnings.</p>
+</li>
+<li>
+<p><a href="#OTHER_X_OPTIONS">Various -X options</a> changed.</p>
+</li>
+<li>
+<p><a href="#INCREMENTAL">The -incremental option</a> tells the AspectJ 1.1
+compiler to recompile only as necessary.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Some other features we wanted to support for 1.1, but did not make it
+into this release:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#ERROR_MESSAGES">Error messages will sometimes be scary</a></p>
+</li>
+<li>
+<p><a href="#MESSAGE_CONTEXT">Source code context is not shown for errors and
+warnings detected during bytecode weaving</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>But some features of the 1.0 compiler are not supported in the 1.1
+compiler:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#NO_SOURCE">The source-related options</a> -preprocess, -usejavac,
+-nocomment and -workingdir</p>
+</li>
+<li>
+<p><a href="#NO_STRICT_LENIENT">The -strict and -lenient options</a></p>
+</li>
+<li>
+<p><a href="#NO_PORTING">The -porting option</a></p>
+</li>
+<li>
+<p><a href="#_13_REQUIRED">J2SE 1.2 is not supported; J2SE 1.3 or later is
+required.</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A short description of the options ajc accepts is available with
+&#8220;ajc -help&#8221;. Longer descriptions are available in the
+<a href="devguide/ajc-ref.html">Development Environment Guide section on
+ajc</a>.</p>
+</div>
+<div class="paragraph">
+<p>Some changes to the implementation are almost entirely internal:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The behavior of the compiler in <a href="#TARGET_TYPES_MADE_PUBLIC">lifting
+the visibility</a> of the target types of some declares and pointcuts to
+public has been clarified.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Also, it is worth noting that because AspectJ now works on bytecode, it
+is somewhat sensitive to how different compilers generate bytecode,
+especially when compiling with and without
+<a href="#ONE_FOUR_METHOD_SIGNATURES">the -1.4 flag</a>.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="tools">Support Tools</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This release includes an Ant task for old-style 1.0 build scripts, a new
+task for all the new compiler options, and a CompilerAdapter to support
+running <code>ajc</code> with the Javac task by setting the <code>build.compiler</code>
+property. The new task can automatically copy input resources to output
+and work in incremental mode using a "tag" file.</p>
+</div>
+<div class="paragraph">
+<p>This release does not include <code>ajdoc</code>, the documentation tool for
+AspectJ sources. Ajdoc is deeply dependent on the abstract syntax tree
+classes from the old compiler, so it needs a bottom-up rewrite. We think
+it best to use this opportunity to implement more general API&#8217;s for
+publishing and rendering static structure. Because those API&#8217;s are last
+to settle in the new architecture, and because the compiler itself is a
+higher priority, we are delaying work on ajdoc until after the 1.1
+release.</p>
+</div>
+<div class="paragraph">
+<p>AspectJ 1.1 will not include ajdb, the AspectJ stand-alone debugger. It
+is no longer necessary for two reasons. First, the -XnoInline flag will
+tell the compiler to generate code without inlining that should work
+correctly with any Java debugger. For code generated with inlining
+enabled, more third-party debuggers are starting to work according to
+JSR 45, "Debugging support for other languages," which is supported by
+AspectJ 1.0. We aim to support JSR-45 in AspectJ 1.1, but support will
+not be in the initial release. Consider using the -XnoInline flag until
+support is available.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="runtime">The Runtime Library</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This release has minor additions to the runtime library classes. As with
+any release, you should compile and run with the runtime library that
+came with your compiler, and you may run with a later version of the
+library without recompiling your code.</p>
+</div>
+<div class="paragraph">
+<p>In one instance, however, runtime classes behave differently this
+release. Because the AspectJ 1.1 compiler does its weaving through
+bytecode, column numbers of source locations are not available.
+Therefore, <code>thisJoinPoint.getSourceLocation().getColumn()</code> is deprecated
+and will always return 0.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="devenv">The AJDE Tools</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The AspectJ Browser supports incremental compilation and running
+programs. AJDE for JBuilder, AJDE for NetBeans, and AJDE for Emacs are
+now independent SourceForge projects (to keep their licenses). They use
+the batch-build mode of the new compiler.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sources">The Sources and the Licenses</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The AspectJ tools sources are available under the
+<a href="https://www.eclipse.org/org/documents/epl-2.0/EPL-2.0.txt">Eclipse Public
+License v 2.0</a> in the Git repository at <a href="https://eclipse.org/aspectj" class="bare">https://eclipse.org/aspectj</a>. For
+more information, see the FAQ entry on building sources.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="distribution">The AspectJ distribution</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>AspectJ 1.0 had many distributions - for the tools, the documentation,
+each IDE support package, their respective sources, and the Ant tasks -
+because they came under different licenses. All of AspectJ 1.1 is
+licensed under the CPL 1.0, so the tools, Ant tasks, and documentation
+are all in one distribution available from <a href="https://eclipse.org/aspectj" class="bare">https://eclipse.org/aspectj</a>.
+To retain their MPL 1.1 license, Ajde for
+<a href="http://aspectj4emacs.sourceforge.net/">Emacs</a>,
+<a href="http://aspectj4netbean.sourceforge.net/">NetBeans</a> and
+<a href="http://aspectj4jbuildr.sourceforge.net/">JBuilder</a> are now independent
+SourceForge projects.</p>
+</div>
+<hr>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="details">Details of some language and compiler changes</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="ASPECT_INSTANTIATION_AND_ADVICE">Aspect Instantiation and Advice</h3>
+<div class="paragraph">
+<p>In AspectJ 1.0.6, we made an effort to hide some complications with
+Aspect instantiation from the user. In particular, the following code
+compiled and ran:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Client</span> {
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
+        Client c = <span class="keyword">new</span> Client();
+    }
+}
+
+aspect Watchcall {
+    pointcut myConstructor(): execution(<span class="keyword">new</span>(..));
+
+    before(): myConstructor() {
+        <span class="predefined-type">System</span>.err.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Entering Constructor</span><span class="delimiter">&quot;</span></span>);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>But there&#8217;s a conceptual problem with this code: The before advice
+should run before the execution of all constructors in the system. It
+must run in the context of an instance of the Watchcall aspect. The only
+way to get such an instance is to have Watchcall&#8217;s default constructor
+execute. But before that executes, we need to run the before advice&#8230;&#8203;</p>
+</div>
+<div class="paragraph">
+<p>AspectJ 1.0.6 hid this circularity through the ad-hoc mechanism of
+preventing an aspect&#8217;s advice from matching join points that were within
+the aspect&#8217;s definition, and occurred before the aspect was initialized.
+But even in AspectJ 1.0.6, this circularity could be exposed:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Client</span> {
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">int</span> foo() { <span class="keyword">return</span> <span class="integer">3</span>; }
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
+        Client c = <span class="keyword">new</span> Client();
+    }
+}
+
+aspect Watchcall {
+    <span class="type">int</span> i = Client.foo();
+    pointcut myConstructor():
+        execution(<span class="keyword">new</span>(..)) || execution(<span class="type">int</span> foo());
+
+    before(): myConstructor() {
+        <span class="predefined-type">System</span>.err.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Entering Constructor</span><span class="delimiter">&quot;</span></span>);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This program would throw a NullPointerException when run, since
+Client.foo() was called before the Watchcall instance could be
+instantiated.</p>
+</div>
+<div class="paragraph">
+<p>In AspectJ 1.1, we have decided that half-hiding the problem just leads
+to trouble, and so we are no longer silently hiding some join points
+before aspect initialization. However, we have provided a better
+exception than a NullPointerException for this case. In AspectJ 1.1,
+both of the above programs will throw
+org.aspectj.lang.NoAspectBoundException.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="THROWS_PATTERN">Matching based on throws</h3>
+<div class="paragraph">
+<p>Type patterns may now be used to pick out methods and constructors based
+on their throws clauses. This allows the following two kinds of
+extremely wildcarded pointcuts:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut throwsMathlike():
+  <span class="comment">// each call to a method with a throws clause containing at least</span>
+  <span class="comment">// one exception with &quot;Math&quot; in its name.</span>
+  call(* *(..) <span class="directive">throws</span> *..*<span class="predefined-type">Math</span>*);
+
+pointcut doesNotThrowMathlike():
+  <span class="comment">// each call to a method with a throws clause containing no</span>
+  <span class="comment">// exceptions with &quot;Math&quot; in its name.</span>
+  call(* *(..) <span class="directive">throws</span> !*..*<span class="predefined-type">Math</span>*);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The longwinded rules are that a method or constructor pattern can have a
+"throws clause pattern". Throws clause patterns look like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">ThrowsClausePattern:
+    ThrowsClausePatternItem (&quot;,&quot; ThrowsClausePatternItem)*
+
+ThrowsClausePatternItem:
+    [&quot;!&quot;] TypeNamePattern</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A ThrowsClausePattern matches the ThrowsClause of any code member
+signature. To match, each ThrowsClausePatternItem must match the throws
+clause of the member in question. If any item doesn&#8217;t match, then the
+whole pattern doesn&#8217;t match. This rule is unchanged from AspectJ 1.0.</p>
+</div>
+<div class="paragraph">
+<p>If a ThrowsClausePatternItem begins with "!", then it matches a
+particular throws clause if and only if <em>none</em> of the types named in the
+throws clause is matched by the TypeNamePattern.</p>
+</div>
+<div class="paragraph">
+<p>If a ThrowsClausePatternItem does not begin with "!", then it matches a
+throws clause if and only if <em>any</em> of the types named in the throws
+clause is matched by the TypeNamePattern.</p>
+</div>
+<div class="paragraph">
+<p>These rules are completely backwards compatible with AspectJ 1.0. The
+rule for "!" matching has one potentially surprising property, in that
+the two PCD&#8217;s shown below will have different matching rules.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">/*[1]*/</span> call(* *(..) <span class="directive">throws</span> !<span class="exception">IOException</span>)
+<span class="comment">/*[2]*/</span> call(* *(..) <span class="directive">throws</span> (!<span class="exception">IOException</span>))
+
+<span class="type">void</span> m() <span class="directive">throws</span> <span class="exception">RuntimeException</span>, <span class="exception">IOException</span> {}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>[1] will NOT match the method m(), because method m&#8217;s throws clause
+declares that it throws IOException. [2] WILL match the method m(),
+because method m&#8217;s throws clause declares the it throws some exception
+which does not match IOException, i.e. RuntimeException.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="NEW_PCDS">New kinded pointcut designators</h3>
+<div class="paragraph">
+<p>AspectJ 1.0 does not provide kinded pointcut designators for two (rarely
+used) join points: preinitialization (the code that runs before a super
+constructor call is made) and advice execution. AspectJ 1.1 does not
+change the meaning of the join points, but provides two new pointcut
+designators to pick out these join points, thus making join points and
+pointcut designators more parallel.</p>
+</div>
+<div class="paragraph">
+<p><code>adviceexectuion()</code> will pick out advice execution join points. You will
+usually want to use <code>adviceexecution()     &amp;&amp; within(Aspect)</code> to
+restrict it to only those pieces of advice defined in a particular
+aspect.<br>
+<code>preinitialization(ConstructorPattern)</code> will pick out pre-initialization
+join points where the initialization process is entered through
+<code>ConstructorPattern</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="PER_TYPE">New pertype aspect specifier (not in 1.1)</h3>
+<div class="paragraph">
+<p>We strongly considered adding a pertype aspect kind to 1.1. This is
+somewhat motivated by the new
+<a href="#SINGLE_INTERCLASS_TARGET">restrictions on inter-type declarations</a></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>This is also motivated by many previous request to support a common
+logging idiom. Here&#8217;s what pertype would look like:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">/** One instance of this aspect will be created for each class,
+ * interface or aspect in the com.bigboxco packages.
+ */</span>
+aspect <span class="predefined-type">Logger</span> pertype(com.bigboxco..*) {
+    <span class="comment">/* This field holds a logger for the class. */</span>
+    Log log;
+
+    <span class="comment">/* This advice will run for every public execution defined by
+     * a type for which a Logger aspect has been created, i.e.
+     * any type in com.bigboxco..*
+     */</span>
+    before(): execution(<span class="directive">public</span> * *(..)) {
+        log.enterMethod(thisJoinPoint.getSignature().getName());
+    }
+
+    <span class="comment">/* We can use a special constructor to initialize the log field */</span>
+    <span class="directive">public</span> <span class="predefined-type">Logger</span>(<span class="predefined-type">Class</span> myType) {
+        <span class="local-variable">this</span>.log = <span class="keyword">new</span> Log(myType);
+    }
+}
+
+<span class="comment">/** External code could use aspectOf to get at the log, i.e. */</span>
+Log l = <span class="predefined-type">Logger</span>.aspectOf(com.bigboxco.Foo.class).log;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The one open question that we see is how this should interact with inner
+types. If a pertype aspect is created for an outer type should advice in
+that aspect run for join points in inner types? That is the behavior of
+the most common uses of this idiom.</p>
+</div>
+<div class="paragraph">
+<p>In any case, this feature will not be in AspectJ 1.1.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="SINGLE_INTERCLASS_TARGET">One target for intertype declarations</h3>
+<div class="paragraph">
+<p>Intertype declarations (once called "introductions") in AspectJ 1.1 can
+only have one target type. So the following code intended to declare
+that there is a void doStuff() method on all subtypes of Target is not
+legal AspectJ 1.1 code.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">aspect A {
+    <span class="directive">public</span> <span class="type">void</span> <span class="predefined-type">Target</span>+.doStuff() { ... }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The functionality of "multi-intertype declarations" can be recovered by
+using a helper interface.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">aspect A {
+    <span class="directive">private</span> <span class="type">interface</span> <span class="class">MyTarget</span> {}
+    declare parents:  <span class="predefined-type">Target</span>+ <span class="directive">implements</span> MyTarget;
+    <span class="directive">public</span> <span class="type">void</span> MyTarget.doStuff() { ... }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We believe this is better style in AspectJ 1.0 as well, as it makes
+clear the static type of "this" inside the method body.</p>
+</div>
+<div class="paragraph">
+<p>The one piece of functionality that can not be easily recovered is the
+ability to add static fields to many classes. We believe that the
+<a href="#PER_TYPE">pertype proposal</a> provides this functionality in a much
+more usable form.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="UNAVAILABLE_JOIN_POINTS">No initializer execution join points</h3>
+<div class="paragraph">
+<p>AspectJ 1.1 does not consider initializer execution a principled join
+point. The collection of initializer code (the code that sets fields
+with initializers and the code in non-static initializer blocks) is
+something that makes sense only in Java source code, not in Java
+bytecode.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="AFTER_HANDLER">No after or around advice on handler join points</h3>
+<div class="paragraph">
+<p>The end of an exception handler is underdetermined in bytecode, so ajc
+will not implement after or around advice on handler join points,
+instead signaling a compile-time error.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="CONSTRUCTOR_EXECUTION_IS_BIGGER">Initializers run inside constructor execution join points</h3>
+<div class="paragraph">
+<p>The code generated by the initializers in Java source code now runs
+inside of constructor execution join points. This changes how before
+advice runs on constructor execution join points. Consider:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">C</span> {
+    C() { }
+    <span class="predefined-type">String</span> id = <span class="string"><span class="delimiter">&quot;</span><span class="content">identifier</span><span class="delimiter">&quot;</span></span>; <span class="comment">// this assignment</span>
+                              <span class="comment">// has to happen sometime</span>
+}
+
+aspect A {
+    before(C c) <span class="local-variable">this</span>(c) &amp;&amp; execution(C.new()) {
+        <span class="predefined-type">System</span>.out.println(c.id.length());
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In AspectJ 1.0, this will print "10", since id is assigned its initial
+value prior to the before advice&#8217;s execution. However, in AspectJ 1.1,
+this will throw a NullPointerExcception, since "id" does not have a
+value prior to the before advice&#8217;s execution.</p>
+</div>
+<div class="paragraph">
+<p>Note that the various flavors of after returning advice are unchanged in
+this respect in AspectJ 1.1. Also note that this only matters for the
+execution of constructors that call a super-constructor. Execution of
+constructors that call a this-constructor are the same in AspectJ 1.1 as
+in AspectJ 1.0.</p>
+</div>
+<div class="paragraph">
+<p>We believe this difference should be minimal to real programs, since
+programmers using before advice on constructor execution must always
+assume incomplete object initialization, since the constructor has not
+yet run.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="INTER_TYPE_FIELD_INITIALIZERS">Inter-type field initializers</h3>
+<div class="paragraph">
+<p>The initializer, if any, of an inter-type field definition runs before
+the class-local initializers of its target class.</p>
+</div>
+<div class="paragraph">
+<p>In AspectJ 1.0.6, such an initializer would run after the initializers
+of a class but before the execution of any of its constructor bodies. As
+already discussed in the sections about
+<a href="#UNAVAILABLE_JOIN_POINTS">initializer execution join points</a> and
+<a href="#CONSTRUCTOR_EXECUTION_IS_BIGGER">constructor execution</a>, the point
+in code between the initializers of a class and its constructor body is
+not principled in bytecode. So we had a choice of running the
+initializer of an inter-type field definition at the beginning of
+initialization (i.e., before initializers from the target class) or at
+the end (i.e., just before its called constructor exits). We chose the
+former, having this pattern in mind:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">int</span> C.methodCount = <span class="integer">0</span>;
+before(C c): <span class="local-variable">this</span>(c) &amp;&amp; execution(* *(..)) { c.methodCount++; }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We felt there would be too much surprise if a constructor called a
+method (thus incrementing the method count) and then the field was reset
+to zero after the constructor was done.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="WITHIN_MEMBER_TYPES">Small limitations of the within pointcut</h3>
+<div class="paragraph">
+<p>Because of the guarantees made (and not made) by the Java classfile
+format, there are cases where AspectJ 1.1 cannot guarantee that the
+within pointcut designator will pick out all code that was originally
+within the source code of a certain type.</p>
+</div>
+<div class="paragraph">
+<p>The non-guarantee applies to code inside of anonymous and local types
+inside member types. While the within pointcut designator behaves
+exactly as it did in AspectJ 1.0 when given a package-level type (like
+C, below), if given a member-type (like C.InsideC, below), it is not
+guaranteed to capture code in contained local and anonymous types. For
+example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">C</span> {
+    <span class="predefined-type">Thread</span> t;
+    <span class="type">class</span> <span class="class">InsideC</span> {
+        <span class="type">void</span> setupOuterThread() {
+            t = <span class="keyword">new</span> <span class="predefined-type">Thread</span>(
+                    <span class="keyword">new</span> <span class="predefined-type">Runnable</span>() {
+                        <span class="directive">public</span> <span class="type">void</span> run() {
+                            <span class="comment">// join points with code here</span>
+                            <span class="comment">// might not be captured by</span>
+                            <span class="comment">// within(C.InsideC), but are</span>
+                            <span class="comment">// captured by within(C)</span>
+                            <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">hi</span><span class="delimiter">&quot;</span></span>);
+                        }
+                    });
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We believe the non-guarantee is small, and we haven&#8217;t verified that it
+is a problem in practice.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="WITHIN_CODE">Small limitations of the withincode pointcut</h3>
+<div class="paragraph">
+<p>The withincode pointcut has similar issues to those described above for
+within.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="INSTANCEOF_ON_WILD">Can&#8217;t do instanceof matching on type patterns with wildcard</h3>
+<div class="paragraph">
+<p>The pointcut designators this, target and args specify a dynamic test on
+their argument. These tests can not be performed on type patterns with
+wildcards in them. The following code that compiled under 1.0 will be an
+error in AspectJ-1.1:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut oneOfMine(): <span class="local-variable">this</span>(com.bigboxco..*);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The only way to implement this kind of matching in a modular way would
+be to use the reflection API at runtime on the Class of the object. This
+would have a very high performance cost and possible security issues.
+There are two good work-arounds. If you control the source or bytecode
+to the type you want to match then you can use declare parents, i.e.:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> <span class="type">interface</span> <span class="class">OneOfMine</span> {}
+declare parents: com.bigboxco..* <span class="directive">implements</span> OneOfMine;
+pointcut oneOfMine(): <span class="local-variable">this</span>(OneOfMine);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you want the more dynamic matching and are willing to pay for the
+performance, then you should use the Java reflection API combined with
+if. That would look something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut oneOfMine(): <span class="local-variable">this</span>(<span class="predefined-type">Object</span>) &amp;&amp;
+    <span class="keyword">if</span>(classMatches(<span class="string"><span class="delimiter">&quot;</span><span class="content">com.bigboxco..*</span><span class="delimiter">&quot;</span></span>,
+                    thisJoinPoint.getTarget().getClass()));
+
+<span class="directive">static</span> <span class="type">boolean</span> classMatches(<span class="predefined-type">String</span> pattern, <span class="predefined-type">Class</span> _class) {
+    <span class="keyword">if</span> (patternMatches(pattern, _class.getName())) <span class="keyword">return</span> <span class="predefined-constant">true</span>;
+    ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note: wildcard type matching still works in all other PCD&#8217;s that match
+based on static types. So, you can use 'within(com.bigboxco..*+)' to
+match any code lexically within one of your classes or a subtype
+thereof. This is often a good choice.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="NO_SOURCE_COLUMN">SourceLocation.getColumn()</h3>
+<div class="paragraph">
+<p>The Java .class file format contains information about the source file
+and line numbers of its contents; however, it has no information about
+source columns. As a result, we can not effectively support the access
+of column information in the reflection API. So, any calls to
+thisJoinPoint.getSourceLocation().getColumn() will be marked as
+deprecated by the compiler, and will always return 0.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ASPECT_PRECEDENCE">Aspect precedence</h3>
+<div class="paragraph">
+<p>AspectJ 1.1 has a new declare form:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">declare precedence <span class="string"><span class="delimiter">&quot;</span><span class="content">:</span><span class="delimiter">&quot;</span></span>  TypePatternList <span class="string"><span class="delimiter">&quot;</span><span class="content">;</span><span class="delimiter">&quot;</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is used to declare advice ordering constraints on join points. For
+example, the constraints that (1) aspects that have Security as part of
+their name should dominate all other aspects, and (2) the Logging aspect
+(and any aspect that extends it) should dominate all non-security
+aspects, can be expressed by:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">declare precedence: *..*<span class="predefined-type">Security</span>*, Logging+, *;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the TypePatternList, the wildcard * means "any type not matched by
+another type in the declare precedence".</p>
+</div>
+<div class="sect3">
+<h4 id="_various_cycles">Various cycles</h4>
+<div class="paragraph">
+<p>It is an error for any aspect to be matched by more than one TypePattern
+in a single declare precedence, so:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">declare precedence:  A, B, A ;  <span class="comment">// error</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>However, multiple declare precedence forms may legally have this kind of
+circularity. For example, each of these declare precedence is perfectly
+legal:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">declare precedence: B, A;
+declare precedence: A, B;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And a system in which both constraints are active may also be legal, so
+long as advice from A and B don&#8217;t share a join point. So this is an
+idiom that can be used to enforce that A and B are strongly independent.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_applies_to_concrete_aspects">Applies to concrete aspects</h4>
+<div class="paragraph">
+<p>Consider the following library aspects:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">abstract</span> aspect Logging {
+    <span class="directive">abstract</span> pointcut logged();
+
+    before(): logged() {
+        <span class="predefined-type">System</span>.err.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">thisJoinPoint: </span><span class="delimiter">&quot;</span></span> + thisJoinPoint);
+    }
+}
+
+aspect MyProfiling {
+    <span class="directive">abstract</span> pointcut profiled();
+
+    <span class="predefined-type">Object</span> around(): profiled() {
+        <span class="type">long</span> beforeTime = <span class="predefined-type">System</span>.currentTimeMillis();
+        <span class="keyword">try</span> {
+            <span class="keyword">return</span> proceed();
+        } <span class="keyword">finally</span> {
+            <span class="type">long</span> afterTime = <span class="predefined-type">System</span>.currentTimeMillis();
+            addToProfile(thisJoinPointStaticPart,
+                         afterTime - beforeTime);
+        }
+    }
+    <span class="directive">abstract</span> <span class="type">void</span> addToProfile(
+        org.aspectj.JoinPoint.StaticPart jp,
+        <span class="type">long</span> elapsed);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In order to use either aspect, they must be extended with concrete
+aspects, say, MyLogging and MyProfiling. In AspectJ 1.0, it was not
+possible to express that Logging&#8217;s advice (when concerned with the
+concrete aspect MyLogging) dominated Profiling&#8217;s advice (when concerned
+with the concrete aspect MyProfiling) without adding a dominates clause
+to Logging itself. In AspectJ 1.1, we can express that constraint with a
+simple:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">declare precedence: MyLogging, MyProfiling;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_changing_order_of_advice_for_sub_aspects">Changing order of advice for sub-aspects</h4>
+<div class="paragraph">
+<p>By default, advice in a sub-aspect has more precedence than advice in a
+super-aspect. One use of the AspectJ 1.0 dominates form was to change
+this precedence:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">abstract</span> aspect SuperA dominates SubA {
+    pointcut foo(): ... ;
+
+    before(): foo() {
+        <span class="comment">// in AspectJ 1.0, runs before the advice in SubA</span>
+        <span class="comment">// because of the dominates clause</span>
+    }
+}
+
+aspect SubA <span class="directive">extends</span> SuperA {
+    before(): foo() {
+        <span class="comment">// in AspectJ 1.0, runs after the advice in SuperA</span>
+        <span class="comment">// because of the dominates clause</span>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This no longer works in AspectJ 1.1, since declare precedence only
+matters for concrete aspects. Thus, if you want to regain this kind of
+precedence change, you will need to refactor your aspects.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="SOURCEROOT">The -sourceroots option</h3>
+<div class="paragraph">
+<p>The AspectJ 1.1 compiler now accepts a -sourceroots option used to pass
+all .java files in particular directories to the compiler. It takes
+either a single directory name, or a list of directory names separated
+with the CLASSPATH separator character (":" for various Unices, ";" for
+various Windows).</p>
+</div>
+<div class="paragraph">
+<p>So, if you have your project separated into a gui module and a base
+module, each of which is stored in a directory tree, you might use one
+of</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">ajc -sourceroots /myProject/gui:/myProject/base
+ajc -sourceroots d:\myProject\gui;d:\myProject\base</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This option may be used in conjunction with lst files, listing .java
+files on the command line, and the -injars option.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="BYTECODE_WEAVING">The -injars option</h3>
+<div class="paragraph">
+<p>The AspectJ 1.1 compiler now accepts an -injars option used to pass all
+.class files in a particular jar file to the compiler. It takes either a
+single directory name, or a list of directory names separated with the
+CLASSPATH separator character (":" for various Unices, ";" for various
+Windows).</p>
+</div>
+<div class="paragraph">
+<p>So, if MyTracing.java defines a trace aspect that you want to apply to
+all the classes in myBase.jar and myGui.jar, you would use one of:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">ajc -injars /bin/myBase.jar:/bin/myGui.jar MyTracing.java
+ajc -injars d:\bin\myBase.jar;d:\bin\myGui.jar MyTracing.java</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The class files in the input jars must not have had advice woven into
+them, since AspectJ enforces the requirement that advice is woven into a
+particular classfile only once. So if the classfiles in the jar file are
+to be created with the ajc compiler (as opposed to a pure Java
+compiler), they should not be compiled with any non-abstract aspects.</p>
+</div>
+<div class="paragraph">
+<p>This option may be used in conjunction with lst files, listing .java
+files on the command line, and the -sourceroots option.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="OUTJAR">The -outjar option</h3>
+<div class="paragraph">
+<p>The -outjar option takes the name of a jar file into which the results
+of the compilation should be put. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">ajc -injars myBase.jar MyTracing.java -outjar myTracedBase.jar</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>No meta information is placed in the output jar file.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="INCREMENTAL">Incremental compilation</h3>
+<div class="paragraph">
+<p>The AspectJ 1.1 compiler now supports incremental compilation. When ajc
+is called with the -incremental option, it must also be passed a
+-sourceroots option specifying a directory to incrementally compile.
+Once the initial compile is done, ajc waits for console input. Every
+time it reads a new line (i.e., every time the user hits return) ajc
+recompiles those input files that need recompiling.</p>
+</div>
+<div class="sect3">
+<h4 id="_limitations">Limitations</h4>
+<div class="paragraph">
+<p>This new functionality is still only lightly tested.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="XNOWEAVE">-XnoWeave, a compiler option to suppress weaving</h3>
+<div class="paragraph">
+<p>The -XnoWeave option suppresses weaving, and generates classfiles and
+that can be passed to ajc again (through the -injars option) to generate
+final, woven classfiles.</p>
+</div>
+<div class="paragraph">
+<p>This option was originally envisioned to be the primary way to generate
+binary aspects that could be linked with other code, and so it was
+previously (in AspectJ 1.1beta1) named <code>-noweave</code>. We feel that using
+the <code>-aspectpath</code> option is a much better option. There may still be use
+cases for unwoven classfiles, but we&#8217;ve moved the flag to experimental
+status.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="BINARY_ASPECTS">-aspectpath, working with aspects in .class/.jar form</h3>
+<div class="paragraph">
+<p>When aspects are compiled into classfiles, they include all information
+necessary for the ajc compiler to weave their advice and deal with their
+inter-type declarations. In order for these aspects to have an effect on
+a compilation process, they must be passed to the compiler on the
+-aspectpath. Every .jar file on this path will be searched for aspects
+and any aspects that are found will be enabled during the compilation.
+The binary forms of this aspects will be untouched.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="NO_CALLEE_SIDE_CALL">Callee-side call join points</h3>
+<div class="paragraph">
+<p>The 1.0 implementation of AspectJ, when given:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">MyRunnable</span> <span class="directive">implements</span> <span class="predefined-type">Runnable</span> {
+    <span class="directive">public</span> <span class="type">void</span> run() { <span class="comment">/*...*/</span> }
+}
+
+aspect A {
+    call(): (<span class="type">void</span> run()) &amp;&amp; target(MyRunnable) {
+        <span class="comment">// do something here</span>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>would cause A&#8217;s advice to execute even when, say, java.lang.Thread
+called run() on a MyRunnable instance.</p>
+</div>
+<div class="paragraph">
+<p>With the new compiler, two things have happened in regard to callee-side
+calls:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>because the programmer has access to more code (i.e., bytecode, not
+just source code), callee-side calls are much less important to have.</p>
+</li>
+<li>
+<p>because compilation is more modular, allowing and encouraging separate
+compilation, callee-side calls are much more difficult to implement</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>With these two points in mind, advice in an aspect will not be applied
+to call join points whose call site is completely unavailable to the
+aspect.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>One reason (though not the only reason) we worked so hard in the
+<em>implementation</em> of 1.0.6 to expose call join points, even if we only
+had access to the callee&#8217;s code, was that otherwise users couldn&#8217;t get
+access to call join points where the call was made from bytecode. This
+is no longer the case. In short, the implementation controls much more
+code (or has the capability to) than ever before.</p>
+</li>
+<li>
+<p>The implementation model for the AspectJ 1.1 compiler is to separate
+the compilation of aspects/advice from their weaving/linking. A property
+of the model is that the compilation requires no access to "target"
+code, only the weaving/linking does, and weaving/linking is inherently
+per-class local: No action at weaving/linking time depends on the
+coordinated mangling of multiple classfiles. Rather, all weaving is done
+on a per classfile basis. This is an essential property for the current
+separate compilation model.<br>
+However, allowing implementation of call advice on either side requires
+simultaneous knowledge of both sides. If we first have access to a call,
+we can&#8217;t decide to simply put the advice on the call site, since later
+we may decide to implement on the callee.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This implementation decision is completely in the letter and the spirit
+of the AspectJ language. From the semantics guide describing code the
+implementation controls:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>But AspectJ implementations are permitted to deviate from this in a
+well-defined way&#8201;&#8212;&#8201;they are permitted to advise only accesses in <em>code
+the implementation controls</em>. Each implementation is free within certain
+bounds to provide its own definition of what it means to control code.</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>And about a particular decision about the 1.0.6 implementation:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Different join points have different requirements. Method call join
+points can be advised only if ajc controls <em>either</em> the code for the
+caller or the code for the receiver, and some call pointcut designators
+may require caller context (what the static type of the receiver is, for
+example) to pick out join points.</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>The 1.1 implementation makes a different design decision: Method call
+join points can be advised only if ajc (in compiler or linker form)
+controls the code for the caller.</p>
+</div>
+<div class="paragraph">
+<p>What does 1.1 gain from this?</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a clear (and implemented) separate compilation model (see point 2,
+above)</p>
+</li>
+<li>
+<p>a less confusing interaction between call join points and the
+thisJoinPoint reflective object: We still get bug reports about source
+information sometimes existing and sometimes not existing at call join
+points.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>What does 1.1 lose from this?</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The ability to capture all calls to Runnable.run() from anywhere to
+code ajc has access too, even from Thread, even if you don&#8217;t compile
+java.lang with ajc.</p>
+</li>
+<li>
+<p>The ability to, without access to the caller, capture entry to a
+particular method, but not super calls.</p>
+</li>
+<li>
+<p>A code-size-improvement performance optimization.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>What are the possibilities for the future?</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>AspectJ 1.1.1 could expand its capture of call join points, possibly
+at the expense of separate compilation clarity, possibly not.</p>
+</li>
+<li>
+<p>AspectJ 1.1.1 could re-introduce reception join points from AspectJ
+0.7 (what callee-side call join points actually are): though they would
+never ever be taught in a tutorial or entry-level description of the
+model, they may have specialized uses.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>How will this affect developers?</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>When using the call PCD but only supplying the callee code, supply the
+calling code or use the execution PCD instead.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="OTHER_X_OPTIONS">Various -X options</h3>
+<div class="paragraph">
+<p>The AspectJ 1.0 compiler supported a number of options that started with
+X, for "experimental". Some of them will not be supported in 1.1, either
+because the "experiment" succeeded (in which case it&#8217;s part of the
+normal functionality) or failed. Others will be supported as is (or
+nearly so) in 1.1:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>-XOcodeSize: This is no longer necessary because inlining of around
+advice is on by default. We support its inverse,
+<a href="#XNOINLINE"><code>-XnoInline</code></a>.</p>
+</li>
+<li>
+<p><a href="#XNOWEAVE">-XnoWeave, a compiler option to suppress weaving</a></p>
+</li>
+<li>
+<p>-XtargetNearSource: Not supported in this release.</p>
+</li>
+<li>
+<p>-XserializableAspects: Supported.</p>
+</li>
+<li>
+<p>-XaddSafePrefix: This option will not be supported in 1.1 at all
+because we&#8217;re now always using (what we believe to be) safe prefixes.</p>
+</li>
+<li>
+<p>-Xlint: Still supported, with <a href="#XLINT">various options</a>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ERROR_MESSAGES">Some confusing error messages</h3>
+<div class="paragraph">
+<p>Building on the eclipse compiler has given us access to a very
+sophisticated problem reporting system as well as highly optimized error
+messages for pure Java code. Often this leads to noticeably better error
+messages than from ajc-1.0.6. However, when we don&#8217;t handle errors
+correctly this can sometimes lead to cascading error messages where a
+single small syntax error will produce dozens of other messages. Please
+report any very confusing error messages as bugs.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="MESSAGE_CONTEXT">Source code context is not shown for errors and warnings detected during bytecode weaving</h3>
+<div class="paragraph">
+<p>For compiler errors and warnings detected during bytecode weaving,
+source code context will not be displayed. In particular, for declare
+error and declare warning statements, the compiler now only emits the
+file and line. We are investigating ways to overcome this in cases where
+the source code is available; in cases where source code is not
+available, we might specify the signature of the offending code. For
+more information, see bug 31724.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="XLINT">The -Xlint option</h3>
+<div class="paragraph">
+<p><code>-Xlint:ignore,error,warning</code> will set the level for all Xlint warnings.
+<code>-Xlint</code>, alone, is an abbreviation for <code>-Xlint:warning</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>-Xlintfile:lint.properties</code> allows fine-grained control. In
+tools.jar, see <code>org/aspectj/weaver/XlintDefault.properties</code> for the
+default behavior and a template to copy.</p>
+</div>
+<div class="paragraph">
+<p>More <code>-Xlint</code> warnings are supported now, and we may add disabled
+warnings in subsequent bug-fix releases of 1.1. Because the
+configurability allows users to turn off warnings, we will be able to
+warn about more potentially dangerous situations, such as the
+potentially unsafe casts used by very polymorphic uses of proceed in
+around advice.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="NO_SOURCE">Source-specific options</h3>
+<div class="paragraph">
+<p>Because AspectJ 1.1 does not generate source code after weaving, the
+source-code-specific options -preprocess, -usejavac, -nocomment and
+-workingdir options are meaningless and so not supported.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="NO_STRICT_LENIENT">The -strict and -lenient options</h3>
+<div class="paragraph">
+<p>Because AspectJ 1.1 uses the Eclipse compiler, which has its own
+mechanism for changing strictness, we no longer support the -strict and
+-lenient options.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="NO_PORTING">The -porting option</h3>
+<div class="paragraph">
+<p>AspectJ 1.1 does not have a -porting option.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_13_REQUIRED">J2SE 1.3 required</h3>
+<div class="paragraph">
+<p>Because we build on Eclipse, the compiler will no longer run under J2SE
+1.2. You must run the compiler (and all tools based on the compiler)
+using J2SE 1.3 or later. The code generated by the compiler can still
+run on Java 1.1 or later VM&#8217;s if compiled against the correct runtime
+libraries.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="DEFAULT_CONSTRUCTOR_CONFLICT">Default constructors</h3>
+<div class="paragraph">
+<p>AspectJ 1.1 does not allow the inter-type definition of a zero-argument
+constructor on a class with a visible default constructor. So this is no
+longer allowed:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">C</span> {}
+
+aspect A {
+    C.new() {}  <span class="comment">// was allowed in 1.0.6</span>
+                <span class="comment">// is a &quot;multiple definitions&quot; conflict in 1.1</span>
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the Java Programming Language, a class defined without a constructor
+actually has a "default" constructor that takes no arguments and just
+calls <code>super()</code>.</p>
+</div>
+<div class="paragraph">
+<p>This default constructor is a member of the class like any other member,
+and can be referenced by other classes, and has code generated for it in
+classfiles. Therefore, it was an oversight that AspectJ 1.0.6 allowed
+such an "overriding" inter-type constructor definition.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="SUPER_IFACE_INITS">Initialization join points for super-interfaces</h3>
+<div class="paragraph">
+<p>In AspectJ, interfaces may have non-static members due to inter-type
+declarations. Because of this, the semantics of AspectJ defines the
+order that initializer code for interfaces is run.</p>
+</div>
+<div class="paragraph">
+<p>In the semantics document for AspectJ 1.0.6, the following promises were
+made about the order of this initialization:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>a supertype is initialized before a subtype</p>
+</li>
+<li>
+<p>initialized code runs only once</p>
+</li>
+<li>
+<p>initializers for supertypes run in left-to-right order</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The first two properties are important and are preserved in AspectJ 1.1,
+but the third property is and was ludicrous, and was never properly
+implemented (and never could be) in AspectJ 1.0.6. Consider:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">interface</span> <span class="class">Top0</span> {}
+<span class="type">interface</span> <span class="class">Top1</span> {}
+<span class="type">interface</span> <span class="class">I</span> <span class="directive">extends</span> Top0, Top1 {}
+<span class="type">interface</span> <span class="class">J</span> <span class="directive">extends</span> Top1, Top0 {}
+
+<span class="type">class</span> <span class="class">C</span> <span class="directive">implements</span> I, J {}
+<span class="comment">// I says Top0's inits must run before Top1's</span>
+<span class="comment">// J says Top1's inits must run before Top0's</span>
+
+aspect A {
+    <span class="type">int</span> Top0.i = foo(<span class="string"><span class="delimiter">&quot;</span><span class="content">I'm in Top0</span><span class="delimiter">&quot;</span></span>);
+    <span class="type">int</span> Top1.i = foo(<span class="string"><span class="delimiter">&quot;</span><span class="content">I'm in Top1</span><span class="delimiter">&quot;</span></span>);
+    <span class="directive">static</span> <span class="type">int</span> foo(<span class="predefined-type">String</span> s) {
+        <span class="predefined-type">System</span>.out.println(s);
+        <span class="keyword">return</span> <span class="integer">37</span>;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This was simply a bug in the AspectJ specification. The correct third
+rule is:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>the initializers for a type&#8217;s superclass are run before the initializers
+for its superinterfaces.</p>
+</div>
+</blockquote>
+</div>
+</div>
+<div class="sect2">
+<h3 id="VOID_FIELD_SET">Field Set Join Points</h3>
+<div class="paragraph">
+<p>In AspectJ 1.0.6, the join point for setting a field F had, as a return
+type, F&#8217;s type. This was "java compatible" because field assignment in
+java, such as "Foo.i = 37", is in fact an expression, and does in fact
+return a value, the value that the field is assigned to.</p>
+</div>
+<div class="paragraph">
+<p>This was never "java programmer compatible", however, largely because
+programmers have absorbed the good style of rarely using an assignment
+statement in a value context. Programmers typically expect "Foo.i = 37"
+not to return a value, but to simply assign a value.</p>
+</div>
+<div class="paragraph">
+<p>Thus, programmers typically wanted to write something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">void</span> around(): set(<span class="type">int</span> Foo.i) {
+    <span class="keyword">if</span> (theSetIsAllowed()) {
+        proceed();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And were confused by it being a compile-time error. They weren&#8217;t
+confused for long, and soon adapted to writing:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">int</span> around(): set(<span class="type">int</span> Foo.i) {
+    <span class="keyword">if</span> (theSetIsAllowed()) {
+        <span class="keyword">return</span> proceed();
+    } <span class="keyword">else</span> {
+        <span class="keyword">return</span> Foo.i;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>But there was definitely a short disconnect.</p>
+</div>
+<div class="paragraph">
+<p>On top of that, we were never shown a convincing use-case for returning
+an interesting value from a set join point. When we revisited this
+issue, in fact, we realized we had a long-standing bug in 1.0.6 dealing
+with the return value of pre-increment expressions (such as ++Foo.i)
+that nobody had found because nobody cares about the return value of
+such join points.</p>
+</div>
+<div class="paragraph">
+<p>So, because it&#8217;s easier to implement, and because we believe that this
+is the last possibility to make the semantics more useful, we have made
+set join points have a void return type in 1.1.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="XNOINLINE">The -XnoInline Option</h3>
+<div class="paragraph">
+<p>The <code>-XnoInline</code> option to indicate that no inlining of any kind should
+be done. This is purely a compiler pragma: No program semantics (apart
+from stack traces) will be changed by the presence or absence of this
+option.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="TARGET_TYPES_MADE_PUBLIC">Target types made public</h3>
+<div class="paragraph">
+<p>Even in 1.0.6, the AspectJ compiler has occasionally needed to convert
+the visibility of a package-level class to a public one. This was
+previously done in an ad-hoc basis that took whole-program analysis into
+account. With the incremental compilation model of AspectJ 1.1, we can
+now specify the occasions when the compiler makes these visibility
+changes.</p>
+</div>
+<div class="paragraph">
+<p>In particular, the types used in the <code>this</code>, <code>target</code>, and <code>args</code>
+pointcuts are made public, as are the super-types from <code>declare parents</code>
+and the exception type from <code>declare soft</code>.</p>
+</div>
+<div class="paragraph">
+<p>We believe the visibility changes could be avoided in the future with
+various implementation tricks if they become a serious concern, but did
+not encounter them as such a concern when they were done in the 1.0.6
+implementation.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="STRINGBUFFER">String + now advised</h3>
+<div class="paragraph">
+<p>In Java, the + operator sometimes results in StringBuffer objects being
+created, appended to, and used to generate a new String. Thus,</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">Foo</span> {
+    <span class="predefined-type">String</span> makeEmphatic(<span class="predefined-type">String</span> s) {
+        <span class="keyword">return</span> s + <span class="string"><span class="delimiter">&quot;</span><span class="content">!</span><span class="delimiter">&quot;</span></span>;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>is approximately the same at runtime as</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">Foo</span> {
+    <span class="predefined-type">String</span> makeEmphatic(<span class="predefined-type">String</span> s) {
+        <span class="keyword">return</span> <span class="keyword">new</span> <span class="predefined-type">StringBuffer</span>(s).append(<span class="string"><span class="delimiter">&quot;</span><span class="content">!</span><span class="delimiter">&quot;</span></span>).toString();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the design process of AspectJ 1.0.6 we didn&#8217;t expose those
+StringBuffer methods and constructors as join points (though we did
+discuss it), but in 1.1 we do.</p>
+</div>
+<div class="paragraph">
+<p>This change is likely to affect highly wildcarded aspects, and can do so
+in surprising ways. In particular:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">A</span> {
+    before(<span class="type">int</span> i): call(* *(<span class="type">int</span>)) &amp;&amp; args(i) {
+        <span class="predefined-type">System</span>.err.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">entering with </span><span class="delimiter">&quot;</span></span> + i);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>may result in a stack overflow error, since the argument to println is
+really</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">new</span> <span class="predefined-type">StringBuffer</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">entering with </span><span class="delimiter">&quot;</span></span>).append(i).toString()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>which has a call to StringBuffer.append(int). In such cases, it&#8217;s worth
+restricting your pointcut, with something like one of:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">call(* *(<span class="type">int</span>)) &amp;&amp; args(i) &amp;&amp; !within(A)
+call(* *(<span class="type">int</span>)) &amp;&amp; args(i) &amp;&amp; !target(<span class="predefined-type">StringBuffer</span>)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ONE_FOUR_METHOD_SIGNATURES">The -1.4 flag and method signatures</h3>
+<div class="paragraph">
+<p>Consider the following aspect</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> aspect SwingCalls {
+
+    pointcut callingAnySwing(): call(* javax.swing..*+.*(..));
+
+    before(): callingAnySwing() {
+        <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Calling any Swing</span><span class="delimiter">&quot;</span></span>);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And then consider the two statements</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="predefined-type">JFrame</span> frame = <span class="keyword">new</span> <span class="predefined-type">JFrame</span>();
+frame.setTitle(<span class="string"><span class="delimiter">&quot;</span><span class="content">Title</span><span class="delimiter">&quot;</span></span>);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>According to the Java Language Specification version 2, the call to
+<code>frame.setTitle("Title")</code> should always produce the bytecode for a call
+to <code>javax.swing.JFrame.setTitle</code>. However, older compilers (and eclipse
+when run without the <code>-1.4</code> flag) will generate the bytecode for a call
+to <code>java.awt.Frame.setTitle</code> instead since this method is not overriden
+by JFrame. The AspectJ weaver depends on the correctly generated
+bytecode in order to match patterns like the one you show correctly.</p>
+</div>
+<div class="paragraph">
+<p>This is a good example of why the pattern
+<code>call(* *(..)) &amp;&amp; target(JFrame)</code> is the recommended style. In general,
+OO programmers don&#8217;t want to care about the static type of an object at
+a call site, but only want to know the dynamic instanceof behavior which
+is what the target matching will handle.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="knownLimitations">Known limitations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The AspectJ 1.1.0 release contains a small number of known limitations
+relative to the AspectJ 1.1 language. For the most up-to-date
+information about known limitations in an AspectJ 1.1 release, see the
+bug database at <a href="https://bugs.eclipse.org/bugs" class="bare">https://bugs.eclipse.org/bugs</a>, especially the open bugs
+for the
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?product=AspectJ&amp;component=Compiler&amp;bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED">compiler</a>,
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?product=AspectJ&amp;component=IDE&amp;bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED">IDE
+support</a>,
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?product=AspectJ&amp;component=Doc&amp;bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED">documentation</a>,
+and
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?product=AspectJ&amp;component=Ant&amp;bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED">Ant
+tasks</a>. Developers should know about bugs marked with the "info" keyword
+because those bugs reflect failures to implement the 1.1 language
+perfectly. These might be fixed during the 1.1 release cycle; find them
+using the query
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?product=AspectJ&amp;keywords=info" class="bare">https://bugs.eclipse.org/bugs/buglist.cgi?product=AspectJ&amp;keywords=info</a>
+For ajc&#8217;s 1.1 implementation limitations, see
+<a href="progguide/implementation.html">Programming Guide Appendix:
+"Implementation Notes"</a>.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

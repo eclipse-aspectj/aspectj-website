@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>Messages</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body id="messages" class="article toc2 toc-left">
+<div id="header">
+<h1>Messages</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#messages-introduction">Introduction</a>
+<ul class="sectlevel2">
+<li><a href="#messages-introduction-config">Configuring Messages</a></li>
+</ul>
+</li>
+<li><a href="#messages-scenarios">Message scenarios</a>
+<ul class="sectlevel2">
+<li><a href="#messages-scenarios-ct">Compile-time weaving scenarios</a></li>
+<li><a href="#messages-scenarios-ltw">Load-time weaving scenarios</a></li>
+</ul>
+</li>
+<li><a href="#messages-xlint">Lint messages</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="messages-introduction">Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Messages point out potential problems in the input program; some are
+clearly problems (errors), but many more may depend on what the
+programmer intends. To keep the noise down the latter are treated as
+warnings which can be ignored by the programmer or information which are
+hidden. However, when investigating unexpected behavior it&#8217;s helpful to
+show them. This section describes how to configure messages, presents
+some problem scenarios when compiling or doing load-time weaving, and
+summarizes some of the more relevant messages.</p>
+</div>
+<div class="sect2">
+<h3 id="messages-introduction-config">Configuring Messages</h3>
+<div class="paragraph">
+<p>The compiler offers <code>-verbose</code>, <code>-warning</code>, and <code>-XLint</code> options when
+invoked using the command-line, Ant, or embedded in an IDE. All options
+are listed in the AspectJ Development Environment Guide sections for
+<a href="../devguide/ajc.html#ajc">Ajc</a> and
+<a href="../devguide/antsupport.html#antTasks">Ant Tasks</a>. The
+<a href="../devguide/ltw.html#ltw">Load-time Weaving</a> section describes how to
+use XML configuration files and system properties to pass options to the
+weaver. (You can also pass options to the weaver using system properties
+in build- time weaving.) The <code>-verbose</code> option has the effect of
+including messages level "info", which are normally ignored. Both
+<code>warning</code> and <code>XLint</code> enable you to identify specific messages to emit,
+but warning messages tend to be the same provided by the underlying
+Eclipse JDT (Java) compiler, while XLint messages are emitted by the
+AspectJ compiler or weaver. Obviously, during load-time weaving only
+weaver messages will be emitted. Similarly, if aspects are compiled but
+not woven, then only compiler messages will be emitted. However, the
+usual case for the compiler/weaver working at build time is to emit both
+compiler and weaver messages.</p>
+</div>
+<div class="paragraph">
+<p>The tables below list some options, System Properties (for LTW only) and
+Java 5 annotations used to control AspectJ messages. The method of
+configuration depends on your environment so please refer to the
+relevant documentation for <a href="../devguide/ajc.html">ajc</a>,
+<a href="../devguide/antsupport.html#antTasks">Ant</a> or
+<a href="../devguide/ltw.html#weaver-options">LTW</a>.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-verbose</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show informational messages including AspectJ version and
+build date.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-debug</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(Load-time weaving only). Show debugging messages such as
+which classes are being woven or those that are excluded. (This is not
+related to the compiler -g option to include debug information in the
+output .class files.)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-showWeaveInfo</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show weaving messages.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-Xlint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Control level of lint messages.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>messageHolderClass</code>/ <code>-XmessageHolderClass:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In Ant tasks and LTW
+respectively specify the class to receive all messages. See
+<a href="../devguide/antsupport.html#antTasks-iajc-options">iajc task
+options</a> or
+<a href="../devguide/ltw.html#weaver-options">Weaver Options</a>.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">System Property</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aj.weaving.verbose</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show informational messages including AspectJ
+version and build date (same as <code>-verbose</code> option).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>org.aspectj.weaver.showWeaveInfo</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show weaving messages (same as
+<code>-showWeaveInfo</code> option).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>org.aspectj.weaving.messages</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set this system property to enable
+tracing of all compiler messages. See <a href="trace.html#trace-configuration">Configuring Tracing</a>.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Annotation</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>@SuppressAjWarnings</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Include this is Java 5 code to suppress AspectJ
+warnings associated with the next line of code.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="messages-scenarios">Message scenarios</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="messages-scenarios-ct">Compile-time weaving scenarios</h3>
+<div class="sect3">
+<h4 id="messages-scenarios-ct-adviceNotWoven">Advice not woven</h4>
+<div class="paragraph">
+<p>This means that the pointcut for the advice did not match, and it should
+be debugged as described in <a href="pointcuts.html#pointcuts">Debugging Pointcuts</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="messages-scenarios-ltw">Load-time weaving scenarios</h3>
+<div class="paragraph">
+<p>You can use <code>META-INF/aop.xml</code> to control which messages are produced
+during LTW. The following example will produce basic informational
+messages about the lifecyle of the weaver in addition to any warning or
+error messages.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;aspectj&gt;</span>
+    <span class="tag">&lt;weaver</span> <span class="attribute-name">options</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">-verbose</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;/weaver&gt;</span>
+<span class="tag">&lt;/aspectj&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The messages indicate which <code>META-INF/aop.xml</code> configurations file(s)
+are being used. Each message is also preceeded by the name of the
+defining class loader associated with weaver. You can use this
+information in a large system to distinguish between different
+applications each of which will typically have its own class loader.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">[AppClassLoader@92e78c] info AspectJ Weaver Version 1.5.3 built on Thursday Oct 26, 2006 at 17:22:31 GMT
+[AppClassLoader@92e78c] info register classloader sun.misc.Launcher$AppClassLoader@92e78c
+[AppClassLoader@92e78c] info using configuration /C:/temp/META-INF/aop.xml
+[AppClassLoader@92e78c] info using configuration /C:/temp/META-INF/aop-ajc.xml
+[AppClassLoader@92e78c] info register aspect ExceptionHandler
+[AppClassLoader@92e78c] info processing reweavable type ExceptionHandler: ExceptionHandler.aj</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="messages-scenarios-ltw-adviceNotWoven">Advice not woven</h4>
+<div class="paragraph">
+<p>It is often difficult to determine, especially when using load-time
+weaving (LTW), why advice has not been woven. Here is a quick guide to
+the messages to look for. Firstly if you use the <code>-verbose</code> option you
+should see the following message when your aspect is registered:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">info register aspect MyAspect</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Secondly if you use the <code>-debug</code> option you should see a message
+indicating that you class is being woven:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">debug weaving 'HelloWorld'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>However this does not mean that advice has actually been woven into your
+class; it says that the class has been passed to the weaver. To
+determine whether your pointcuts match you can use the <code>-showWeaveInfo</code>
+option which will cause a message to be issued each time a join point is
+woven:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">weaveinfo Join point 'method-execution(void HelloWorld.main(java.lang.String[]))' ...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If advice is woven at this join point you should get the corresponding
+message.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="messages-xlint">Lint messages</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The table below lists some useful <code>-Xlint</code> messages.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Message</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aspectExcludedByConfiguration</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ignore</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If an aspect is not being
+woven, despite being registered, it could be that it has been excluded
+by either an <code>include</code> or <code>exclude</code> element in the <code>aspects</code> section of
+<code>META-INF/aop.xml</code>. Enable this message to determine whether an aspect
+has been excluded.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adviceDidNotMatch</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>warning</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Issued when advice did not potentially
+affect any join points. This means the corresponding pointcut did not
+match any join points in the program. This may be valid e.g., in library
+aspects or code picking up error conditions, but often the programmer
+simply made a mistake in the pointcut. The best approach is to debug the
+pointcut.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>invalidAbsoluteTypeName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>warning</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Issued when an exact type in a
+pointcut does not match any type in the system. Note that this can
+interact with the rules for resolving simple types, which permit
+unqualified names if they are imported.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>typeNotExposedToWeaver</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>warning</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This means that a type which could
+be affected by an aspect is not available for weaving. This happens when
+a class on the classpath should be woven.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>runtimeExceptionNotSoftened</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>warning</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Before AspectJ 5, declare
+soft used to soften runtime exceptions (unnecessarily). Since then, it
+does not but does issue this warning in case the programmer did intend
+for the exception to be wrapped.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>unmatchedSuperTypeInCall</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>warning</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Issued when a call pointcut
+specifies a defining type which is not matched at the call site (where
+the declared type of the reference is used, not the actual runtime
+type). Most people should use 'target(Foo) &amp;&amp; call(void foo())' instead.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

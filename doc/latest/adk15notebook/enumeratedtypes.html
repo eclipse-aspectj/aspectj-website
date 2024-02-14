@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>Enumerated Types</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body id="enumeratedtypes" class="article toc2 toc-left">
+<div id="header">
+<h1>Enumerated Types</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#enums-in-java5">Enumerated Types in Java 5</a></li>
+<li><a href="#enums-in-aspectj5">Enumerated Types in AspectJ 5</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="enums-in-java5">Enumerated Types in Java 5</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Java 5 (and hence AspectJ 5) provides explicit support for enumerated
+types. In the simplest case, you can declare an enumerated type as
+follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">enum</span> ProgrammingLanguages {
+  COBOL, C, JAVA, ASPECTJ
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Enumerated types are just classes, and they can contain method and field
+declarations, and may implement interfaces. Enums may only have private
+constructors, and may not be extended.</p>
+</div>
+<div class="paragraph">
+<p>Enumerated types in Java 5 all implicitly extend the type
+<code>java.lang.Enum</code>. It is illegal to explicitly declare a subtype of this
+class.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="enums-in-aspectj5">Enumerated Types in AspectJ 5</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>AspectJ 5 supports the declaration of enumerated types just as Java 5
+does. Because of the special restrictions Java 5 places around
+enumerated types, AspectJ makes the following additional restrictions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You cannot use declare parents to change the super type of an enum.</p>
+</li>
+<li>
+<p>You cannot use declare parents to declare <code>java.lang.Enum</code> as the parent
+of any type.</p>
+</li>
+<li>
+<p>You cannot make inter-type constructor declarations on an enum.</p>
+</li>
+<li>
+<p>You cannot extend the set of values in an enum via any ITD-like
+construct.</p>
+</li>
+<li>
+<p>You cannot make inter-type method or field declarations on an enum.</p>
+</li>
+<li>
+<p>You cannot use declare parents to make an enum type implement an
+interface.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In theory, the last of these two items <em>could</em> be supported. However,
+AspectJ 5 follows the simple rule that <em>an enum type cannot be the
+target of an inter-type declaration or declare parents statement</em>. This
+position may be relaxed in a future version of AspectJ.</p>
+</div>
+<div class="paragraph">
+<p>If an enum is named explicitly as the target of a declare parents
+statement, a compilation error will result. If an enumerated type is
+matched by a non-explicit type pattern used in a declare parents
+statement it will be ignored (and an XLint warning issued).</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

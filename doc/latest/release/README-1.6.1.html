@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>AspectJ 1.6.1</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>AspectJ 1.6.1</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_refactored_bug_231396">Refactored (bug 231396)</a>
+<ul class="sectlevel2">
+<li><a href="#_straight_compilation">Straight compilation</a></li>
+<li><a href="#_binary_weaving">Binary weaving</a></li>
+<li><a href="#_loadtime_weaving">Loadtime weaving</a></li>
+<li><a href="#_loadtime_weaving_stress">Loadtime weaving stress</a></li>
+</ul>
+</li>
+<li><a href="#_incremental_compilation">Incremental compilation</a></li>
+<li><a href="#_language_changes">Language changes</a>
+<ul class="sectlevel2">
+<li><a href="#_optmized_syntax_for_annotation_value_binding_bug234943">Optmized syntax for annotation value binding (Bug234943)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>© Copyright 2008 Contributors. All rights reserved.</em></p>
+</div>
+<div class="paragraph">
+<p>The main themes of AspectJ1.6.1 are better memory usage and faster
+weaving. This has been achieved through profiling of the weaving process
+and has resulted in some serious refactoring of the weaver component
+within AspectJ. It provides exactly the same functionality as in
+previous releases, it just weaves faster now, using less code and less
+memory. This readme will give an overview of the kind of changes made
+and what can be expected when using 1.6.1 compared to previous releases.</p>
+</div>
+<div class="paragraph">
+<p>The complete list of issues resolved for AspectJ 1.6.1 can be found with
+these bugzilla queries. The first lists bugs addressed (more than 60!)
+whilst the second details enhancements made in this release.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=&amp;product=AspectJ&amp;target_milestone=1.6.1&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;bug_severity=blocker&amp;bug_severity=critical&amp;bug_severity=major&amp;bug_severity=normal&amp;bug_severity=minor&amp;bug_severity=trivial&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">Bugs
+resolved</a></p>
+</li>
+<li>
+<p><a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=&amp;product=AspectJ&amp;target_milestone=1.6.1&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;bug_severity=enhancement&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">Enhancements
+implemented</a></p>
+</li>
+</ul>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_refactored_bug_231396">Refactored (<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=231396">bug 231396</a>)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The bugzilla entry goes into more specifics on what has changed, the end
+result is that aspectjweaver.jar has had around 275 classes removed
+(about 25%) and has slimmed down by 350k (about 20%). In terms of
+performance for different scenarios:</p>
+</div>
+<div class="sect2">
+<h3 id="_straight_compilation">Straight compilation</h3>
+<div class="paragraph">
+<p>The refactoring effort has been focused on the weaver component, hence
+there is limited impact on the performance of source compilation but
+this comparison shows it is faster. Four scenarios are compared, in each
+scenario a different aspect is applied to the JDT compiler (just as a
+sample piece of source code).</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>1100 source files, few aspects that target 859 join points.</p>
+</li>
+<li>
+<p>1100 source files, code style trace aspect targeting public methods
+(22000 join points)</p>
+</li>
+<li>
+<p>1100 source files, annotation style trace aspect (22000 join points)</p>
+</li>
+<li>
+<p>1100 source files, insane aspect (before(): within(*) \{}) (203000
+join points)</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="images/perfSourceCompile_161.jpg" alt="image"></span></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_binary_weaving">Binary weaving</h3>
+<div class="paragraph">
+<p>Moving on from source compilation to pure binary weaving, the
+improvements are more obvious. Here we are using the complete JVM
+classes jar 'rt.jar' as an example of a large jar file for weaving.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Binary weaving rt.jar (~12000 classes) with a simple aspect (1200 join
+points)</p>
+</li>
+<li>
+<p>Binary weaving rt.jar (~12000 classes) with a code style trace aspect
+(121000 join points)</p>
+</li>
+<li>
+<p>Binary weaving rt.jar (~12000 classes) with an annotation style trace
+aspect (121000 join points)</p>
+</li>
+<li>
+<p>Binary weaving rt.jar (~12000 classes) with an insane aspect
+(before(): within(*) \{}) (352000 join points)</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="images/perfBinaryWeave_161.jpg" alt="image"></span></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_loadtime_weaving">Loadtime weaving</h3>
+<div class="paragraph">
+<p>The loadtime weaving improvements are similar to those seen for binary
+weaving (naturally). Here we are using the JDK tools jar 'tools.jar' as
+an example of a jar file for loadtime weaving.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Binary weaving tools.jar (~1900 classes) with a code style trace
+aspect</p>
+</li>
+<li>
+<p>Binary weaving tools.jar (~1900 classes) with an insane aspect
+(before(): within(*) \{})</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="images/perfLTW_161.jpg" alt="image"></span></p>
+</div>
+<div class="paragraph">
+<p>The refactoring work has also reduced the amount of unnecessary garbage
+created on the heap during the weaving process. The next comparison
+shows roughly the reduction in amount of 'stuff' created on the heap
+during a weave. This isn&#8217;t the max heap required to do a weave, it is
+just showing how many less temporary objects are allocated during an
+entire run of the weaver</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>First, the number of kilobytes of memory allocated from the heap
+during a weave of tools.jar with a code style trace aspect</p>
+</li>
+<li>
+<p>Second, another run of the same thing</p>
+</li>
+<li>
+<p>Third, this time using the insane aspect</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="images/heapContents_161.jpg" alt="image"></span></p>
+</div>
+<div class="paragraph">
+<p>So in terms of memory required, weaving the insane aspect into tools.jar
+created 1.4G of 'stuff' over the entire weaving process, compared to
+1.75G with 1.6.0.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_loadtime_weaving_stress">Loadtime weaving stress</h3>
+<div class="paragraph">
+<p>As well as addressing the memory usage of a single load time weaver, we
+have also looked at the use of load time weaving in a larger scale
+scenario, where multiple classloaders are being instantiated and
+discarded over time and each has an associated load time weaver. Under
+<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=210470">bug 210470</a> we
+looked in detail at whether the lifecycle of the weaver instance
+correctly matched the lifecycle of the associated classloader. It did
+not, but now it does! Here is a memory usage graph for AspectJ1.6.1 -
+this shows an application that spawns 7 threads which run continuously
+for a few minutes. Each thread repeatedly creates a classloader, weaves
+500 classes using it then discards the classloader. You can see that
+over time the memory is recovered correctly and when all threads
+complete (and all classloaders are orphaned), all the weavers are
+discarded.</p>
+</div>
+<div class="paragraph">
+<p>First, AspectJ 1.6.0, in which memory was never correctly recovered and
+so an OutOfMemory problem would always occur eventually.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="images/memLtwStress_160.jpg" alt="image"></span></p>
+</div>
+<div class="paragraph">
+<p>And now AspectJ 1.6.1:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="images/memLtwStress_161.jpg" alt="image"></span></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_incremental_compilation">Incremental compilation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Following on from the work done to improve compilation under Eclipse in
+AspectJ 1.6.0 (<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=221427">Bug
+221427</a> ) - we now support the building of 'broken code'
+(<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=102733">bug 102733</a>). This
+is something the JDT has always been doing - where code containing
+errors continues to build (if recovery is possible) but should the
+actual methods containing the errors get invoked, an exception will be
+thrown at runtime. A number of users typically extract large projects
+from their library systems, knowing that they will only partially build
+in their current eclipse setup, but as long at they do not invoke the
+code containing the errors then they expect the rest of the project to
+run normally. AspectJ now allows this mode of operation, and it has the
+additional effect that the state of the project stays consistent, albeit
+with known errors, and this means AspectJ will more frequently do
+incremental builds rather than falling back to full builds because there
+was a compilation error.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_language_changes">Language changes</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_optmized_syntax_for_annotation_value_binding_bug234943">Optmized syntax for annotation value binding (<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=234943">Bug234943</a>)</h3>
+<div class="paragraph">
+<p>If only binding an annotation at a method-execution join point in order
+to access an <strong>enum value</strong> within it, there is a more optimal syntax that
+can be used to produce faster code. Given this setup:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">enum</span> Colour { RED,GREEN,BLUE;}
+
+<span class="annotation">@interface</span> ColouredAnnotation { Colour value(); }
+
+<span class="annotation">@ColouredAnnotation</span>(Colour.RED)
+<span class="directive">public</span> <span class="type">void</span> colouredMethod() { }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Current syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">before(ColouredAnnotation anno): execution(* *(..)) &amp;&amp; <span class="annotation">@annotation</span>(anno) {
+  printTheColour(anno.value());
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>New optional syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">before(Colour col): execution(* *(..)) &amp;&amp; <span class="annotation">@annotation</span>(ColouredAnnotation(col)) {
+  printTheColour(col);
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

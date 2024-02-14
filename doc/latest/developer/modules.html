@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>AspectJ Modules</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>AspectJ Modules</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_core_modules">Core Modules</a></li>
+<li><a href="#_supporting_modules">Supporting Modules</a></li>
+<li><a href="#_eclipse_aspectj_development_tools_ajdt">Eclipse AspectJ Development Tools (AJDT)</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are a number of different structures [Parnas]: "the module structure, the uses structure, the runtime structure,
+&#8230;&#8203;" This document overviews module structure and summarizes what is hidden by each. For detailed documentation refer to
+the individual module sources and docs available via CVS.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_core_modules">Core Modules</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>CVS Location:</strong> dev.eclipse.org:/cvsroot/technology/org.aspectj/modules</p>
+</div>
+<div class="paragraph">
+<p>To set up for building, one need only check out the module directories within the <code>modules/</code> directory. In Eclipse,
+check out each module into the workspace as a project. (Note: module dependencies may change at any time, so this
+documentation might be out of date. The Eclipse .classpath files specify the module dependencies, even when using Ant to
+build outside of Eclipse.)</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Module</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Dependencies</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ajde</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">asm, bridge, org.aspectj.ajdt.core, org.eclipse.jdt.core, util</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hides the details of accessing the AspectJ
+compiler and interpreting compilation results (error messages, structure model, etc.) from other applications (typically
+IDEs) that need to invoke it programmatically. Changing any public interface in ajde can break all the IDE integration
+projects and should be done with care.<br>
+<br>
+It also contains a library of common swing user interface components that can be used by any swing based IDE. The
+non-eclipse IDE integration projects use this library (except for the emacs support).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">asm</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bridge</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contains the Abstract Structure Model, which represents the result of an aspectj compilation. Clients
+of ajde are returned an instance of the structure model which allows them to navigate and interpret the static structure
+of an aspectj program.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bridge</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">util</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contains an interface and implementation of classes realted to compiler messages including: source
+locations, handling, and formatting. Intended to minimize dependencies between testing, the compiler, and
+ajde.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.aspectj.ajdt.core</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">asm, bridge, org.eclipse.jdt.core, runtime, testing-util, util, weaver</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Front-end of the
+AspectJ compiler and extension of Eclipse&#8217;s JDT compiler. Extends the JDT compiler&#8217;s parsing and name resolution to
+understand AspectJ declarations.  Also extends incremental behavior with understanding of AspectJ dependencies.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.eclipse.jdt.core</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Eclipse JDT compiler, slightly patched for AspectJ and stored in binary form to avoid
+accidental changes. Sources are available in CVS at dev.eclipse.org:/cvsroot/technology/org.aspectj/shadows.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">runtime</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Small runtime library required for building and running AspectJ programs</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">taskdefs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bridge, org.aspectj.ajdt.core, util</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ant taskdef for the AspectJ compiler/weaver, ajc.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">util</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Common utility classes including data type, file, and stream manipulation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">weaver</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">asm, bridge, runtime, testing-util, util</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Back-end of the AspectJ compiler, built on top of the BCEL
+bytecode toolkit. All advice planning and weaving is done here. Takes an aspect bytecode format and other Java
+classfiles as input.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_supporting_modules">Supporting Modules</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>CVS Location:</strong> dev.eclipse.org:/cvsroot/technology/org.aspectj/modules</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Module</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Description</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">build</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ant files, scripts, taskdefs required for building the AspectJ distribution. Also contains the GUI installer.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">docs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Programmer and developer documentation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">lib</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Libraries required for building AspectJ</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">testing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Test support classes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">testing-client</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Client used for running the harness and reporting results</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">testing-drivers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Testing harness drivers and support classes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">testing-util</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Common testing utility classes used by the unit test suites in the core modules</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AspectJ test suite, including all language tests, regression tests, and test system sources</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_eclipse_aspectj_development_tools_ajdt">Eclipse AspectJ Development Tools (AJDT)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>CVS Location:</strong> dev.eclipse.org:/cvsroot/technology/org.eclipse.ajdt/plugins/org.eclipse.ajdt</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Plug-in</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Dependencies</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Description</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.eclipse.ajdt.ui</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.aspectj.ajde</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AspectJ IDE support for Eclipse</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">org.aspectj.ajde</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ajde, asm, bridge</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AspectJ libraries plug-in</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

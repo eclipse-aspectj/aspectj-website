@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>AspectJ 1.6.12</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>AspectJ 1.6.12</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_notable_changes">Notable Changes</a>
+<ul class="sectlevel2">
+<li><a href="#_rc1_annotation_value_matching_and">RC1 - annotation value matching and !=</a></li>
+<li><a href="#_rc1_more_flexible_pointcutcode_wiring_in_aop_xml">RC1 - More flexible pointcut/code wiring in aop.xml</a></li>
+<li><a href="#_m2_thisaspectinstance_bug239649">M2 - thisAspectInstance (bug239649)</a></li>
+<li><a href="#_m2_weaving_groovy">M2 - weaving groovy</a></li>
+<li><a href="#_m2_ajdt_memory">M2 - AJDT memory</a></li>
+<li><a href="#_m2_java7_weaving_support">M2 - Java7 weaving support</a></li>
+<li><a href="#_m1_synthetic_is_supported_in_pointcut_modifiers_327867">M1 - synthetic is supported in pointcut modifiers 327867</a></li>
+<li><a href="#_m1_respect_protection_domain_when_generating_types_during_weaving_328099">M1 - respect protection domain when generating types during weaving 328099</a></li>
+<li><a href="#_m1_suppressions_inline_with_the_jdt_compiler_335810">M1 - Suppressions inline with the JDT compiler 335810</a></li>
+<li><a href="#_m1_optimized_annotation_value_binding_for_ints_347684">M1 - Optimized annotation value binding for ints 347684</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>© Copyright 2010-2011 Contributors. All rights reserved.</em></p>
+</div>
+<div class="paragraph">
+<p>The full list of resolved issues in 1.6.12 is available
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced;bug_status=RESOLVED;bug_status=VERIFIED;bug_status=CLOSED;product=AspectJ;target_milestone=1.6.12;">here</a></p>
+</div>
+<div class="paragraph">
+<p><em>Release info:</em></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>1.6.12 available 18-Oct-2011</em></p>
+</li>
+<li>
+<p><em>1.6.12.RC1 available 3-Oct-2011</em></p>
+</li>
+<li>
+<p><em>1.6.12.M2 available 18-Aug-2011</em></p>
+</li>
+<li>
+<p><em>1.6.12.M1 available 7-Jun-2011</em></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_notable_changes">Notable Changes</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_rc1_annotation_value_matching_and">RC1 - annotation value matching and !=</h3>
+<div class="paragraph">
+<p>Prior to this change it was only possible to specify an annotation match
+like this:<br>
+<br>
+get(@Anno(someValue=1) * *) || get(@Anno(someValue=3) * *)<br></p>
+</div>
+<div class="paragraph">
+<p>Now it is possible to use != and write this:<br>
+<br>
+get(@Anno(someValue!=2) * *)<br></p>
+</div>
+<div class="paragraph">
+<p>This can enable a group of annotated elements to be more easily
+identified.<br>
+<br></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rc1_more_flexible_pointcutcode_wiring_in_aop_xml">RC1 - More flexible pointcut/code wiring in aop.xml</h3>
+<div class="paragraph">
+<p>Prior to this version the wiring was quite limited. In order to wire a
+pointcut to a piece of code the user needed to write an abstract aspect
+that included an abstract pointcut and some advice attached to that
+abstract pointcut. Then compile this aspect and finally write the XML to
+concretize the abstract pointcut. With 1.6.12 more flexibility has been
+added and for some cases there can be no need for that abstract aspect.</p>
+</div>
+<div class="paragraph">
+<p>This is a work in progress but now you can write this in the aop.xml:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;concrete-aspect</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">MyAspect</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+  <span class="tag">&lt;before</span> <span class="attribute-name">pointcut</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">execution(* Hello.say2(..)) AND args(message)</span><span class="delimiter">&quot;</span></span>
+   <span class="attribute-name">invokeClass</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">SomeRegularJavaClass</span><span class="delimiter">&quot;</span></span>
+   <span class="attribute-name">invokeMethod</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">someMethod(JoinPoint tjp, java.lang.String message)</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;after</span> <span class="attribute-name">pointcut</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">execution(* Hello.say2(..)) AND args(message)</span><span class="delimiter">&quot;</span></span>
+   <span class="attribute-name">invokeClass</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">SomeRegularJavaClass</span><span class="delimiter">&quot;</span></span>
+   <span class="attribute-name">invokeMethod</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">someOtherMethod(JoinPoint tjp, java.lang.String message)</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+<span class="tag">&lt;/concrete-aspect&gt;</span>
+
+public class SomeRegularJavaClass {
+
+  public static void someMethod(org.aspectj.lang.JoinPoint tjp, String s) {
+    System.out.println(&quot;in advice4: s=&quot;+s+&quot; at &quot;+tjp);
+  }
+
+  public static void someOtherMethod(org.aspectj.lang.JoinPoint tjp, String s) {
+    System.out.println(&quot;in advice5: s=&quot;+s+&quot; at &quot;+tjp);
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example there is a simple regular java class containing some
+static methods. In the XML these can be joined to pointcuts, kind as if
+they were advice. Notice in the XML it specifies:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The pointcut</p>
+</li>
+<li>
+<p>The invokeClass - the fully qualified name of the class containing the
+Java method</p>
+</li>
+<li>
+<p>The invokeMethod - the method, including signature in the specified
+class.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Due to the method specification being in XML the parameter types must be
+fully specified. The only exception to this rule is that the AspectJ
+core types JoinPoint (and JoinPoint.StaticPart) do not have to be fully
+qualified (see the example above). <strong>Important:</strong> notice that in the case
+above which does argument binding, the names are bound according to the
+XML specification, not according to the parameter names in the Java
+code.</p>
+</div>
+<div class="paragraph">
+<p>Around advice is also supported (the return type of the method must
+match the joinpoint return type). The example shows after advice,
+currently there is no way to specify either after returning or after
+finally, there is only after.</p>
+</div>
+<div class="paragraph">
+<p>Expanding this further would enable support for all the code style
+features in the XML. Some of the language features like declare
+annotation cannot be done in annotation style aspects but the XML
+doesn&#8217;t have the same kind of restrictions. If anyone wants to help out
+by fleshing this area of the weaver out, let me know and I&#8217;ll help you
+get started!</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="_m2_thisaspectinstance_bug239649">M2 - thisAspectInstance (<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=239649">bug239649</a>)</h3>
+<div class="paragraph">
+<p>There is now a new well known name that you can use in the if clauses in
+your aspects. thisAspectInstance provides access to the aspect instance.
+Here is an example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">aspect X {
+  <span class="type">boolean</span> doit() {
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">In instance check method doit()</span><span class="delimiter">&quot;</span></span>);
+    <span class="keyword">return</span> <span class="predefined-constant">true</span>;
+  }
+
+  before():execution(* m(..)) &amp;&amp; <span class="keyword">if</span>(thisAspectInstance.doit()){
+    <span class="predefined-type">System</span>.out.println(thisJoinPoint);
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now why not just use <code>X.aspectOf()</code> instead of <code>thisAspectInstance</code>? Well,
+<code>thisAspectInstance</code> is quite useful when working with abstract/concrete
+aspects:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">abstract</span> aspect X {
+<span class="directive">abstract</span> pointcut p();
+
+<span class="type">boolean</span> doit() {
+    <span class="keyword">return</span> <span class="predefined-constant">true</span>;
+  }
+
+  before():p()  &amp;&amp; <span class="keyword">if</span>(thisAspectInstance.doit()){
+    <span class="predefined-type">System</span>.out.println(thisJoinPoint);
+  }
+}
+
+aspect Y <span class="directive">extends</span> X {
+
+  pointcut p(): execution(* m(..));
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now thisAspectInstance will be an instance of the Y, not X. It enables
+the aspect instance to be used in some kind of check/guard that will
+avoid the costly creation of a thisJoinPoint object if the advice isn&#8217;t
+going to run. <strong>Note:</strong> right now this only works for singleton aspects.
+If you have need of it with other instantiation models, please comment
+on <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=239649" class="bare">https://bugs.eclipse.org/bugs/show_bug.cgi?id=239649</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_m2_weaving_groovy">M2 - weaving groovy</h3>
+<div class="paragraph">
+<p>Although we have been successfully weaving groovy for a long time, it is
+becoming more popular and a few issues have been uncovered when using
+non-singleton aspects with groovy code. These have been fixed.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_m2_ajdt_memory">M2 - AJDT memory</h3>
+<div class="paragraph">
+<p>The release notes for the last few versions of AspectJ have mentioned
+two options (minimalModel and typeDemotion) which can be switched on to
+reduce memory consumption. They have had enough field testing now and
+from 1.6.12.M2 onwards they are on by default. Users should see a
+reduction in memory consumed by AspectJ projects in AJDT. It won&#8217;t
+affect load time weaving. It may also help command line (or Ant) compile
+time weaving. If these options cause a problem then please raise a
+bugzilla but in the interim you could work around the problem by
+actively turning them off by specifying
+-Xset:minimalModel=false,typeDemotion=false in the project properties
+for your AspectJ project.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_m2_java7_weaving_support">M2 - Java7 weaving support</h3>
+<div class="paragraph">
+<p>Some preliminary work has been done to support Java7. Java7 class files
+must contain the necessary extra verifier support attributes in order to
+load successfully on a Java7 VM - the attributes were only optional in
+Java6. It is possible to force loading of classes missing the attributes
+but that requires use of a -XX option. AspectJ 1.6.12.M2 should create
+these for you if you weave Java7 level class files. Nothing has been
+done yet to rebase AspectJ on a version of the Eclipse compiler that
+supports Java7 language constructs - that will happen after Eclipse
+3.7.1 is out.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="_m1_synthetic_is_supported_in_pointcut_modifiers_327867">M1 - synthetic is supported in pointcut modifiers <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=327867">327867</a></h3>
+<div class="paragraph">
+<p>It is now possible to specify synthetic in pointcuts:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut p(): execution(!synthetic * *(..));</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_m1_respect_protection_domain_when_generating_types_during_weaving_328099">M1 - respect protection domain when generating types during weaving <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=328099">328099</a></h3>
+<div class="paragraph">
+<p>This enables us to weave signed jars correctly. AspectJ sometimes
+generates closure classes during weaving and these must be defined with
+the same protection domain as the jar that gave rise to them. In
+1.6.12.M1 this should now work correctly.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_m1_suppressions_inline_with_the_jdt_compiler_335810">M1 - Suppressions inline with the JDT compiler <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=335810">335810</a></h3>
+<div class="paragraph">
+<p>Starting with Eclipse 3.6, the Eclipse compiler no longer suppresses raw
+type warnings with @SuppressWarnings("unchecked"). You need to use
+@SuppressWarnings("rawtypes") for that. AspectJ has now been updated
+with this rule too.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_m1_optimized_annotation_value_binding_for_ints_347684">M1 - Optimized annotation value binding for ints <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=347684">347684</a></h3>
+<div class="paragraph">
+<p>The optimized annotation value binding now supports ints - this is for
+use when you want to match upon the existence of an annotation but you
+don&#8217;t need the annotation, you just need a value from it. This code
+snippet shows an example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@interface</span> SomeAnnotation {
+  <span class="type">int</span> i();
+}
+
+before(<span class="type">int</span> i): execution(* *(..)) &amp;&amp; <span class="annotation">@annotation</span>(SomeAnnotation(i)) {</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Binding values in this way will result in code that runs <strong>much</strong> faster
+than using pointcuts that bind the annotation itself then pull out the
+value.</p>
+</div>
+<div class="paragraph">
+<p>Under that same bug some changes were made to match values by name when
+binding too. Suppose the annotation had multiple int values, how would
+we select which int to bind? AspectJ will now use the name (if it can)
+to select the right value:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@interface</span> SomeAnnotation {
+  <span class="type">int</span> mods();
+  <span class="type">int</span> flags();
+}
+
+before(<span class="type">int</span> flags): execution(* *(..)) &amp;&amp; <span class="annotation">@annotation</span>(SomeAnnotation(flags)) {</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here the use of 'flags' as the name of the value being bound will ensure
+the 'flags' value from any SomeAnnotation is bound and not the 'mods'
+value.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

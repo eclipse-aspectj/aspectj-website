@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>AspectJ 1.8.0</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>AspectJ 1.8.0</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_notable_changes">Notable changes</a>
+<ul class="sectlevel2">
+<li><a href="#_java_8_compilation">Java 8 compilation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>© Copyright 2014 Contributors. All rights reserved.</em></p>
+</div>
+<div class="paragraph">
+<p>The full list of resolved issues in 1.8.0 is available
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced;bug_status=RESOLVED;bug_status=VERIFIED;bug_status=CLOSED;product=AspectJ;target_milestone=1.8.0.M1;target_milestone=1.8.0;">here</a></p>
+</div>
+<div class="paragraph">
+<p><em>Release info:</em></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>1.8.0 available 17-Apr-2014</em></p>
+</li>
+<li>
+<p><em>1.8.0.RC1 available 18-Mar-2014</em></p>
+</li>
+<li>
+<p><em>1.8.0.M1 available 29-Jul-2013</em></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_notable_changes">Notable changes</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_java_8_compilation">Java 8 compilation</h3>
+<div class="paragraph">
+<p>AspectJ has been updated to the latest available Eclipse Java compiler
+version that compiles Java8 code (the version available as a feature
+patch on top of Eclipse 4.3.2).</p>
+</div>
+<div class="paragraph">
+<p>Here is a sample AspectJ8 program:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// === 8&lt; ==== C.java ==== 8&lt; ===</span>
+<span class="keyword">import</span> <span class="include">java.util.Arrays</span>;
+
+<span class="type">interface</span> <span class="class">I</span> {
+    <span class="comment">// Default method</span>
+    <span class="keyword">default</span> <span class="type">void</span> foo() {
+        <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">ABC</span><span class="delimiter">&quot;</span></span>);
+    }
+}
+
+<span class="directive">public</span> <span class="type">class</span> <span class="class">C</span> <span class="directive">implements</span> I{
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
+        <span class="keyword">new</span> C().foo();
+        <span class="comment">// Lambda</span>
+        <span class="predefined-type">Runnable</span> r = () -&gt; { <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">hello world!</span><span class="delimiter">&quot;</span></span>); };
+        r.run();
+        <span class="comment">// Used Java8 b97</span>
+        <span class="predefined-type">Arrays</span>.asList(MyClass.doSomething()).forEach((p) -&gt; <span class="predefined-type">System</span>.out.println(p));
+    }
+}
+
+aspect X {
+    before(): execution(* I.foo()) {
+        <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">I.foo running</span><span class="delimiter">&quot;</span></span>);
+    }
+    before(): staticinitialization(!X) {
+        <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Clazz </span><span class="delimiter">&quot;</span></span>+thisJoinPointStaticPart);
+    }
+}
+
+
+<span class="type">class</span> <span class="class">Utils</span> {
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">int</span> compareByLength(<span class="predefined-type">String</span> in, <span class="predefined-type">String</span> out) {
+        <span class="keyword">return</span> in.length() - out.length();
+    }
+}
+
+<span class="type">class</span> <span class="class">MyClass</span> {
+    <span class="directive">public</span> <span class="directive">static</span> <span class="predefined-type">String</span><span class="type">[]</span> doSomething() {
+        <span class="predefined-type">String</span> <span class="type">[]</span>args = <span class="keyword">new</span> <span class="predefined-type">String</span><span class="type">[]</span>{<span class="string"><span class="delimiter">&quot;</span><span class="content">4444</span><span class="delimiter">&quot;</span></span>,<span class="string"><span class="delimiter">&quot;</span><span class="content">333</span><span class="delimiter">&quot;</span></span>,<span class="string"><span class="delimiter">&quot;</span><span class="content">22</span><span class="delimiter">&quot;</span></span>,<span class="string"><span class="delimiter">&quot;</span><span class="content">1</span><span class="delimiter">&quot;</span></span>};
+        <span class="comment">// Method reference</span>
+        <span class="predefined-type">Arrays</span>.sort(args,Utils::compareByLength);
+        <span class="keyword">return</span> args;
+    }
+}
+<span class="comment">// === 8&lt; ==== C.java ==== 8&lt; ===</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:11 +0700
+</div>
+</div>
+</body>
+</html>

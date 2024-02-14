@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>AspectJ 1.6.4</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>AspectJ 1.6.4</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#compilation">Compilation times</a></li>
+<li><a href="#_better_editor_feedback">Better editor feedback</a></li>
+<li><a href="#language">Language Enhancements</a></li>
+<li><a href="#_declaremixin">@DeclareMixin</a></li>
+<li><a href="#bugsfixed">Bugs fixed</a></li>
+<li><a href="#whatsnext">What&#8217;s next?</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>© Copyright 2009 Contributors. All rights reserved.</em></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#compilation">Compilation times</a></p>
+</li>
+<li>
+<p><a href="#language">Language enhancements</a></p>
+</li>
+<li>
+<p><a href="#bugsfixed">Bugs fixed</a></p>
+</li>
+<li>
+<p><a href="#whatsnext">What&#8217;s next?</a></p>
+</li>
+</ul>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="compilation">Compilation times</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In AspectJ 1.6.4 the goal was to improve the IDE experience, through a
+combination of improved compilation speed (both full builds and
+incremental builds), improved support for multiple-project
+configurations, and improved feedback in the editor. The following
+sections go into details on each of those topics.</p>
+</div>
+<div class="paragraph">
+<p><strong>Full Compilation</strong></p>
+</div>
+<div class="paragraph">
+<p>As an example project, all the measurements here are based on the
+modified JDT compiler that AspectJ uses internally. It is 1100 source
+files and includes aspects that affect around 850 join points. Here are
+the full build times in AJDT:</p>
+</div>
+<div class="paragraph">
+<p>AJDT 1.6.3 (uses AspectJ 1.6.3)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">21352ms
+21597ms
+21502ms</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>AJDT 1.6.5dev builds (use AspectJ 1.6.4)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">19811ms
+19802ms
+19504ms</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>About 1.5-2 seconds faster for this example.</p>
+</div>
+<div class="paragraph">
+<p><strong>Incremental Compilation and multi-project scenarios</strong></p>
+</div>
+<div class="paragraph">
+<p>In most common project configurations there are multiple eclipse
+projects in some kind of dependency hierarchy. Depending on what changes
+in a top level project, those downstream may need to be rebuilt. The
+analysis around this area has greatly improved in AspectJ 1.6.4, and
+this has resulted in much reduced incremental build times. The example
+timed here is around 20 AspectJ projects in a hierarchy, and a change is
+made to a source file in the top level project and build times are
+observed for the downstream projects.</p>
+</div>
+<div class="paragraph">
+<p>The timings reported here are accessible to anyone with AJDT installed -
+just open the 'AJDT Event Trace View' and it will report ongoing
+information about what the compiler/weaver and AJDT are up to. Be aware
+that data is only recorded in this view if it is open - so for optimal
+performance it should be shutdown, but it is useful for debugging
+scenarios or collecting basic benchmark numbers. Within the event trace
+view output, the time recorded for 'time spent in AJDE' represents the
+time spent in the compiler: analysing what has changed on the classpath,
+building code, weaving code.</p>
+</div>
+<div class="paragraph">
+<p>Initially this is using AJDT 1.6.2 (which embeds AspectJ 1.6.3):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">Type of change: adding a new method to a type
+Project build times (first one is the compile of our change, the rest are for downstream projects):
+462ms, 4ms, 145ms, 8ms, 9ms, 287ms, 471ms, 222ms, 1028ms, 143ms, 505ms, 199ms, 261ms, 1224ms,
+321ms, 704ms, 75ms, 233ms, 257ms
+Summary: Total time spent in the compiler for that change: 6558ms
+---
+Type of change: whitespace change (adding just a harmless space character)
+Project build times (first one is the compile of our change, the rest are for downstream projects):
+229ms, 5ms, 10ms, 9ms, 10ms, 79ms, 43ms, 62ms, 80ms, 37ms, 64ms, 32ms, 79ms,
+154ms, 94ms, 189ms, 72ms, 144ms, 205ms
+Summary: Total time spent in the compiler for that change: 1597ms</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now with AspectJ 1.6.5 dev builds (which embed AspectJ 1.6.4):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">Type of change: adding a new method to a type
+Project build times (first one is the compile of our change, the rest are for downstream projects):
+288ms, 3ms, 143ms, 2ms, 2ms, 162ms, 244ms, 89ms, 489ms, 113ms, 277ms, 108ms, 143ms, 626ms,
+135ms, 260ms, 2ms, 96ms, 6ms
+Summary: Total time spent in the compiler for that change: 3188ms down from 6558ms
+
+Type of change: whitespace change (adding just a harmless space character)
+Project build times (first one is the compile of our change, the rest are for downstream projects):
+101ms, 1ms, 1ms, 1ms, 0ms, 1ms, 1ms, 1ms, 1ms, 1ms, 0ms, 1ms, 1ms, 2ms, 0ms, 1ms, 0ms, 2ms, 2ms
+Summary: Total time spent in the compiler for that change: 118ms (down from 1597ms)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Improvements all round, and almost instant builds now for whitespace
+changes, even in large project setups.</p>
+</div>
+<div class="paragraph">
+<p>In addition the compilation times are also improved in situations where
+AspectJ projects depend upon Java projects and where aspectpath is used.
+AJDT 1.6.5 dev builds also include some changes that really speed up
+builds.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_better_editor_feedback">Better editor feedback</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Under <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=246393">bug 246393</a>
+the problem has been addressed where sometimes spurious errors would
+appear throughout the editor for a file in AJDT when just one single
+simple syntax errors exists. More detail on this problem can be found
+<a href="http://andrewclement.blogspot.com/2009/02/aspectj-fixing-reverse-cascade-errors.html">here</a>.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="language">Language Enhancements</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Optimizing support for maintaining per join point state</strong></p>
+</div>
+<div class="paragraph">
+<p>The traditional way to maintain state on a per join point basis involves
+using the JoinPoint.StaticPart as a key into a map:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">aspect X pertypewithin(*) {
+  <span class="predefined-type">Map</span>&lt;JoinPoint.StaticPart,<span class="predefined-type">Timer</span>&gt; timerMap = ...
+
+  Object around(): execution(<span class="directive">public</span> * *(..)) {
+    <span class="predefined-type">Timer</span> timerToUse = timerMap.get(thisJoinPointStaticPart);
+    timerToUse.start();
+    <span class="predefined-type">Object</span> o =  proceed();
+    timerToUse.stop();
+    <span class="keyword">return</span> o;
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These map lookups are slow. In AspectJ 1.6.4 there is a new getId()
+method on the JoinPoint.StaticPart object. The ids for all affected join
+points within a target type are unique (and start from 0) - they are
+ideal for array lookups. So using this the above aspect can be
+rewritten:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">aspect X pertypewithin(*) {
+  <span class="predefined-type">Timer</span><span class="type">[]</span> timerArray = ...
+
+  Object around(): execution(<span class="directive">public</span> * *(..)) {
+    <span class="predefined-type">Timer</span> timerToUse = timerArray[thisJoinPointStaticPart.getId()];
+    timerToUse.start();
+    <span class="predefined-type">Object</span> o =  proceed();
+    timerToUse.stop();
+    <span class="keyword">return</span> o;
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>much faster. Just be aware that the ids are only unique within an
+affected target type - hence the use of pertypewithin in this example to
+ensure there is an aspect instance (and so a different array) for each
+advised type.</p>
+</div>
+<div class="paragraph">
+<p>See related <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=89009">bug
+89009</a> for the full discussion</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_declaremixin">@DeclareMixin</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The annotation style declare parents support (@DeclareParents) has been
+(rightly) criticized because it really does not offer an equivalent to
+what is possible with code style declare parents, it really offers a
+mixin strategy. It also has limitations such as the delegate instance
+used to satisfy any method invocations on an affected target cannot
+access the object instance for which it is acting as a delegate. To
+address these concerns a proper mixin notation has been introduced that
+makes it more clear that a mixin strategy is being employed and it
+addresses the problem of the mixin delegate accessing the affected
+target instance.</p>
+</div>
+<div class="paragraph">
+<p>The @DeclareMixin annotation is attached to a factory method which
+returns instances of the delegate. Here is a basic example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// The factory method that can build the delegate instance is annotated with @DeclareMixin.</span>
+<span class="comment">// The annotation value defines the type pattern for targets of the mixin.</span>
+<span class="comment">// The parameter is the object for which a delegate is being constructed.</span>
+<span class="comment">// The interface that will be mixed in is the return value of the factory method.</span>
+<span class="annotation">@DeclareMixin</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.xyz..*</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="directive">static</span> SomeInterface createDelegate(<span class="predefined-type">Object</span> instance) {
+  <span class="keyword">return</span> <span class="keyword">new</span> SomeImplementation(instance);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>More examples are
+<a href="https://www.eclipse.org/aspectj/doc/released/adk15notebook/ataspectj-itds.html">here
+in the online documentation</a>.</p>
+</div>
+<div class="paragraph">
+<p>Going forward attempts will be made to try and make @DeclareParents
+behave more like code style - if this cannot be done it is likely to be
+deprecated.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="bugsfixed">Bugs fixed</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The complete list of issues resolved for AspectJ 1.6.4 (more than 70)
+can be found with this bugzilla query:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=&amp;product=AspectJ&amp;target_milestone=1.6.4&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">Bugs
+resolved</a></p>
+</li>
+</ul>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="whatsnext">What&#8217;s next?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>More incremental build enhancements</strong></p>
+</div>
+<div class="paragraph">
+<p>A number of situations still exist where incremental compile speeds
+still needs optimizing, particular when capabilities like aspectpath or
+inpath are used.</p>
+</div>
+<div class="paragraph">
+<p><strong>Build state persistence</strong></p>
+</div>
+<div class="paragraph">
+<p>Between restarts of Eclipse the state of each project is not recorded -
+hence full builds are required upon restart. The state (and associated
+relationship model) should be persisted between restarts, but both of
+these need a review first to ensure they are not larger than they need
+to be.</p>
+</div>
+<div class="paragraph">
+<p><strong>Memory consumption</strong></p>
+</div>
+<div class="paragraph">
+<p>Both for source compilation and load-time weaving scenarios. The size of
+the model in the IDE needs reviewing, and also the type map within the
+weaver. Although the type map uses Weak/Soft references to try and
+better control how it uses memory, the JVM policies for managing these
+references vary wildly and so some work needs to be done to allow for
+these differences.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:11 +0700
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>Dumping classes during load-time weaving</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body id="ltwdump" class="article toc2 toc-left">
+<div id="header">
+<h1>Dumping classes during load-time weaving</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#ltwdump-introduction">Introduction</a>
+<ul class="sectlevel2">
+<li><a href="#ltw-examples">Configuring bytecode dumping in load-time weaving</a></li>
+<li><a href="#ltwdump-examples">LTW Dump Examples</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="ltwdump-introduction">Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Very rarely problems may be encountered with classes that have been
+load-time woven. Symptoms will include incorrect program function or a
+Java exception such as <code>java.lang.VerifyError</code>. In these situations it&#8217;s
+most helpful to include the offending class in the bug report. When
+using load-time weaving the woven classes are in memory only so to save
+them to disk configure <code>META-INF/aop.xml</code> to dump the classes (by
+default to an <code>_ajdump</code> subdirectory of the current working directory).
+Also if the input class file is not available (e.g. it is a generated
+proxy or has already been instrumented by another agent) you can
+configure the weaver to dump the input classes as well.</p>
+</div>
+<div class="sect2">
+<h3 id="ltw-examples">Configuring bytecode dumping in load-time weaving</h3>
+<div class="paragraph">
+<p>For details of how to configure byte-code dumping, see the AspectJ
+Development Environment Guide section on
+<a href="../devguide/ltw.html#configuring-load-time-weaving-with-aopxml-files">Configuring
+Load-time Weaving</a>. Following is a simple example.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ltwdump-examples">LTW Dump Examples</h3>
+<div class="paragraph">
+<p>The following <code>META-INF/aop.xml</code> will weave classes in the <code>com.foo</code>
+package (and subpackages) but not CGLIB generated classes in the
+<code>com.foo.bar</code> package (and subpackages). It will also ensure all woven
+byte-code is dumped both before and after weaving.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;aspectj&gt;</span>
+    <span class="tag">&lt;aspects&gt;</span>
+        <span class="tag">&lt;aspect</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">ataspectj.EmptyAspect</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/aspects&gt;</span>
+    <span class="tag">&lt;weaver</span> <span class="attribute-name">options</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">-verbose -debug</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;dump</span> <span class="attribute-name">within</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">com.foo.bar..*</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">beforeandafter</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;include</span> <span class="attribute-name">within</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">com.foo..*</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;exclude</span> <span class="attribute-name">within</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">com.foo.bar..*CGLIB*</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/weaver&gt;</span>
+<span class="tag">&lt;/aspectj&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see messages similar to this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">[WeavingURLClassLoader] info AspectJ Weaver Version 1.5.3 built on Thursday Oct 26, 2006 at 17:22:31 GMT
+[WeavingURLClassLoader] info register classloader org.aspectj.weaver.loadtime.WeavingURLClassLoader
+[WeavingURLClassLoader] info using configuration /C:/tempMETA-INF/aop.xml
+[WeavingURLClassLoader] info register aspect ataspectj.EmptyAspect
+[WeavingURLClassLoader] debug not weaving 'com.foo.bar.Test$$EnhancerByCGLIB$$12345'
+[WeavingURLClassLoader] debug weaving 'com.foo.bar.Test'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>On disk you would find the following files:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">_ajdump/_before/com/foo/bar/Test.class
+_ajdump/com/foo/bar/Test.class</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

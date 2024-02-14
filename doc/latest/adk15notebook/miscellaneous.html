@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>Other Changes in AspectJ 5</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body id="miscellaneous" class="article toc2 toc-left">
+<div id="header">
+<h1>Other Changes in AspectJ 5</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#pointcuts-change">Pointcuts</a></li>
+<li><a href="#declare-soft-change">Declare Soft</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="pointcuts-change">Pointcuts</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>AspectJ 5 is more liberal than AspectJ 1.2.1 in accepting pointcut
+expressions that bind context variables in more than one location. For
+example, AspectJ 1.2.1 does not allow:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut foo(Foo foo) :
+  (execution(* *(..)) &amp;&amp; <span class="local-variable">this</span>(foo) ) ||
+  (set(* *) &amp;&amp; target(foo));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>whereas this expression is permitted in AspectJ 5. Each context variable
+must be bound exactly once in each branch of a disjunction, and the
+disjunctive branches must be mutually exclusive. In the above example
+for instance, no join point can be both an execution join point and a
+set join point so the two branches are mutually exclusive.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="declare-soft-change">Declare Soft</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The semantics of the <code>declare soft</code> statement have been refined in
+AspectJ 5 to only soften exceptions that are not already runtime
+exceptions. If the exception type specified in a declare soft statement
+is <code>RuntimeException</code> or a subtype of <code>RuntimeException</code> then a new
+XLint warning will be issued:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">declare soft : SomeRuntimeException : execution(* *(..));
+
+<span class="comment">// &quot;SomeRuntimeException will not be softened as it is already a</span>
+<span class="comment">// RuntimeException&quot; [XLint:runtimeExceptionNotSoftened]</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This XLint message can be controlled by setting the
+<code>runtimeExceptionNotSoftened</code> XLint parameter.</p>
+</div>
+<div class="paragraph">
+<p>If the exception type specified in a declare soft statement is a super
+type of <code>RuntimeException</code> (such as <code>Exception</code> for example) then any
+<em>checked</em> exception thrown at a matched join point, where the exception
+is an instance of the softened exception, will be softened to an
+<code>org.aspectj.lang.SoftException</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> aspect SoftenExample {
+  declare soft : <span class="exception">Exception</span> : execution(* Foo.*(..));
+}
+
+<span class="type">class</span> <span class="class">Foo</span> {
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
+    Foo foo = <span class="keyword">new</span> Foo();
+    foo.foo();
+    foo.bar();
+  }
+
+  <span class="type">void</span> foo() <span class="directive">throws</span> <span class="exception">Exception</span> {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">Exception</span>();        <span class="comment">// this will be converted to a SoftException</span>
+  }
+
+  <span class="type">void</span> bar() <span class="directive">throws</span> <span class="exception">Exception</span> {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">RuntimeException</span>();  <span class="comment">// this will remain a RuntimeException</span>
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

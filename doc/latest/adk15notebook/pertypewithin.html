@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>The pertypewithin Aspect Instantiation Model</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body id="pertypewithin" class="article">
+<div id="header">
+<h1>The <code>pertypewithin</code> Aspect Instantiation Model</h1>
+</div>
+<div id="content">
+<div class="paragraph">
+<p>AspectJ 5 defines a new per-clause type for aspect instantiation:
+<code>pertypewithin</code>. Unlike the other per-clauses, <code>pertypewithin</code> takes a
+type pattern:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">PerTypeWithin := 'pertypewithin' '(' OptionalParensTypePattern ')'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When an aspect is declared using the <code>pertypewithin</code> instantiation
+model, one new aspect instance will be created for each type matched by
+the associated type pattern.</p>
+</div>
+<div class="paragraph">
+<p>Pertypewithin aspects have <code>aspectOf</code> and <code>hasAspect</code> methods with the
+following signatures:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">/**
+ * return true if this aspect has an instance associated with
+ * the given type.
+ */</span>
+<span class="directive">public</span> <span class="directive">static</span> <span class="type">boolean</span> hasAspect(<span class="predefined-type">Class</span> clazz)
+
+<span class="comment">/**
+ * return the instance associated with the given type.
+ * Throws NoAspectBoundException if there is no such
+ * aspect.
+ */</span>
+<span class="directive">public</span> <span class="directive">static</span> P aspectOf(<span class="predefined-type">Class</span> clazz)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Where <code>P</code> is the type of the <code>pertypewithin</code> aspect.</p>
+</div>
+<div class="paragraph">
+<p>In addition, <code>pertypewithin</code> aspects have a <code>getWithinTypeName</code> method
+that can be called to return the package qualified name of the type for
+which the aspect instance has been created.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">/**
+ * return the package qualified name (eg. com.foo.MyClass) of the type
+ * for which the aspect instance has been instantiated.
+ */</span>
+<span class="directive">public</span> <span class="predefined-type">String</span> getWithinTypeName()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In common with the other per-clause instantiation models, the execution
+of any advice declared within a <code>pertypewithin</code> aspect is conditional
+upon an implicit pointcut condition. In this case, that any join point
+be <code>within</code> the type that the executing aspect is an <code>aspectOf</code>. For
+example, given the aspect definition</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">import</span> <span class="include">java.util</span>.*;
+
+<span class="directive">public</span> aspect InstanceTracking pertypewithin(org.xyz..*) {
+
+  <span class="comment">// use WeakHashMap for auto-garbage collection of keys</span>
+  <span class="directive">private</span> <span class="predefined-type">Map</span>&lt;<span class="predefined-type">Object</span>,<span class="predefined-type">Boolean</span>&gt; instances = <span class="keyword">new</span> <span class="predefined-type">WeakHashMap</span>&lt;<span class="predefined-type">Object</span>,<span class="predefined-type">Boolean</span>&gt;();
+
+  after(<span class="predefined-type">Object</span> o) returning() : execution(<span class="keyword">new</span>(..)) &amp;&amp; <span class="local-variable">this</span>(o) {
+    instances.put(o,<span class="predefined-constant">true</span>);
+  }
+
+  <span class="directive">public</span> <span class="predefined-type">Set</span>&lt;?&gt; getInstances() {
+    <span class="keyword">return</span> instances.keySet();
+  }
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then one aspect instance will be created for each type within
+<code>org.xyz..<strong></code>. For each aspect instance, the after returning advice will
+match only the execution of constructors within the matched
+per-type-within type. The net result is that the aspect tracks all known
+instances of each type within <code>org.xyz..</strong></code>. To get access to the
+instances, a programmer can simply write
+<code>InstanceTracking.aspectOf(org.xyz.SomeType.class).getInstances()</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>pertypewithin</code> aspect instantiation model should be used when the
+implementation of a crosscutting concern requires that some state be
+maintained for each type in a set of types. To maintain state for a
+single type, it is easier to use a static inter-type declared field.
+Examples of usage include instance tracking, profiling, and the
+implementation of a common tracing idiom that uses one Logger per traced
+class.</p>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

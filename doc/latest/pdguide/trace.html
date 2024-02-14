@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>Tracing</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body id="trace" class="article toc2 toc-left">
+<div id="header">
+<h1>Tracing</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#trace-introduction">Introduction</a>
+<ul class="sectlevel2">
+<li><a href="#trace-configuration">Configuring Tracing</a></li>
+<li><a href="#trace-examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="trace-introduction">Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The AspectJ developers have instrumented the compiler/weaver with many
+"trace" messages for their own debugging use. These remain in the
+production releases because tracing helps when it is hard to isolate the
+problem in a test case. This sections describes how to enable tracing so
+you can provide trace information on bug reports.</p>
+</div>
+<div class="paragraph">
+<p>The usual approach to opening a report on Bugzilla is to describe the
+symptoms of the problem and attach a simple testcase. This allows the
+AspectJ team to try and reproduce the problem in an attempt to fix it as
+well as improve the test suite. Unfortunately it may not be possible to
+produce such a testcase either because your program is too large or is
+commercially sensitive. Alternatively the problem may relate to your
+specific environment where AspectJ is being used and will not be
+reproducible by the AspectJ team. In each of these situations you can
+produce a trace of the compiler when the problem occurs instead. This
+can then be attached to the bug report.</p>
+</div>
+<div class="sect2">
+<h3 id="trace-configuration">Configuring Tracing</h3>
+<div class="paragraph">
+<p>When available (Java 5 or later) AspectJ will use the
+<a href="http://java.sun.com/j2se/1.5.0/docs/guide/logging/index.html">java.util.logging</a>
+infrastructure configured using a <code>logging.properties</code> file. By default
+only error and fatal events will be logged but less severe warnings as
+well as fine-grained method entry and exit events can be obtained using
+the appropriate configuration. All regular compiler messages can also be
+logged through the infrastructure by setting the
+<code>org.aspectj.weaving.messages</code> System property.</p>
+</div>
+<div class="paragraph">
+<p>If you are running the AspectJ compiler/weaver under JDK 1.4 or earlier,
+AspectJ will use a simple built-in trace infrastructure that logs to
+stderr. This is enabled by setting the
+<code>org.aspectj.weaving.tracing.enabled</code> System property. You may also
+override the default behaviour or provide your own trace implementation
+using the <code>org.aspectj.weaving.tracing.factory</code> System property.</p>
+</div>
+<div class="paragraph">
+<p>The table below lists the System properties that can be used to
+configure tracing.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>org.aspectj.tracing.debug</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Enable simple debugging of the trace infrastructure itself.</p>
+</div>
+<div class="paragraph">
+<p>Default: <code>false</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>org.aspectj.tracing.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Enable the built-in AspectJ trace infrastructure.</p>
+</div>
+<div class="paragraph">
+<p>Default: <code>false</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>org.aspectj.tracing.factory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Select trace infrastructure. Specify the
+fully qualified class name of the
+<code>org.aspectj.weaver.tools.TraceFactory</code> interface to use a custom
+infrastructure. Specify a value of <code>default</code> to force AspectJ to use
+it&#8217;s built-in infrastructure.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>org.aspectj.tracing.messages</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Enable tracing of compiler messages. The kind of messages logged is
+determined by the selected trace infrastructure not the message
+configuration.</p>
+</div>
+<div class="paragraph">
+<p>Default: <code>false</code>.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="trace-examples">Examples</h3>
+<div class="paragraph">
+<p>Using <code>-Dorg.aspectj.tracing.factory=default</code> to force AspectJ to use
+its internal infrastructure, <code>-Dorg.aspectj.tracing.enabled=true</code> to
+turn it on and <code>-Dorg.aspectj.tracing.messages=true</code> to include messages
+running a simple HelloWorld with LTW will generate tracing to stderr.
+Below is an extract from that trace with method arguments removed. You
+will notice the millisecond time stamp, thread id and indication of
+entry/exit/event or message type for each line of trace.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">15:44:18.630 main &gt; org.aspectj.weaver.loadtime.Aj.&lt;init&gt;
+15:44:18.660 main &lt; org.aspectj.weaver.loadtime.Aj.&lt;init&gt;
+15:44:18.660 main &gt; org.aspectj.weaver.loadtime.Aj.preProcess
+15:44:18.660 main - org.aspectj.weaver.loadtime.Aj.preProcess
+15:44:18.730 main &gt; org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.&lt;init&gt;
+15:44:18.730 main &lt; org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.&lt;init&gt;
+15:44:18.730 main &gt; org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.initialize
+15:44:18.821 main I [AppClassLoader@92e78c] info AspectJ Weaver Version DEVELOPMENT ...
+15:44:18.821 main &gt; org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.parseDefinitions
+15:44:18.821 main I [AppClassLoader@92e78c] info register classloader ...
+15:44:18.821 main - org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.parseDefinitions
+15:44:18.841 main - org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.parseDefinitions
+15:44:18.841 main I [AppClassLoader@92e78c] info using configuration ...
+15:44:18.891 main &lt; org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.parseDefinitions
+15:44:19.021 main &gt; org.aspectj.weaver.World$TypeMap.&lt;init&gt;
+15:44:19.021 main &lt; org.aspectj.weaver.World$TypeMap.&lt;init&gt;
+15:44:19.021 main &gt; org.aspectj.weaver.CrosscuttingMembersSet.&lt;init&gt;
+15:44:19.021 main &lt; org.aspectj.weaver.CrosscuttingMembersSet.&lt;init&gt;
+15:44:19.021 main &gt; org.aspectj.weaver.Lint.&lt;init&gt;
+15:44:19.021 main &lt; org.aspectj.weaver.Lint.&lt;init&gt;
+15:44:19.021 main &gt; org.aspectj.weaver.World.&lt;init&gt;
+15:44:19.111 main &lt; org.aspectj.weaver.World.&lt;init&gt;
+15:44:19.201 main &gt; org.aspectj.weaver.bcel.BcelWeaver.&lt;init&gt;
+15:44:19.201 main &lt; org.aspectj.weaver.bcel.BcelWeaver.&lt;init&gt;
+15:44:19.201 main &gt; org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.registerDefinitions
+15:44:19.211 main &gt; org.aspectj.weaver.bcel.BcelWeaver.setReweavableMode
+15:44:19.351 main &lt; org.aspectj.weaver.bcel.BcelWeaver.setReweavableMode
+15:44:19.351 main &gt; org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.registerAspects
+15:44:19.351 main I [AppClassLoader@92e78c] info register aspect Aspect
+15:44:19.351 main &gt; org.aspectj.weaver.bcel.BcelWeaver.addLibraryAspect
+15:44:19.501 main - org.aspectj.weaver.bcel.BcelWorld.lookupJavaClass
+15:44:19.632 main &gt; org.aspectj.weaver.CrosscuttingMembersSet.addOrReplaceAspect
+15:44:19.792 main &lt; org.aspectj.weaver.CrosscuttingMembersSet.addOrReplaceAspect
+15:44:19.792 main &lt; org.aspectj.weaver.bcel.BcelWeaver.addLibraryAspect
+15:44:19.792 main &lt; org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.registerAspects
+15:44:19.792 main &lt; org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.registerDefinitions
+15:44:19.792 main &gt; org.aspectj.weaver.bcel.BcelWeaver.prepareForWeave
+15:44:19.822 main &lt; org.aspectj.weaver.bcel.BcelWeaver.prepareForWeave
+15:44:19.822 main &gt; org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.weaveAndDefineConcete...
+15:44:19.822 main &lt; org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.weaveAndDefineConcete...
+15:44:19.822 main &lt; org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.initialize
+15:44:19.822 main &gt; org.aspectj.weaver.tools.WeavingAdaptor.weaveClass
+...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively when running under Java 5 the <code>logging.properties</code> file
+below could be used to configure Java Logging. The resulting file, just
+containing trace for the <code>org.aspectj.weaver.loadtime</code> package, will be
+written to <code>java0.log</code> in your <code>user.home</code> directory.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">handlers= java.util.logging.FileHandler
+
+.level= INFO
+
+java.util.logging.FileHandler.pattern = %h/java%u.log
+java.util.logging.FileHandler.count = 1
+java.util.logging.FileHandler.formatter = java.util.logging.SimpleFormatter
+java.util.logging.FileHandler.level = FINER
+
+org.aspectj.weaver.loadtime.level = FINER</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By setting the System property <code>-Dorg.aspectj.tracing.debug=true</code> you
+should see a message confirming which trace infrastructure is being
+used.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">TraceFactory.instance=org.aspectj.weaver.tools.Jdk14TraceFactory@12dacd1</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

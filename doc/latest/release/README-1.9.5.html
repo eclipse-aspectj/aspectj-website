@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>AspectJ 1.9.5</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>AspectJ 1.9.5</h1>
+</div>
+<div id="content">
+<div class="paragraph">
+<p><em>© Copyright 2019 Contributors. All rights reserved.</em></p>
+</div>
+<div class="paragraph">
+<p>The full list of resolved issues in 1.9.5 is available
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;f0=OP&amp;f1=OP&amp;f3=CP&amp;f4=CP&amp;j1=OR&amp;list_id=16866879&amp;product=AspectJ&amp;query_format=advanced&amp;target_milestone=1.9.5">here</a></p>
+</div>
+<div class="paragraph">
+<p><em>Release info: 1.9.5 available 28-Nov-2019</em></p>
+</div>
+<div class="paragraph">
+<p>AspectJ 1.9.5 supports Java13. Java13 introduces text blocks, but you
+must activate support for that via an <code>--enable-preview</code> flag when using
+the compiler and attempting to run the resultant classes: Here is
+<code>Code.java</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Code</span> {
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> argv) {}
+
+  <span class="directive">static</span> aspect X {
+    before(): execution(* Code.main(..)) {
+    <span class="predefined-type">System</span>.out.println(
+<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span><span class="string"><span class="delimiter">&quot;</span><span class="content">
+This
+is
+on
+multiple
+lines
+</span><span class="delimiter">&quot;</span></span><span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>
+);
+    }
+  }
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Compile it with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">$ ajc --enable-preview -13 Code.java</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now run it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">$ java --enable-preview Code
+This
+is
+on
+multiple
+lines</code></pre>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:11 +0700
+</div>
+</div>
+</body>
+</html>

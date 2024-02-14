@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>AspectJ Documentation and Resources</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body id="top" class="article toc2 toc-left">
+<div id="header">
+<h1>AspectJ Documentation and Resources</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#documentation">AspectJ documentation</a></li>
+<li><a href="#distributions">AspectJ distributions</a></li>
+<li><a href="#resources">Other AspectJ resources</a></li>
+<li><a href="#paths">Suggested learning paths for those new to AspectJ</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>AspectJ<sup>TM</sup> is a seamless aspect-oriented extension to Java<sup>TM</sup>. The compiler and development tools are available under
+an open-source license, require Java 8 to run, and produce code that runs in JDK 1.3 and later VM&#8217;s. For the latest
+materials, see <a href="https://eclipse.org/aspectj" class="bare">https://eclipse.org/aspectj</a>. Not all of these materials have been updated for AspectJ 5.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Section</th>
+<th class="tableblock halign-left valign-top">Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#documentation">Documentation</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="faq/faq.html#faq">FAQ</a>, <a href="quickref/quick5.pdf">Quick Reference (AspectJ 5)</a>,
+<a href="quickref/quick.pdf">Quick Reference (1.2.1)</a>, <a href="adk15notebook/index.html">AspectJ 5 Developer&#8217;s Notebook</a>,
+<a href="progguide/index.html">programming</a>, <a href="devguide/index.html">development</a> and
+<a href="pdguide/index.html">problem diagnosis</a> guides, <a href="runtime-api/index.html">runtime API</a>,
+<a href="weaver-api/index.html">weaver API</a> and <a href="examples">example code</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#distributions">Distributions</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://eclipse.org/aspectj">AspectJ</a> development environment support for <a href="https://eclipse.org/ajdt">Eclipse</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#resources">Other resources</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://eclipse.org/aspectj">AspectJ project</a>, the bug <a href="https://bugs.eclipse.org/bugs">db</a>, and mailing lists for
+<a href="mailto:aspectj-users@eclipse.org">users</a> and <a href="mailto:aspectj-dev@eclipse.org">developers</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#paths">Learning paths</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">for those new to AspectJ</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="documentation">AspectJ documentation</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Documentation</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="quickref/quick5.pdf">AspectJ 5 Quick Reference</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Four-page quick reference for the AspectJ 5 language</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="quickref/quick.pdf">AspectJ Quick Reference</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Two-page quick reference for the AspectJ language</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>AspectJ 5 Developer&#8217;s Notebook</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="adk15notebook/index.html">HTML multi-page</a></p>
+</li>
+<li>
+<p><a href="adk15notebook/adk15notebook.html">HTML single page</a></p>
+</li>
+<li>
+<p><a href="adk15notebook/adk15notebook.pdf">PDF</a></p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Describes the changes to the AspectJ language and tools introduced in the AspectJ 5 Development Kit. These changes are
+additive, and are not yet reflected in the programming guide or quick reference.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Programming Guide</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="progguide/index.html">HTML multi-page</a></p>
+</li>
+<li>
+<p><a href="progguide/progguide.html">HTML single page</a></p>
+</li>
+<li>
+<p><a href="progguide/progguide.pdf">PDF</a></p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Introduces AOP and the AspectJ language. <a href="progguide/gettingstarted.html">Getting Started</a> describes basic semantics
+and shows development- and production-time applications. <a href="progguide/language.html">The AspectJ Language</a> describes
+join points, pointcuts, advice, and introduction, all features new to AOP. <a href="progguide/examples.html">Examples</a> walks
+you through the examples included with the documentation, and there are two short chapters on useful
+<a href="progguide/idioms.html">Idioms</a> and a few <a href="progguide/pitfalls.html">Pitfalls</a>.<br>
+The appendices have reference information: the <a href="progguide/quickreference.html">Quick Reference</a> summarizes AspectJ
+syntax, the <a href="progguide/semantics.html">Language Semantics</a> best describes AspectJ usage, and
+<a href="progguide/implementation.html">Implementation Notes</a> describes how the current version is limited to code the
+compiler controls.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Development Environment Guide</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="devguide/index.html">HTML multi-page</a></p>
+</li>
+<li>
+<p><a href="devguide/devguide.html">HTML single page</a></p>
+</li>
+<li>
+<p><a href="devguide/devguide.pdf">PDF</a></p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Guide to the command-line compiler <a href="devguide/ajc.html">ajc</a> and the <a href="devguide/antsupport.html">Ant tasks</a> for
+building AspectJ programs</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Problem Diagnosis Guide</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="pdguide/index.html">HTML multi-page</a></p>
+</li>
+<li>
+<p><a href="pdguide/pdguide.html">HTML single page</a></p>
+</li>
+<li>
+<p><a href="pdguide/pdguide.pdf">PDF</a></p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Guide to various debugging features available, such as messages and trace to help you both solve problems with you own
+programs and report bugs to the AspectJ team</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="runtime-api/index.html">AspectJ Runtime API</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">API documentation for AspectJ runtime classes. <code>JoinPoint</code> shows the state automatically available at each join point.
+<code>ProceedingJoinPoint</code> explains how to <code>proceed(..)</code> to the intercepted join point from an around advice.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="weaver-api/index.html">AspectJ Weaver API</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">API documentation for AspectJ weaver classes. This is a superset of the runtime API plus all the additional classes
+used for byte code weaving, both during compilation from source code and binary weaving during post-compile and
+load-time weaving.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="faq/faq.html#faq">FAQ</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Frequently asked questions about the AspectJ language, tools, and project</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="release/JavaVersionCompatibility.html">Java version compatibility</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Compatibility matrix, explaining which AspectJ compiler version supports which Java language version and needs which
+JDK to run</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Release notes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Release notes, describing new features, improvements, bugfixes per AspectJ version:<br>
+<br>
+<a href="release/README-1.9.21.html">1.9.21</a>,
+<a href="release/README-1.9.20.html">1.9.20 and 1.9.20.1</a>, <a href="release/README-1.9.19.html">1.9.19</a>,
+<a href="release/README-1.9.9.html">1.9.9 and 1.9.9.1</a>, <a href="release/README-1.9.8.html">1.9.8</a>,
+<a href="release/README-1.9.7.html">1.9.7</a>, <a href="release/README-1.9.6.html">1.9.6</a>,
+<a href="release/README-1.9.5.html">1.9.5</a>, <a href="release/README-1.9.4.html">1.9.4</a>,
+<a href="release/README-1.9.3.html">1.9.3</a>, <a href="release/README-1.9.2.html">1.9.2</a>,
+<a href="release/README-1.9.1.html">1.9.1</a>, <a href="release/README-1.9.0.html">1.9.0</a>,
+<a href="release/README-1.8.11.html">1.8.11</a>, <a href="release/README-1.8.10.html">1.8.10</a>,
+<a href="release/README-1.8.9.html">1.8.9</a>, <a href="release/README-1.8.8.html">1.8.8</a>,
+<a href="release/README-1.8.7.html">1.8.7</a>, <a href="release/README-1.8.6.html">1.8.6</a>,
+<a href="release/README-1.8.5.html">1.8.5</a>, <a href="release/README-1.8.4.html">1.8.4</a>,
+<a href="release/README-1.8.3.html">1.8.3</a>, <a href="release/README-1.8.2.html">1.8.2</a>,
+<a href="release/README-1.8.1.html">1.8.1</a>, <a href="release/README-1.8.0.html">1.8.0</a>,
+<a href="release/README-1.7.4.html">1.7.4</a>, <a href="release/README-1.7.3.html">1.7.3</a>,
+<a href="release/README-1.7.2.html">1.7.2</a>, <a href="release/README-1.7.1.html">1.7.1</a>,
+<a href="release/README-1.7.0.html">1.7.0</a>, <a href="release/README-1.6.12.html">1.6.12</a>,
+<a href="release/README-1.6.11.html">1.6.11</a>, <a href="release/README-1.6.10.html">1.6.10</a>,
+<a href="release/README-1.6.9.html">1.6.9</a>, <a href="release/README-1.6.8.html">1.6.8</a>,
+<a href="release/README-1.6.7.html">1.6.7</a>, <a href="release/README-1.6.6.html">1.6.6</a>,
+<a href="release/README-1.6.5.html">1.6.5</a>, <a href="release/README-1.6.4.html">1.6.4</a>,
+<a href="release/README-1.6.3.html">1.6.3</a>, <a href="release/README-1.6.2.html">1.6.2</a>,
+<a href="release/README-1.6.1.html">1.6.1</a>, <a href="release/README-1.6.0.html">1.6.0</a>,
+<a href="release/README-1.5.4.html">1.5.4</a>, <a href="release/README-1.5.3.html">1.5.3</a>,
+<a href="release/README-1.5.2.html">1.5.2</a>, <a href="release/README-1.5.1.html">1.5.1</a>,
+<a href="release/README-1.5.0.html">1.5.0</a>, <a href="release/README-1.2.1.html">1.2.1</a>,
+<a href="release/README-1.2.html">1.2</a>, <a href="release/README-1.1.html">1.1</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="release/changes.html">Changes</a> (historical)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Changes between historical releases up to 1.6.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="release/porting.html">Porting guide</a> (historical)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Porting guide for historical releases to 1.2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="examples">Examples</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AspectJ code to demonstrate some language features and implement JavaBean properties, the Observer pattern, a tracing
+library, and a game application where aspects handle display updating</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>AspectJ Design Overview</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="developer/index.html">HTML multi-page</a></p>
+</li>
+<li>
+<p><a href="developer/design-overview.html">HTML single page</a></p>
+</li>
+<li>
+<p><a href="developer/design-overview.pdf">PDF</a></p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Introductory information about AspectJ language design, developer guides, module structure</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="distributions">AspectJ distributions</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Distributions</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://eclipse.org/aspectj">AspectJ binary distribution</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The AspectJ distribution contains a Java-based installer, binaries for the compiler, Ant taskdefs as well as the
+documentation and examples.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://eclipse.org/aspectj">AspectJ source code</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Source code for AspectJ is available under the open-source
+<a href="https://www.eclipse.org/org/documents/epl-2.0/EPL-2.0.txt">Eclipse Public License v 2.0</a> license from the Git
+repositories for the AspectJ project. See the <a href="faq/faq.html#buildingsource">FAQ entry</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://eclipse.org/ajdt">AspectJ for Eclipse</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AspectJ Development Environment support for Eclipse is available under Eclipse Public License v 1.0 from the
+eclipse.org project site <a href="https://eclipse.org/ajdt" class="bare">https://eclipse.org/ajdt</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="resources">Other AspectJ resources</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Resources</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mail lists</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AspectJ users discuss tips and best practices for writing AspectJ programs on <a href="mailto:aspectj-users@eclipse.org">aspectj-users@eclipse.org</a>. AspectJ
+developers discuss issues with developing the AspectJ tools on <a href="mailto:aspectj-dev@eclipse.org">aspectj-dev@eclipse.org</a>. To get occasional emails about
+AspectJ releases and relevant events, subscribe to <a href="mailto:aspectj-announce@eclipse.org">aspectj-announce@eclipse.org</a>. To view list archives or subscribe to
+the list, go to <a href="https://eclipse.org/aspectj">the AspectJ home page</a>. To find archived emails, use the Eclipse site
+<a href="https://www.eclipse.org/search/search.cgi">search page</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://bugs.eclipse.org/bugs">Bug database</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Use the Eclipse project&#8217;s Bugzilla database to view and submit bugs against the AspectJ product components
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?product=AspectJ&amp;component=Compiler">Compiler</a> (for the AspectJ compiler, ajc),
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?product=AspectJ&amp;component=IDE">IDE</a> (for AJDE bugs),
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?product=AspectJ&amp;component=Ant">Ant</a> (for the Ant tasks) and
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?product=AspectJ&amp;component=Docs">Docs</a> (for the documentation).
+Bugs all users should know about are
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?product=AspectJ&amp;keywords=info">flagged with the "info" keyword</a>.
+See the <a href="faq/faq.html#ajcbugs">FAQ entry</a> for instructions on submitting compiler bugs.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="paths">Suggested learning paths for those new to AspectJ</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To learn the AspectJ language, read the <a href="progguide/index.html">Programming Guide</a>, keeping the
+<a href="progguide/semantics.html">Semantics appendix</a> nearby as the best reference for AspectJ usage. Focus initially on the
+join point model and pointcuts, concepts AOP adds to OOP. To read about how the <a href="examples">examples</a> work, see the
+<a href="progguide/examples.html">Examples</a> section in the <a href="progguide/index.html">Programming Guide</a>. View and navigate
+the crosscutting structure using <a href="https://eclipse.org/ajdt">AJDT</a>.</p>
+</div>
+<div class="paragraph">
+<p>To start using AspectJ with your own code, modify the example aspects to apply to your classes. As you learn, use the
+compiler&#8217;s <code>-Xlint</code> flags to catch some common mistakes. (Understand that the
+<a href="progguide/implementation.html">current implementation</a> is limited to code the compiler controls.)</p>
+</div>
+<div class="paragraph">
+<p>To plan how to adopt AspectJ into a project, read the <a href="progguide/index.html">Programming Guide</a> on development- and
+production-time aspects and the FAQ entries for <a href="faq/faq.html#howToStartUsing">How should I start using AspectJ?</a>,
+<a href="faq/faq.html#adoption">Deciding to adopt AspectJ</a>, the Development tools sections
+(<a href="faq/faq.html#integrateWithDevTools">How does AspectJ integrate with existing Java development tools?</a>,
+<a href="faq/faq.html#devtools">Integrating AspectJ into your development environment</a>,
+<a href="faq/faq.html#ltw">Load-time weaving</a>), and <a href="faq/faq.html#opensource">AspectJ as open-source</a>).</p>
+</div>
+<div class="paragraph">
+<p>Enjoy the language!</p>
+</div>
+<div class="paragraph">
+<p>The AspectJ Team</p>
+</div>
+<hr>
+<div class="paragraph">
+<p><span class="small"><a href="#top">Top</a></span></p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

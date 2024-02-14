@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>Exploring the Spacewar Example</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body id="_5" class="article toc2 toc-left">
+<div id="header">
+<h1>Exploring the Spacewar Example</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_5_1">Compiling Spacewar</a></li>
+<li><a href="#_5_2">Running Spacewar</a></li>
+<li><a href="#_5_3">Exploring the Code</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>© Copyright 1997-2001 Xerox Corporation. All rights reserved.</em></p>
+</div>
+<div class="paragraph">
+<p><em>Last updated: January 10, 2001</em></p>
+</div>
+<div class="paragraph">
+<p>The code in this directory is an implementation of the classic video
+game Spacewar.</p>
+</div>
+<div class="paragraph">
+<p>The Spacewar game is intended to provide a modest-sized example of a
+program that uses aspects. The code for this example is evolving, as we
+add new features to AspectJ and come up with a better understanding of
+how to use the features.</p>
+</div>
+<div class="paragraph">
+<p>In order to compile and run this example, make sure to have the latest
+version of AspectJ correctly installed. If you&#8217;re not sure you do, try
+the helloworld example first by following the instructions in
+<a href="../doc/primer/default.html">Primer</a> section Getting Started.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_5_1">Compiling Spacewar</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Change to the <code>examples</code> directory.</p>
+</li>
+<li>
+<p>Type <code>ajc -argfile spacewar/demo.lst</code> to compile the system.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_5_2">Running Spacewar</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>In the examples directory, type <code>java spacewar.Game</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>When the game starts up you will see two different displays. These are
+the two built-in display aspects of the game. In each you will see a
+single white ship and two red ships. The white ship is yours to control;
+the red ships are an enemy robots. Your ship is controlled with the four
+arrow keys to turn, thrust and stop; the spacebar fires. As you play,
+the game will be displayed in both windows.</p>
+</div>
+<div class="paragraph">
+<p>When running on a 1.4 or later VM, click in the main panel to give it
+focus so that your keystrokes are recognized.</p>
+</div>
+<div class="paragraph">
+<p>You can quit the game with ctl-Q.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_5_3">Exploring the Code</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There is one other built-in configurations for the Spacewar game. Try it
+by typing <code>ajc @spacewar\debug.lst</code>. This compiles in an elaborate
+debugging aspect for the game.</p>
+</div>
+<div class="paragraph">
+<p>We recommend you explore the Spacewar source code and look at the
+aspects that it uses. You will find several of them, of different scales
+and different degrees of cross-cutting. Remember that these represent
+our evolving understanding of how to use AspectJ to implement Spacewar.
+If you believe we should be doing something differently, then please let
+us know.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

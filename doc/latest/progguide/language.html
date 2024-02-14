@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>The AspectJ Language</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body id="language" class="article toc2 toc-left">
+<div id="header">
+<h1>The AspectJ Language</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#language-intro">Introduction</a></li>
+<li><a href="#language-anatomy">The Anatomy of an Aspect</a>
+<ul class="sectlevel2">
+<li><a href="#_an_example_aspect">An Example Aspect</a></li>
+<li><a href="#_pointcuts">Pointcuts</a></li>
+<li><a href="#_advice">Advice</a></li>
+</ul>
+</li>
+<li><a href="#language-joinPoints">Join Points and Pointcuts</a>
+<ul class="sectlevel2">
+<li><a href="#_some_example_pointcuts">Some Example Pointcuts</a></li>
+<li><a href="#call-vs-execution">call vs. execution</a></li>
+<li><a href="#_pointcut_composition">Pointcut composition</a></li>
+<li><a href="#_pointcut_parameters">Pointcut Parameters</a></li>
+<li><a href="#example">Example: <code>HandleLiveness</code></a></li>
+<li><a href="#pointcut-best-practice">Writing good pointcuts</a></li>
+</ul>
+</li>
+<li><a href="#language-advice">Advice</a></li>
+<li><a href="#language-interType">Inter-type declarations</a>
+<ul class="sectlevel2">
+<li><a href="#_inter_type_scope">Inter-type Scope</a></li>
+<li><a href="#_example_pointassertions">Example: <code>PointAssertions</code></a></li>
+</ul>
+</li>
+<li><a href="#language-thisJoinPoint"><code>thisJoinPoint</code></a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="language-intro">Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The previous chapter, <a href="gettingstarted.html#starting">Getting Started with AspectJ</a>, was a brief overview of the
+AspectJ language. You should read this chapter to understand AspectJ&#8217;s
+syntax and semantics. It covers the same material as the previous
+chapter, but more completely and in much more detail.</p>
+</div>
+<div class="paragraph">
+<p>We will start out by looking at an example aspect that we&#8217;ll build out
+of a pointcut, an introduction, and two pieces of advice. This example
+aspect will gives us something concrete to talk about.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="language-anatomy">The Anatomy of an Aspect</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This lesson explains the parts of AspectJ&#8217;s aspects. By reading this
+lesson you will have an overview of what&#8217;s in an aspect and you will be
+exposed to the new terminology introduced by AspectJ.</p>
+</div>
+<div class="sect2">
+<h3 id="_an_example_aspect">An Example Aspect</h3>
+<div class="paragraph">
+<p>Here&#8217;s an example of an aspect definition in AspectJ:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">/*01*/</span> aspect FaultHandler {
+<span class="comment">/*02*/</span>
+<span class="comment">/*03*/</span>   <span class="directive">private</span> <span class="type">boolean</span> Server.disabled = <span class="predefined-constant">false</span>;
+<span class="comment">/*04*/</span>
+<span class="comment">/*05*/</span>   <span class="directive">private</span> <span class="type">void</span> reportFault() {
+<span class="comment">/*06*/</span>     <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Failure! Please fix it.</span><span class="delimiter">&quot;</span></span>);
+<span class="comment">/*07*/</span>   }
+<span class="comment">/*08*/</span>
+<span class="comment">/*09*/</span>   <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> fixServer(Server s) {
+<span class="comment">/*10*/</span>     s.disabled = <span class="predefined-constant">false</span>;
+<span class="comment">/*11*/</span>   }
+<span class="comment">/*12*/</span>
+<span class="comment">/*13*/</span>   pointcut services(Server s): target(s) &amp;&amp; call(<span class="directive">public</span> * *(..));
+<span class="comment">/*14*/</span>
+<span class="comment">/*15*/</span>   before(Server s): services(s) {
+<span class="comment">/*16*/</span>     <span class="keyword">if</span> (s.disabled) <span class="keyword">throw</span> <span class="keyword">new</span> DisabledException();
+<span class="comment">/*17*/</span>   }
+<span class="comment">/*18*/</span>
+<span class="comment">/*19*/</span>   after(Server s) throwing (FaultException e): services(s) {
+<span class="comment">/*20*/</span>     s.disabled = <span class="predefined-constant">true</span>;
+<span class="comment">/*21*/</span>     reportFault();
+<span class="comment">/*22*/</span>   }
+<span class="comment">/*23*/</span> }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>FaultHandler</code> consists of one inter-type field on <code>Server</code> (line
+03), two methods (lines 05-07 and 09-11), one pointcut definition (line
+13), and two pieces of advice (lines 15-17 and 19-22).</p>
+</div>
+<div class="paragraph">
+<p>This covers the basics of what aspects can contain. In general, aspects
+consist of an association of other program entities, ordinary variables
+and methods, pointcut definitions, inter-type declarations, and advice,
+where advice may be before, after or around advice. The remainder of
+this lesson focuses on those crosscut-related constructs.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_pointcuts">Pointcuts</h3>
+<div class="paragraph">
+<p>AspectJ&#8217;s pointcut definitions give names to pointcuts. Pointcuts
+themselves pick out join points, i.e. interesting points in the
+execution of a program. These join points can be method or constructor
+invocations and executions, the handling of exceptions, field
+assignments and accesses, etc. Take, for example, the pointcut
+definition in line 13:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut services(Server s): target(s) &amp;&amp; call(<span class="directive">public</span> * *(..))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This pointcut, named <code>services</code>, picks out those points in the execution
+of the program when <code>Server</code> objects have their public methods called.
+It also allows anyone using the <code>services</code> pointcut to access the
+<code>Server</code> object whose method is being called.</p>
+</div>
+<div class="paragraph">
+<p>The idea behind this pointcut in the <code>FaultHandler</code> aspect is that
+fault-handling-related behavior must be triggered on the calls to public
+methods. For example, the server may be unable to proceed with the
+request because of some fault. The calls of those methods are,
+therefore, interesting events for this aspect, in the sense that certain
+fault-related things will happen when these events occur.</p>
+</div>
+<div class="paragraph">
+<p>Part of the context in which the events occur is exposed by the formal
+parameters of the pointcut. In this case, that consists of objects of
+type <code>Server</code>. That formal parameter is then being used on the right
+hand side of the declaration in order to identify which events the
+pointcut refers to. In this case, a pointcut picking out join points
+where a Server is the target of some operation (target(s)) is being
+composed (<code>&amp;&amp;</code>, meaning and) with a pointcut picking out call join
+points (<code>call(..)</code>). The calls are identified by signatures that can
+include wild cards. In this case, there are wild cards in the return
+type position (first <code>*</code>), in the name position (second <code>*</code>) and in the
+argument list position <code>(..)</code>; the only concrete information is given by
+the qualifier <code>public</code>.</p>
+</div>
+<div class="paragraph">
+<p>Pointcuts pick out arbitrarily large numbers of join points of a
+program. But they pick out only a small number of <em>kinds</em> of join
+points. Those kinds of join points correspond to some of the most
+important concepts in Java. Here is an incomplete list: method call,
+method execution, exception handling, instantiation, constructor
+execution, and field access. Each kind of join point can be picked out
+by its own specialized pointcut that you will learn about in other parts
+of this guide.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_advice">Advice</h3>
+<div class="paragraph">
+<p>A piece of advice brings together a pointcut and a body of code to
+define aspect implementation that runs at join points picked out by the
+pointcut. For example, the advice in lines 15-17 specifies that the
+following piece of code</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">{
+  <span class="keyword">if</span> (s.disabled) <span class="keyword">throw</span> <span class="keyword">new</span> DisabledException();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>is executed when instances of the <code>Server</code> class have their public
+methods called, as specified by the pointcut <code>services</code>. More
+specifically, it runs when those calls are made, just before the
+corresponding methods are executed.</p>
+</div>
+<div class="paragraph">
+<p>The advice in lines 19-22 defines another piece of implementation that
+is executed on the same pointcut:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">{
+  s.disabled = <span class="predefined-constant">true</span>;
+  reportFault();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>But this second method executes after those operations throw exception
+of type <code>FaultException</code>.</p>
+</div>
+<div class="paragraph">
+<p>There are two other variations of after advice: upon successful return
+and upon return, either successful or with an exception. There is also a
+third kind of advice called around. You will see those in other parts of
+this guide.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="language-joinPoints">Join Points and Pointcuts</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Consider the following Java class:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">Point</span> {
+  <span class="directive">private</span> <span class="type">int</span> x, y;
+
+  <span class="predefined-type">Point</span>(<span class="type">int</span> x, <span class="type">int</span> y) { <span class="local-variable">this</span>.x = x; <span class="local-variable">this</span>.y = y; }
+
+  <span class="type">void</span> setX(<span class="type">int</span> x) { <span class="local-variable">this</span>.x = x; }
+  <span class="type">void</span> setY(<span class="type">int</span> y) { <span class="local-variable">this</span>.y = y; }
+
+  <span class="type">int</span> getX() { <span class="keyword">return</span> x; }
+  <span class="type">int</span> getY() { <span class="keyword">return</span> y; }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In order to get an intuitive understanding of AspectJ&#8217;s join points and
+pointcuts, let&#8217;s go back to some of the basic principles of Java.
+Consider the following a method declaration in class Point:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">void</span> setX(<span class="type">int</span> x) { <span class="local-variable">this</span>.x = x; }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This piece of program says that when method named <code>setX</code> with an <code>int</code>
+argument called on an object of type <code>Point</code>, then the method body
+<code>{ this.x = x; }</code> is executed. Similarly, the constructor of the class
+states that when an object of type <code>Point</code> is instantiated through a
+constructor with two <code>int</code> arguments, then the constructor body
+<code>{ this.x = x; this.y = y; }</code> is executed.</p>
+</div>
+<div class="paragraph">
+<p>One pattern that emerges from these descriptions is</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>When something happens, then something gets executed.</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>In object-oriented programs, there are several kinds of "things that
+happen" that are determined by the language. We call these the join
+points of Java. Join points consist of things like method calls, method
+executions, object instantiations, constructor executions, field
+references and handler executions. (See the <a href="quickreference.html#quick">AspectJ Quick Reference</a> for a
+complete listing.)</p>
+</div>
+<div class="paragraph">
+<p>Pointcuts pick out these join points. For example, the pointcut</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut setter():
+  target(<span class="predefined-type">Point</span>) &amp;&amp;
+  (call(<span class="type">void</span> setX(<span class="type">int</span>)) || call(<span class="type">void</span> setY(<span class="type">int</span>)));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>picks out each call to <code>setX(int)</code> or <code>setY(int)</code> when called on an
+instance of <code>Point</code>. Here&#8217;s another example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut ioHandler(): within(MyClass) &amp;&amp; handler(<span class="exception">IOException</span>);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This pointcut picks out each the join point when exceptions of type
+<code>IOException</code> are handled inside the code defined by class <code>MyClass</code>.</p>
+</div>
+<div class="paragraph">
+<p>Pointcut definitions consist of a left-hand side and a right-hand side,
+separated by a colon. The left-hand side consists of the pointcut name
+and the pointcut parameters (i.e. the data available when the events
+happen). The right-hand side consists of the pointcut itself.</p>
+</div>
+<div class="sect2">
+<h3 id="_some_example_pointcuts">Some Example Pointcuts</h3>
+<div class="paragraph">
+<p>Here are examples of pointcuts picking out</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">when a particular method body executes</dt>
+<dd>
+<p><code>execution(void Point.setX(int))</code></p>
+</dd>
+<dt class="hdlist1">when a method is called</dt>
+<dd>
+<p><code>call(void Point.setX(int))</code></p>
+</dd>
+<dt class="hdlist1">when an exception handler executes</dt>
+<dd>
+<p>  <code>handler(ArrayOutOfBoundsException)</code>
+when the object currently executing (i.e. <code>this</code>) is of type</p>
+</dd>
+<dt class="hdlist1"><code>SomeType</code></dt>
+<dd>
+<p><code>this(SomeType)</code></p>
+</dd>
+<dt class="hdlist1">when the target object is of type <code>SomeType</code></dt>
+<dd>
+<p><code>target(SomeType)</code></p>
+</dd>
+<dt class="hdlist1">when the executing code belongs to class <code>MyClass</code></dt>
+<dd>
+<p>  <code>within(MyClass)</code>
+when the join point is in the control flow of a call to a <code>Test</code>'s</p>
+</dd>
+<dt class="hdlist1">no-argument <code>main</code> method</dt>
+<dd>
+<p><code>cflow(call(void Test.main()))</code></p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Pointcuts compose through the operations <code>OR</code> (<code>||</code>), <code>ANT</code> (<code>&amp;&amp;</code>)
+and <code>NOT</code> (<code>!</code>).</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>It is possible to use wildcards. So</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>execution(* *(..))</code></p>
+</li>
+<li>
+<p><code>call(* set(..))</code></p>
+<div class="paragraph">
+<p>means (1) the execution of any method regardless of return or parameter
+types, and (2) the call to any method named <code>set</code> regardless of return
+or parameter types&#8201;&#8212;&#8201;in case of overloading there may be more than one
+such <code>set</code> method; this pointcut picks out calls to all of them.</p>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>You can select elements based on types. For example,</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>execution(int *())</code></p>
+</li>
+<li>
+<p><code>call(* setY(long))</code></p>
+</li>
+<li>
+<p><code>call(* Point.setY(int))</code></p>
+</li>
+<li>
+<p><code>call(*.new(int, int))</code></p>
+<div class="paragraph">
+<p>means (1) the execution of any method with no parameters that returns an
+<code>int</code>, (2) the call to any <code>setY</code> method that takes a <code>long</code> as an
+argument, regardless of return type or declaring type, (3) the call to
+any of <code>Point</code>'s <code>setY</code> methods that take an <code>int</code> as an argument,
+regardless of return type, and (4) the call to any classes' constructor,
+so long as it takes exactly two <code>int</code>s as arguments.</p>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>You can compose pointcuts. For example,</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>target(Point) &amp;&amp; call(int *())</code></p>
+</li>
+<li>
+<p><code>call(* *(..)) &amp;&amp; (within(Line) || within(Point))</code></p>
+</li>
+<li>
+<p><code>within(<strong>) &amp;&amp; execution(</strong>.new(int))</code></p>
+</li>
+<li>
+<p><code>!this(Point) &amp;&amp; call(int *(..))</code></p>
+<div class="paragraph">
+<p>means (1) any call to an <code>int</code> method with no arguments on an instance
+of <code>Point</code>, regardless of its name, (2) any call to any method where the
+call is made from the code in <code>Point</code>'s or <code>Line</code>'s type declaration,
+(3) the execution of any constructor taking exactly one <code>int</code> argument,
+regardless of where the call is made from, and (4) any method call to an
+<code>int</code> method when the executing object is any type except <code>Point</code>.</p>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>You can select methods and constructors based on their modifiers and
+on negations of modifiers. For example, you can say:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>call(public * *(..))</code></p>
+</li>
+<li>
+<p><code>execution(!static * *(..))</code></p>
+</li>
+<li>
+<p><code>execution(public !static * *(..))</code></p>
+<div class="paragraph">
+<p>which means (1) any call to a public method, (2) any execution of a
+non-static method, and (3) any execution of a public, non-static method.</p>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Pointcuts can also deal with interfaces. For example, given the
+interface</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">interface</span> <span class="class">MyInterface</span> { ... }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>the pointcut <code>call(* MyInterface.*(..))</code> picks out any call to a method
+in <code>MyInterface</code>'s signature&#8201;&#8212;&#8201;that is, any method defined by
+<code>MyInterface</code> or inherited by one of its a supertypes.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="call-vs-execution">call vs. execution</h3>
+<div class="paragraph">
+<p>When methods and constructors run, there are two interesting times
+associated with them. That is when they are called, and when they
+actually execute.</p>
+</div>
+<div class="paragraph">
+<p>AspectJ exposes these times as call and execution join points,
+respectively, and allows them to be picked out specifically by <code>call</code>
+and <code>execution</code> pointcuts.</p>
+</div>
+<div class="paragraph">
+<p>So what&#8217;s the difference between these join points? Well, there are a
+number of differences:</p>
+</div>
+<div class="paragraph">
+<p>Firstly, the lexical pointcut declarations <code>within</code> and <code>withincode</code>
+match differently. At a call join point, the enclosing code is that of
+the call site. This means that <code>call(void m()) &amp;&amp; withincode(void m())</code>
+will only capture directly recursive
+calls, for example. At an execution join point, however, the program is
+already executing the method, so the enclosing code is the method
+itself: <code>execution(void m()) &amp;&amp; withincode(void m())</code> is the same as
+<code>execution(void m())</code>.</p>
+</div>
+<div class="paragraph">
+<p>Secondly, the call join point does not capture super calls to non-static
+methods. This is because such super calls are different in Java, since
+they don&#8217;t behave via dynamic dispatch like other calls to non-static
+methods.</p>
+</div>
+<div class="paragraph">
+<p>The rule of thumb is that if you want to pick a join point that runs
+when an actual piece of code runs (as is often the case for tracing),
+use <code>execution</code>, but if you want to pick one that runs when a particular
+<em>signature</em> is called (as is often the case for production aspects), use
+<code>call</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_pointcut_composition">Pointcut composition</h3>
+<div class="paragraph">
+<p>Pointcuts are put together with the operators and (spelled <code>&amp;&amp;</code>), or
+(spelled <code>||</code>), and not (spelled <code>!</code>). This allows the creation of very
+powerful pointcuts from the simple building blocks of primitive
+pointcuts. This composition can be somewhat confusing when used with
+primitive pointcuts like <code>cflow</code> and <code>cflowbelow</code>. Here&#8217;s an example:</p>
+</div>
+<div class="paragraph">
+<p><code>cflow(P)</code> picks out each join point in the control flow of the join
+points picked out by <code>P</code>. So, pictorially:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">P ---------------------
+  \
+   \  cflow of P
+    \</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>What does <code>cflow(P) &amp;&amp; cflow(Q)</code> pick out? Well, it picks out each join point that is
+in both the control flow of <code>P</code> and in the control flow of <code>Q</code>. So&#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">        P ---------------------
+          \
+           \  cflow of P
+            \
+             \
+              \
+Q -------------\-------
+  \             \
+   \  cflow of Q \ cflow(P) &amp;&amp; cflow(Q)
+    \             \</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that <code>P</code> and <code>Q</code> might not have any join points in common&#8230;&#8203; but
+their control flows might have join points in common.</p>
+</div>
+<div class="paragraph">
+<p>But what does <code>cflow(P &amp;&amp; Q)</code> mean? Well, it means the control flow of those join
+points that are both picked out by <code>P</code> and picked out by <code>Q</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">P &amp;&amp; Q -------------------
+       \
+        \ cflow of (P &amp;&amp; Q)
+         \</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and if there are <em>no</em> join points that are both picked by <code>P</code> and picked
+out by <code>Q</code>, then there&#8217;s no chance that there are any join points in the
+control flow of <code>(P &amp;&amp; Q)</code>.</p>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s some code that expresses this.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Test</span> {
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
+    foo();
+  }
+  <span class="directive">static</span> <span class="type">void</span> foo() {
+    goo();
+  }
+  <span class="directive">static</span> <span class="type">void</span> goo() {
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">hi</span><span class="delimiter">&quot;</span></span>);
+  }
+}
+
+aspect A  {
+  pointcut fooPC(): execution(<span class="type">void</span> Test.foo());
+  pointcut gooPC(): execution(<span class="type">void</span> Test.goo());
+  pointcut printPC(): call(<span class="type">void</span> java.io.PrintStream.println(<span class="predefined-type">String</span>));
+
+  before(): cflow(fooPC()) &amp;&amp; cflow(gooPC()) &amp;&amp; printPC() &amp;&amp; !within(A) {
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">should occur</span><span class="delimiter">&quot;</span></span>);
+  }
+
+  before(): cflow(fooPC() &amp;&amp; gooPC()) &amp;&amp; printPC() &amp;&amp; !within(A) {
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">should not occur</span><span class="delimiter">&quot;</span></span>);
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>!within(A)</code> pointcut above is required to avoid the <code>printPC</code>
+pointcut applying to the <code>System.out.println</code> call in the advice body.
+If this was not present a recursive call would result as the pointcut
+would apply to its own advice. (See <a href="pitfalls.html#pitfalls-infiniteLoops">Infinite loops</a>
+for more details.)</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_pointcut_parameters">Pointcut Parameters</h3>
+<div class="paragraph">
+<p>Consider again the first pointcut definition in this chapter:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut setter():
+  target(<span class="predefined-type">Point</span>) &amp;&amp;
+  (call(<span class="type">void</span> setX(<span class="type">int</span>)) || call(<span class="type">void</span> setY(<span class="type">int</span>)));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As we&#8217;ve seen, this pointcut picks out each call to <code>setX(int)</code> or
+<code>setY(int)</code> methods where the target is an instance of <code>Point</code>. The
+pointcut is given the name <code>setter</code> and no parameters on the left-hand
+side. An empty parameter list means that none of the context from the
+join points is published from this pointcut. But consider another
+version of version of this pointcut definition:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut setter(<span class="predefined-type">Point</span> p):
+  target(p) &amp;&amp;
+  (call(<span class="type">void</span> setX(<span class="type">int</span>)) || call(<span class="type">void</span> setY(<span class="type">int</span>)));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This version picks out exactly the same join points. But in this
+version, the pointcut has one parameter of type <code>Point</code>. This means that
+any advice that uses this pointcut has access to a <code>Point</code> from each
+join point picked out by the pointcut. Inside the pointcut definition
+this <code>Point</code> is named <code>p</code> is available, and according to the right-hand
+side of the definition, that <code>Point p</code> comes from the <code>target</code> of each
+matched join point.</p>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s another example that illustrates the flexible mechanism for
+defining pointcut parameters:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut testEquality(<span class="predefined-type">Point</span> p):
+  target(<span class="predefined-type">Point</span>) &amp;&amp;
+  args(p) &amp;&amp;
+  call(<span class="type">boolean</span> equals(<span class="predefined-type">Object</span>));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This pointcut also has a parameter of type <code>Point</code>. Similar to the
+<code>setter</code> pointcut, this means that anyone using this pointcut has
+access to a <code>Point</code> from each join point. But in this case, looking at
+the right-hand side we find that the object named in the parameters is
+not the target <code>Point</code> object that receives the call; it&#8217;s the argument
+(also of type <code>Point</code>) passed to the <code>equals</code> method when some other
+<code>Point</code> is the target. If we wanted access to both <code>Point</code>s, then the
+pointcut definition that would expose target <code>Point p1</code> and argument
+<code>Point p2</code> would be</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut testEquality(<span class="predefined-type">Point</span> p1, <span class="predefined-type">Point</span> p2):
+  target(p1) &amp;&amp;
+  args(p2) &amp;&amp;
+  call(<span class="type">boolean</span> equals(<span class="predefined-type">Object</span>));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s look at another variation of the <code>setter</code> pointcut:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut setter(<span class="predefined-type">Point</span> p, <span class="type">int</span> newval):
+  target(p) &amp;&amp;
+  args(newval) &amp;&amp;
+  (call(<span class="type">void</span> setX(<span class="type">int</span>)) || call(<span class="type">void</span> setY(<span class="type">int</span>)));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this case, a <code>Point</code> object and an <code>int</code> value are exposed by the
+named pointcut. Looking at the the right-hand side of the definition, we
+find that the <code>Point</code> object is the target object, and the <code>int</code> value
+is the called method&#8217;s argument.</p>
+</div>
+<div class="paragraph">
+<p>The use of pointcut parameters is relatively flexible. The most
+important rule is that all the pointcut parameters must be bound at
+every join point picked out by the pointcut. So, for example, the
+following pointcut definition will result in a compilation error:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut badPointcut(<span class="predefined-type">Point</span> p1, <span class="predefined-type">Point</span> p2):
+  (target(p1) &amp;&amp; call(<span class="type">void</span> setX(<span class="type">int</span>))) ||
+  (target(p2) &amp;&amp; call(<span class="type">void</span> setY(<span class="type">int</span>)));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>because <code>p1</code> is only bound when calling <code>setX</code>, and <code>p2</code> is only bound
+when calling <code>setY</code>, but the pointcut picks out all of these join points
+and tries to bind both <code>p1</code> and <code>p2</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="example">Example: <code>HandleLiveness</code></h3>
+<div class="paragraph">
+<p>The example below consists of two object classes (plus an exception
+class) and one aspect. Handle objects delegate their public, non-static
+operations to their <code>Partner</code> objects. The aspect <code>HandleLiveness</code>
+ensures that, before the delegations, the partner exists and is alive,
+or else it throws an exception.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">Handle</span> {
+  Partner partner = <span class="keyword">new</span> Partner();
+
+  <span class="directive">public</span> <span class="type">void</span> foo() { partner.foo(); }
+  <span class="directive">public</span> <span class="type">void</span> bar(<span class="type">int</span> x) { partner.bar(x); }
+
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
+    Handle h1 = <span class="keyword">new</span> Handle();
+    h1.foo();
+    h1.bar(<span class="integer">2</span>);
+  }
+}
+
+<span class="type">class</span> <span class="class">Partner</span> {
+  <span class="type">boolean</span> isAlive() { <span class="keyword">return</span> <span class="predefined-constant">true</span>; }
+  <span class="type">void</span> foo() { <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span>); }
+  <span class="type">void</span> bar(<span class="type">int</span> x) { <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">bar </span><span class="delimiter">&quot;</span></span> + x); }
+}
+
+aspect HandleLiveness {
+  before(Handle handle): target(handle) &amp;&amp; call(<span class="directive">public</span> * *(..)) {
+    <span class="keyword">if</span> ( handle.partner == <span class="predefined-constant">null</span>  || !handle.partner.isAlive() ) {
+      <span class="keyword">throw</span> <span class="keyword">new</span> DeadPartnerException();
+    }
+  }
+}
+
+<span class="type">class</span> <span class="class">DeadPartnerException</span> <span class="directive">extends</span> <span class="exception">RuntimeException</span> {}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pointcut-best-practice">Writing good pointcuts</h3>
+<div class="paragraph">
+<p>During compilation, AspectJ processes pointcuts in order to try and
+optimize matching performance. Examining code and determining if each
+join point matches (statically or dynamically) a given pointcut is a
+costly process. (A dynamic match means the match cannot be fully
+determined from static analysis and a test will be placed in the code to
+determine if there is an actual match when the code is running). On
+first encountering a pointcut declaration, AspectJ will rewrite it into
+an optimal form for the matching process. What does this mean? Basically
+pointcuts are rewritten in DNF (Disjunctive Normal Form) and the
+components of the pointcut are sorted such that those components that
+are cheaper to evaluate are checked first. This means users do not have
+to worry about understanding the performance of various pointcut
+designators and may supply them in any order in their pointcut
+declarations.</p>
+</div>
+<div class="paragraph">
+<p>However, AspectJ can only work with what it is told, and for optimal
+performance of matching the user should think about what they are trying
+to achieve and narrow the search space for matches as much as they can
+in the definition. Basically there are three kinds of pointcut
+designator: kinded, scoping and context:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Kinded designators are those which select a particular kind of join
+point. For example: <code>execution, get, set, call, handler</code></p>
+</li>
+<li>
+<p>Scoping designators are those which select a group of join points of
+interest (of probably many kinds). For example: <code>within, withincode</code></p>
+</li>
+<li>
+<p>Contextual designators are those that match (and optionally bind)
+based on context. For example: <code>this, target, @annotation</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A well written pointcut should try and include at least the first two
+types (kinded and scoping), whilst the contextual designators may be
+included if wishing to match based on join point context, or bind that
+context for use in the advice. Supplying either just a kinded designator
+or just a contextual designator will work but could affect weaving
+performance (time and memory used) due to all the extra processing and
+analysis. Scoping designators are very fast to match, they can very
+quickly dismiss groups of join points that should not be further
+processed - that is why a good pointcut should always include one if
+possible.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="language-advice">Advice</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Advice defines pieces of aspect implementation that execute at
+well-defined points in the execution of the program. Those points can be
+given either by named pointcuts (like the ones you&#8217;ve seen above) or by
+anonymous pointcuts. Here is an example of an advice on a named
+pointcut:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut setter(<span class="predefined-type">Point</span> p1, <span class="type">int</span> newval):
+  target(p1) &amp;&amp; args(newval)
+  (call(<span class="type">void</span> setX(<span class="type">int</span>) || call(<span class="type">void</span> setY(<span class="type">int</span>)));
+
+before(<span class="predefined-type">Point</span> p1, <span class="type">int</span> newval): setter(p1, newval) {
+  <span class="predefined-type">System</span>.out.println(
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">About to set something in </span><span class="delimiter">&quot;</span></span> + p1 +
+    <span class="string"><span class="delimiter">&quot;</span><span class="content"> to the new value </span><span class="delimiter">&quot;</span></span> + newval
+  );
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And here is exactly the same example, but using an anonymous pointcut:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">before(<span class="predefined-type">Point</span> p1, <span class="type">int</span> newval):
+  target(p1) &amp;&amp; args(newval)
+  (call(<span class="type">void</span> setX(<span class="type">int</span>)) || call(<span class="type">void</span> setY(<span class="type">int</span>)))
+{
+  <span class="predefined-type">System</span>.out.println(
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">About to set something in </span><span class="delimiter">&quot;</span></span> + p1 +
+    <span class="string"><span class="delimiter">&quot;</span><span class="content"> to the new value </span><span class="delimiter">&quot;</span></span> + newval
+  );
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here are examples of the different advice:</p>
+</div>
+<div class="paragraph">
+<p>This before advice runs just before the join points picked out by the
+(anonymous) pointcut:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">before(<span class="predefined-type">Point</span> p, <span class="type">int</span> x): target(p) &amp;&amp; args(x) &amp;&amp; call(<span class="type">void</span> setX(<span class="type">int</span>)) {
+  <span class="keyword">if</span> (!p.assertX(x)) <span class="keyword">return</span>;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This after advice runs just after each join point picked out by the
+(anonymous) pointcut, regardless of whether it returns normally or
+throws an exception:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">after(<span class="predefined-type">Point</span> p, <span class="type">int</span> x):
+  target(p) &amp;&amp; args(x) &amp;&amp; call(<span class="type">void</span> setX(<span class="type">int</span>))
+{
+  <span class="keyword">if</span> (!p.assertX(x)) <span class="keyword">throw</span> <span class="keyword">new</span> PostConditionViolation();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This after returning advice runs just after each join point picked out
+by the (anonymous) pointcut, but only if it returns normally. The return
+value can be accessed, and is named <code>x</code> here. After the advice runs, the
+return value is returned:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">after(<span class="predefined-type">Point</span> p) returning(<span class="type">int</span> x):
+  target(p) &amp;&amp; call(<span class="type">int</span> getX())
+{
+  <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Returning int value </span><span class="delimiter">&quot;</span></span> + x + <span class="string"><span class="delimiter">&quot;</span><span class="content"> for p = </span><span class="delimiter">&quot;</span></span> + p);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This after throwing advice runs just after each join point picked out by
+the (anonymous) pointcut, but only when it throws an exception of type
+<code>Exception</code>. Here the exception value can be accessed with the name <code>e</code>.
+The advice re-raises the exception after it&#8217;s done:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">after() throwing(<span class="exception">Exception</span> e):
+  target(<span class="predefined-type">Point</span>) &amp;&amp; call(<span class="type">void</span> setX(<span class="type">int</span>))
+{
+    <span class="predefined-type">System</span>.out.println(e);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This around advice traps the execution of the join point; it runs
+<em>instead</em> of the join point. The original action associated with the
+join point can be invoked through the special <code>proceed</code> call:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">void</span> around(<span class="predefined-type">Point</span> p, <span class="type">int</span> x):
+  target(p)
+  &amp;&amp; args(x)
+  &amp;&amp; call(<span class="type">void</span> setX(<span class="type">int</span>))
+{
+  <span class="keyword">if</span> (p.assertX(x)) proceed(p, x);
+  p.releaseResources();
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="language-interType">Inter-type declarations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Aspects can declare members (fields, methods, and constructors) that are
+owned by other types. These are called inter-type members. Aspects can
+also declare that other types implement new interfaces or extend a new
+class. Here are examples of some such inter-type declarations:</p>
+</div>
+<div class="paragraph">
+<p>This declares that each <code>Server</code> has a <code>boolean</code> field named <code>disabled</code>,
+initialized to <code>false</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> <span class="type">boolean</span> Server.disabled = <span class="predefined-constant">false</span>;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is declared <code>private</code>, which means that it is private <em>to the
+aspect</em>: only code in the aspect can see the field. And even if <code>Server</code>
+has another private field named <code>disabled</code> (declared in <code>Server</code> or in
+another aspect) there won&#8217;t be a name collision, since no reference to
+<code>disabled</code> will be ambiguous.</p>
+</div>
+<div class="paragraph">
+<p>This declares that each <code>Point</code> has an <code>int</code> method named <code>getX</code> with no
+arguments that returns whatever <code>this.x</code> is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">int</span> <span class="predefined-type">Point</span>.getX() { <span class="keyword">return</span> <span class="local-variable">this</span>.x; }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Inside the body, <code>this</code> is the <code>Point</code> object currently executing.
+Because the method is publically declared any code can call it, but if
+there is some other <code>Point.getX()</code> declared there will be a compile-time
+conflict.</p>
+</div>
+<div class="paragraph">
+<p>This publically declares a two-argument constructor for <code>Point</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="predefined-type">Point</span>.new(<span class="type">int</span> x, <span class="type">int</span> y) { <span class="local-variable">this</span>.x = x; <span class="local-variable">this</span>.y = y; }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This publicly declares that each <code>Point</code> has an <code>int</code> field named <code>x</code>,
+initialized to zero:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">int</span> <span class="predefined-type">Point</span>.x = <span class="integer">0</span>;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Because this is publically declared, it is an error if <code>Point</code> already
+has a field named <code>x</code> (defined by <code>Point</code> or by another aspect).</p>
+</div>
+<div class="paragraph">
+<p>This declares that the <code>Point</code> class implements the <code>Comparable</code>
+interface:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">declare parents: <span class="predefined-type">Point</span> <span class="directive">implements</span> <span class="predefined-type">Comparable</span>;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Of course, this will be an error unless <code>Point</code> defines the methods
+required by <code>Comparable</code>.</p>
+</div>
+<div class="paragraph">
+<p>This declares that the <code>Point</code> class extends the <code>GeometricObject</code>
+class.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">declare parents: <span class="predefined-type">Point</span> <span class="directive">extends</span> GeometricObject;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>An aspect can have several inter-type declarations. For example, the
+following declarations</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="predefined-type">String</span> <span class="predefined-type">Point</span>.name;
+<span class="directive">public</span> <span class="type">void</span> <span class="predefined-type">Point</span>.setName(<span class="predefined-type">String</span> name) { <span class="local-variable">this</span>.name = name; }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>publicly declare that Point has both a String field <code>name</code> and a <code>void</code>
+method <code>setName(String)</code> (which refers to the <code>name</code> field declared by
+the aspect).</p>
+</div>
+<div class="paragraph">
+<p>An inter-type member can only have one target type, but often you may
+wish to declare the same member on more than one type. This can be done
+by using an inter-type member in combination with a private interface:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">aspect A {
+  <span class="directive">private</span> <span class="type">interface</span> <span class="class">HasName</span> {}
+  declare parents: (<span class="predefined-type">Point</span> || <span class="predefined-type">Line</span> || Square) <span class="directive">implements</span> HasName;
+
+  <span class="directive">private</span> <span class="predefined-type">String</span> HasName.name;
+  <span class="directive">public</span>  <span class="predefined-type">String</span> HasName.getName()  { <span class="keyword">return</span> name; }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This declares a marker interface <code>HasName</code>, and also declares that any
+type that is either <code>Point</code>, <code>Line</code>, or <code>Square</code> implements that
+interface. It also privately declares that all <code>HasName</code> object have a
+<code>String</code> field called <code>name</code>, and publically declares that all <code>HasName</code>
+objects have a <code>String</code> method <code>getName()</code> (which refers to the
+privately declared <code>name</code> field).</p>
+</div>
+<div class="paragraph">
+<p>As you can see from the above example, an aspect can declare that
+interfaces have fields and methods, even non-constant fields and methods
+with bodies.</p>
+</div>
+<div class="sect2">
+<h3 id="_inter_type_scope">Inter-type Scope</h3>
+<div class="paragraph">
+<p>AspectJ allows private and package-protected (default) inter-type
+declarations in addition to public inter-type declarations. Private
+means private in relation to the aspect, not necessarily the target
+type. So, if an aspect makes a private inter-type declaration of a field</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> <span class="type">int</span> Foo.x;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then code in the aspect can refer to <code>Foo</code>'s <code>x</code> field, but nobody else
+can. Similarly, if an aspect makes a package-protected introduction,</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">int</span> Foo.x;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>then everything in the aspect&#8217;s package (which may or may not be <code>Foo</code>'s
+package) can access <code>x</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example_pointassertions">Example: <code>PointAssertions</code></h3>
+<div class="paragraph">
+<p>The example below consists of one class and one aspect. The aspect
+privately declares the assertion methods of <code>Point</code>, <code>assertX</code> and
+<code>assertY</code>. It also guards calls to <code>setX</code> and <code>setY</code> with calls to these
+assertion methods. The assertion methods are declared privately because
+other parts of the program (including the code in <code>Point</code>) have no
+business accessing the assert methods. Only the code inside of the
+aspect can call those methods.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">Point</span>  {
+  <span class="type">int</span> x, y;
+
+  <span class="directive">public</span> <span class="type">void</span> setX(<span class="type">int</span> x) { <span class="local-variable">this</span>.x = x; }
+  <span class="directive">public</span> <span class="type">void</span> setY(<span class="type">int</span> y) { <span class="local-variable">this</span>.y = y; }
+
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
+    <span class="predefined-type">Point</span> p = <span class="keyword">new</span> <span class="predefined-type">Point</span>();
+    p.setX(<span class="integer">3</span>); p.setY(<span class="integer">333</span>);
+  }
+}
+
+aspect PointAssertions {
+
+  <span class="directive">private</span> <span class="type">boolean</span> <span class="predefined-type">Point</span>.assertX(<span class="type">int</span> x) {
+    <span class="keyword">return</span> (x &lt;= <span class="integer">100</span> &amp;&amp; x &gt;= <span class="integer">0</span>);
+  }
+  <span class="directive">private</span> <span class="type">boolean</span> <span class="predefined-type">Point</span>.assertY(<span class="type">int</span> y) {
+    <span class="keyword">return</span> (y &lt;= <span class="integer">100</span> &amp;&amp; y &gt;= <span class="integer">0</span>);
+  }
+
+  before(<span class="predefined-type">Point</span> p, <span class="type">int</span> x): target(p) &amp;&amp; args(x) &amp;&amp; call(<span class="type">void</span> setX(<span class="type">int</span>)) {
+    <span class="keyword">if</span> (!p.assertX(x))
+      <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Illegal value for x</span><span class="delimiter">&quot;</span></span>); <span class="keyword">return</span>;
+  }
+  before(<span class="predefined-type">Point</span> p, <span class="type">int</span> y): target(p) &amp;&amp; args(y) &amp;&amp; call(<span class="type">void</span> setY(<span class="type">int</span>)) {
+    <span class="keyword">if</span> (!p.assertY(y))
+      <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Illegal value for y</span><span class="delimiter">&quot;</span></span>); <span class="keyword">return</span>;
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="language-thisJoinPoint"><code>thisJoinPoint</code></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>AspectJ provides a special reference variable, <code>thisJoinPoint</code>, that
+contains reflective information about the current join point for the
+advice to use. The <code>thisJoinPoint</code> variable can only be used in the
+context of advice, just like <code>this</code> can only be used in the context of
+non-static methods and variable initializers. In advice, <code>thisJoinPoint</code>
+is an object of type
+<a href="../runtime-api/org/aspectj/lang/JoinPoint.html"><code>org.aspectj.lang.JoinPoint</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>One way to use it is simply to print it out. Like all Java objects,
+<code>thisJoinPoint</code> has a <code>toString()</code> method that makes quick-and-dirty
+tracing easy:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">aspect TraceNonStaticMethods {
+  before(<span class="predefined-type">Point</span> p): target(p) &amp;&amp; call(* *(..)) {
+    <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Entering </span><span class="delimiter">&quot;</span></span> + thisJoinPoint + <span class="string"><span class="delimiter">&quot;</span><span class="content"> in </span><span class="delimiter">&quot;</span></span> + p);
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The type of <code>thisJoinPoint</code> includes a rich reflective class hierarchy
+of signatures, and can be used to access both static and dynamic
+information about join points such as the arguments of the join point:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">thisJoinPoint.getArgs()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In addition, it holds an object consisting of all the static information
+about the join point such as corresponding line number and static
+signature:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">thisJoinPoint.getStaticPart()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you only need the static information about the join point, you may
+access the static part of the join point directly with the special
+variable <code>thisJoinPointStaticPart</code>. Using <code>thisJoinPointStaticPart</code> will
+avoid the run-time creation of the join point object that may be
+necessary when using <code>thisJoinPoint</code> directly.</p>
+</div>
+<div class="paragraph">
+<p>It is always the case that</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">thisJoinPointStaticPart == thisJoinPoint.getStaticPart()
+
+thisJoinPoint.getKind() == thisJoinPointStaticPart.getKind()
+thisJoinPoint.getSignature() == thisJoinPointStaticPart.getSignature()
+thisJoinPoint.getSourceLocation() == thisJoinPointStaticPart.getSourceLocation()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>One more reflective variable is available:
+<code>thisEnclosingJoinPointStaticPart</code>. This, like
+<code>thisJoinPointStaticPart</code>, only holds the static part of a join point,
+but it is not the current but the enclosing join point. So, for example,
+it is possible to print out the calling source location (if available)
+with</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">before() : execution (* *(..)) {
+  <span class="predefined-type">System</span>.err.println(thisEnclosingJoinPointStaticPart.getSourceLocation())
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 15:02:44 +0700
+</div>
+</div>
+</body>
+</html>

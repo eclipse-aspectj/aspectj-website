@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>New Reflection Interfaces</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body id="reflection" class="article toc2 toc-left">
+<div id="header">
+<h1>New Reflection Interfaces</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#reflection_api">Using <code>AjTypeSystem</code></a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>AspectJ 5 provides a full set of reflection APIs analogous to the
+<code>java.lang.reflect</code> package, but fully aware of the AspectJ type system.
+See the javadoc for the runtime and tools APIs for the full details. The
+reflection APIs are only supported when running under Java 5 and for
+code compiled by the AspectJ 5 compiler at target level 1.5.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="reflection_api">Using <code>AjTypeSystem</code></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The starting point for using the reflection apis is
+<code>org.aspectj.lang.reflect.AjTypeSystem</code> which provides the method
+<code>getAjType(Class)</code> which will return the <code>AjType</code> corresponding to a
+given Java class. The <code>AjType</code> interface corresponds to
+<code>java.lang.Class</code> and gives you access to all of the method, field,
+constructor, and also pointcut, advice, declare statement and inter-type
+declaration members in the type.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

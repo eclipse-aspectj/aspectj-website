@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>A Grammar for the AspectJ 5 Language</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body id="grammar" class="article">
+<div id="header">
+<h1>A Grammar for the AspectJ 5 Language</h1>
+</div>
+<div id="content">
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">== type patterns ===
+
+TypePattern :=
+    SimpleTypePattern |
+    '!' TypePattern |
+    '(' AnnotationPattern? TypePattern ')'
+    TypePattern '&amp;&amp;' TypePattern |
+    TypePattern '||' TypePattern
+
+SimpleTypePattern := DottedNamePattern '+'? '[]'*
+
+DottedNamePattern :=
+    FullyQualifiedName RestOfNamePattern? |
+    '*' NotStarNamePattern?
+
+RestOfNamePattern := '..' DottedNamePattern | '*' NotStarNamePattern?
+
+NotStarNamePattern :=
+    FullyQualifiedName RestOfNamePattern? |
+    '..' DottedNamePattern
+
+FullyQualifiedName := JavaIdentifierCharacter+ ('.' JavaIdentifierCharacter+)*
+
+== annotation patterns ===
+
+AnnotationPattern := '!'? '@' AnnotationTypePattern AnnotationPattern*
+
+AnnotationTypePattern := FullyQualifiedName | '(' TypePattern ')'
+
+== signature patterns ===
+
+-- field --
+
+FieldPattern :=
+    AnnotationPattern? FieldModifiersPattern?
+    TypePattern (TypePattern DotOrDotDot)? SimpleNamePattern
+
+FieldModifiersPattern := '!'? FieldModifier FieldModifiersPattern*
+
+FieldModifier :=
+    'public' | 'private' | 'protected' | 'static' |
+    'transient' | 'final'
+
+DotOrDotDot := '.' | '..'
+
+SimpleNamePattern := JavaIdentifierChar+ ('*' SimpleNamePattern)?
+
+-- method --
+
+MethodPattern :=
+    AnnotationPattern? MethodModifiersPattern? TypePattern
+    (TypePattern DotOrDotDot)? SimpleNamePattern
+    '(' FormalsPattern ')' ThrowsPattern?
+
+MethodModifiersPattern := '!'? MethodModifier MethodModifiersPattern*
+
+MethodModifier :=
+    'public' | 'private' | 'protected' | 'static' |
+    'synchronized' | 'final'
+
+FormalsPattern :=
+    '..' (',' FormalsPatternAfterDotDot)? |
+    OptionalParensTypePattern (',' FormalsPattern)* |
+    TypePattern '...'
+
+FormalsPatternAfterDotDot :=
+    OptionalParensTypePattern (',' FormalsPatternAfterDotDot)* |
+    TypePattern '...'
+
+ThrowsPattern := 'throws' TypePatternList
+
+TypePatternList := TypePattern (',' TypePattern)*
+
+-- constructor --
+
+ConstructorPattern :=
+    AnnotationPattern? ConstructorModifiersPattern?
+    (TypePattern DotOrDotDot)? 'new' '(' FormalsPattern ')'
+    ThrowsPattern?
+
+ConstructorModifiersPattern :=
+    '!'? ConstructorModifier ConstructorModifiersPattern*
+
+ConstructorModifier := 'public' | 'private' | 'protected'
+
+== Pointcuts ===
+
+PointcutPrimitive :=
+    Call | Execution | Get | Set | Handler |
+    Initialization | PreInitialization |
+    StaticInitialization | AdviceExecution |
+    This | Target | Args | CFlow | CFlowBelow |
+    Within | WithinCode | If |
+    AnnotationPointcut
+
+AnnotationPointcut :=
+    AtAnnotation | AtThis | AtTarget |
+    AtWithin | AtWithinCode | AtArgs
+
+Call := 'call' '(' MethodOrConstructorPattern ')'
+
+MethodOrConstructorPattern := MethodPattern | ConstructorPattern
+
+Execution := 'execution' '(' MethodOrConstructorPattern ')'
+
+Get := 'get' '(' FieldPattern ')'
+Set := 'set' '(' FieldPattern ')'
+Handler := 'handler' '(' OptionalParensTypePattern ')'
+Initialization := 'initialization' '(' ConstructorPattern ')'
+PreInitialization := 'preinitialization' '(' ConstructorPattern ')'
+StaticInitialization := 'staticinitialization' '(' OptionalParensTypePattern ')'
+AdviceExecution := 'adviceexecution' '(' ')'
+This := 'this' '(' TypeOrIdentifier ')'
+Target := 'target' '(' TypeOrIdentifier ')'
+Args := 'args' '(' FormalsOrIdentifiersPattern ')'
+CFlow := 'cflow' '(' Pointcut ')'
+CFlowBelow := 'cflowbelow' '(' Pointcut ')'
+Within := 'within' '(' OptionalParensTypePattern ')'
+WithinCode := 'withincode' '(' OptionalParensTypePattern ')'
+If := 'if' '(' BooleanJavaExpression ')'
+
+TypeOrIdentifier := FullyQualifiedName ('[' ']')* | Identifier
+Identifier := JavaIdentifierChar+
+
+FormalsOrIdentifiersPattern :=
+    '..' (',' FormalsOrIdentifiersPatternAfterDotDot)? |
+    TypeOrIdentifier (',' FormalsOrIdentifiersPattern)* |
+    '*' (',' FormalsOrIdentifiersPattern)*
+
+FormalsOrIdentifiersPatternAfterDotDot :=
+    TypeOrIdentifier (',' FormalsOrIdentifiersPatternAfterDotDot)* |
+    '*' (',' FormalsOrIdentifiersPatternAfterDotDot)*
+
+AtAnnotation := '@annotation' '(' AnnotationOrIdentifier ')'
+AtThis := '@this' '(' AnnotationOrIdentifer ')'
+AtTarget := '@target' '(' AnnotationOrIdentifier ')'
+AtWithin := '@within' '(' AnnotationOrIdentifier ')'
+AtWithinCode := '@withincode' '(' AnnotationOrIdentifier ')'
+
+AnnotationOrIdentifier := FullyQualifiedName | Identifier
+
+AtArgs := '@args' '(' AnnotationsOrIdentifiersPattern ')'
+
+AnnotationsOrIdentifiersPattern :=
+    '..' (',' AnnotationsOrIdentifiersPatternAfterDotDot)? |
+    AnnotationOrIdentifier (',' AnnotationsOrIdentifiersPattern)* |
+    '*' (',' AnnotationsOrIdentifiersPattern)*
+
+AnnotationsOrIdentifiersPatternAfterDotDot :=
+    AnnotationOrIdentifier (',' AnnotationsOrIdentifiersPatternAfterDotDot)* |
+    '*' (',' AnnotationsOrIdentifiersPatternAfterDotDot)*
+
+PointcutDeclaration :=
+    PointcutModifiers? 'pointcut' Identifier Formals ':' PointcutExpression
+
+PointcutModifiers := PointcutModifier*
+
+PointcutModifier := 'public' | 'private' | 'protected' | 'abstract'
+
+Formals := '(' ParamList? ')'
+ParamList := FullyQualifiedName Identifier (',' ParamList)*
+
+ReferencePointcut := (FullyQualifiedName '.')? Identifier Formals
+
+PointcutExpression :=
+    (PointcutPrimitive | ReferencePointcut) |
+    '!' PointcutExpression |
+    '(' PointcutExpression ')' |
+    PointcutExpression '&amp;&amp;' PointcutExpression |
+    PointcutExpression '||' PointcutExpression
+
+== Advice ===
+
+to be written...
+
+== Inter-type Declarations ===
+
+to be written...
+
+== Declare Statements ===
+
+to be written...
+
+== Aspects ===
+
+to be written...</code></pre>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

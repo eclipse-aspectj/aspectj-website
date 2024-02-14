@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>aj, the AspectJ load-time weaving launcher</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1><code>aj</code>, the AspectJ load-time weaving launcher</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_name">Name</a></li>
+<li><a href="#_synopsis">Synopsis</a></li>
+<li><a href="#aj">Description</a></li>
+<li><a href="#_examples">Examples</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_name">Name</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>aj</code> - command-line launcher for basic load-time weaving</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_synopsis">Synopsis</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>aj [<em>Options</em>] [<em>arg</em>&#8230;&#8203;]</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="aj">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>aj</code> command runs Java programs in Java 1.4 or later by setting up
+<code>WeavingURLClassLoader</code> as the system class loader, to do load-time
+bytecode weaving.</p>
+</div>
+<div class="paragraph">
+<p>The arguments are the same as those used to launch the Java program.
+Users should define the environment variables <code>CLASSPATH</code> and
+<code>ASPECTPATH</code>.</p>
+</div>
+<div class="paragraph">
+<p>For more information and alternatives for load-time weaving, see
+<a href="ltw.html#ltw">Load-Time Weaving</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_examples">Examples</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Use ajc to build a library, then weave at load time</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">REM compile library
+${ASPECTJ_HOME}\bin\ajc.bat -outjar lib\aspects.jar @aspects.lst
+
+REM run, weaving into application at load-time set
+ASPECTPATH=lib\aspects.jar set CLASSPATH=app\app.jar
+${ASPECTJ_HOME}\bin\aj.bat com.company.app.Main &quot;Hello, World!&quot;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

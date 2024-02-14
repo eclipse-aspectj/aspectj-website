@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>AspectJ 1.6.0</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>AspectJ 1.6.0</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_aspectj_v1_6_0_23_apr_2008">AspectJ v1.6.0 - 23 Apr 2008</a>
+<ul class="sectlevel2">
+<li><a href="#_upgrade_to_a_java_1_6_compiler">Upgrade to a Java 1.6 compiler</a></li>
+<li><a href="#_better_incremental_compilation_support_in_the_ide">Better incremental compilation support in the IDE</a></li>
+<li><a href="#_parameter_annotation_matching">Parameter annotation matching</a></li>
+<li><a href="#_annotation_value_matching">Annotation Value Matching</a></li>
+<li><a href="#_changes_since_release_candidate">Changes since release candidate</a></li>
+<li><a href="#_releases_leading_up_to_aspectj_1_6_0">Releases leading up to AspectJ 1.6.0</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>© Copyright 2008 Contributors. All rights reserved.</em></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_aspectj_v1_6_0_23_apr_2008">AspectJ v1.6.0 - 23 Apr 2008</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For the complete list of every issue addressed since the last full
+release, see
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=&amp;product=AspectJ&amp;target_milestone=1.6.0+M1&amp;target_milestone=1.6.0+M2&amp;target_milestone=1.6.0+RC1&amp;target_milestone=1.6.0&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">this
+bugzilla link</a>.</p>
+</div>
+<div class="paragraph">
+<p>Some of the highlights of 1.6.0 are:</p>
+</div>
+<div class="sect2">
+<h3 id="_upgrade_to_a_java_1_6_compiler">Upgrade to a Java 1.6 compiler</h3>
+<div class="paragraph">
+<p>AspectJ1.6.0 upgrades the internal Eclipse compiler level to version
+785_R33x - a Java 1.6 level compiler</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_better_incremental_compilation_support_in_the_ide">Better incremental compilation support in the IDE</h3>
+<div class="paragraph">
+<p>Changes under <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=221427">bug
+221427</a> mean that the compiler is better able to maintain incremental
+state for projects in Eclipse and determine whether full builds or
+incremental builds are required when project dependencies change. The
+result is that the compiler will more frequently do an incremental build
+rather than falling back to doing a full build. Some basic performance
+findings can be seen in
+<a href="https://dev.eclipse.org/mhonarc/lists/aspectj-users/msg09002.html">this
+mailing list post</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_parameter_annotation_matching">Parameter annotation matching</h3>
+<div class="paragraph">
+<p>Parameter matching is possible for constructors and methods. The use of
+parentheses around the parameter types in a method signature determine
+whether the annotations relate to the type of the parameter or the
+parameter itself.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">execution(* *(<span class="annotation">@A</span> *));</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Execution of a method/ctor whose first parameter is of a type
+annotated with @A.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">execution(* *(<span class="annotation">@A</span> (*)));</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Execution of a method/ctor whose first parameter is annotated with @A</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">execution(* *(<span class="annotation">@A</span> (<span class="annotation">@B</span> *)))</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Execution of a method/ctor whose first parameter is annotated with @A
+and is of a type annotated with @B. Example:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// ------ Start of Test.java -----</span>
+<span class="annotation">@interface</span> A {}
+<span class="annotation">@interface</span> B {}
+
+<span class="type">class</span> <span class="class">C</span> {
+ <span class="directive">public</span> <span class="type">void</span> foo(<span class="annotation">@A</span> <span class="predefined-type">String</span> s) {}
+ <span class="directive">public</span> <span class="type">void</span> goo(<span class="annotation">@A</span> <span class="annotation">@B</span> <span class="predefined-type">String</span> s) {}
+}
+
+aspect X {
+ before(): execution(* *(<span class="annotation">@A</span> (*))) {}
+ before(): execution(* *(<span class="annotation">@B</span> (*))) {}
+}
+<span class="comment">// ------ End of Test.java -----</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">$ ajc -showWeaveInfo -1.6 Test.java
+Join point 'method-execution(void C.foo(java.lang.String))' in Type 'C' (A.java:5) advised by before advice from 'X' (A.java:10)
+
+Join point 'method-execution(void C.goo(java.lang.String))' in Type 'C' (A.java:6) advised by before advice from 'X' (A.java:11)
+
+Join point 'method-execution(void C.goo(java.lang.String))' in Type 'C' (A.java:6) advised by before advice from 'X' (A.java:10)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The first piece of advice matched both methods. The second only matched <code>goo()</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_annotation_value_matching">Annotation Value Matching</h3>
+<div class="paragraph">
+<p>This allows static matching of the values of an annotation - if the
+matching is done statically at weave time, it is possible to avoid some
+of the reflection that is currently required within the advice (in some
+cases). A typical use case is tracing where the trace level is defined
+by an annotation but may be switched OFF for a method if the annotation
+has a particular value. Perhaps tracing has been turned on at the type
+level and a few critical methods should not get traced. Here is some
+code showing the use case:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">enum</span> TraceLevel { NONE, LEVEL1, LEVEL2, LEVEL3 }
+
+<span class="annotation">@interface</span> Trace {
+  TraceLevel value() <span class="keyword">default</span> TraceLevel.LEVEL1;
+}
+
+aspect X {
+  <span class="comment">// Advise all methods marked @Trace except those with a tracelevel of none</span>
+  before(): execution(<span class="annotation">@Trace</span> !<span class="annotation">@Trace</span>(TraceLevel.NONE) * *(..)) {
+    <span class="predefined-type">System</span>.err.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">tracing </span><span class="delimiter">&quot;</span></span>+thisJoinPoint);
+  }
+}
+
+<span class="directive">public</span> <span class="type">class</span> <span class="class">ExampleOne</span> {
+
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
+    ExampleOne eOne = <span class="keyword">new</span> ExampleOne();
+    eOne.m001();
+    eOne.m002();
+    eOne.m003();
+    eOne.m004();
+    eOne.m005();
+    eOne.m006();
+    eOne.m007();
+  }
+
+  <span class="annotation">@Trace</span>(TraceLevel.NONE)
+  <span class="directive">public</span> <span class="type">void</span> m001() {}
+
+  <span class="annotation">@Trace</span>(TraceLevel.LEVEL2)
+  <span class="directive">public</span> <span class="type">void</span> m002() {} <span class="comment">// gets advised</span>
+
+  <span class="annotation">@Trace</span>(TraceLevel.LEVEL3)
+  <span class="directive">public</span> <span class="type">void</span> m003() {} <span class="comment">// gets advised</span>
+
+  <span class="annotation">@Trace</span>(TraceLevel.NONE)
+  <span class="directive">public</span> <span class="type">void</span> m004() {}
+
+  <span class="annotation">@Trace</span>(TraceLevel.LEVEL2)
+  <span class="directive">public</span> <span class="type">void</span> m005() {} <span class="comment">// gets advised</span>
+
+  <span class="annotation">@Trace</span>(TraceLevel.NONE)
+  <span class="directive">public</span> <span class="type">void</span> m006() {}
+
+  <span class="annotation">@Trace</span>
+  <span class="directive">public</span> <span class="type">void</span> m007() {} <span class="comment">// gets advised</span>
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Matching is currently allowed on all annotation value types <strong>except</strong>
+class and array. Also it is not currently supported for parameter
+annotation values.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_changes_since_release_candidate">Changes since release candidate</h3>
+<div class="paragraph">
+<p>The only fix 1.6.0 final includes beyond the release candidate is a
+multi-threading problem in the weaver -
+<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=227029">bug 227029</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_releases_leading_up_to_aspectj_1_6_0">Releases leading up to AspectJ 1.6.0</h3>
+<div class="paragraph">
+<p>AspectJ v1.6.0rc1- 16 Apr 2008</p>
+</div>
+<div class="paragraph">
+<p>AspectJ v1.6.0M2 - 26 Feb 2008</p>
+</div>
+<div class="paragraph">
+<p>AspectJ v1.6.0M1 - 16 Jan 2008</p>
+</div>
+<hr>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

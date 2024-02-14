@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>AspectJ 1.2</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>AspectJ 1.2</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#compiler">The Compiler</a></li>
+<li><a href="#tools">Support Tools</a></li>
+<li><a href="#runtime">The Runtime Library</a></li>
+<li><a href="#devenv">The AJDE Tools</a></li>
+<li><a href="#details">Details of some compiler changes</a>
+<ul class="sectlevel2">
+<li><a href="#WEAVE_TIME">Compilation (weave) times reduced.</a></li>
+<li><a href="#LAZY_TJP">The -XlazyTjp option.</a></li>
+<li><a href="#INCREMENTAL">Improvements to incremental compilation.</a></li>
+<li><a href="#ERROR_MESSAGES">Improved error messages.</a></li>
+<li><a href="#LINT">New lint warnings.</a></li>
+<li><a href="#REWEAVABLE">The -Xreweavable option.</a></li>
+<li><a href="#INPATH">The -inpath option.</a></li>
+<li><a href="#COMPLIANCE">The default compliance mode of the compiler has changed from -1.3 to -1.4.</a></li>
+<li><a href="#AJDOC">The ajdoc tool makes a comeback in the AspectJ 1.2 distribution.</a></li>
+<li><a href="#LTW">A sample script is supplied that supports load-time weaving from the command-line</a></li>
+<li><a href="#SOFTEX">SoftException now supports getCause()</a></li>
+<li><a href="#LTW2">org.aspectj.weaver.tools package added</a></li>
+</ul>
+</li>
+<li><a href="#allchanges">All changes are listed in the bug database</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>© Copyright 2003,2004 Contributors. All rights reserved.</em></p>
+</div>
+<div class="paragraph">
+<p>The definition of the AspectJ language is unchanged in the 1.2 release.
+Instead, AspectJ 1.2 provides major improvements to the functionality of
+the supporting tools and enforces some language limits that went
+unchecked before. This document describes the tools differences between
+AspectJ versions 1.2 and 1.1.1. Users new to AspectJ need only read the
+<a href="progguide/index.html">AspectJ Programming Guide</a> since it describes
+the 1.2 language. Users familiar with AspectJ 1.1 may find this document
+a quicker way to learn what changed in the tools, and should use it as a
+guide for porting programs from 1.1 to 1.2, together with porting.html.</p>
+</div>
+<div class="paragraph">
+<p>This document first summarizes changes from the 1.1.1 release in</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#compiler">the compiler</a>,</p>
+</li>
+<li>
+<p><a href="#tools">the support tools</a>,</p>
+</li>
+<li>
+<p><a href="#runtime">the runtime</a>,</p>
+</li>
+<li>
+<p><a href="#devenv">the development environment support</a>,</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>then <a href="#details">details</a> some of the changes, and finally points
+readers to the bug database for <a href="#allchanges">all the changes</a>.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="compiler">The Compiler</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Compared to AspectJ 1.1.1, the AspectJ 1.2 compiler&#8230;&#8203;</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#WEAVE_TIME">Is faster</a>, with weaving completing in less than half
+the time it used to take in many cases.
+<a id="WEAVE_CHART"></a><span class="image"><img src="images/AspectJ11v12.JPG" alt="image"></span>.</p>
+</li>
+<li>
+<p>Supports the <a href="#LAZY_TJP">-XlazyTjp option</a> which produces code that
+runs faster and uses less memory in some common cases.</p>
+</li>
+<li>
+<p>Has <a href="#INCREMENTAL">much better support for incremental
+compilation</a>.</p>
+</li>
+<li>
+<p>Produces <a href="#ERROR_MESSAGES">better error messages</a>.</p>
+</li>
+<li>
+<p>Has some <a href="#LINT">new lint warnings</a> to catch common mistakes and
+changes to serializability.</p>
+</li>
+<li>
+<p>Supports the <a href="#REWEAVABLE">-Xreweavable option</a> that allows classes
+to be woven more than once.</p>
+</li>
+<li>
+<p></p>
+</li>
+<li>
+<p>Supports the <a href="#INPATH">-inpath option</a> which allows both
+directories and jars containing class files to be specified as input to
+the weaver.</p>
+</li>
+<li>
+<p><a href="#COMPLIANCE">Changes the default compiler compliance mode</a> from
+-1.3 to -1.4.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A short description of the options ajc accepts is available with
+&#8220;ajc -help&#8221;. Longer descriptions are available in the
+<a href="devguide/ajc-ref.html">Development Environment Guide section on
+ajc</a>.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="tools">Support Tools</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>AspectJ 1.2 contains two important changes to the supporting tools:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#AJDOC">ajdoc</a> is back</p>
+</li>
+<li>
+<p>A sample script is supplied for <a href="#LTW">load-time weaving</a> from the
+command-line.</p>
+</li>
+</ul>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="runtime">The Runtime Library</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This release has minor updates to the runtime library classes. As with
+any release, you should compile and run with the runtime library that
+came with your compiler, and you may run with a later version of the
+library without recompiling your code.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#SOFTEX"><code>SoftException</code></a> now supports <code>getCause()</code>.</p>
+</li>
+<li>
+<p>Although not part of <code>aspectjrt.jar</code> this release also provides a new
+set of tools APIs in the <a href="#LTW2"><code>org.aspectj.weaver.tools</code></a> that
+provide a weaving class loader and an adapter that can be used to
+integrate load-time weaving into an existing class loader hierarchy.</p>
+</li>
+<li>
+<p>Cflow stack management has been modified to use thread local storage
+on JVMs that support this feature. This improves performance in terms of
+heap usage for multi-threaded applications that use cflow.</p>
+</li>
+</ul>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="devenv">The AJDE Tools</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The AJDE based tools for JBuilder, NetBeans and Emacs continue to be
+independent SourceForge projects. The AspectJ 1.2 distribution includes
+an updated version of the AjBrowser tool that benefits from all the
+enhancements made in the 1.2 compiler.</p>
+</div>
+<div class="paragraph">
+<p>The 1.2 release of AspectJ also lays a lot of the groundwork for a much
+better AspectJ IDE experience that we hope to surface initially through
+AJDT (AspectJ support for Eclipse). Amongst the many improvements, we
+will have full eager parsing support that avoids the need to keep the
+whole structure model of a project in memory, hopefully making AJDT much
+less memory hungry and much slicker to use. For more details see the
+<a href="https://www.eclipse.org/ajdt">AJDT project website</a>.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="details">Details of some compiler changes</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="WEAVE_TIME">Compilation (weave) times reduced.</h3>
+<div class="paragraph">
+<p>Our benchmark suite shows that AspectJ 1.2 is at least twice as fast in
+the weaving phase as AspectJ 1.1.1 for matches based on a variety of
+pointcut expressions (see the <a href="#WEAVE_CHART">chart above</a>). We&#8217;ve
+also made the base incremental compilation implementation in AspectJ 1.2
+approximately twice as fast as in AspectJ 1.1.1, so when this is
+combined with the weave time improvements you should see speed-ups of up
+to 4x for incremental compilation.</p>
+</div>
+<div class="paragraph">
+<p>In addition, AspectJ 1.2 maintains only weak references to some of its
+recoverable data structures, allowing the JVM to optimise between
+performance and memory usage. Experiments forcing GC showed that we can
+achieve about a 20% memory usage reduction in this manner if needed.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="LAZY_TJP">The -XlazyTjp option.</h3>
+<div class="paragraph">
+<p>Under AspectJ 1.1.1, if the body of an advice contained a reference to a
+non-statically determinable portion of <code>thisJoinPoint</code> (such as for
+example a call to <code>getArgs()</code>), then a JoinPoint object was always
+creating before entering the advice. This was the case even if the
+advice was guarded with an <code>if()</code> pointcut that evaluated to false.</p>
+</div>
+<div class="paragraph">
+<p>AspectJ 1.2 now supports the <code>-XlazyTjp</code> option that only creates the
+JoinPoint object just before dispatching to the advice body. By
+promoting the guard to a test in an <code>if()</code> pointcut, the creation of the
+JoinPoint object can be avoided altogether in the case where the test
+returns false.</p>
+</div>
+<div class="paragraph">
+<p>Consider a simple tracing aspect as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> aspect Tracing {
+
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">boolean</span> enabled = <span class="predefined-constant">false</span>;
+
+  pointcut toBeTraced() : execution(* *(..)) || execution(<span class="keyword">new</span>(..));
+
+  before() : toBeTraced() &amp;&amp; <span class="keyword">if</span>(enabled) {
+    <span class="predefined-type">Object</span><span class="type">[]</span> args = thisJoinPoint.getArgs();
+    <span class="comment">// format args and print out entry trace record etc....</span>
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The most important consideration is the system overhead when tracing is
+turned off. Using the <code>-XlazyTjp</code> option makes the program above run
+10-100x faster, even when running a small test case with minimal GC
+issues. The optimization is disabled at join points advised by around
+advice, and an Xlint warning will be displayed in these cases.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="INCREMENTAL">Improvements to incremental compilation.</h3>
+<div class="paragraph">
+<p>AspectJ 1.2 provides more complete incremental compilation support than
+AspectJ 1.1.1. Firstly, incremental compilation resulting from a change
+to a source file is now approximately twice as fast as it was under
+1.1.1 (even before taking the improvements to weaving time into
+account). Secondly, the incremental coverage now takes into account
+changes to resources, classes and jars on the inpath, injars, and
+aspectpath. The new <code>inpath</code> option in AspectJ 1.2 allows directories to
+be specified in addition to jars (just like a classpath) as input to the
+weaver. Any update, addition or deletion of a class file in a directory
+on the inpath will cause incremental (re)weaving.</p>
+</div>
+<div class="paragraph">
+<p>Changes to a jar file on the inpath, injars or aspectpath will now be
+detected, but will trigger a full rebuild, as will any change to the
+paths used to control compilation.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ERROR_MESSAGES">Improved error messages.</h3>
+<div class="paragraph">
+<p>AspectJ 1.1.1 did not provide source context information for messages
+produced during the weaving phase, even in the case where source files
+were passed to the compiler. For example, an error message arising as a
+result of a <code>declare error</code> statement might look as follows under
+AspectJ 1.1.1:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">BadClass.java:6 should not be calling bad methods</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>whereas in AspectJ 1.2 you will see:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">BadClass.java:6 error should not be calling bad methods
+new C().bad();
+^^^^^^^^^^^^^^
+     method-call(void C.bad())
+     see also: DeclareError.java:5</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There are four new things to note about this error message. Firstly,
+errors and warnings are now prefixed with the word "error", or "warning"
+as appropriate. Secondly, the offending line of source is shown if
+source code is available. Thirdly, in the case of weaver messages
+arising as a result of <code>declare error</code> and <code>declare warning</code> statements,
+AspectJ now shows not only the location of the error or warning, but
+also the location of the <code>declare</code> statement itself. Finally, note that
+messages produced as a result of <code>declare error</code> and <code>declare warning</code>
+statements now also display the matched join point at the location of
+the error:</p>
+</div>
+<div class="paragraph">
+<p>When source code is not available, the messages show the binary input
+source (class file or jar file) in which the error or warning was
+detected:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">BadClass.java:6 error should not be calling bad methods
+(no source information available)
+       method-call(void C.bad())
+       see also: C:\...\DeclareError.java:5
+       see also: C:\...\bin-input.jar</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This error message tells us that <code>BadClass.class</code> contained in a jar on
+the inpath called <code>bin-input.jar</code>, and originally compiled from a source
+file called <code>BadClass.java</code>, contains a join point
+(<code>method-call(void C.bad())</code> matched by a <code>declare error</code> statement on
+line 5 of the file <code>DeclareError.java</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="LINT">New lint warnings.</h3>
+<div class="paragraph">
+<p>Consider the program:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">/*01*/</span> <span class="type">class</span> <span class="class">A</span> {
+<span class="comment">/*02*/</span>   <span class="directive">public</span> <span class="type">void</span> doIt() {...};
+<span class="comment">/*03*/</span> }
+<span class="comment">/*04*/</span>
+<span class="comment">/*05*/</span> <span class="type">class</span> <span class="class">B</span> <span class="directive">extends</span> A {
+<span class="comment">/*06*/</span>   <span class="directive">public</span> <span class="type">void</span> doThisToo() {...};
+<span class="comment">/*07*/</span> }
+<span class="comment">/*08*/</span>
+<span class="comment">/*09*/</span>
+<span class="comment">/*10*/</span> <span class="directive">public</span> <span class="type">class</span> <span class="class">CallsAandB</span> {
+<span class="comment">/*11*/</span>
+<span class="comment">/*12*/</span>  <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
+<span class="comment">/*13*/</span>    B b = <span class="keyword">new</span> B();
+<span class="comment">/*14*/</span>    A bInDisguise = <span class="keyword">new</span> B();
+<span class="comment">/*15*/</span>
+<span class="comment">/*16*/</span>    b.doIt();               <span class="comment">// AspectJ 1.2 matches here</span>
+<span class="comment">/*17*/</span>    bInDisguise.doIt();     <span class="comment">// this is never matched</span>
+<span class="comment">/*18*/</span>  }
+<span class="comment">/*19*/</span>
+<span class="comment">/*20*/</span> }
+<span class="comment">/*21*/</span>
+<span class="comment">/*22*/</span> aspect CallPCDMatchingExample {
+<span class="comment">/*23*/</span>
+<span class="comment">/*24*/</span>   before() : call(* B.doIt(..)) {
+<span class="comment">/*25*/</span>     <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">About to call B.doIt(...)</span><span class="delimiter">&quot;</span></span>);
+<span class="comment">/*26*/</span>   }
+<span class="comment">/*27*/</span>
+<span class="comment">/*28*/</span> }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Because the static type of <code>bInDisguise</code> is <code>A</code> (line 14), the call on
+line 17 is never matched by the pointcut expression on 24, even though
+the runtime type of <code>bInDisguise</code> is <code>B</code>. Type patterns matched in
+<code>call</code> pointcut designators are matched based on static type matching.
+Some users have found this static type matching confusing, and AspectJ
+1.2 has a new Xlint warning (<code>unmatchedSuperTypeInCall</code>) which is
+enabled by default.</p>
+</div>
+<div class="paragraph">
+<p>The compiler will now produce a warning whenever a call pointcut
+designator does not match at a join point, and a user may have expected
+it to. Compiling the above program using AspectJ 1.2 produces the
+following compiler output:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">CallsAandB.java:24 warning does not match because declaring type is A, if match desired use target(B) [Xlint:unmatchedSuperTypeInCall]
+before() : call(* B.doIt(..)) {
+           ^^^^^^^^^^^^^^^
+    see also: CallsAandB.java:17
+
+1 warning</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The warning is telling us that the call pointcut associated with the
+before advice on line 24 of the source file does not match at a join
+point where the user may have expected it to. The source location
+corresponding to the unmatched join point is indicated by the "see also"
+line - in this case line 17 of the source file. At line 17 we find a
+call to <code>bInDisguise.doIt()</code>. Since the static type of <code>bInDisguise</code> is
+<code>A</code>, this call will never be matched. The warning also tells us a
+possible solution if we intended the pointcut to match at this join
+point: use <code>call(* doIt(..) &amp;&amp; target(B)</code>.</p>
+</div>
+<div class="paragraph">
+<p>If you find warnings of this kind coming out when you use the AspectJ
+1.2 compiler, the recommended fix is to switch to using the <code>target</code>
+designator in place of a type pattern in the <code>call</code> pointcut expression.
+Note that there is no loss of runtime efficiency here - runtime tests
+are only added in the cases where it cannot be determined at compile
+time whether the type of the receiver will match the type specified in
+the <code>target</code> expression. Also note that <code>target</code> cannot be used in
+<code>declare</code> statements.</p>
+</div>
+<div class="paragraph">
+<p>A new Xlint warning, <code>needsSerialVersionUIDField</code> (disabled by default)
+will produce a warning at compile time if the process of weaving changes
+the default <code>serialVersionUID</code> of a serializable class, and the class
+does not define a <code>serialVersionUID</code>. By defining a <code>serialVersionUID</code>
+field, the programmer can ensure that objects serialized without the
+aspect present can be read by a version of the program in which the
+aspect is present, and vice-versa.</p>
+</div>
+<div class="paragraph">
+<p>A complimentary Xlint warning, <code>brokeSerialVersionCompatibility</code>
+(disabled by default) will produce a warning at compile time if the
+process of weaving makes an incompatible change to a serializable class
+(for example, through the addition of an inter-type declared field).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="REWEAVABLE">The -Xreweavable option.</h3>
+<div class="paragraph">
+<p>The new <code>-Xreweavable</code> option produces class files that contain enough
+additional information in them that they can be rewoven. In time we hope
+that this can become a standard option, replacing the current
+<code>-Xnoweave</code> option. Using reweavable produces class files that can be
+legally loaded by a JVM, whereas with noweave, it is too easy to produce
+class files that will result in a verify error at runtime. The
+reweavable option makes it easy to weave code many times without having
+to decide which weave is the final one. In a future version of the
+AspectJ compiler, producing reweavable class files may become the
+default option. The trade-off at the moment is that reweavable class
+files are currently approximately twice the size of their non-reweavable
+counterparts.</p>
+</div>
+<div class="paragraph">
+<p>To ensure consistent semantics when reweaving, the AspectJ compiler
+requires that all aspects that have previously modified a class file
+during weaving be present in the system during a reweave. An error will
+be issued if any are missing.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="INPATH">The -inpath option.</h3>
+<div class="paragraph">
+<p>The new <code>-inpath</code> option replaces the <code>-injars</code> option (which is still
+supported for backwards compatibility). It allows both directories and
+jar files to be specified using path separators to separate entries in
+the path. This option makes it easy for class files produced as the
+result of building one project to become binary input to the compilation
+of a second project.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="COMPLIANCE">The default compliance mode of the compiler has changed from -1.3 to -1.4.</h3>
+<div class="paragraph">
+<p>The default AspectJ compiler compliance level is now 1.4 (whereas in
+previous releases the default compliance level was 1.3). This has a
+number of implications:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>class files generated by the compiler are now JRE v1.2 and upwards
+compatible. (At compliance level 1.3, AspectJ generated class files that
+were compatible with JRE 1.1 also).</p>
+</li>
+<li>
+<p><code>call</code> pointcuts may match more join points than in the same program
+compiled at compliance level 1.3.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The AspectJ compiler can be restored to 1.3 compliance settings by
+specifying the "-1.3" option on the command-line.</p>
+</div>
+<div class="paragraph">
+<p>Consider again the following example program which illustrates the
+differences in join point matching with the <code>call</code> pointcut designator
+between 1.4 and 1.3 compliance levels.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">/*01*/</span> <span class="type">class</span> <span class="class">A</span> {
+<span class="comment">/*02*/</span>   <span class="directive">public</span> <span class="type">void</span> doIt() {...};
+<span class="comment">/*03*/</span> }
+<span class="comment">/*04*/</span>
+<span class="comment">/*05*/</span> <span class="type">class</span> <span class="class">B</span> <span class="directive">extends</span> A {
+<span class="comment">/*06*/</span>   <span class="directive">public</span> <span class="type">void</span> doThisToo() {...};
+<span class="comment">/*07*/</span> }
+<span class="comment">/*08*/</span>
+<span class="comment">/*09*/</span>
+<span class="comment">/*10*/</span> <span class="directive">public</span> <span class="type">class</span> <span class="class">CallsAandB</span> {
+<span class="comment">/*11*/</span>
+<span class="comment">/*12*/</span>  <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
+<span class="comment">/*13*/</span>    B b = <span class="keyword">new</span> B();
+<span class="comment">/*14*/</span>    A bInDisguise = <span class="keyword">new</span> B();
+<span class="comment">/*15*/</span>
+<span class="comment">/*16*/</span>    b.doIt();               <span class="comment">// AspectJ 1.2 matches here</span>
+<span class="comment">/*17*/</span>    bInDisguise.doIt();     <span class="comment">// this is never matched</span>
+<span class="comment">/*18*/</span>  }
+<span class="comment">/*19*/</span>
+<span class="comment">/*20*/</span> }
+<span class="comment">/*21*/</span>
+<span class="comment">/*22*/</span> aspect CallPCDMatchingExample {
+<span class="comment">/*23*/</span>
+<span class="comment">/*24*/</span>   before() : call(* B.doIt(..)) {
+<span class="comment">/*25*/</span>     <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">About to call B.doIt(...)</span><span class="delimiter">&quot;</span></span>);
+<span class="comment">/*26*/</span>   }
+<span class="comment">/*27*/</span>
+<span class="comment">/*28*/</span> }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When this program is compiled with AspectJ 1.2 using the default
+compiler options, it will produce one line of output when it is
+executed:</p>
+</div>
+<div class="paragraph">
+<p><code>About to call B.doIt(&#8230;&#8203;)</code></p>
+</div>
+<div class="paragraph">
+<p>The same program compiled under AspectJ 1.1 (or using AspectJ 1.2 with
+the -1.3 flag specified) does not produce any output when it is run. The
+reason for the additional call pcd match is that prior to compliance
+level 1.4, Java compilers produced bytecodes that call A.doIt() (the
+defining type of the method), rather than B.doIt() (the declared type in
+the program text). The generated call to A.doIt() is not matched by the
+call pcd used in the before advice. At compliance level 1.4, the
+bytecodes retain the declared type of the receiver in the program
+source, generating a call to B.doIt(), which <em>is</em> matched by the call
+pcd.</p>
+</div>
+<div class="paragraph">
+<p>This is a good example of why the recommended style is to use
+<code>call(* doIt(..)) &amp;&amp; target(B)</code>, which always matches based on the
+actual type of the receiver.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="AJDOC">The ajdoc tool makes a comeback in the AspectJ 1.2 distribution.</h3>
+<div class="paragraph">
+<p><code>ajdoc</code> (the AspectJ replacement for the <code>javadoc</code> tool) is once again
+included in the AspectJ distribution. The <code>ajdoc</code> tool produces regular
+javadoc that also shows advises and advised by relationships next to
+methods and advice. A future enhancement will show inter-type
+declarations in the target class too.</p>
+</div>
+<div class="paragraph">
+<p><strong>Known limitations:</strong> Please note that <code>ajdoc</code> documents advice and
+pointcut members, shows where advice applies and links affected members
+back to the advice.  It currently does not document or add structural
+links for any inter-type declarations or other declare forms.</p>
+</div>
+<div class="paragraph">
+<p>Run the "ajdoc.bat" script just as you run javadoc.  For a list of
+accepted parameters run "ajdoc -help".  For example, to document
+everything in the Spacewar example run:<br>
+&gt; cd examples<br>
+&gt; ajdoc -d doc -private spacewar coordination</p>
+</div>
+<div class="paragraph">
+<p><code>ajdoc</code> sample output for an aspect source file:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="images/ajdoc1.JPG" alt="image"></span></p>
+</div>
+<div class="paragraph">
+<p><code>ajdoc</code> sample output for advised methods:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="images/ajdoc2.JPG" alt="image"></span></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="LTW">A sample script is supplied that supports load-time weaving from the command-line</h3>
+<div class="paragraph">
+<p>The AspectJ 1.2 distribution ships with sample scripts for Windows and
+Unix platforms that exploit AspectJ&#8217;s binary weaving capabilities at
+application load time. You will find these scripts in the
+<code>doc/examples/ltw</code> directory of your AspectJ installation.</p>
+</div>
+<div class="paragraph">
+<p>The scripts allow you to set an environment variable, <code>ASPECTPATH</code>,
+containing a path-separator delimited list of aspect-library jar files.
+A Java application can then be launched using the &#8220;aj&#8221; script (&#8220;aj&#8221;
+is to &#8220;ajc&#8221; as &#8220;java&#8221; is to &#8220;javac&#8221;). If the <code>ASPECTPATH</code> is unset
+or empty, &#8220;aj&#8221; behaves exactly the same as &#8220;java&#8221;, but if the
+<code>ASPECTPATH</code> contains one or more aspect libraries, the aspects in the
+library will be linked (woven) with the application code as it is
+loaded.</p>
+</div>
+<div class="paragraph">
+<p>The <code>doc/examples/ltw</code> directory of your AspectJ installation contains a
+sample application that demonstrates these capabilities. Following the
+instructions in the <code>README</code> file in that directory, running
+&#8220;aj tracing.ExampleMain&#8221; with <code>ASPECTPATH</code> unset produces the output:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">c1.perimeter() = 12.566370614359172
+c1.area() = 12.566370614359172
+s1.perimeter() = 4.0
+s1.area() = 1.0
+c2.distance(c1) = 4.242640687119285
+s1.distance(c1) = 2.23606797749979
+s1.toString(): Square side = 1.0 @ (1.0, 2.0)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you set <code>ASPECTPATH</code> to include <code>../jars/tracingLib.jar</code>, and run
+&#8220;aj tracing.ExampleMain&#8221; again, the output will be:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">  --&gt; tracing.TwoDShape(double, double)
+  &lt;-- tracing.TwoDShape(double, double)
+  --&gt; tracing.Circle(double, double, double)
+  &lt;-- tracing.Circle(double, double, double)
+  --&gt; tracing.TwoDShape(double, double)
+  &lt;-- tracing.TwoDShape(double, double)
+  --&gt; tracing.Circle(double, double, double)
+  &lt;-- tracing.Circle(double, double, double)
+  --&gt; tracing.Circle(double)
+  &lt;-- tracing.Circle(double)
+  --&gt; tracing.TwoDShape(double, double)
+  &lt;-- tracing.TwoDShape(double, double)
+  --&gt; tracing.Square(double, double, double)
+  &lt;-- tracing.Square(double, double, double)
+  --&gt; tracing.Square(double, double)
+  &lt;-- tracing.Square(double, double)
+  --&gt; double tracing.Circle.perimeter()
+  &lt;-- double tracing.Circle.perimeter()
+c1.perimeter() = 12.566370614359172
+  --&gt; double tracing.Circle.area()
+  &lt;-- double tracing.Circle.area()
+c1.area() = 12.566370614359172
+  --&gt; double tracing.Square.perimeter()
+  &lt;-- double tracing.Square.perimeter()
+s1.perimeter() = 4.0
+  --&gt; double tracing.Square.area()
+  &lt;-- double tracing.Square.area()
+s1.area() = 1.0
+  --&gt; double tracing.TwoDShape.distance(TwoDShape)
+    --&gt; double tracing.TwoDShape.getX()
+    &lt;-- double tracing.TwoDShape.getX()
+    --&gt; double tracing.TwoDShape.getY()
+    &lt;-- double tracing.TwoDShape.getY()
+  &lt;-- double tracing.TwoDShape.distance(TwoDShape)
+  etc...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The scripts only support JDK 1.4 and above - attempting to use them with
+a 1.3 or lower JDK will most likely produce <code>NoClassDefFound</code> errors. We
+welcome contributions from users to improve these scripts.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="SOFTEX">SoftException now supports getCause()</h3>
+<div class="paragraph">
+<p><code>org.aspectj.lang.SoftException</code> now supports the <code>getCause()</code> method,
+which returns the original exception wrapped by the <code>SoftException</code>.
+This means that exception chains will print correctly on 1.4 and later
+JREs.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="LTW2">org.aspectj.weaver.tools package added</h3>
+<div class="paragraph">
+<p>A new set of public APIs are exported by the
+<a href="api/index.html"><code>org.aspectj.weaver.tools</code></a> package that can be used
+to integrate load-time weaving into an existing class loader hierachy.
+The package implementation is included in <code>aspectjtools.jar</code>. For an
+example of how to use these APIs, see the
+<code>org.aspectj.weaver.WeavingURLClassLoader</code> implementation.</p>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="allchanges">All changes are listed in the bug database</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For a complete list of changes in the 1.2 release, search for
+<code>target 1.2</code> in the bug database:
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?product=AspectJ&amp;component=Compiler&amp;target_milestone=1.2" class="bare">https://bugs.eclipse.org/bugs/buglist.cgi?product=AspectJ&amp;component=Compiler&amp;target_milestone=1.2</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

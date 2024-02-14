@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>AspectJ 1.6.9</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>AspectJ 1.6.9</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_features">Features</a>
+<ul class="sectlevel2">
+<li><a href="#_declare_annotation_supports_compound_signature_patterns_287613">declare annotation supports compound signature patterns: 287613</a></li>
+<li><a href="#_intertype_declaration_of_member_types">Intertype declaration of member types</a></li>
+<li><a href="#_optional_aspects_310506">'Optional' aspects: 310506</a></li>
+<li><a href="#_reduction_in_class_file_sizes_312839">Reduction in class file sizes: 312839</a></li>
+<li><a href="#_transparent_weaving_309743">Transparent weaving: 309743</a></li>
+<li><a href="#_overweaving_293450">Overweaving: 293450</a></li>
+<li><a href="#_aop_scoping_124460">AOP Scoping: 124460</a></li>
+<li><a href="#_message_inserts_for_declare_warningerror_messages">Message inserts for declare warning/error messages</a></li>
+<li><a href="#_declare_warningerror_for_type_patterns">declare warning/error for type patterns</a></li>
+<li><a href="#_type_category_type_patterns">Type category type patterns</a></li>
+<li><a href="#_intertype_fields_preserve_visibility_and_name">Intertype fields preserve visibility and name</a></li>
+<li><a href="#_aspectj_snapshots_in_a_maven_repo">AspectJ snapshots in a maven repo</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>© Copyright 2010 Contributors. All rights reserved.</em></p>
+</div>
+<div class="paragraph">
+<p>The full list of resolved issues in 1.6.9 is available
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced;bug_status=RESOLVED;bug_status=VERIFIED;bug_status=CLOSED;product=AspectJ;target_milestone=1.6.9;target_milestone=1.6.9M1;target_milestone=1.6.9M2;target_milestone=1.6.9RC1">here</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_features">Features</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_declare_annotation_supports_compound_signature_patterns_287613">declare annotation supports compound signature patterns: <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=287613">287613</a></h3>
+<div class="paragraph">
+<p>Until now it wasn&#8217;t possible to express a compound pattern in any of the
+declare annotation constructs that take a member signature. For example,
+if you wanted to attach an annotation to all your getter like methods,
+you needed two constructs</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">declare <span class="annotation">@method</span>: * is*(): <span class="annotation">@FooBar</span>;
+declare <span class="annotation">@method</span>: * get*(): <span class="annotation">@FooBar</span>;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now AspectJ allows compound patterns for declare
+@method/@constructor/@field.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">declare <span class="annotation">@method</span>: (* is*()) || (* get*()): <span class="annotation">@FooBar</span>;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_intertype_declaration_of_member_types">Intertype declaration of member types</h3>
+<div class="paragraph">
+<p>It is now possible to ITD member types. The syntax is as would be
+expected. This example introduces a new member type called Inner into
+type Foo:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Foo</span> {
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
+        <span class="keyword">new</span> Inner().run();
+    }
+}
+
+aspect Magic {
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">Foo</span>.Inner {
+        <span class="directive">public</span> <span class="type">void</span> run() {
+            <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Inner.run() executing</span><span class="delimiter">&quot;</span></span>);
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Only static member types are supported.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_optional_aspects_310506">'Optional' aspects: <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=310506">310506</a></h3>
+<div class="paragraph">
+<p>It is not uncommon to ship a library aspect separately to a jar upon
+which it depends. In the case of Spring there is an aspect library
+containing a multitude of aspects that attach different technologies
+(transactions/persistence/etc) to your application. Normally an aspect
+will fail with a "can&#8217;t find type" style message if a weaver is told to
+use it and yet it references some missing dependency. This can be
+annoying and require you to include jars on your classpath (or in your
+maven configuration) that you don&#8217;t actually use, they are <strong>only</strong> there
+to avoid problems with the aspect. In 1.6.9 you can add a setting to
+these aspects in the aop.xml that makes them optional. The setting
+mentions a type and if that type cannot be found the aspect immediately
+shuts itself down. This basically means that the aspect is only going to
+do its job if the type being mentioned in the setting is around. This
+enables the aspect library to be on the aspect path but any aspects
+within it to switch-off if there is nothing for them to do.</p>
+</div>
+<div class="paragraph">
+<p>Here is an example, 'AspectA' will switch itself off if the type
+'a.b.c.Anno' cannot be found:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;aspect</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">AspectA</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">requires</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">a.b.c.Anno</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_reduction_in_class_file_sizes_312839">Reduction in class file sizes: <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=312839">312839</a></h3>
+<div class="paragraph">
+<p>More details here:
+<a href="http://andrewclement.blogspot.com/2010/05/aspectj-size-is-important.html" class="bare">http://andrewclement.blogspot.com/2010/05/aspectj-size-is-important.html</a>
+but basically some work has been done to improve the serialized form of
+aspects. As an example, a compiled Roo petclinic sample (which uses lots
+of aspects and ITDs) is down from 1Meg (AspectJ 1.6.9m2) to 630k
+(AspectJ 1.6.9rc1).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_transparent_weaving_309743">Transparent weaving: <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=309743">309743</a></h3>
+<div class="paragraph">
+<p>In a further step towards transparent weaving, support for the AjType
+reflection system is now being made optional. This means if intending to
+use the AjTypeSystem to reflect on woven code, then the code must be
+built with the option -makeAjReflectable. This change is being made
+because the reflection supporting metadata that enables the AjTypeSystem
+to work can break other tools that are just using regular reflection on
+the classes. These days many more users are processing classes using
+standard reflection than are using AjTypeSystem. The related bugzilla
+discussing this issue is
+<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=309743">309743</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_overweaving_293450">Overweaving: <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=293450">293450</a></h3>
+<div class="paragraph">
+<p>Preliminary support for overweaving was added in AspectJ 1.6.7, but now
+in AspectJ 1.6.9m2 it is much more reliable. Basically it is an
+alternative to reweaving when needing to weave a class multiple times.
+Overweaving can cope with 'other tools' modifying the bytecode in
+between AspectJ weaves, whereas reweaving cannot. More details are in
+the related bugzilla
+<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=293450">293450</a> and in this
+<a href="http://andrewclement.blogspot.com/2010/05/aspectj-overweaving.html">blog
+article</a>. A weaver is switched into overweaving mode by the option
+-Xset:overWeaving=true - which can be specified on the command line or
+in the weaver options section of aop.xml. There is still more work to be
+done on this feature - any feedback is welcome.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_aop_scoping_124460">AOP Scoping: <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=124460">124460</a></h3>
+<div class="paragraph">
+<p>Another feature that had preliminary support a while ago is aspect
+scoping in aop.xml. This has also been improved in AspectJ1.6.9m2. For
+those not aware of it, it is the ability to specify a scope against
+aspects defined in your loadtime weaving aop.xml file. A scope
+effectively enables the user to limit the applicability of your aspect
+to some subset of all those types included by the weaver include
+section. Why is it needed? It can be useful when taking an aspect that
+did not originally scope itself properly (using a within clause) and
+needing to limit its effect in a load time weaving context. Think of it
+as a within pattern that you can put into the aop.xml that augments all
+the pointcuts defined in the original aspect.</p>
+</div>
+<div class="paragraph">
+<p>Here is an example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;aspectj&gt;</span>
+  <span class="tag">&lt;aspects&gt;</span>
+    <span class="tag">&lt;aspect</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">X</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;aspect</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Y</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">scope</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">com.foo..*</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;/aspects&gt;</span>
+  <span class="tag">&lt;weaver&gt;</span>
+    <span class="tag">&lt;include</span> <span class="attribute-name">within</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">com..*</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;/weaver&gt;</span>
+<span class="tag">&lt;/aspectj&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example the weaver include section specifies all the types in
+com..* should be woven and the aspects to be used are X and Y. The new
+'scope' setting on aspect Y&#8217;s definition allows finer control, and
+specifies that Y should in fact only be applied to com.foo..* types.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_message_inserts_for_declare_warningerror_messages">Message inserts for declare warning/error messages</h3>
+<div class="paragraph">
+<p>It is now possible to use joinpoint context in the messages attached to
+declare warning and declare error constructs. Some examples:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">declare warning: execution(* A.m(..)): <span class="string"><span class="delimiter">&quot;</span><span class="content">joinpoint is {joinpoint}</span><span class="delimiter">&quot;</span></span>;
+declare warning: execution(* A.m(..)): <span class="string"><span class="delimiter">&quot;</span><span class="content">joinpoint kind is '{joinpoint.kind}'</span><span class="delimiter">&quot;</span></span>;
+declare warning: get(<span class="type">int</span> *) &amp;&amp; within(A): <span class="string"><span class="delimiter">&quot;</span><span class="content">joinpoint signature is {joinpoint.signature}</span><span class="delimiter">&quot;</span></span>;
+declare warning: execution(* A.m(..)): <span class="string"><span class="delimiter">&quot;</span><span class="content">joinpoint declaring type is {joinpoint.signature.declaringType}</span><span class="delimiter">&quot;</span></span>;
+declare warning: execution(* A.m(..)): <span class="string"><span class="delimiter">&quot;</span><span class="content">signature name for method is {joinpoint.signature.name}</span><span class="delimiter">&quot;</span></span>;
+declare warning: execution(* A.m(..)): <span class="string"><span class="delimiter">&quot;</span><span class="content">joinpoint location is {joinpoint.sourcelocation.sourcefile}:{joinpoint.sourcelocation.line}</span><span class="delimiter">&quot;</span></span>;
+declare warning: execution(* A.m(..)): <span class="string"><span class="delimiter">&quot;</span><span class="content">joinpoint line is '{joinpoint.sourcelocation.line}'</span><span class="delimiter">&quot;</span></span>;
+
+declare warning: get(<span class="type">int</span> *): <span class="string"><span class="delimiter">&quot;</span><span class="content">warning is from aspect {advice.aspecttype}</span><span class="delimiter">&quot;</span></span>;
+declare warning: execution(* A.m(..)): <span class="string"><span class="delimiter">&quot;</span><span class="content">warning sourcelocation is {advice.sourcelocation.sourcefile}:{advice.sourcelocation.line}</span><span class="delimiter">&quot;</span></span>;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The syntax is to enclose the relevant key within curly brackets within
+the message. Please raise an enhancement request if you need other keys
+- the set supported so far are all those shown in the example above.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_declare_warningerror_for_type_patterns">declare warning/error for type patterns</h3>
+<div class="paragraph">
+<p>It is now possible to use a type pattern with declare warning and
+declare error. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">declare warning: I+ &amp;&amp; !hasfield(<span class="type">int</span> i): <span class="string"><span class="delimiter">&quot;</span><span class="content">Implementations of I are expected to have a int field called i</span><span class="delimiter">&quot;</span></span>;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_type_category_type_patterns">Type category type patterns</h3>
+<div class="paragraph">
+<p>This is the ability to narrow the types of interest so that interfaces
+can be ignored, or inner types, or classes or aspects. There is now a
+new is() construct that enables this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">execution(* (!is(InnerType)).m(..)) {}
+!within(* &amp;&amp; is(InnerType)) {}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Options for use in is() are: ClassType, AspectType, InterfaceType,
+InnerType, AnonymousType, EnumType, AnonymousType.</p>
+</div>
+<div class="paragraph">
+<p>Note: It is important to understand that "!within(is(InnerType))" and
+"within(!is(InnerType))" are not the same. The latter one is unlikely to
+be what you want to use. For example here:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">Boo</span> {
+  <span class="type">void</span> foo() {}
+  <span class="type">class</span> <span class="class">Bar</span> {
+    <span class="type">void</span> foo() {}
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Bar.foo() will match within(!is(InnerType)) because within considers all
+surrounding types (so although Bar doesn&#8217;t match the pattern, the
+surrounding Boo will match it). Bar.foo() will not match
+!within(is(InnerType)) because Bar will match the pattern and then the
+result of that match will be negated.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_intertype_fields_preserve_visibility_and_name">Intertype fields preserve visibility and name</h3>
+<div class="paragraph">
+<p>Some users always expect this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">C</span> {
+}
+
+aspect X {
+  <span class="directive">private</span> <span class="type">int</span> C.someField;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To cause a private field called 'someField' to be added to C. This is
+conceptually what happens during compilation but if any user then later
+attempts to access someField via reflection or runs a javap against the
+class file, they will see that isn&#8217;t what happens in practice. A public
+member is added with a mangled name. For code attempting to access
+someField built with ajc, the visibility of the declaration will, of
+course, be respected. But for frameworks accessing the code later
+(typically through reflection), it can cause confusion. With AspectJ
+1.6.9 the name and visibility are now preserved. Compile time semantics
+remain the same, it is only the weaving process that has changed to
+produce slightly different output.</p>
+</div>
+<div class="paragraph">
+<p>Here is the output of javap when that is built with 1.6.8:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">C</span> <span class="directive">extends</span> java.lang.Object{
+    <span class="directive">public</span> <span class="type">int</span> ajc<span class="error">$</span>interField<span class="error">$</span>X<span class="error">$</span>someField;
+    C();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is the output of javap when that is built with 1.6.9:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">C</span> <span class="directive">extends</span> java.lang.Object{
+    <span class="directive">private</span> <span class="type">int</span> someField;
+    C();
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">int</span> ajc<span class="error">$</span>get<span class="error">$</span>someField(C);
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> ajc<span class="error">$</span>set<span class="error">$</span>someField(C, <span class="type">int</span>);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The name 'someField' is preserved. The visibility is also preserved but
+because of that we also need to generate some accessors to get at the
+field.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_aspectj_snapshots_in_a_maven_repo">AspectJ snapshots in a maven repo</h3>
+<div class="paragraph">
+<p>To ease how AspectJ development builds can be consumed, they are now
+placed into a maven repo. When a new version of AspectJ is put into AJDT
+it is also put into the maven.springframework.org repo. The maven
+compatible repo is <code>maven.springframework.org/snapshot/org/aspectj</code> -
+and if you browse to it you will see it currently contains 1.6.9 dev
+builds under the name 1.6.9.BUILD-SNAPSHOT. The repo is added with this
+magic:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;repository&gt;</span>
+    <span class="tag">&lt;id&gt;</span>maven.springframework.org<span class="tag">&lt;/id&gt;</span>
+    <span class="tag">&lt;name&gt;</span>SpringSource snapshots<span class="tag">&lt;/name&gt;</span>
+    <span class="tag">&lt;url&gt;</span>http://maven.springframework.org/snapshot<span class="tag">&lt;/url&gt;</span>
+<span class="tag">&lt;/repository&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and then the version to depend upon is: 1.6.9.BUILD-SNAPSHOT</p>
+</div>
+<hr>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:11 +0700
+</div>
+</div>
+</body>
+</html>

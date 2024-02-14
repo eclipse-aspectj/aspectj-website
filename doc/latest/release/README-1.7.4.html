@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>AspectJ 1.7.4</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>AspectJ 1.7.4</h1>
+</div>
+<div id="content">
+<div class="paragraph">
+<p><em>© Copyright 2013 Contributors. All rights reserved.</em></p>
+</div>
+<div class="paragraph">
+<p>The list of resolved issues in 1.7.4 is available
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced;bug_status=RESOLVED;bug_status=VERIFIED;bug_status=CLOSED;product=AspectJ;target_milestone=1.7.4;">here</a></p>
+</div>
+<div class="paragraph">
+<p><em>Release info: 1.7.4 available 24-Oct-2013</em></p>
+</div>
+<div class="paragraph">
+<p><strong>Notes</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>This release includes an important fix for using loadtime weaving in a
+JVM where JMX is turned on
+(<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=415266">415266</a>)</p>
+</li>
+<li>
+<p>There are some new message insert keys usable in declare error/warning
+(<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=420210">420210</a>) The new
+keys are:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">joinpoint.enclosingclass <span class="comment">// Bar</span>
+joinpoint.enclosingmember <span class="comment">// void Bar.foo(String)</span>
+joinpoint.enclosingmember.name <span class="comment">// foo</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>All keys are case insensitive.</p>
+</div>
+</li>
+<li>
+<p>It is now possible to specify individual xlint settings without
+needing to supply a file
+(<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=419279">419279</a>)</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">ajc -Xlint:adviceDidNotMatch=error,noGuardForLazyTjp=ignore Foo.java</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:11 +0700
+</div>
+</div>
+</body>
+</html>

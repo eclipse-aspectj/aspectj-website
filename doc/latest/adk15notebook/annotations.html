@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>Annotations</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>Annotations</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#annotations-inJava5">Annotations in Java 5</a>
+<ul class="sectlevel2">
+<li><a href="#_using_annotations">Using Annotations</a></li>
+<li><a href="#_retention_policies">Retention Policies</a></li>
+<li><a href="#_accessing_annotations_at_runtime">Accessing Annotations at Runtime</a></li>
+<li><a href="#_annotation_inheritance">Annotation Inheritance</a></li>
+</ul>
+</li>
+<li><a href="#annotations-aspectmembers">Annotating Aspects</a></li>
+<li><a href="#annotations-pointcuts-and-advice">Join Point Matching based on Annotations</a>
+<ul class="sectlevel2">
+<li><a href="#_annotation_patterns">Annotation Patterns</a></li>
+<li><a href="#_type_patterns">Type Patterns</a></li>
+<li><a href="#signaturePatterns">Signature Patterns</a></li>
+<li><a href="#_example_pointcuts">Example Pointcuts</a></li>
+<li><a href="#_runtime_type_matching_and_context_exposure">Runtime type matching and context exposure</a></li>
+<li><a href="#_package_and_parameter_annotations">Package and Parameter Annotations</a></li>
+<li><a href="#_annotation_inheritance_and_pointcut_matching">Annotation Inheritance and pointcut matching</a></li>
+<li><a href="#matchingOnAnnotationValues">Matching based on annotation values</a></li>
+</ul>
+</li>
+<li><a href="#annotations-decp">Using Annotations with declare statements</a>
+<ul class="sectlevel2">
+<li><a href="#_declare_error_and_declare_warning">Declare error and declare warning</a></li>
+<li><a href="#_declare_parents">declare parents</a></li>
+<li><a href="#_declare_precedence">declare precedence</a></li>
+</ul>
+</li>
+<li><a href="#annotations-declare">Declare Annotation</a></li>
+<li><a href="#annotations-itds">Inter-type Declarations</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="annotations-inJava5">Annotations in Java 5</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section provides the essential information about annotations in
+Java 5 needed to understand how annotations are treated in AspectJ 5.
+For a full introduction to annotations in Java, please see the
+documentation for the Java 5 SDK.</p>
+</div>
+<div class="sect2">
+<h3 id="_using_annotations">Using Annotations</h3>
+<div class="paragraph">
+<p>Java 5 introduces <em>annotation types</em> which can be used to express
+metadata relating to program members in the form of <em>annotations</em>.
+Annotations in Java 5 can be applied to package and type declarations
+(classes, interfaces, enums, and annotations), constructors, methods,
+fields, parameters, and variables. Annotations are specified in the
+program source by using the <code>@</code> symbol. For example, the following piece
+of code uses the <code>@Deprecated</code> annotation to indicate that the
+<code>obsoleteMethod()</code> has been deprecated:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Deprecated</span>
+<span class="directive">public</span> <span class="type">void</span> obsoleteMethod() { ... }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Annotations may be <em>marker annotations</em>, <em>single-valued annotations</em>, or
+<em>multi-valued annotations</em>. Annotation types with no members or that
+provide default values for all members may be used simply as marker
+annotations, as in the deprecation example above. Single-value
+annotation types have a single member, and the annotation may be written
+in one of two equivalent forms:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@SuppressWarnings</span>({<span class="string"><span class="delimiter">&quot;</span><span class="content">unchecked</span><span class="delimiter">&quot;</span></span>})
+<span class="directive">public</span> <span class="type">void</span> someMethod() {...}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@SuppressWarnings</span>(value={<span class="string"><span class="delimiter">&quot;</span><span class="content">unchecked</span><span class="delimiter">&quot;</span></span>})
+<span class="directive">public</span> <span class="type">void</span> someMethod() {...}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Multi-value annotations must use the `member-name=value
+            ` syntax to specify annotation values. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Authenticated</span>(role=<span class="string"><span class="delimiter">&quot;</span><span class="content">supervisor</span><span class="delimiter">&quot;</span></span>,clearanceLevel=<span class="integer">5</span>)
+<span class="directive">public</span> <span class="type">void</span> someMethod() {...}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_retention_policies">Retention Policies</h3>
+<div class="paragraph">
+<p>Annotations can have one of three retention policies:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Source-file retention</dt>
+<dd>
+<p>Annotations with source-file retention are read by the compiler during
+the compilation process, but are not rendered in the generated <code>.class</code> files.</p>
+</dd>
+<dt class="hdlist1">Class-file retention</dt>
+<dd>
+<p>This is the default retention policy. Annotations with class-file
+retention are read by the compiler and also retained in the generated <code>.class</code> files.</p>
+</dd>
+<dt class="hdlist1">Runtime retention</dt>
+<dd>
+<p>Annotations with runtime retention are read by the compiler, retained
+in the generated <code>.class</code> files, and also made available at
+runtime.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Local variable annotations are not retained in class files (or at
+runtime) regardless of the retention policy set on the annotation type.
+See JLS 9.6.1.2.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_accessing_annotations_at_runtime">Accessing Annotations at Runtime</h3>
+<div class="paragraph">
+<p>Java 5 supports a new interface, <code>java.lang.reflect.AnnotatedElement</code>,
+that is implemented by the reflection classes in Java (<code>Class</code>,
+<code>Constructor</code>, <code>Field</code>, <code>Method</code>, and <code>Package</code>). This interface gives
+you access to annotations <em>that have runtime retention</em> via the
+<code>getAnnotation</code>, <code>getAnnotations</code>, and <code>isAnnotationPresent</code>. Because
+annotation types are just regular Java classes, the annotations returned
+by these methods can be queried just like any regular Java object.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_annotation_inheritance">Annotation Inheritance</h3>
+<div class="paragraph">
+<p>It is important to understand the rules relating to inheritance of
+annotations, as these have a bearing on join point matching based on the
+presence or absence of annotations.</p>
+</div>
+<div class="paragraph">
+<p>By default annotations are <em>not</em> inherited. Given the following program</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@MyAnnotation</span>
+<span class="type">class</span> <span class="class">Super</span> {
+  <span class="annotation">@Oneway</span> <span class="directive">public</span> <span class="type">void</span> foo() {}
+}
+
+<span class="type">class</span> <span class="class">Sub</span> <span class="directive">extends</span> Super {
+  <span class="directive">public</span> <span class="type">void</span> foo() {}
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then <code>Sub</code> <em>does not</em> have the <code>MyAnnotation</code> annotation, and
+<code>Sub.foo()</code> is not an <code>@Oneway</code> method, despite the fact that it
+overrides <code>Super.foo()</code> which is.</p>
+</div>
+<div class="paragraph">
+<p>If an annotation type has the meta-annotation <code>@Inherited</code> then an
+annotation of that type on a <em>class</em> will cause the annotation to be
+inherited by sub-classes. So, in the example above, if the
+<code>MyAnnotation</code> type had the <code>@Inherited</code> attribute, then <code>Sub</code> would
+have the <code>MyAnnotation</code> annotation.</p>
+</div>
+<div class="paragraph">
+<p><code>@Inherited</code> annotations are not inherited when used to annotate
+anything other than a type. A type that implements one or more
+interfaces never inherits any annotations from the interfaces it
+implements.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="annotations-aspectmembers">Annotating Aspects</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>AspectJ 5 supports annotations on aspects, and on method, field,
+constructor, advice, and inter-type declarations within aspects. Method
+and advice parameters may also be annotated. Annotations are not
+permitted on pointcut declarations or on <code>declare</code> statements.</p>
+</div>
+<div class="paragraph">
+<p>The following example illustrates the use of annotations in aspects:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@AspectAnnotation</span>
+<span class="directive">public</span> <span class="directive">abstract</span> aspect ObserverProtocol {
+
+    <span class="annotation">@InterfaceAnnotation</span>
+    <span class="type">interface</span> <span class="class">Observer</span> {}
+
+    <span class="annotation">@InterfaceAnnotation</span>
+    <span class="type">interface</span> <span class="class">Subject</span> {}
+
+    <span class="annotation">@ITDFieldAnnotation</span>
+    <span class="directive">private</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Observer</span>&gt; <span class="predefined-type">Subject</span>.observers;
+
+    <span class="annotation">@ITDMethodAnnotation</span>
+    <span class="directive">public</span> <span class="type">void</span> <span class="predefined-type">Subject</span>.addObserver(<span class="predefined-type">Observer</span> o) {
+      observers.add(o);
+    }
+
+    <span class="annotation">@ITDMethodAnnotation</span>
+    <span class="directive">public</span> <span class="type">void</span> <span class="predefined-type">Subject</span>.removeObserver(<span class="predefined-type">Observer</span> o) {
+      observers.remove(o);
+    }
+
+    <span class="annotation">@MethodAnnotation</span>
+    <span class="directive">private</span> <span class="type">void</span> notifyObservers(<span class="predefined-type">Subject</span> subject) {
+      <span class="keyword">for</span>(<span class="predefined-type">Observer</span> o : subject.observers)
+        notifyObserver(o,subject);
+    }
+
+    <span class="comment">/**
+     * Delegate to concrete sub-aspect the actual form of
+     * notification for a given type of Observer.
+     */</span>
+    <span class="annotation">@MethodAnnotation</span>
+    <span class="directive">protected</span> <span class="directive">abstract</span> <span class="type">void</span> notifyObserver(<span class="predefined-type">Observer</span> o, <span class="predefined-type">Subject</span> s);
+
+    <span class="comment">/* no annotations on pointcuts */</span>
+    <span class="directive">protected</span> <span class="directive">abstract</span> pointcut observedEvent(<span class="predefined-type">Subject</span> subject);
+
+    <span class="annotation">@AdviceAnnotation</span>
+    after(<span class="predefined-type">Subject</span> subject) returning : observedEvent(subject) {
+        notifyObservers(subject);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>An annotation on an aspect will be inherited by sub-aspects, iff it has
+the <code>@Inherited</code> meta-annotation.</p>
+</div>
+<div class="paragraph">
+<p>AspectJ 5 supports a new XLint warning, "the pointcut associated with
+this advice does not match any join points". The warning is enabled by
+default and will be emitted by the compiler if the pointcut expression
+associated with an advice statement can be statically determined to not
+match any join points. The warning can be suppressed for an individual
+advice statement by using the
+<code>@SuppressAjWarnings({"adviceDidNotMatch"})</code> annotation. This works in
+the same way as the Java 5 SuppressWarnings annotation (See JLS
+9.6.1.5), but has class file retention.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">import</span> <span class="include">org.aspectj.lang.annotation.SuppressAjWarnings</span>;
+
+<span class="directive">public</span> aspect AnAspect {
+
+  pointcut anInterfaceOperation() : execution(* AnInterface.*(..));
+
+  <span class="annotation">@SuppressAjWarnings</span> <span class="comment">// may not match if there are no implementers of the interface...</span>
+  before() : anInterfaceOperation() {
+     <span class="comment">// do something...</span>
+  }
+
+  <span class="annotation">@SuppressAjWarnings</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">adviceDidNotMatch</span><span class="delimiter">&quot;</span></span>) <span class="comment">// alternate form</span>
+  after() returning : anInterfaceOperation() {
+     <span class="comment">// do something...</span>
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="annotations-pointcuts-and-advice">Join Point Matching based on Annotations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section discusses changes to type pattern and signature pattern
+matching in AspectJ 5 that support matching join points based on the
+presence or absence of annotations. We then discuss means of exposing
+annotation values within the body of advice.</p>
+</div>
+<div class="sect2">
+<h3 id="_annotation_patterns">Annotation Patterns</h3>
+<div class="paragraph">
+<p>For any kind of annotated element (type, method, constructor, package,
+etc.), an annotation pattern can be used to match against the set of
+annotations on the annotated element.An annotation pattern element has
+one of two basic forms:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>@&lt;qualified-name&gt;</code>, for example, <code>@Foo</code>, or <code>@org.xyz.Foo</code>.</p>
+</li>
+<li>
+<p><code>@(&lt;type-pattern&gt;)</code>, for example, <code>@(org.xyz..*)</code>, or <code>@(Foo || Boo)</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These simple elements may be negated using <code>!</code>, and combined by simple
+concatentation. The pattern <code>@Foo @Boo</code> matches an annotated element
+that has both an annotation of type <code>Foo</code> and an annotation of type
+<code>Boo</code>.</p>
+</div>
+<div class="paragraph">
+<p>Some examples of annotation patterns follow:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>@Immutable</code></dt>
+<dd>
+<p>Matches any annotated element which has an annotation of type
+<code>Immutable</code>.</p>
+</dd>
+<dt class="hdlist1"><code>!@Persistent</code></dt>
+<dd>
+<p>Matches any annotated element which does not have an annotation of
+type <code>Persistent</code>.</p>
+</dd>
+<dt class="hdlist1"><code>@Foo @Goo</code></dt>
+<dd>
+<p>Matches any annotated element which has both an annotation of type
+<code>Foo</code> and an annotation of type <code>Goo</code>.</p>
+</dd>
+<dt class="hdlist1"><code>@(Foo || Goo)</code></dt>
+<dd>
+<p>Matches any annotated element which has either an annotation of a type
+matching the type pattern <code>(Foo || Goo)</code>. In other words, an annotated
+element with either an annotation of type <code>Foo</code> or an annotation of
+type <code>Goo</code> (or both). (The parenthesis are required in this example).</p>
+</dd>
+<dt class="hdlist1"><code>@(org.xyz..*)</code></dt>
+<dd>
+<p>Matches any annotated element which has either an annotation of a type
+matching the type pattern <code>(org.xyz..*)</code>. In other words, an annotated
+element with an annotation that is declared in the org.xyz package or
+a sub-package. (The parenthesis are required in this example).</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_type_patterns">Type Patterns</h3>
+<div class="paragraph">
+<p>AspectJ 1.5 extends type patterns to allow an optional
+<code>AnnotationPattern</code> prefix.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">TypePattern := SimpleTypePattern |
+               '!' TypePattern |
+               '(' AnnotationPattern? TypePattern ')'
+               TypePattern '&amp;&amp;' TypePattern |
+               TypePattern '||' TypePattern
+
+SimpleTypePattern := DottedNamePattern '+'? '[]'*
+
+DottedNamePattern := FullyQualifiedName RestOfNamePattern? |
+                     '*' NotStarNamePattern?
+
+RestOfNamePattern := '..' DottedNamePattern |
+                     '*' NotStarNamePattern?
+
+NotStarNamePattern := FullyQualifiedName RestOfNamePattern? |
+                      '..' DottedNamePattern
+
+FullyQualifiedName := JavaIdentifierCharacter+ ('.' JavaIdentifierCharacter+)*</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that in most cases when annotations are used as part of a type
+pattern, the parenthesis are required (as in <code>(@Foo Hello+)</code>). In some
+cases (such as a type pattern used within a <code>within</code> or <code>handler</code>
+pointcut expression), the parenthesis are optional:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">OptionalParensTypePattern := AnnotationPattern? TypePattern</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following examples illustrate the use of annotations in type
+patterns:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>(@Immutable *)</code></dt>
+<dd>
+<p>Matches any type with an <code>@Immutable</code> annotation.</p>
+</dd>
+<dt class="hdlist1"><code>(!@Immutable *)</code></dt>
+<dd>
+<p>Matches any type which does not have an <code>@Immutable</code> annotation.</p>
+</dd>
+<dt class="hdlist1"><code>(@Immutable (org.xyz.* || org.abc.*))</code></dt>
+<dd>
+<p>Matches any type in the <code>org.xyz</code> or <code>org.abc</code> packages with the
+<code>@Immutable</code> annotation.</p>
+</dd>
+<dt class="hdlist1"><code>((@Immutable Foo+) || Goo)</code></dt>
+<dd>
+<p>Matches a type <code>Foo</code> or any of its subtypes, which have the
+<code>@Immutable</code> annotation, or a type <code>Goo</code>.</p>
+</dd>
+<dt class="hdlist1"><code>((@(Immutable || NonPersistent) org.xyz..*)</code></dt>
+<dd>
+<p>Matches any type in a package beginning with the prefix <code>org.xyz</code>,
+which has either the <code>@Immutable</code> annotation or the <code>@NonPersistent</code>
+annotation.</p>
+</dd>
+<dt class="hdlist1"><code>(@Immutable @NonPersistent org.xyz..*)</code></dt>
+<dd>
+<p>Matches any type in a package beginning with the prefix <code>org.xyz</code>,
+which has both an <code>@Immutable</code> annotation and an <code>@NonPersistent</code>
+annotation.</p>
+</dd>
+<dt class="hdlist1"><code>(@(@Inherited <strong>) org.xyz..</strong>)</code></dt>
+<dd>
+<p>Matches any type in a package beginning with the prefix <code>org.xyz</code>,
+which has an inheritable annotation. The annotation pattern
+<code>@(@Inherited *)</code> matches any annotation of a type matching the type
+pattern <code>@Inherited *</code>, which in turn matches any type with the
+<code>@Inherited</code> annotation.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="signaturePatterns">Signature Patterns</h3>
+<div class="sect3">
+<h4 id="fieldPatterns">Field Patterns</h4>
+<div class="paragraph">
+<p>A <code>FieldPattern</code> can optionally specify an annotation-matching pattern
+as the first element:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">FieldPattern :=
+    AnnotationPattern? FieldModifiersPattern?
+    TypePattern (TypePattern DotOrDotDot)? SimpleNamePattern
+
+FieldModifiersPattern := '!'? FieldModifier FieldModifiersPattern*
+
+FieldModifier := 'public' | 'private' | 'protected' | 'static' |
+                 'transient' | 'final'
+
+DotOrDotDot := '.' | '..'
+
+SimpleNamePattern := JavaIdentifierChar+ ('*' SimpleNamePattern)?</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If present, the <code>AnnotationPattern</code> restricts matches to fields with
+annotations that match the pattern. For example:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>@SensitiveData * *</code></dt>
+<dd>
+<p>Matches a field of any type and any name, that has an annotation of
+type <code>@SensitiveData</code></p>
+</dd>
+<dt class="hdlist1"><code>@SensitiveData List org.xyz..<strong>.</strong></code></dt>
+<dd>
+<p>Matches a member field of a type in a package with prefix <code>org.xzy</code>,
+where the field is of type <code>List</code>, and has an annotation of type
+<code>@SensitiveData</code></p>
+</dd>
+<dt class="hdlist1"><code>(@SensitiveData <strong>) org.xyz..</strong>.*</code></dt>
+<dd>
+<p>Matches a member field of a type in a package with prefix <code>org.xzy</code>,
+where the field is of a type which has a <code>@SensitiveData</code> annotation.</p>
+</dd>
+<dt class="hdlist1"><code>@Foo (@Goo <strong>) (@Hoo *).</strong></code></dt>
+<dd>
+<p>Matches a field with an annotation <code>@Foo</code>, of a type with an
+annotation <code>@Goo</code>, declared in a type with annotation <code>@Hoo</code>.</p>
+</dd>
+<dt class="hdlist1"><code>@Persisted @Classified * *</code></dt>
+<dd>
+<p>Matches a field with an annotation <code>@Persisted</code> and an annotation
+<code>@Classified</code>.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="methodPatterns">Method and Constructor Patterns</h4>
+<div class="paragraph">
+<p>A <code>MethodPattern</code> can optionally specify an annotation-matching pattern
+as the first element.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">MethodPattern :=
+    AnnotationPattern? MethodModifiersPattern? TypePattern
+                       (TypePattern DotOrDotDot)? SimpleNamePattern
+                       '(' FormalsPattern ')'ThrowsPattern?
+
+MethodModifiersPattern := '!'? MethodModifier MethodModifiersPattern*
+
+MethodModifier := 'public' | 'private' | 'protected' | 'static' |
+                  'synchronized' | 'final'
+
+FormalsPattern := '..' (',' FormalsPatternAfterDotDot)* |
+                  OptionalParensTypePattern (',' FormalsPattern)* |
+                  TypePattern '...'
+
+FormalsPatternAfterDotDot :=
+        OptionalParensTypePattern (',' FormalsPatternAfterDotDot)* |
+        TypePattern '...'
+
+ThrowsPattern := 'throws' TypePatternList
+
+TypePatternList := TypePattern (',' TypePattern)*</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A <code>ConstructorPattern</code> has the form</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">ConstructorPattern :=
+    AnnotationPattern? ConstructorModifiersPattern?
+                       (TypePattern DotOrDotDot)? 'new' '(' FormalsPattern ')'
+                       ThrowsPattern?
+
+ConstructorModifiersPattern := '!'? ConstructorModifier ConstructorModifiersPattern*
+
+ConstructorModifier := 'public' | 'private' | 'protected'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The optional <code>AnnotationPattern</code> at the beginning of a method or
+constructor pattern restricts matches to methods/constructors with
+annotations that match the pattern. For example:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>@Oneway * *(..)</code></dt>
+<dd>
+<p>Matches a method with any return type and any name, that has an
+annotation of type <code>@Oneway</code>.</p>
+</dd>
+<dt class="hdlist1"><code>@Transaction * (@Persistent org.xyz..<strong>).</strong>(..)</code></dt>
+<dd>
+<p>Matches a method with the <code>@Transaction</code> annotation, declared in a
+type with the <code>@Persistent</code> annotation, and in a package beginning
+with the <code>org.xyz</code> prefix.</p>
+</dd>
+<dt class="hdlist1"><code>* <strong>.</strong>(@Immutable *,..)</code></dt>
+<dd>
+<p>Matches any method taking at least one parameter, where the parameter
+type has an annotation <code>@Immutable</code>.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example_pointcuts">Example Pointcuts</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>within(@Secure *)</code></dt>
+<dd>
+<p>Matches any join point where the code executing is declared in a type
+with an <code>@Secure</code> annotation. The format of the <code>within</code> pointcut
+designator in AspectJ 5 is
+<code>'within' '(' OptionalParensTypePattern ')'</code>.</p>
+</dd>
+<dt class="hdlist1"><code>staticinitialization(@Persistent *)</code></dt>
+<dd>
+<p>Matches the staticinitialization join point of any type with the
+<code>@Persistent</code> annotation. The format of the <code>staticinitialization</code>
+pointcut designator in AspectJ 5 is
+<code>'staticinitialization' '(' OptionalParensTypePattern ')'</code>.</p>
+</dd>
+<dt class="hdlist1"><code>call(@Oneway * *(..))</code></dt>
+<dd>
+<p>Matches a call to a method with a <code>@Oneway</code> annotation.</p>
+</dd>
+<dt class="hdlist1"><code>execution(public (@Immutable <strong>) org.xyz..</strong>.*(..))</code></dt>
+<dd>
+<p>The execution of any public method in a package with prefix <code>org.xyz</code>,
+where the method returns an immutable result.</p>
+</dd>
+<dt class="hdlist1"><code>set(@Cachable * *)</code></dt>
+<dd>
+<p>Matches the set of any cachable field.</p>
+</dd>
+<dt class="hdlist1"><code>handler(!@Catastrophic *)</code></dt>
+<dd>
+<p>Matches the handler join point for the handling of any exception that
+is not <code>Catastrophic</code>. The format of the <code>handler</code> pointcut designator
+in AspectJ 5 is <code>'handler' '(' OptionalParensTypePattern ')'</code>.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_runtime_type_matching_and_context_exposure">Runtime type matching and context exposure</h3>
+<div class="paragraph">
+<p>AspectJ 5 supports a set of "@" pointcut designators which can be used
+both to match based on the presence of an annotation at runtime, and to
+expose the annotation value as context in a pointcut or advice
+definition. These designators are <code>@args, @this, @target,
+    @within, @withincode</code>, and <code>@annotation</code></p>
+</div>
+<div class="paragraph">
+<p>It is a compilation error to attempt to match on an annotation type that
+does not have runtime retention using <code>@this, @target</code> or <code>@args</code>. It is
+a compilation error to attempt to use any of these designators to expose
+an annotation value that does not have runtime retention.</p>
+</div>
+<div class="paragraph">
+<p>The <code>this()</code>, <code>target()</code>, and <code>args()</code> pointcut designators allow
+matching based on the runtime type of an object, as opposed to the
+statically declared type. In AspectJ 5, these designators are
+supplemented with three new designators : <code>@this()</code> (read, "this
+annotation"), <code>@target()</code>, and <code>@args()</code>.</p>
+</div>
+<div class="paragraph">
+<p>Like their counterparts, these pointcut designators can be used both for
+join point matching, and to expose context. The format of these new
+designators is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">AtThis := '@this' '(' AnnotationOrIdentifer ')'
+
+AtTarget := '@target' '(' AnnotationOrIdentifier ')'
+
+AnnotationOrIdentifier := FullyQualifiedName | Identifier
+
+AtArgs := '@args' '(' AnnotationsOrIdentifiersPattern ')'
+
+AnnotationsOrIdentifiersPattern :=
+                  '..' (',' AnnotationsOrIdentifiersPatternAfterDotDot)? |
+                  AnnotationOrIdentifier (',' AnnotationsOrIdentifiersPattern)* |
+                  '*' (',' AnnotationsOrIdentifiersPattern)*
+
+AnnotationsOrIdentifiersPatternAfterDotDot :=
+              AnnotationOrIdentifier (',' AnnotationsOrIdentifiersPatternAfterDotDot)* |
+              '*' (',' AnnotationsOrIdentifiersPatternAfterDotDot)*</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The forms of <code>@this()</code> and <code>@target()</code> that take a single annotation
+name are analogous to their counterparts that take a single type name.
+They match at join points where the object bound to <code>this</code> (or <code>target</code>,
+respectively) has an annotation of the specified type. For example:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>@this(Foo)</code></dt>
+<dd>
+<p>Matches any join point where the object currently bound to 'this' has
+an annotation of type <code>Foo</code>.</p>
+</dd>
+<dt class="hdlist1"><code>call(* *(..)) &amp;&amp; @target(Classified)</code></dt>
+<dd>
+<p>Matches a call to any object where the target of the call has a
+<code>@Classified</code> annotation.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Annotations can be exposed as context in the body of advice by using the
+forms of <code>@this(), @target()</code> and <code>@args()</code> that use bound variables in
+the place of annotation names. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut callToClassifiedObject(Classified classificationInfo) :
+    call(* *(..)) &amp;&amp; <span class="annotation">@target</span>(classificationInfo);
+
+pointcut txRequiredMethod(Tx transactionAnnotation) :
+    execution(* *(..)) &amp;&amp; <span class="annotation">@this</span>(transactionAnnotation)
+    &amp;&amp; <span class="keyword">if</span>(transactionAnnotation.policy() == TxPolicy.REQUIRED);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>@args</code> pointcut designator behaves as its <code>args</code> counterpart,
+matching join points based on number and position of arguments, and
+supporting the <code>*</code> wildcard and at most one <code>..</code> wildcard. An annotation
+at a given position in an <code>@args</code> expression indicates that the runtime
+type of the argument in that position at a join point must have an
+annotation of the indicated type. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">/**
+ * matches any join point with at least one argument, and where the
+ * type of the first argument has the @Classified annotation
+ */</span>
+pointcut classifiedArgument() : <span class="annotation">@args</span>(Classified,..);
+
+<span class="comment">/**
+ * matches any join point with three arguments, where the third
+ * argument has an annotation of type @Untrusted.
+ */</span>
+pointcut untrustedData(Untrusted untrustedDataSource) :
+    <span class="annotation">@args</span>(*,*,untrustedDataSource);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In addition to accessing annotation information at runtime through
+context binding, access to <code>AnnotatedElement</code> information is also
+available reflectively with the body of advice through the
+<code>thisJoinPoint</code>, <code>thisJoinPointStaticPart</code>, and
+<code>thisEnclosingJoinPointStaticPart</code> variables. To access annotations on
+the arguments, or object bound to this or target at a join point you can
+use the following code fragments:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="predefined-type">Annotation</span><span class="type">[]</span> thisAnnotations = thisJoinPoint.getThis().getClass().getAnnotations();
+<span class="predefined-type">Annotation</span><span class="type">[]</span> targetAnnotations = thisJoinPoint.getTarget().getClass().getAnnotations();
+<span class="predefined-type">Annotation</span><span class="type">[]</span> firstParamAnnotations = thisJoinPoint.getArgs()[<span class="integer">0</span>].getClass().getAnnotations();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>@within</code> and <code>@withincode</code> pointcut designators match any join
+point where the executing code is defined within a type (<code>@within</code>), or
+a method/constructor (<code>@withincode</code>) that has an annotation of the
+specified type. The form of these designators is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">AtWithin := '@within' '(' AnnotationOrIdentifier ')'
+AtWithinCode := '@withincode' '(' AnnotationOrIdentifier ')'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Some examples of using these designators follow:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>@within(Foo)</code></dt>
+<dd>
+<p>Matches any join point where the executing code is defined within a
+type which has an annotation of type <code>Foo</code>.</p>
+</dd>
+<dt class="hdlist1"><code>pointcut insideCriticalMethod(Critical c) : @withincode(c);</code></dt>
+<dd>
+<p>Matches any join point where the executing code is defined in a method
+or constructor which has an annotation of type <code>@Critical</code>, and
+exposes the value of the annotation in the parameter <code>c</code>.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The <code>@annotation</code> pointcut designator matches any join point where the
+<em>subject</em> of the join point has an annotation of the given type. Like
+the other @pcds, it can also be used for context exposure.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">AtAnnotation := '@annotation' '(' AnnotationOrIdentifier ')'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The subject of a join point is defined in the table in chapter one of
+this guide.</p>
+</div>
+<div class="paragraph">
+<p>Access to annotation information on members at a matched join point is
+also available through the <code>getSignature</code> method of the <code>JoinPoint</code> and
+<code>JoinPoint.StaticPart</code> interfaces. The <code>Signature</code> interfaces are
+extended with additional operations that provide access to the
+<code>java.lang.reflect</code> <code>Method, Field</code> and <code>Constructor</code> objects on which
+annnotations can be queried. The following fragment illustrates an
+example use of this interface to access annotation information.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="predefined-type">Signature</span> sig = thisJoinPointStaticPart.getSignature();
+<span class="predefined-type">AnnotatedElement</span> declaringTypeAnnotationInfo = sig.getDeclaringType();
+<span class="keyword">if</span> (sig <span class="keyword">instanceof</span> MethodSignature) {
+  <span class="comment">// this must be a call or execution join point</span>
+  <span class="predefined-type">Method</span> method = ((MethodSignature)sig).getMethod();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><em>Note again that it would be nicer to add the method getAnnotationInfo
+directly to MemberSignature, but this would once more couple the runtime
+library to Java 5.</em></p>
+</div>
+<div class="paragraph">
+<p>The <code>@this,@target</code> and <code>@args</code> pointcut designators can only be used to
+match against annotations that have runtime retention. The
+<code>@within, @withincode</code> and <code>@annotation</code> pointcut designators can only
+be used to match against annotations that have at least class-file
+retention, and if used in the binding form the annotation must have
+runtime retention.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_package_and_parameter_annotations">Package and Parameter Annotations</h3>
+<div class="paragraph">
+<p><em>Matching on package annotations is not supported in AspectJ. Support
+for this capability may be considered in a future release.</em></p>
+</div>
+<div class="paragraph">
+<p>Parameter annotation matching is being added in AspectJ1.6. Initially
+only matching is supported but binding will be implemented at some
+point. Whether the annotation specified in a pointcut should be
+considered to be an annotation on the parameter type or an annotation on
+the parameter itself is determined through the use of parentheses around
+the parameter type. Consider the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@SomeAnnotation</span>
+<span class="type">class</span> <span class="class">AnnotatedType</span> {}
+
+<span class="type">class</span> <span class="class">C</span> {
+  <span class="directive">public</span> <span class="type">void</span> foo(AnnotatedType a) {}
+  <span class="directive">public</span> <span class="type">void</span> goo(<span class="annotation">@SomeAnnotation</span> <span class="predefined-type">String</span> s) {}
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The method foo has a parameter of an annotated type, and can be matched
+by this pointcut:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut p(): execution(* *(<span class="annotation">@SomeAnnotation</span> *));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When there is a single annotation specified like this, it is considered
+to be part of the type pattern in the match against the parameter: 'a
+parameter of any type that has the annotation @SomeAnnotation'.</p>
+</div>
+<div class="paragraph">
+<p>To match the parameter annotation case, the method goo, this is the
+pointcut:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut p(): execution(* *(<span class="annotation">@SomeAnnotation</span> (*)));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The use of parentheses around the wildcard is effectively indicating
+that the annotation should be considered separately to the type pattern
+for the parameter type: 'a parameter of any type that has a parameter
+annotation of @SomeAnnotation'.</p>
+</div>
+<div class="paragraph">
+<p>To match when there is a parameter annotation and an annotation on the
+type as well:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut p(): execution(* *(<span class="annotation">@SomeAnnotation</span> (<span class="annotation">@SomeOtherAnnotation</span> *)));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The parentheses are grouping @SomeOtherAnnotation with the * to form the
+type pattern for the parameter, then the type @SomeAnnotation will be
+treated as a parameter annotation pattern.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_annotation_inheritance_and_pointcut_matching">Annotation Inheritance and pointcut matching</h3>
+<div class="paragraph">
+<p>According to the Java 5 specification, non-type annotations are not
+inherited, and annotations on types are only inherited if they have the
+<code>@Inherited</code> meta-annotation. Given the following program:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">C1</span> {
+  <span class="annotation">@SomeAnnotation</span>
+  <span class="directive">public</span> <span class="type">void</span> aMethod() {...}
+}
+
+<span class="type">class</span> <span class="class">C2</span> <span class="directive">extends</span> C1 {
+  <span class="directive">public</span> <span class="type">void</span> aMethod() {...}
+}
+
+<span class="type">class</span> <span class="class">Main</span> {
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
+    C1 c1 = <span class="keyword">new</span> C1();
+    C2 c2 = <span class="keyword">new</span> C2();
+    c1.aMethod();
+    c2.aMethod();
+  }
+}
+
+aspect X {
+  pointcut annotatedC2MethodCall() :
+    call(<span class="annotation">@SomeAnnotation</span> * C2.aMethod());
+
+  pointcut annotatedMethodCall() :
+    call(<span class="annotation">@SomeAnnotation</span> * aMethod());
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The pointcut <code>annotatedC2MethodCall</code> will not match anything since the
+definition of <code>aMethod</code> in <code>C2</code> does not have the annotation.</p>
+</div>
+<div class="paragraph">
+<p>The pointcut <code>annotatedMethodCall</code> matches <code>c1.aMethod()</code> but not
+<code>c2.aMethod()</code>. The call to <code>c2.aMethod</code> is not matched because join
+point matching for modifiers (the visibility modifiers, annotations, and
+throws clause) is based on the subject of the join point (the method
+actually being called).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="matchingOnAnnotationValues">Matching based on annotation values</h3>
+<div class="paragraph">
+<p>The <code>if</code> pointcut designator can be used to write pointcuts that match
+based on the values annotation members. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut txRequiredMethod(Tx transactionAnnotation) :
+    execution(* *(..)) &amp;&amp; <span class="annotation">@this</span>(transactionAnnotation)
+    &amp;&amp; <span class="keyword">if</span>(transactionAnnotation.policy() == TxPolicy.REQUIRED);</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="annotations-decp">Using Annotations with declare statements</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_declare_error_and_declare_warning">Declare error and declare warning</h3>
+<div class="paragraph">
+<p>Since pointcut expressions in AspectJ 5 support join point matching
+based on annotations, this facility can be exploited when writing
+<code>declare warning</code> and <code>declare error</code> statements. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">declare warning : withincode(<span class="annotation">@PerformanceCritical</span> * *(..)) &amp;&amp;
+                  call(<span class="annotation">@ExpensiveOperation</span> * *(..))
+                : <span class="string"><span class="delimiter">&quot;</span><span class="content">Expensive operation called from within performance critical section</span><span class="delimiter">&quot;</span></span>;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">declare error : call(* org.xyz.model.*.*(..)) &amp;&amp;
+                !<span class="annotation">@within</span>(Trusted)
+                : <span class="string"><span class="delimiter">&quot;</span><span class="content">Untrusted code should not call the model classes directly</span><span class="delimiter">&quot;</span></span>;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_declare_parents">declare parents</h3>
+<div class="paragraph">
+<p>The general form of a <code>declare parents</code> statement is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">declare parents : TypePattern extends Type;
+declare parents : TypePattern implements TypeList;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Since AspectJ 5 supports annotations as part of a type pattern
+specification, it is now possible to match types based on the presence
+of annotations <em>with either class-file or runtime retention</em>. For
+example:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>declare parents : (@Secured *) implements SecuredObject;</code></dt>
+<dd>
+<p>All types with the <code>@Secured</code> annotation implement the <code>SecuredObject</code>
+inteface.</p>
+</dd>
+<dt class="hdlist1"><code>declare parents : (@Secured BankAccount+) implements SecuredObject;</code></dt>
+<dd>
+<p>The subset of types drawn from the <code>BankAccount</code> type and any subtype
+of <code>BankAccount</code>, where the <code>@Secured</code> annotation is present,
+implement the <code>SecuredObject</code> interface.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>An annotation type may not be used as the target of a declare parents
+statement. If an annotation type is named explicitly as the target of a
+declare parents statement, a compilation error will result. If an
+annotation type is matched by a non-explicit type pattern used in a
+declare parents statement it will be ignored (and an XLint warning
+issued).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_declare_precedence">declare precedence</h3>
+<div class="paragraph">
+<p>The general form of a declare precedence statement is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">declare precedence : TypePatList;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>AspectJ 5 allows the type patterns in the list to include annotation
+information as part of the pattern specification. For example:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>declare precedence : (@Security <strong>),</strong>;</code></dt>
+<dd>
+<p>All aspects with the <code>@Security</code> annotation take precedence over any
+other aspects in the system. (Or, more informally, all
+security-related aspects take precedence).</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="annotations-declare">Declare Annotation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>AspectJ 5 supports a new kind of declare statement,
+<code>declare annotation</code>. This takes different forms according to the
+recipient of the annotation: <code>declare @type</code> for types,
+<code>declare @method</code> for methods, <code>declare @constructor</code> for constructors,
+and <code>declare @field</code> for fields. <code>declare @package</code> may be supported in
+a future release.</p>
+</div>
+<div class="paragraph">
+<p>The general form is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">declare @&lt;kind&gt; : ElementPattern : Annotation ;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Where annotation is a regular annotation expression as defined in the
+Java 5 language. If the annotation has the <code>@Target</code> meta-annotation,
+then the elements matched by <code>ElementPattern</code> must be of the kind
+specified by the <code>@Target</code> annotation.</p>
+</div>
+<div class="paragraph">
+<p><code>ElementPattern</code> is defined as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">ElementPattern := TypePattern |
+                  MethodPattern |
+                  ConstructorPattern |
+                  FieldPattern</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following examples illustrate the use of <code>declare annotation</code>.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>declare @type : org.xyz.model..* : @BusinessDomain ;</code></dt>
+<dd>
+<p>  All types defined in a package with the prefix <code>org.xyz.model</code> have
+  the <code>@BusinessDomain</code> annotation.
+declare @method : public * BankAccount+.*(..) :</p>
+</dd>
+<dt class="hdlist1"><code>@Secured(role="supervisor")</code></dt>
+<dd>
+<p>  All public methods in <code>BankAccount</code> and its subtypes have the
+  annotation <code>@Secured(role="supervisor")</code>.
+declare @constructor : BankAccount+.new(..) :</p>
+</dd>
+<dt class="hdlist1"><code>@Secured(role="supervisor")</code></dt>
+<dd>
+<p>All constructors in <code>BankAccount</code> and its subtypes have the annotation
+<code>@Secured(role="supervisor")</code>.</p>
+</dd>
+<dt class="hdlist1"><code>declare @field : * DAO+.* : @Persisted;</code></dt>
+<dd>
+<p>All fields defined in <code>DAO</code> or its subtypes have the <code>@Persisted</code>
+annotation.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="annotations-itds">Inter-type Declarations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An annotation type may not be the target of an inter-type declaration.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

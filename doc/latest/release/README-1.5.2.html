@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>AspectJ 5 v1.5.2 Readme</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>AspectJ 5 v1.5.2 Readme</h1>
+</div>
+<div id="content">
+<div class="paragraph">
+<p><em>© Copyright 2006 Contributors. All rights reserved.</em></p>
+</div>
+<div class="paragraph">
+<p>This release is primarily a bug fix release. It includes approximately
+60 fixes and enhancements that have been incorporated since the 1.5.1
+release. You can see the full list through
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;product=AspectJ&amp;target_milestone=1.5.2&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED">this
+bugzilla query</a>.</p>
+</div>
+<div class="paragraph">
+<p>Notable changes since the 1.5.1 release include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=126167">[_126167</a>] The
+handling of proceed in @Around advice has changed to be more compatible
+with code style.</p>
+</li>
+<li>
+<p><a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=147711">[_147711</a>] Members
+generated as a result of the AspectJ weaving process are now marked Java
+synthetic - enabling coverage tools such as Emma to process woven
+classes correctly.</p>
+</li>
+<li>
+<p><a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=138316">[_138316</a>] AspectJ
+has now transitioned from the CPL to the EPL license.</p>
+</li>
+<li>
+<p><a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=140695">[_140695</a>] Using a
+more optimal world for managing types when load-time weaving - reduces
+heap usage (work in progress).</p>
+</li>
+<li>
+<p><a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=101983">[_101983</a>] AspectJ
+can now support separate output folders for each input source folder -
+enables AJDT to behave more like JDT.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For information on bug fixes in AspectJ 5 v1.5.2, see the
+<a href="changes.html">changes</a> document.</p>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

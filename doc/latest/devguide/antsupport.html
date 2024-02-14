@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>AspectJ Ant Tasks</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body id="antTasks" class="article toc2 toc-left">
+<div id="header">
+<h1>AspectJ Ant Tasks</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#antTasks-intro">Introduction</a></li>
+<li><a href="#antTasks-install">Installing Ant Tasks</a></li>
+<li><a href="#antTasks-iajc">AjcTask (iajc)</a>
+<ul class="sectlevel2">
+<li><a href="#antTasks-iajc-options">AjcTask (iajc) Options</a></li>
+<li><a href="#antTasks-nested-includes">AjcTask matching parameters specified as nested elements</a></li>
+<li><a href="#antTasks-iajc-paths">AjcTask Path-like Structures</a></li>
+<li><a href="#antTasks-iajc-sample">Sample of iajc task</a></li>
+<li><a href="#antTasks-iajc-uptodate">Avoiding clean compiles</a></li>
+<li><a href="#_programmatically_handling_compiler_messages">Programmatically handling compiler messages</a></li>
+</ul>
+</li>
+<li><a href="#antTasks-adapter">Ajc11CompilerAdapter (javac)</a>
+<ul class="sectlevel2">
+<li><a href="#antTasks-adapter-sample">Sample of compiler adapter</a></li>
+<li><a href="#antTasks-adapter-options">Compiler adapter compilerarg options</a></li>
+</ul>
+</li>
+<li><a href="#antTasks-ajc">Ajc10 (ajc)</a>
+<ul class="sectlevel2">
+<li><a href="#antTasks-ajc-options">Ajc10 (ajc) Options</a></li>
+<li><a href="#antTasks-ajc-nested">Ajc10 parameters specified as nested elements</a></li>
+<li><a href="#antTasks-ajc-sample">Sample of ajc task</a></li>
+</ul>
+</li>
+<li><a href="#antTasks-problems">Isolating problems running the Ant tasks</a>
+<ul class="sectlevel2">
+<li><a href="#antTasks-knownProblems">Known issues with the Ant tasks</a></li>
+<li><a href="#antTasks-feedback">Ant task questions and bugs</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="antTasks-intro">Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>AspectJ contains a compiler, <code>ajc</code>, that can be run from Ant. Included
+in the <code>aspectjtools.jar</code> are Ant binaries to support three ways of
+running the compiler:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#antTasks-iajc">AjcTask (iajc)</a>, a task to run the AspectJ
+post-1.1 compiler, which supports all the eclipse and ajc options,
+including incremental mode.</p>
+</li>
+<li>
+<p><a href="#antTasks-adapter">Ajc11CompilerAdapter (javac)</a>, an adapter class
+to run the new compiler using Javac tasks by setting the build.compiler
+property</p>
+</li>
+<li>
+<p><a href="#antTasks-ajc">Ajc10 (ajc)</a>, a task to run build scripts
+compatible with the AspectJ 1.0 tasks</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This describes how to install and use the tasks and the adapter. For an
+example Ant script, see <a href="../examples/build.xml">examples/build.xml</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="antTasks-install">Installing Ant Tasks</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Install Jakarta Ant 1.5.1: Please see the official Jakarta Ant website
+for more information and the 1.5.1 distribution. This release is
+source-compatible with Ant 1.3 and Ant 1.4, but the task sources must be
+compiled with those versions of the Ant libraries to be used under those
+versions of Ant. Sources are available under the Eclipse Public License
+v 2.0 at <a href="https://eclipse.org/aspectj" class="bare">https://eclipse.org/aspectj</a>.</p>
+</div>
+<div class="paragraph">
+<p>In Ant 1.5, third-party tasks can be declared using a taskdef entry in
+the build script, to identify the name and classes. When declaring a
+task, include the <code>aspectjtools.jar</code> either in the taskdef classpath or
+in <code>${ANT_HOME}/lib</code> where it will be added to the system class path by
+the ant script. You may specify the task script names directly, or use
+the "resource" attribute to specify the default names:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;taskdef</span> <span class="attribute-name">resource</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The current resource file retains the name "ajc" for the Ajc10 task, and
+uses "iajc" for the AspectJ post-1.1 task.</p>
+</div>
+<div class="paragraph">
+<p>In Ant 1.6, third-party tasks are declared in their own namespace using
+<code>antlib.xml</code>. For example, the following script would build and run the
+spacewar example, if you put the script in the examples directory and
+<code>aspectjtools.jar</code> in the <code>${ANT_HOME}/lib</code> directory.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;project</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">aspectj-ant1.6</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">default</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">spacewar</span><span class="delimiter">&quot;</span></span>
+    <span class="attribute-name">xmlns:aspectj</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">antlib:org.aspectj</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">basedir</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">.</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;target</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">spacewar</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;aspectj:iajc</span>
+            <span class="attribute-name">argfiles</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">spacewar/debug.lst</span><span class="delimiter">&quot;</span></span>
+            <span class="attribute-name">outjar</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">spacewar.jar</span><span class="delimiter">&quot;</span></span>
+            <span class="attribute-name">classpath</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">../../lib/aspectjrt.jar</span><span class="delimiter">&quot;</span></span>
+       <span class="tag">/&gt;</span>
+       <span class="tag">&lt;java</span> <span class="attribute-name">classname</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">spacewar.Game</span><span class="delimiter">&quot;</span></span>
+        <span class="attribute-name">classpath</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">spacewar.jar:../../lib/aspectjrt.jar</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/target&gt;</span>
+<span class="tag">&lt;/project&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For more information on using Ant, please refer to Jakarta&#8217;s
+documentation on integrating user-defined Ant tasks into builds.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="antTasks-iajc">AjcTask (iajc)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This task uses the AspectJ post-1.1 compiler ajc. The AspectJ compiler
+can be used like Javac to compile Java sources, but it can also compile
+AspectJ sources or weave binary aspects with Java bytecode. It can run
+in normal "batch" mode or in an "incremental" mode, where it only
+recompiles files it has to revisit. For more information on ajc, see
+<a href="ajc.html"><code>ajc</code>, the AspectJ compiler/weaver</a>. Unlike Javac or the Javac Ant task, this task always
+compiles the specified files since aspects can apply to other (updated)
+files. For a workaround, see <a href="#antTasks-iajc-uptodate">Avoiding clean
+compiles</a>.</p>
+</div>
+<div class="paragraph">
+<p>Beyond the normal ajc compiler options, this task also supports an
+experimental option for an incremental "tag" file, and it can copy
+resources from source directories or input jars to the output jar or
+directory.</p>
+</div>
+<div class="paragraph">
+<p>This task is named iajc to avoid conflict with the 1.0 task ajc.</p>
+</div>
+<div class="sect2">
+<h3 id="antTasks-iajc-options">AjcTask (iajc) Options</h3>
+<div class="paragraph">
+<p>The following tables list the supported parameters. For any parameter
+specified as a Path, a single path can be specified directly as an
+attribute, multiple paths can be specified using a nested element of the
+same name, and a common path can be reused by defining it as a global
+and passing the id to the corresponding {name}ref attribute. See
+<a href="#antTasks-iajc-paths">Path</a> below for more details.</p>
+</div>
+<div class="paragraph">
+<p>Most attributes and nested elements are optional. The compiler requires
+that the same version of <code>aspectjrt.jar</code> be specified on the classpath,
+and that some sources be be specified (using one or more of
+<code>sourceroots</code>, <code>injars</code>, <code>inpath</code>, <code>argfiles</code>, and/or <code>srcdir</code> (with
+patterns)). When in incremental mode, only <code>sourceroots</code> may be
+specified.</p>
+</div>
+<div class="paragraph">
+<p>Boolean parameters default to <code>false</code> unless otherwise stated.</p>
+</div>
+<div class="paragraph">
+<p><strong>AjcTask (iajc) options for specifying sources</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">argfiles, argfilesRef (<a href="#antTasks-iajc-paths">Path</a>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An argument
+file contains a list of arguments read by the compiler. Each line is
+read into one element of the argument array and may include another
+argfile by reference.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sourceRoots, sourceRootsRef (<a href="#antTasks-iajc-paths">Path</a>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Directories containing source files (ending with .java or .aj) to
+compile.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">srcdir (<a href="#antTasks-iajc-paths">Path</a>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Base directory of sources to
+compile, assuming there are <a href="#antTasks-nested-includes">nested
+matches</a>. This approach uses the Ant process for matching .java files
+and is not compatible with incremental mode. Unless using filters to
+limit the sources included, use sourceroots instead.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">injars, injarsRef (<a href="#antTasks-iajc-paths">Path</a>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Deprecated - use
+inpath instead. Read .class files for bytecode weaving from zip files
+(only).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">inpath, inpathRef (<a href="#antTasks-iajc-paths">Path</a>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Read .class files
+for bytecode weaving from directories or zip files (like classpath).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">classpath, classpathRef (<a href="#antTasks-iajc-paths">Path</a>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The
+classpath used by the sources being compiled. When compiling aspects,
+include the same version of the <code>aspectjrt.jar</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bootclasspath, bootclasspathRef (<a href="#antTasks-iajc-paths">Path</a>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The
+bootclasspath specifies types to use instead of the invoking VM&#8217;s when
+seeking types during compilation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">extDirs, extDirsRef (<a href="#antTasks-iajc-paths">Path</a>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The extension
+directories to use instead of those in the invoking VM when seeking
+types during compilation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">aspectPath, aspectPathRef (<a href="#antTasks-iajc-paths">Path</a>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Similar to
+classpath, aspectpath contains read-only, binary aspect libraries that
+are woven into sources but not included in the output. <code>aspectpath</code>
+accepts jar/zip files (but, unlike classpath, not directories).</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>AjcTask (iajc) options for specifying output</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">destDir</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The directory in which to place the generated class files.
+Only one of <code>destDir</code> and <code>outJar</code> may be set.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">outJar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The zip file in which to place the generated output class
+files. Only one of <code>destDir</code> and <code>outJar</code> may be set.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">copyInjars</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(Deprecated/ignored; ajc does this.) If true, copy all
+non-.class files from input jar(s) to the output jar or destination
+directory after the compile (or incremental compile) completes. In
+forked mode, this copies only after the process completes, not after
+incremental compiles.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sourceRootCopyFilter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When set, copy all files from the sourceroot
+directories to the output jar or destination directory except those
+specified in the filter pattern. The pattern should be compatible with
+an Ant fileset excludes filter; when using this, most developers pass
+<code><strong>/CVS/<strong>,</strong>/</strong>.java</code> to exclude any CVS directories or source files. See
+<code>inpathDirCopyFilter</code>. Requires <code>destDir</code> or <code>outJar</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">inpathDirCopyFilter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When set, copy all files from the inpath
+directories to the output jar or destination directory except those
+specified in the filter pattern. The pattern should be compatible with
+an Ant fileset excludes filter; when using this, most developers pass
+<code><strong>/CVS/<strong>,</strong>/</strong>.java,<strong>/<strong>.class</code> to exclude any CVS directories, source
+files, or unwoven .class files. (If <code></strong>/</strong>.class</code> is not specified, it
+will be prepended to the filter.) See <code>sourceRootCopyFilter</code>. (Note that
+ajc itself copies all resources from input jar/zip files on the inpath.)
+Requires <code>destDir</code> or <code>outJar</code>.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>AjcTask (iajc) options for specifying compiler behavior</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fork</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Run process in another VM. This gets the forking classpath either
+explicitly from a <code>forkclasspath</code> entry or by searching the task or
+system/Ant classpath for the first readable file with a name of the form
+<code>aspectj{-}tools{.*}.jar</code>. When forking you can specify the amount of
+memory used with <code>maxmem</code>. Fork cannot be used in incremental mode,
+unless using a tag file.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">forkclasspath, forkclasspathRef (<a href="#antTasks-iajc-paths">Path</a>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specify the classpath to use for the compiler when forking.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maxmem</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum memory to use for the new VM when fork is true.
+Values should have the same form as accepted by the VM, e.g., "128m".</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">incremental</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">incremental mode: Build once, then recompile only required
+source files when user provides input. Requires that source files be
+specified only using <code>sourceroots</code>. Incompatible with forking.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tagfile</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">incremental mode: Build once, then recompile only required
+source files when the tag file is updated, finally exiting when tag file
+is deleted. Requires that source files be specified only using
+<code>sourceroots</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set experimental option(s), using comma-separated list of accepted
+options Options should not contain the leading X. Some commonly-used
+experimental options have their own entries. The other permitted ones
+(currently) are serializableAspects, incrementalFile, lazyTjp,
+reweavable, notReweavable, noInline, terminateAfterCompilation,
+ajruntimelevel:1.2, and ajruntimelevel:1.5. Of these, some were
+deprecated in AspectJ 5 (reweavable, terminateAfterCompilation, etc.).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">XterminateAfterCompilation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Terminates before the weaving process,
+dumping out unfinished class files.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>AjcTask (iajc) options for specifying compiler side-effects and
+messages</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">emacssym</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, emit <code>.ajesym</code> symbol files for Emacs support.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">crossref</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, emit <code>.ajsym</code> file into the output directory.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">verbose</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, log compiler verbose messages as Project.INFO during
+the compile.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">logCommand</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, log compiler command elements as Project.INFO
+(rather than the usual Project.VERBOSE level).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Xlistfileargs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, emit list of file arguments during the compile
+(but behaves now like verbose).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">version</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, do not compile - just print AspectJ version.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">help</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, just print help for the command-line compiler.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Xlintwarnings</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Same as <code>xlint:warning</code>: if true, set default level of
+all language usage messages to warning.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Xlint</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specify default level of all language usage messages to one of
+[<code>error warning ignore</code>].</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">XlintFile</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specify property file containing <code>name:level</code> associations
+setting level for language messages emitted during compilation. Any
+levels set override the default associations in
+<code>org/aspectj/weaver/XLintDefault.properties</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">failonerror</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, throw BuildException to halt build if there are
+any compiler errors. If false, continue notwithstanding compile errors.
+Defaults to <code>true</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">messageHolderClass</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specify a class to use as the message holder for
+the compile process. The entry must be a fully-qualified name of a class
+resolveable from the task classpath complying with the
+<code>org.aspectj.bridge.IMessageHolder</code> interface and having a public
+no-argument constructor.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">showWeaveInfo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, emit weaver messages. Defaults to <code>false</code>.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>AjcTask (iajc) options for specifying Eclipse compiler options</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nowarn</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, same as <code>warn:none</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">deprecation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, same as <code>warn:deprecation</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">warn</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">One or more comma-separated warning specifications from
+[<code>constructorName packageDefaultMethod deprecation,
+                  maskedCatchBlocks unusedLocals unusedArguments,
+                 unusedImports syntheticAccess assertIdentifier</code>].</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">debug</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, same as <code>debug:lines,vars,source</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">debugLevel</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">One or more comma-separated debug specifications from
+[<code>lines vars source</code>].</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PreserveAllLocals</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, code gen preserves all local variables (for
+debug purposes).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">noimporterror</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, emit no errors for unresolved imports.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">referenceinfo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, compute reference info.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">log</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">File to log compiler messages to.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">encoding</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default source encoding format (per-file encoding not
+supported in Ant tasks).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">proceedOnError</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, keep compiling after errors encountered,
+dumping class files with problem methods.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">progress</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, emit progress (requires log).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, display speed information.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">target</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specify target class file format as one of [<code>1.1 1.2</code>].
+Defaults to 1.1 class file.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set source compliance level to one of [<code>1.3 1.4 1.5</code>] (default
+is 1.4). 1.3 implies -source 1.3 and -target 1.1. 1.4 implies -source
+1.4 and -target 1.2. 1.5 implies -source 1.5 and -target 1.5.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set source assertion mode to one of [<code>1.3 1.4</code>]. Default
+depends on compliance mode.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="antTasks-nested-includes">AjcTask matching parameters specified as nested elements</h3>
+<div class="paragraph">
+<p>This task forms an implicit FileSet and supports all attributes of
+<code>fileset</code> (dir becomes srcdir) as well as the nested <code>include</code>,
+<code>exclude</code>, and <code>patternset</code> elements. These can be used to specify
+source files. However, it is better to use <code>sourceroots</code> to specify
+source directories unless using filters to exclude some files from
+compilation.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="antTasks-iajc-paths">AjcTask Path-like Structures</h3>
+<div class="paragraph">
+<p>Some parameters are path-like structures containing one or more
+elements; these are <code>sourceroots</code>, <code>argfiles</code>, <code>injars</code>, <code>inpath</code>,
+<code>classpath</code>, <code>bootclasspath</code>, <code>forkclasspath</code>, and <code>aspectpath</code>. In all
+cases, these may be specified as nested elements, something like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;iajc</span> <span class="error">{</span><span class="attribute-name">attributes..</span><span class="error">}</span> <span class="tag">/&gt;</span>
+    <span class="error">&lt;</span>{name}<span class="error">&gt;</span>
+        <span class="tag">&lt;pathelement</span> <span class="attribute-name">path</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">{first-location}</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        <span class="tag">&lt;pathelement</span> <span class="attribute-name">path</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">{second-location}</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+        ...
+    <span class="error">&lt;</span>{name}<span class="error">&gt;</span>
+    ...
+<span class="tag">&lt;/iajc&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As with other Path-like structures, they may be defined elsewhere and
+specified using the refid attribute:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;path</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">aspect.path</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;pathelement</span> <span class="attribute-name">path</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${home}/lib/persist.jar</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;pathelement</span> <span class="attribute-name">path</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${home}/lib/trace.jar</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+<span class="tag">&lt;/path&gt;</span>
+...
+<span class="tag">&lt;iajc</span> <span class="error">{</span><span class="attribute-name">attributes..</span><span class="error">}</span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;aspectpath</span> <span class="attribute-name">refid</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">aspect.path</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    ...
+<span class="tag">&lt;/iajc&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The task also supports an attribute <code>{name}ref</code> for each such parameter.
+E.g., for <code>aspectpath</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;iajc</span> <span class="error">{</span><span class="attribute-name">attributes..</span><span class="error">}</span> <span class="attribute-name">aspectpathref</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">aspect.path</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="antTasks-iajc-sample">Sample of iajc task</h3>
+<div class="paragraph">
+<p>A minimal build script defines the task and runs it, specifying the
+sources:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;project</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">simple-example</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">default</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">compile</span><span class="delimiter">&quot;</span></span> <span class="tag">&gt;</span>
+  <span class="tag">&lt;taskdef</span>
+      <span class="attribute-name">resource</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;classpath&gt;</span>
+      <span class="tag">&lt;pathelement</span> <span class="attribute-name">location</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${home.dir}/tools/aspectj/lib/aspectjtools.jar</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/classpath&gt;</span>
+  <span class="tag">&lt;/taskdef&gt;</span>
+
+  <span class="tag">&lt;target</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">compile</span><span class="delimiter">&quot;</span></span> <span class="tag">&gt;</span>
+    <span class="tag">&lt;iajc</span> <span class="attribute-name">sourceroots</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${home.dir}/ec/project/src</span><span class="delimiter">&quot;</span></span>
+        <span class="attribute-name">classpath</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${home.dir}/tools/aspectj/lib/aspectjrt.jar</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;/target&gt;</span>
+<span class="tag">&lt;/project&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Below is script with most everything in it. The compile process&#8230;&#8203;</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Runs in incremental mode, recompiling when the user hits return;</p>
+</li>
+<li>
+<p>Reads all the source files from two directories;</p>
+</li>
+<li>
+<p>Reads binary .class files from input jar and directory;</p>
+</li>
+<li>
+<p>Uses a binary aspect library for persistence;</p>
+</li>
+<li>
+<p>Outputs to an application jar; and</p>
+</li>
+<li>
+<p>Copies resources from the source directories and binary input jar and
+directories to the application jar.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>When this target is built, the compiler will build once and then wait
+for input from the user. Messages are printed as usual. When the user
+has quit, then this runs the application.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;target</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">build-test</span><span class="delimiter">&quot;</span></span> <span class="tag">&gt;</span>
+  <span class="tag">&lt;iajc</span> <span class="attribute-name">outjar</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${home.dir}/output/application.jar</span><span class="delimiter">&quot;</span></span>
+          <span class="attribute-name">sourceRootCopyFilter</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">**/CVS/*,**/*.java</span><span class="delimiter">&quot;</span></span>
+          <span class="attribute-name">inpathDirCopyFilter</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">**/CVS/*,**/*.java,**/*.class</span><span class="delimiter">&quot;</span></span>
+          <span class="attribute-name">incremental</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span> <span class="tag">&gt;</span>
+    <span class="tag">&lt;sourceroots&gt;</span>
+      <span class="tag">&lt;pathelement</span> <span class="attribute-name">location</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${home.dir}/ec/project/src</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+      <span class="tag">&lt;pathelement</span> <span class="attribute-name">location</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${home.dir}/ec/project/testsrc</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/sourceroots&gt;</span>
+    <span class="tag">&lt;inpath&gt;</span>
+      <span class="tag">&lt;pathelement</span> <span class="attribute-name">location</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${home.dir}/build/module.jar</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+      <span class="tag">&lt;pathelement</span> <span class="attribute-name">location</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${home.dir}/build/binary-input</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/inpath&gt;</span>
+    <span class="tag">&lt;aspectpath&gt;</span>
+      <span class="tag">&lt;pathelement</span> <span class="attribute-name">location</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${home.dir}/ec/int/persist.jar</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/aspectpath&gt;</span>
+    <span class="tag">&lt;classpath&gt;</span>
+      <span class="tag">&lt;pathelement</span> <span class="attribute-name">location</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${home.dir}/tools/aspectj/lib/aspectjrt.jar</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/classpath&gt;</span>
+  <span class="tag">&lt;/iajc&gt;</span>
+
+  <span class="tag">&lt;java</span> <span class="attribute-name">classname</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.smart.app.Main</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;classpath&gt;</span>
+      <span class="tag">&lt;pathelement</span> <span class="attribute-name">location</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${home.dir}/tools/aspectj/lib/aspectjrt.jar</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+      <span class="tag">&lt;pathelement</span> <span class="attribute-name">location</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${home.dir}/ec/int/persist.jar</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+      <span class="tag">&lt;pathelement</span> <span class="attribute-name">location</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${home.dir}/output/application.jar</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/classpath&gt;</span>
+  <span class="tag">&lt;/java&gt;</span>
+<span class="tag">&lt;/target&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For an example of a build script, see ../examples/build.xml.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="antTasks-iajc-uptodate">Avoiding clean compiles</h3>
+<div class="paragraph">
+<p>Unlike javac, the ajc compiler always processes all input because new
+aspects can apply to updated classes and vice-versa. However, in the
+case where no files have been updated, there is no reason to recompile
+sources. One way to implement that is with an explicit dependency check
+using the uptodate task:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;target</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">check.aspects.jar</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+  <span class="tag">&lt;uptodate</span> <span class="attribute-name">property</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">build.unnecessary</span><span class="delimiter">&quot;</span></span>
+      <span class="attribute-name">targetfile</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${aspects.module-jar}</span><span class="delimiter">&quot;</span></span> <span class="tag">&gt;</span>
+     <span class="tag">&lt;srcfiles</span> <span class="attribute-name">dir</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${src1}</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">includes</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">**/*.aj</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+     <span class="tag">&lt;srcfiles</span> <span class="attribute-name">dir</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${src2}/</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">includes</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">**/*.aj</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;/uptodate&gt;</span>
+<span class="tag">&lt;/target&gt;</span>
+
+<span class="tag">&lt;target</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">compile.aspects</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">depends</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">prepare,check.aspects.jar</span><span class="delimiter">&quot;</span></span>
+        <span class="attribute-name">unless</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">build.unnecessary</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+   <span class="tag">&lt;iajc</span> <span class="attribute-name">...</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When using this technique, be careful to verify that binary input jars
+are themselves up-to-date after they would have been modified by any
+build commands.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmatically_handling_compiler_messages">Programmatically handling compiler messages</h3>
+<div class="paragraph">
+<p>Users may specify a message holder to which the compiler will pass all
+messages as they are generated. This will override all of the normal
+message printing, but does not prevent the task from failing if
+exceptions were thrown or if failonerror is true and the compiler
+detected errors in the sources.</p>
+</div>
+<div class="paragraph">
+<p>Handling messages programmatically could be useful when using the
+compiler to verify code. If aspects consist of declare [error|warning],
+then the compiler can act to detect invariants in the code being
+processed. For code to compare expected and actual messages, see the
+AspectJ testing module (which is not included in the binary
+distribution).</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="antTasks-adapter">Ajc11CompilerAdapter (javac)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This CompilerAdapter can be used in javac task calls by setting the
+<code>build.compiler</code> property. This enables users to to easily switch
+between the Javac and AspectJ compilers. However, because there are
+differences in source file handling between the Javac task and the ajc
+compiler, not all Javac task invocations can be turned over to iajc.
+However, ajc can compile anything that Javac can, so it should be
+possible for any given compile job to restate the Javac task in a way
+that can be handled by iajc/ajc.</p>
+</div>
+<div class="sect2">
+<h3 id="antTasks-adapter-sample">Sample of compiler adapter</h3>
+<div class="paragraph">
+<p>To build using the adapter, put the <code>aspectjtools.jar</code> on the system/ant
+classpath (e.g., in <code>${ANT_HOME}/lib</code>) and define the <code>build.compiler</code>
+property as the fully-qualified name of the class,
+<code>org.aspectj.tools.ant.taskdefs.Ajc11CompilerAdapter</code>.</p>
+</div>
+<div class="paragraph">
+<p>The AspectJ compiler should run for any compile using the Javac task
+(for options, see the Ant documentation for the Javac task). For
+example, the call below passes all out-of-date source files in the
+<code>src/org/aspectj</code> subdirectories to the <code>ajc</code> command along with the
+destination directory:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">-- command:
+
+    cp aspectj1.1/lib/aspectjtools.jar ant/lib
+    ant/bin/ant -Dbuild.compiler=org.aspectj.tools.ant.taskdefs.Ajc11CompilerAdapter ...
+
+-- task invocation in the build script:
+
+  &lt;javac srcdir=&quot;src&quot; includes=&quot;org/aspectj/**/*.java&quot; destdir=&quot;dest&quot; /&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To pass ajc-specific arguments, use a compilerarg entry.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">-- command
+
+  Ant -Dbuild.compiler=org.aspectj.tools.ant.taskdefs.Ajc11CompilerAdapter
+
+-- build script
+
+  &lt;property name=&quot;ajc&quot;
+              value=&quot;org.aspectj.tools.ant.taskdefs.Ajc11CompilerAdapter&quot;/&gt;
+
+  &lt;javac srcdir=&quot;src&quot; includes=&quot;org/aspectj/**/*.java&quot; destdir=&quot;dest&quot; &gt;
+    &lt;compilerarg compiler=&quot;${ajc}&quot; line=&quot;-argfile src/args.lst&quot;/&gt;
+  &lt;javac/&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The Javac task does special handling of source files that can interfere
+with ajc. It removes any files that are not out-of-date with respect to
+the corresponding .class files. But ajc requires all source files, since
+an aspect may affect a source file that is not out of date. (For a
+solution to this, see the <code>build.compiler.clean</code> property described
+below.) Conversely, developers sometimes specify a source directory to
+javac, and let it search for files for types it cannot find. AspectJ
+will not do this kind of searching under the source directory (since the
+programmer needs to control which sources are affected). (Don&#8217;t confuse
+the source directory used by Javac with the source root used by ajc; if
+you specify a source root to ajc, it will compile any source file under
+that source root (without exception or filtering).) To replace source
+dir searching in Javac, use an Ant filter to specify the source files.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="antTasks-adapter-options">Compiler adapter compilerarg options</h3>
+<div class="paragraph">
+<p>The adapter supports any ajc command-line option passed using
+compilerarg, as well as the following options available only in AjcTask.
+Find more details on the following options in
+<a href="#antTasks-iajc">AjcTask (iajc)</a>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>-Xmaxmem</code>: set maximum memory for forking (also settable in javac).</p>
+</li>
+<li>
+<p><code>-Xlistfileargs</code>: list file arguments (also settable in javac).</p>
+</li>
+<li>
+<p><code>-Xfailonerror</code>: throw BuildException on compiler error (also settable
+in javac).</p>
+</li>
+<li>
+<p><code>-Xmessageholderclass</code>: specify fully-qualified name of class to use
+as the message holder.</p>
+</li>
+<li>
+<p><code>-Xcopyinjars</code>: copy resources from any input jars to output (default
+behavior since 1.1.1)</p>
+</li>
+<li>
+<p><code>-Xsourcerootcopyfilter {filter}</code>: copy resources from source
+directories to output (minus files specified in filter)</p>
+</li>
+<li>
+<p><code>-Xtagfile {file}</code>: use file to control incremental compilation</p>
+</li>
+<li>
+<p><code>-Xsrcdir {dir}</code>: add to list of ajc source roots (all source files
+will be included).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Special considerations when using Javac and compilerarg:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The names above may differ slightly from what you might expect from
+AjcTask; use these forms when specifying compilerarg.</p>
+</li>
+<li>
+<p>By default the adapter will mimic the Javac task&#8217;s copying of resource
+files by specifying <code>"<strong>/CVS/<strong>,</strong>/</strong>.java,<strong>/<strong>.aj"</code> for the sourceroot
+copy filter. To change this behavior, supply your own value (e.g.,
+<code>"</strong>/</strong>"</code> to copy nothing).</p>
+</li>
+<li>
+<p>Warning - define the system property <code>build.compiler.clean</code> to compile
+all files, when available. Javac prunes the source file list of
+"up-to-date" source files based on the timestamps of corresponding
+.class files, and will not compile if no sources are out of date. This
+is wrong for ajc which requires all the files for each compile and which
+may refer indirectly to sources using argument files.</p>
+<div class="paragraph">
+<p>To work around this, set the global property <code>build.compiler.clean</code>.
+This tells the compiler adapter to delete all .class files in the
+destination directory and re-execute the javac task so javac can
+recalculate the list of source files. e.g.,</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">Ant -Dbuild.compiler=org.aspectj.tools.ant.taskdefs.Ajc11CompilerAdapter
+    -Dbuild.compiler.clean=anything ...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Caveats to consider when using this global <code>build.compiler.clean</code>
+property:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>If javac believes there are no out-of-date source files, then the
+adapter is never called and cannot clean up, and the "compile" will
+appear to complete successfully though it did nothing.</p>
+</li>
+<li>
+<p>Cleaning will makes stepwise build processes fail if they depend on
+the results of the prior compilation being in the same directory, since
+cleaning deletes all .class files.</p>
+</li>
+<li>
+<p>This clean process only permits one compile process at a time for each
+destination directory because it tracks recursion by writing a tag file
+to the destination directory.</p>
+</li>
+<li>
+<p>When running incrementally, the clean happens only before the initial
+compile.</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="antTasks-ajc">Ajc10 (ajc)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This task handles the same arguments as those used by the AspectJ 1.0
+task. This should permit those with existing build scripts using the Ajc
+Ant task to continue using the same scripts when compiling with 1.1.
+This will list any use of options no longer supported in 1.1 (e.g.,
+<code>lenient, strict, workingdir, preprocess, usejavac</code>,&#8230;&#8203;), and does not
+provide access to the new features of AspectJ 1.1. (Developers using
+AspectJ 1.1 only should upgrade their scripts to use AjcTask instead.
+This will not work for AspectJ 1.2 or later.)</p>
+</div>
+<div class="sect2">
+<h3 id="antTasks-ajc-options">Ajc10 (ajc) Options</h3>
+<div class="paragraph">
+<p>Most attributes and nested elements are optional. The compiler requires
+that the same version of <code>aspectjrt.jar</code> be specified on the classpath,
+and that some sources be be specified (using one or more of <code>argfiles</code>
+and <code>srcdir</code> (with patterns)).</p>
+</div>
+<div class="paragraph">
+<p>Boolean parameters default to <code>false</code> unless otherwise stated.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. AjcTask (ajc) options for specifying sources</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">srcdir</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The base directory of the java files. See</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">destdir</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The target directory for the output .class files</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">includes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comma-separated list of patterns of files that must be
+included. No files are included when omitted.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">includesfile</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The path to a file containing include patterns.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">excludes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comma-separated list of patterns of files that must be
+excluded. No files (except default excludes) are excluded when omitted.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">excludesfile</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The path to a file containing exclude patterns.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">defaultexcludes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, then default excludes are used. Default
+excludes are used when omitted (i.e., defaults to <code>true</code>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">classpath, classpathref</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The classpath to use, optionally given as a
+reference to a classpath Path element defined elsewhere.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bootclasspath, bootclasspathref</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The bootclasspath to use, optionally
+given as a reference to a bootclasspath Path element defined elsewhere.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">extdirs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Paths to directories containting installed extensions.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">debug</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, emit debug info in the .class files.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">deprecation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, emit messages about use of deprecated API.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">verbose</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Emit compiler status messages during the compile.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">version</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Emit version information and quit.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">failonerror</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, throw BuildException to halt build if there are
+any compiler errors. If false, continue notwithstanding compile errors.
+Defaults to <code>true</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">source</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value of -source option - ignored unless <code>1.4</code>.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Parameters ignored by the old ajc taskdef, but now supported or buggy</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Supported?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">encoding</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default encoding of source files.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">optimize</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether source should be compiled with optimization.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes?</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">target</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Generate class files for specific VM version, one of
+[<code>1.1 1.2</code>].</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">depend</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enables dependency-tracking.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">includeAntRuntime</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to include the Ant run-time libraries.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">includeJavaRuntime</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to include the run-time libraries from the
+executing VM.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">threads</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Multi-threaded compilation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The following table shows that many of the unique parameters in AspectJ
+1.0 are no longer supported.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. Parameters unique to ajc</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">deprecated X options include reweavable (on by default)
+reweavable:compress (compressed by default)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">emacssym</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Generate symbols for Emacs IDE support.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">argfiles</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A comma-delimited list of argfiles that contain a
+line-delimited list of source file paths (absolute or relative to the
+argfile).</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="_argfiles_argument_list_files">argfiles - argument list files</h4>
+<div class="paragraph">
+<p>An argument file is a file (usually <code>{file}.lst</code>) containing a list of
+source file paths (absolute or relative to the argfile). You can use it
+to specify all source files to be compiled, which ajc requires to avoid
+searching every possible source file in the source path when building
+aspects. If you specify an argfile to the ajc task, it will not include
+all files in any specified source directory (which is the default
+behavior for the Javac task when no includes are specified). Conversely,
+if you specify excludes, they will be removed from the list of files
+compiled even if they were specified in an argument file.</p>
+</div>
+<div class="paragraph">
+<p>The compiler also accepts arguments that are not source files, but the
+IDE support for such files varies, and Javac does not support them. Be
+sure to include exactly one argument on each line.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="antTasks-ajc-nested">Ajc10 parameters specified as nested elements</h3>
+<div class="paragraph">
+<p>This task forms an implicit FileSet and supports all attributes of
+<code>fileset</code> (dir becomes srcdir) as well as the nested <code>include</code>,
+<code>exclude</code>, and <code>patternset</code> elements. These can be used to specify
+source files.</p>
+</div>
+<div class="paragraph">
+<p><code>ajc</code>'s <code>srcdir</code>, <code>classpath</code>, <code>bootclasspath</code>, <code>extdirs</code>, and <code>jvmarg</code>
+attributes are path-like structures and can also be set via nested
+<code>src</code>, <code>classpath</code>, <code>bootclasspath</code>, <code>extdirs</code>, and <code>jvmargs</code>
+elements, respectively.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="antTasks-ajc-sample">Sample of ajc task</h3>
+<div class="paragraph">
+<p>Following is a declaration for the ajc task and a sample invocation that
+uses the ajc compiler to compile the files listed in <code>default.lst</code> into
+the dest dir:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;project</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">example</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">default</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">compile</span><span class="delimiter">&quot;</span></span> <span class="tag">&gt;</span>
+  <span class="tag">&lt;taskdef</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">ajc</span><span class="delimiter">&quot;</span></span>
+    <span class="attribute-name">classname</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.aspectj.tools.ant.taskdefs.Ajc10</span><span class="delimiter">&quot;</span></span> <span class="tag">&gt;</span>
+    <span class="comment">&lt;!-- declare classes needed to run the tasks and tools --&gt;</span>
+    <span class="tag">&lt;classpath&gt;</span>
+      <span class="tag">&lt;pathelement</span> <span class="attribute-name">location</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${home.dir}/tools/aspectj/lib/aspectjtools.jar</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/classpath&gt;</span>
+  <span class="tag">&lt;/taskdef&gt;</span>
+
+  <span class="tag">&lt;target</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">compile</span><span class="delimiter">&quot;</span></span> <span class="tag">&gt;</span>
+    <span class="tag">&lt;mkdir</span> <span class="attribute-name">dir</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">dest</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;ajc</span> <span class="attribute-name">destdir</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">dest</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">argfiles</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">default.lst</span><span class="delimiter">&quot;</span></span> <span class="tag">&gt;</span>
+      <span class="comment">&lt;!-- declare classes needed to compile the target files --&gt;</span>
+      <span class="tag">&lt;classpath&gt;</span>
+        <span class="tag">&lt;pathelement</span> <span class="attribute-name">location</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${home.dir}/tools/aspectj/lib/aspectjrt.jar</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+      <span class="tag">&lt;/classpath&gt;</span>
+    <span class="tag">&lt;/ajc&gt;</span>
+  <span class="tag">&lt;/target&gt;</span>
+<span class="tag">&lt;/project&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This build script snippet</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;ajc</span> <span class="attribute-name">srcdir</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${src}</span><span class="delimiter">&quot;</span></span>
+     <span class="attribute-name">destdir</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${build}</span><span class="delimiter">&quot;</span></span>
+     <span class="attribute-name">argfiles</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">demo.lst</span><span class="delimiter">&quot;</span></span>
+<span class="tag">/&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>compiles all .java files specified in the demo.lst and stores the .class
+files in the ${build} directory. Unlike the Javac task, the includes
+attribute is empty by default, so only those files specified in demo.lst
+are included.</p>
+</div>
+<div class="paragraph">
+<p>This next example</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;ajc</span> <span class="attribute-name">srcdir</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${src}</span><span class="delimiter">&quot;</span></span>
+     <span class="attribute-name">destdir</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">${build}</span><span class="delimiter">&quot;</span></span>
+     <span class="attribute-name">includes</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">spacewar/*,coordination/*</span><span class="delimiter">&quot;</span></span>
+     <span class="attribute-name">excludes</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">spacewar/Debug.java</span><span class="delimiter">&quot;</span></span>
+<span class="tag">/&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>compiles .java files under the <code>${src}</code> directory in the spacewar and
+coordination packages, and stores the .class files in the <code>${build}</code>
+directory. All source files under spacewar/ and coordination/ are used,
+except Debug.java.</p>
+</div>
+<div class="paragraph">
+<p>See ../examples/build.xml for an example build script.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="antTasks-problems">Isolating problems running the Ant tasks</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you have problems with the tasks not solved by the documentation,
+please try to see if you have the same problems when running ajc
+directly on the command line.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If the problem occurs on the command line also, then the problem is
+not in the task. (It may be in the tools; please send bug reports.)</p>
+</li>
+<li>
+<p>If the problem does not occur on the command line, then it may lie in
+the parameters you are supplying in Ant or in the task&#8217;s handling of
+them.</p>
+</li>
+<li>
+<p>If the build script looks correct and the problem only occurs when
+building from Ant, then please send a report (including your build file,
+if possible).</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="antTasks-knownProblems">Known issues with the Ant tasks</h3>
+<div class="paragraph">
+<p>For the most up-to-date information on known problems, see the
+<a href="https://bugs.eclipse.org/bugs">bug database</a> for unresolved
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?&amp;product=AspectJ&amp;component=Compiler&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED">compiler
+bugs</a> or
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?&amp;product=AspectJ&amp;component=Ant&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED">taskdef
+bugs</a> .</p>
+</div>
+<div class="paragraph">
+<p>When running Ant build scripts under Eclipse 2.x variants, you will get
+a VerifyError because the Eclipse Ant support fails to isolate the Ant
+runtime properly. To run in this context, set up iajc to fork (and use
+forkclasspath). Eclipse 3.0 will fork Ant processes to avoid problems
+like this.</p>
+</div>
+<div class="paragraph">
+<p>Memory and forking: Users email most often about the ajc task running
+out of memory. This is not a problem with the task; some compiles take a
+lot of memory, often more than similar compiles using javac.</p>
+</div>
+<div class="paragraph">
+<p>Forking is now supported in both the
+<a href="#antTasks-adapter">Ajc11CompilerAdapter (javac)</a> and
+<a href="#antTasks-iajc">AjcTask (iajc)</a>, and you can set the maximum memory
+available. You can also not fork and increase the memory available to
+Ant (see the Ant documentation, searching for ANT_OPTS, the variable
+they use in their scripts to pass VM options, e.g., ANT_OPTS=-Xmx128m).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="antTasks-feedback">Ant task questions and bugs</h3>
+<div class="paragraph">
+<p>For questions, you can send email to <a href="mailto:aspectj-users@dev.eclipse.org">aspectj-users@dev.eclipse.org</a>. (Do
+join the list to participate!) We also welcome any bug reports, patches,
+and features; you can submit them to the bug database at
+<a href="https://bugs.eclipse.org/bugs" class="bare">https://bugs.eclipse.org/bugs</a> using the AspectJ product and Ant
+component.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

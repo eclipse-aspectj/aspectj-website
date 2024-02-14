@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>AspectJ 1.6.2</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>AspectJ 1.6.2</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_incremental_compilation_bug_247742_bug_245566_bug_243376">Incremental compilation (bug 247742, bug 245566, bug 243376)</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>© Copyright 2008 Contributors. All rights reserved.</em></p>
+</div>
+<div class="paragraph">
+<p>The main theme of AspectJ1.6.2 was improved IDE incremental performance
+and a number of changes have gone in to improve how AspectJ and AJDT
+communicate - greatly reducing the time taken to perform an incremental
+compile (more details below). 1.6.2 also includes a number of fixes and
+enhancements covering areas such as:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>better support for generics and intertype declarations</p>
+</li>
+<li>
+<p>better support for annotation style syntax</p>
+</li>
+<li>
+<p>improvements to ajdoc</p>
+</li>
+<li>
+<p>bringing the AspectJ structure model more in line with the JDT model</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Many thanks to all the users that helped diagnose problems, provide
+testcases and contribute fixes. In particular:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Dave Whittaker - for generics and intertype declaration testing and
+testcases</p>
+</li>
+<li>
+<p>Jason Naylor, Arturo Salazar - for ajdoc testcases, fixes and design
+input</p>
+</li>
+<li>
+<p>Andrew Eisenberg - for helping shape the AJDT/AspectJ interface and
+improving incremental</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The complete list of issues resolved for AspectJ 1.6.2 (more than 60)
+can be found with this bugzilla query:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=&amp;product=AspectJ&amp;target_milestone=1.6.2&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">Bugs
+resolved</a></p>
+</li>
+</ul>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_incremental_compilation_bug_247742_bug_245566_bug_243376">Incremental compilation (<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=247742">bug 247742</a>, <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=245566">bug 245566</a>, <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=243376">bug 243376</a>)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Two main changes in this area.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Better communication between AJDT and AspectJ. The interface between
+the two has been modified so that AJDT can give more input to AspectJ
+about what needs to be done for an incremental compile, rather than
+having AspectJ discover it each time.</p>
+</li>
+<li>
+<p>Structure model changes. The AspectJ structure model (of types in a
+project and the weaving amongst them) allows handles to be created for
+every node, as a lightweight reference to the elements of the model.
+These handles were similar to those that JDT uses for references to
+elements of a project but not identical. Many many fixes have gone in to
+bring the handle formats closer and closer. For example including src
+folders as elements in the AspectJ model and using the fully correct set
+of JDT delimiters throughout each handle. This means there is no longer
+an expensive transformation cost in going from an AspectJ element to its
+related JDT element and no need for AJDT to maintain a more JDT like
+version of the AspectJ structure model. The imminent development builds
+of AJDT will utilise these changes.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><em>What difference does it make?</em></p>
+</div>
+<div class="paragraph">
+<p>For every kind of build there are two numbers to take into account.
+Firstly there is the time spent in the compiler (time spent compiling
+and weaving), secondly there is the time spent in AJDT (time spent
+communicating what happened back to the user via the problems view,
+gutter annotations). Values for these times can be seen by opening the
+'AJDT Event Trace View' in eclipse. The changes within AspectJ obviously
+effect the time spent in the compiler and that is described as 'time
+spent in AJDE' within the event trace view (AJDE being the compiler
+wrapper invoked by AJDT).</p>
+</div>
+<div class="paragraph">
+<p>For a 1000 source file AspectJ project, the times spent in AJDE have
+changed as follows for a single whitespace change and save operation:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>For a sourcefile unaffected by aspects. Was 1828ms, now 75ms.</p>
+</li>
+<li>
+<p>For a sourcefile affected by some advice. Was 1844ms, now 90ms.</p>
+</li>
+<li>
+<p>For a sourcefile affected by lots of advice. Was 1937ms, now 188ms.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The AspectJ changes are done to support this, but we are still bedding
+them down in AJDT. If you want to see numbers like those above you need
+to install the latest AJDT dev builds for Eclipse 3.4 (an AJDT 1.6.1 dev
+build from the dev update site:
+<a href="https://download.eclipse.org/tools/ajdt/34/dev/update" class="bare">https://download.eclipse.org/tools/ajdt/34/dev/update</a> ) and then after
+starting Eclipse, select 'Window&gt;Preferences' and in the AspectJ tab
+select 'Incremental Compiler Optimizations'. Let us know how you get on!
+When it has had enough testing it will be made the default and then is
+likely to be back ported to Eclipse 3.3 AJDT.</p>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

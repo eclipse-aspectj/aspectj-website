@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>The AspectJTM Problem Diagnosis Guide</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="book">
+<div id="header">
+<h1>The AspectJ<sup>TM</sup> Problem Diagnosis Guide</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>by the AspectJ Team</em></p>
+</div>
+<div class="paragraph">
+<p><em>Copyright (c) 2006 IBM Corporation and others. 2006 Contributors. All rights reserved.</em></p>
+</div>
+<div class="paragraph">
+<p>This guide describes how to configure the AspectJ compiler/weaver to provide
+information for diagnosing problems in the input programs, the
+compiler/weaver or its configuration.</p>
+</div>
+<div class="paragraph">
+<p>The AspectJ compiler and weaver can provide lots of information for diagnosing
+problems in building AspectJ programs. For problems in the input program,
+there are a number of default warning and error messages, as well as many
+configurable "lint" messages, all of which can be emitted normally,
+logged using standard facilities, or intercepted programmatically.
+These are discussed in <a href="messages.html#messages">Messages</a>. Since most errors
+relate to writing pointcuts incorrectly, there is a section on
+<a href="pointcuts.html#pointcuts">Debugging Pointcuts</a>.</p>
+</div>
+<div class="paragraph">
+<p>For problems with the compiler/weaver itself there are three facilities
+that enable the AspectJ developers to resolve bugs even when it is
+too hard to deliver a reproducible test case:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="trace.html#trace">Tracing</a> can be enabled to track progress up to the time of a failure;</p>
+</li>
+<li>
+<p><a href="ajcore.html#ajcore">AspectJ Core Files</a> can give a relatively complete picture of the state of
+the world at the time of a failure; and</p>
+</li>
+<li>
+<p><a href="ltwdump.html#ltwdump">Dumping classes during load-time weaving</a> is a way to capture both input and output classes during load-time weaving.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This guide describes how to configure messages to get the right information
+and how to configure traces, dumps, and core files. Although the compiler/weaver
+operates in roughly three modes (from the command-line, embedded in an IDE,
+and enabled as load-time weaving), the principles are basically the same for
+all modes. The differences lie in how to set up diagnostics and what
+information is likely to be relevant.</p>
+</div>
+<div class="paragraph">
+<p><strong>Table of Contents</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="messages.html">Messages</a></p>
+</li>
+<li>
+<p><a href="pointcuts.html">Debugging Pointcuts</a></p>
+</li>
+<li>
+<p><a href="trace.html">Tracing</a></p>
+</li>
+<li>
+<p><a href="ajcore.html">AspectJ Core Files</a></p>
+</li>
+<li>
+<p><a href="ltwdump.html">Dumping classes during load-time weaving</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

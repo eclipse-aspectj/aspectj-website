@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>Covariance</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>Covariance</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#covariance-inJava5">Covariance in Java 5</a></li>
+<li><a href="#covariance-and-join-point-matching">Covariant methods and Join Point matching</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="covariance-inJava5">Covariance in Java 5</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Java 5 (and hence AspectJ 5) allows you to narrow the return type in an
+overriding method. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">A</span> {
+  <span class="directive">public</span> A whoAreYou() {...}
+}
+
+<span class="type">class</span> <span class="class">B</span> <span class="directive">extends</span> A {
+  <span class="comment">// override A.whoAreYou *and* narrow the return type.</span>
+  <span class="directive">public</span> B whoAreYou() {...}
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="covariance-and-join-point-matching">Covariant methods and Join Point matching</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The join point matching rules for <code>call</code> and <code>execution</code> pointcut
+designators are extended to match against covariant methods.</p>
+</div>
+<div class="paragraph">
+<p>Given the classes <code>A</code> and <code>B</code> as defined in the previous section, and
+the program fragment</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">A a = <span class="keyword">new</span> A();
+B b = <span class="keyword">new</span> B();
+a.whoAreYou();
+b.whoAreYou();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The signatures for the call join point <code>a.whoAreYou()</code> are simply:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">A A.whoAreYou()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The signatures for the call join point <code>b.whoAreYou()</code> are:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">A A.whoAreYou()
+B B.whoAreYou()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Following the join point matching rules given in <a href="joinpointsignatures.html#jpsigs">Join Point Signatures</a>.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>call(* whoAreYou())</code></dt>
+<dd>
+<p>Matches both calls, (since each call join point has at least one
+matching signature).</p>
+</dd>
+<dt class="hdlist1"><code>call(* A.whoAreYou())</code></dt>
+<dd>
+<p>Matches both calls, (since each call join point has at least one
+matching signature).</p>
+</dd>
+<dt class="hdlist1"><code>call(A whoAreYou())</code></dt>
+<dd>
+<p>Matches both calls, (since each call join point has at least one
+matching signature).</p>
+</dd>
+<dt class="hdlist1"><code>call(A B.whoAreYou())</code></dt>
+<dd>
+<p>Does not match anything - neither of the call join points has a
+signature matched by this pattern. A lint warning is given for the
+call <code>a.whoAreYou()</code> ("does not match because declaring type is <code>A</code>, if
+match required use <code>target(B)</code>").</p>
+</dd>
+<dt class="hdlist1"><code>call(A+ B.whoAreYou())</code></dt>
+<dd>
+<p>Matches the call to <code>b.whoAreYou()</code> since the signature pattern
+matches the signature <code>B B.whoAreYou()</code>. A lint warning is given for
+the call <code>a.whoAreYou()</code> ("does not match because declaring type is <code>A</code>,
+if match required use <code>target(B)</code>").</p>
+</dd>
+<dt class="hdlist1"><code>call(B A.whoAreYou())</code></dt>
+<dd>
+<p>Does not match anything since neither join point has a signature
+matched by this pattern.</p>
+</dd>
+<dt class="hdlist1"><code>call(B whoAreYou())</code></dt>
+<dd>
+<p>Matches the call to <code>b.whoAreYou()</code> only.</p>
+</dd>
+<dt class="hdlist1"><code>call(B B.whoAreYou())</code></dt>
+<dd>
+<p>Matches the call to <code>b.whoAreYou()</code> only.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The rule for signature matching at call and execution join points is
+unchanged from AspectJ 1.2: a call or execution pointcut matches if the
+signature pattern matches at least one of the signatures of the join
+point, and if the modifiers of the method or constructor are matched by
+any modifier pattern or annotation pattern that may be present.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

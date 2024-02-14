@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>ajdoc, the AspectJ API documentation generator</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1><code>ajdoc</code>, the AspectJ API documentation generator</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_name">Name</a></li>
+<li><a href="#_synopsis">Synopsis</a></li>
+<li><a href="#_description">Description</a></li>
+<li><a href="#_examples">Examples</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_name">Name</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>ajdoc</code> - generate HTML API documentation, including crosscutting structure</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_synopsis">Synopsis</h2>
+<div class="sectionbody">
+<div class="literalblock">
+<div class="content">
+<pre>ajdoc [ -bootclasspath <em>classpathlist</em> ] [ -classpath <em>classpathlist</em> ] [-d <em>path</em>] [-help] [-package] [-protected] [-private] [-public] [-overview <em>overviewFile</em>] [ -sourcepath <em>sourcepathlist</em> ] [-verbose] [-version] [<em>sourcefiles</em>... | <em>packages</em>... | @<em>file</em>... | -argfile <em>file</em>...] [ <em>ajc options</em> ]</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_description">Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>ajdoc</code> renders HTML documentation for AspectJ constructs as well as the
+Java constructs that <code>javadoc</code> renders. In addition <code>ajdoc</code> displays the
+crosscutting nature in the form of links. That means, for example, that
+you can see everything affecting a method when reading the documentation
+for the method.</p>
+</div>
+<div class="paragraph">
+<p>To run <code>ajdoc</code>, use one of the scripts in the AspectJ <code>bin</code> directory.
+The <code>ajdoc</code> implementation builds on Sun&#8217;s <code>javadoc</code> command line tool,
+and you use it in the same way with many of the same options (<code>javadoc</code>
+options are not documented here; for more information on <code>javadoc</code>
+usage, see the <a href="http://java.sun.com/j2se/javadoc/">Javadoc homepage</a>.)</p>
+</div>
+<div class="paragraph">
+<p>As with <code>ajc</code> (but unlike <code>javadoc</code>), you pass <code>ajdoc</code> all your aspect
+source files and any files containing types affected by the aspects;
+it&#8217;s often easiest to just pass all the <code>.java</code> and <code>.aj</code> files in your
+system. Unlike <code>ajc</code>, <code>ajdoc</code> will try to find package sources using the
+specified sourcepath if you list packages on the command line.</p>
+</div>
+<div class="paragraph">
+<p>To provide an argfile listing the source files, you can use use the same
+argfile (<code>@filename</code>) conventions as with <code>ajc</code>. For example, the
+following documents all the source files listed in <code>argfile.lst</code>,
+sending the output to the <code>docDir</code> output directory.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">ajdoc -d docDir @argfile.lst</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See <a href="ajc.html"><code>ajc</code>, the AspectJ compiler/weaver</a> for details on the text file
+format.</p>
+</div>
+<div class="paragraph">
+<p><code>ajdoc</code> honours <code>ajc</code> options. See the <a href="ajc.html#ajc_options">ajc
+documentation</a> for details on these options.</p>
+</div>
+<div class="paragraph">
+<p><code>ajdoc</code> currently requires the <code>tools.jar</code> from J2SE 1.3 to be on the
+classpath. Normally the scripts set this up, assuming that your
+<code>JAVA_HOME</code> variable points to an appropriate installation of Java. You
+may need to provide this jar when using a different version of Java or a
+JRE.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_examples">Examples</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Change into the <code>examples</code> directory.</p>
+</li>
+<li>
+<p>Type <code>mkdir doc</code> to create the destination directory for the documentation.</p>
+</li>
+<li>
+<p>Type <code>ajdoc -private -d doc spacewar coordination</code> to generate the documentation. (Use <code>-private</code> to get all members,
+since many of the interesting ones in spacewar are not public.)</p>
+</li>
+<li>
+<p>Type <code>ajdoc -private -d doc @spacewar/demo.lst</code> to use the argfile associated with Spacewar.</p>
+</li>
+<li>
+<p>To view the documentation, open the file <code>index.html</code> in the <code>doc</code> directory using a web browser.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

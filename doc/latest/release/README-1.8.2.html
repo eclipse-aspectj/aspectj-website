@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>AspectJ 1.8.2</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>AspectJ 1.8.2</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_notable_changes">Notable changes</a>
+<ul class="sectlevel2">
+<li><a href="#_update_to_more_recent_eclipse_compiler">Update to more recent Eclipse Compiler</a></li>
+<li><a href="#_correct_handling_of_runtimeinvisibletypeannotations_type_annotations_without_runtime_visibility">Correct handling of RuntimeInvisibleTypeAnnotations (type annotations without runtime visibility)</a></li>
+<li><a href="#_annotation_processing">Annotation processing</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>© Copyright 2014 Contributors. All rights reserved.</em></p>
+</div>
+<div class="paragraph">
+<p>The full list of resolved issues in 1.8.2 is available
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced;bug_status=RESOLVED;bug_status=VERIFIED;bug_status=CLOSED;product=AspectJ;target_milestone=1.8.2;">here</a></p>
+</div>
+<div class="paragraph">
+<p><em>Release info: 1.8.2 available 14-Aug-2014</em></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_notable_changes">Notable changes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Although only a few bugs have been fixed here, they are quite important
+ones:</p>
+</div>
+<div class="sect2">
+<h3 id="_update_to_more_recent_eclipse_compiler">Update to more recent Eclipse Compiler</h3>
+<div class="paragraph">
+<p>AspectJ is now based on a more up to date Eclipse compiler level (git
+hash 2b07958) so includes all the latest fixes</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_correct_handling_of_runtimeinvisibletypeannotations_type_annotations_without_runtime_visibility">Correct handling of RuntimeInvisibleTypeAnnotations (type annotations without runtime visibility)</h3>
+<div class="paragraph">
+<p>For anyone weaving code containing these kind of type annotations, this
+is an important fix. Although AspectJ does not currently support
+pointcuts matching on these kinds of annotation it was crashing when
+they were encountered. That is now fixed.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_annotation_processing">Annotation processing</h3>
+<div class="paragraph">
+<p>A very long standing issue, the AspectJ compiler now supports annotation
+processors thanks to some work by Sergey Stupin.</p>
+</div>
+<div class="paragraph">
+<p>Here is a short example, a very basic annotation and application:</p>
+</div>
+<div class="sect3">
+<h4 id="_marker_java">Marker.java</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">import</span> <span class="include">java.lang.annotation.Retention</span>;
+<span class="keyword">import</span> <span class="include">java.lang.annotation.RetentionPolicy</span>;
+
+<span class="annotation">@Retention</span>(<span class="predefined-type">RetentionPolicy</span>.RUNTIME)
+<span class="directive">public</span> <span class="annotation">@interface</span> Marker { }</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_code_java">Code.java</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Code</span> {
+
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="predefined-type">String</span> <span class="type">[]</span>argv) {
+    <span class="keyword">new</span> Code().moo();
+    <span class="keyword">new</span> Code().boo();
+    <span class="keyword">new</span> Code().too();
+    <span class="keyword">new</span> Code().woo();
+  }
+
+  <span class="directive">public</span> <span class="type">void</span> moo() {}
+
+  <span class="annotation">@Marker</span>
+  <span class="directive">public</span> <span class="type">void</span> boo() {}
+
+  <span class="annotation">@Marker</span>
+  <span class="directive">public</span> <span class="type">void</span> too() {}
+
+  <span class="directive">public</span> <span class="type">void</span> woo() {}
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And now a basic annotation processor. This processor will find methods
+in the source marked with the annotation Marker and for each one
+generate an aspect tailored to advising that method (this <strong>is</strong> a
+contrived demo!)</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_demoprocessor_java">DemoProcessor.java</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">import</span> <span class="include">java.io</span>.*;
+<span class="keyword">import</span> <span class="include">javax.tools</span>.*;
+<span class="keyword">import</span> <span class="include">java.util</span>.*;
+<span class="keyword">import</span> <span class="include">javax.annotation.processing</span>.*;
+<span class="keyword">import</span> <span class="include">javax.lang.model</span>.*;
+<span class="keyword">import</span> <span class="include">javax.lang.model.element</span>.*;
+
+<span class="annotation">@SupportedAnnotationTypes</span>(value= {<span class="string"><span class="delimiter">&quot;</span><span class="content">*</span><span class="delimiter">&quot;</span></span>})
+<span class="annotation">@SupportedSourceVersion</span>(SourceVersion.RELEASE_6)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">DemoProcessor</span> <span class="directive">extends</span> AbstractProcessor {
+
+  <span class="directive">private</span> Filer filer;
+
+  <span class="annotation">@Override</span>
+  <span class="directive">public</span> <span class="type">void</span> init(ProcessingEnvironment env) {
+    filer = env.getFiler();
+  }
+
+  <span class="annotation">@Override</span>
+  <span class="directive">public</span> <span class="type">boolean</span> process(<span class="predefined-type">Set</span> elements, RoundEnvironment env) {
+    <span class="comment">// Discover anything marked with @Marker</span>
+    <span class="keyword">for</span> (<span class="predefined-type">Element</span> element: env.getElementsAnnotatedWith(Marker.class)) {
+      <span class="keyword">if</span> (element.getKind() == ElementKind.METHOD) {
+        <span class="comment">// For any methods we find, create an aspect:</span>
+        <span class="predefined-type">String</span> methodName = element.getSimpleName().toString();
+        <span class="predefined-type">String</span> aspectText =
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">public aspect Advise_</span><span class="delimiter">&quot;</span></span>+methodName+<span class="string"><span class="delimiter">&quot;</span><span class="content"> {</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>+
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">  before(): execution(* </span><span class="delimiter">&quot;</span></span>+methodName+<span class="string"><span class="delimiter">&quot;</span><span class="content">(..)) {</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>+
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">    System.out.println(</span><span class="char">\&quot;</span><span class="delimiter">&quot;</span></span>+methodName+<span class="string"><span class="delimiter">&quot;</span><span class="content"> running</span><span class="char">\&quot;</span><span class="content">);</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>+
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">  }</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>+
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">}</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>;
+        <span class="keyword">try</span> {
+          JavaFileObject file = filer.createSourceFile(<span class="string"><span class="delimiter">&quot;</span><span class="content">Advise_</span><span class="delimiter">&quot;</span></span>+methodName, element);
+          file.openWriter().append(aspectText).close();
+          <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Generated aspect to advise </span><span class="delimiter">&quot;</span></span>+element.getSimpleName());
+        } <span class="keyword">catch</span> (<span class="exception">IOException</span> ioe) {
+          <span class="comment">// already creates message can appear if processor runs more than once</span>
+          <span class="keyword">if</span> (!ioe.getMessage().contains(<span class="string"><span class="delimiter">&quot;</span><span class="content">already created</span><span class="delimiter">&quot;</span></span>)) {
+            ioe.printStackTrace();
+          }
+        }
+      }
+    }
+    <span class="keyword">return</span> <span class="predefined-constant">true</span>;
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With those sources, we compile the processor:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">ajc -1.6 DemoProcessor.java Marker.java</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now compile the code with the processor specified:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">ajc -1.6 -processor DemoProcessor -showWeaveInfo Code.java Marker.java</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">Generated aspect to advise too
+Generated aspect to advise boo
+Join point 'method-execution(void Code.boo())' in Type 'Code' (Code.java:14) advised by before advice from 'Advise_boo' (Advise_boo.java:2)
+Join point 'method-execution(void Code.too())' in Type 'Code' (Code.java:17) advised by before advice from 'Advise_too' (Advise_too.java:2)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice the processor generates the aspects and then they are woven into
+the code being compiled immediately.</p>
+</div>
+<div class="paragraph">
+<p>Finally we can run it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">java Code
+boo running
+too running</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Note:</strong> There is still work to be done to get annotation processors
+behaving under AJDT.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:11 +0700
+</div>
+</div>
+</body>
+</html>

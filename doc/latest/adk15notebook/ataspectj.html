@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>An Annotation Based Development Style</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body id="ataspectj" class="article toc2 toc-left">
+<div id="header">
+<h1>An Annotation Based Development Style</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#ataspectj-intro">Introduction</a></li>
+<li><a href="#ataspectj-aspects">Aspect Declarations</a>
+<ul class="sectlevel2">
+<li><a href="#_limitations">Limitations</a></li>
+</ul>
+</li>
+<li><a href="#ataspectj-pcadvice">Pointcuts and Advice</a>
+<ul class="sectlevel2">
+<li><a href="#_pointcuts">Pointcuts</a></li>
+<li><a href="#_advice">Advice</a></li>
+</ul>
+</li>
+<li><a href="#ataspectj-itds">Inter-type Declarations</a>
+<ul class="sectlevel2">
+<li><a href="#atDeclareParents">@DeclareParents</a></li>
+<li><a href="#atDeclareMixin">@DeclareMixin</a></li>
+</ul>
+</li>
+<li><a href="#ataspectj-declare">Declare statements</a></li>
+<li><a href="#ataspectj-aspectof"><code>aspectOf()</code> and <code>hasAspect()</code> methods</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="ataspectj-intro">Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In addition to the familiar AspectJ code-based style of aspect
+declaration, AspectJ 5 also supports an annotation-based style of aspect
+declaration. We informally call the set of annotations that support this
+development style the "@AspectJ" annotations.</p>
+</div>
+<div class="paragraph">
+<p>AspectJ 5 allows aspects and their members to be specified using either
+the code style or the annotation style. Whichever style you use, the
+AspectJ weaver ensures that your program has exactly the same semantics.
+It is, to quote a famous advertising campaign, "a choice, not a
+compromise". The two styles can be mixed within a single application,
+and even within a single source file, though we doubt this latter mix
+will be recommended in practice.</p>
+</div>
+<div class="paragraph">
+<p>The use of the @AspectJ annotations means that there are large classes
+of AspectJ applications that can be compiled by a regular Java 5
+compiler, and subsequently woven by the AspectJ weaver (for example, as
+an additional build stage, or as late as class load-time). In this
+chapter we introduce the @AspectJ annotations and show how they can be
+used to declare aspects and aspect members.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ataspectj-aspects">Aspect Declarations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Aspect declarations are supported by the
+<code>org.aspectj.lang.annotation.Aspect</code> annotation. The declaration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Aspect</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">Foo</span> {}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Is equivalent to:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> aspect Foo {}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To specify an aspect an aspect instantiation model (the default is
+singleton), provide the perclause as the <code>@Aspect</code> value. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Aspect</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">perthis(execution(* abc..*(..)))</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">Foo</span> {}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>is equivalent to&#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> aspect Foo perthis(execution(* abc..*(..))) {}</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_limitations">Limitations</h3>
+<div class="paragraph">
+<p>Privileged aspects are not supported by the annotation style.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ataspectj-pcadvice">Pointcuts and Advice</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Pointcut and advice declarations can be made using the
+<code>Pointcut, Before, After, AfterReturning, AfterThrowing,</code> and <code>Around</code>
+annotations.</p>
+</div>
+<div class="sect2">
+<h3 id="_pointcuts">Pointcuts</h3>
+<div class="paragraph">
+<p>Pointcuts are specified using the <code>org.aspectj.lang.annotation.Pointcut</code>
+annotation on a method declaration. The method should have a <code>void</code>
+return type. The parameters of the method correspond to the parameters
+of the pointcut. The modifiers of the method correspond to the modifiers
+of the pointcut.</p>
+</div>
+<div class="paragraph">
+<p>As a general rule, the <code>@Pointcut</code> annotated method must have an empty
+method body and must not have any <code>throws</code> clause. If formal are bound
+(using
+<code>args(), target(), this(), @args(), @target(), @this(), @annotation())</code>
+in the pointcut, then they must appear in the method signature.</p>
+</div>
+<div class="paragraph">
+<p>The <code>if()</code> pointcut is treated specially and is discussed in a later
+section.</p>
+</div>
+<div class="paragraph">
+<p>Here is a simple example of a pointcut declaration in both code and
+@AspectJ styles:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Pointcut</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">call(* *.*(..))</span><span class="delimiter">&quot;</span></span>)
+<span class="type">void</span> anyCall() {}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>is equivalent to&#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut anyCall() : call(* *.*(..));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When binding arguments, simply declare the arguments as normal in the
+annotated method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Pointcut</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">call(* *.*(int)) &amp;&amp; args(i) &amp;&amp; target(callee)</span><span class="delimiter">&quot;</span></span>)
+<span class="type">void</span> anyCall(<span class="type">int</span> i, Foo callee) {}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>is equivalent to&#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut anyCall(<span class="type">int</span> i, Foo callee) : call(* *.*(<span class="type">int</span>)) &amp;&amp; args(i) &amp;&amp; target(callee);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>An example with modifiers (Remember that Java 5 annotations are not
+inherited, so the <code>@Pointcut</code> annotation must be present on the
+extending aspect&#8217;s pointcut declaration too):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Pointcut</span>(<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">protected</span> <span class="directive">abstract</span> <span class="type">void</span> anyCall();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>is equivalent to&#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">protected</span> <span class="directive">abstract</span> pointcut anyCall();</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_type_references_inside_aspectj_annotations">Type references inside @AspectJ annotations</h4>
+<div class="paragraph">
+<p>Using the code style, types referenced in pointcut expressions are
+resolved with respect to the imported types in the compilation unit.
+When using the annotation style, types referenced in pointcut
+expressions are resolved in the absence of any imports and so have to be
+fully qualified if they are not by default visible to the declaring type
+(outside of the declaring package and <code>java.lang</code> ). This does not apply
+to type patterns with wildcards, which are always resolved in a global
+scope.</p>
+</div>
+<div class="paragraph">
+<p>Consider the following compilation unit:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">org.aspectprogrammer.examples</span>;
+
+<span class="keyword">import</span> <span class="include">java.util.List</span>;
+
+<span class="directive">public</span> aspect Foo {
+  pointcut listOperation() : call(* <span class="predefined-type">List</span>.*(..));
+  pointcut anyUtilityCall() : call(* java.util..*(..));
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Using the annotation style this would be written as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">org.aspectprogrammer.examples</span>;
+
+<span class="keyword">import</span> <span class="include">java.util.List</span>; <span class="comment">// redundant but harmless</span>
+
+<span class="annotation">@Aspect</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">Foo</span> {
+  <span class="annotation">@Pointcut</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">call(* java.util.List.*(..))</span><span class="delimiter">&quot;</span></span>) <span class="comment">// must qualify</span>
+  <span class="type">void</span> listOperation() {}
+
+  <span class="annotation">@Pointcut</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">call(* java.util..*(..))</span><span class="delimiter">&quot;</span></span>)
+  <span class="type">void</span> anyUtilityCall() {}
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_if_pointcut_expressions">if() pointcut expressions</h4>
+<div class="paragraph">
+<p>In code style, it is possible to use the <code>if(&#8230;&#8203;)</code> poincut to define a
+conditional pointcut expression which will be evaluated at runtime for
+each candidate join point. The <code>if(&#8230;&#8203;)</code> body can be any valid Java
+boolean expression, and can use any exposed formal, as well as the join
+point forms
+<code>thisJoinPoint, thisJoinPointStaticPart and thisJoinPointEnclosingStaticPart</code>
+.</p>
+</div>
+<div class="paragraph">
+<p>When using the annotation style, it is not possible to write a full Java
+expression within the annotation value so the syntax differs slightly,
+whilst providing the very same semantics and runtime behaviour. An
+<code>if()</code> pointcut expression can be declared in an <code>@Pointcut</code> , but must
+have either an empty body (<code>if()</code>, or be one of the expression forms
+<code>if(true)</code> or <code>if(false)</code> . The annotated method must be public, static,
+and return a boolean. The body of the method contains the condition to
+be evaluated. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Pointcut</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">call(* *.*(int)) &amp;&amp; args(i) &amp;&amp; if()</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="directive">static</span> <span class="type">boolean</span> someCallWithIfTest(<span class="type">int</span> i) {
+    <span class="keyword">return</span> i &gt; <span class="integer">0</span>;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>is equivalent to&#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut someCallWithIfTest(<span class="type">int</span> i) :
+  call(* *.*(<span class="type">int</span>)) &amp;&amp; args(i) &amp;&amp; <span class="keyword">if</span>(i &gt; <span class="integer">0</span>);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and the following is also a valid form:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">static</span> <span class="type">int</span> COUNT = <span class="integer">0</span>;
+
+<span class="annotation">@Pointcut</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">call(* *.*(int)) &amp;&amp; args(i) &amp;&amp; if()</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="directive">static</span> <span class="type">boolean</span> someCallWithIfTest(<span class="type">int</span> i, JoinPoint jp, JoinPoint.EnclosingStaticPart esjp) {
+   <span class="comment">// any legal Java expression...</span>
+   <span class="keyword">return</span> i &gt; <span class="integer">0</span>
+          &amp;&amp; jp.getSignature().getName.startsWith(<span class="string"><span class="delimiter">&quot;</span><span class="content">doo</span><span class="delimiter">&quot;</span></span>)
+          &amp;&amp; esjp.getSignature().getName().startsWith(<span class="string"><span class="delimiter">&quot;</span><span class="content">test</span><span class="delimiter">&quot;</span></span>)
+          &amp;&amp; COUNT++ &lt; <span class="integer">10</span>;
+}
+
+<span class="annotation">@Before</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">someCallWithIfTest(anInt, jp, enc)</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="type">void</span> beforeAdviceWithRuntimeTest(<span class="type">int</span> anInt, JoinPoint jp, JoinPoint.EnclosingStaticPart enc) {
+   <span class="comment">//...</span>
+}
+
+<span class="comment">// Note that the following is NOT valid</span>
+<span class="comment">/*
+@Before(&quot;call(* *.*(int)) &amp;&amp; args(i) &amp;&amp; if()&quot;)
+public void advice(int i) {
+   // so you were writing an advice or an if body ?
+}
+*/</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is thus possible with the annotation style to use the <code>if()</code> pointcut
+only within an <code>@Pointcut</code> expression. The <code>if()</code> must not contain any
+body. The annotated <code>@Pointcut</code> method must then be of the form
+<code>public static boolean</code> and can use formal bindings as usual. Extra
+<em>implicit</em> arguments of type JoinPoint, JoinPoint.StaticPart and
+JoinPoint.EnclosingStaticPart can also be used (this is not permitted
+for regular annotated pointcuts not using the <code>if()</code> form).</p>
+</div>
+<div class="paragraph">
+<p>The special forms <code>if(true)</code> and <code>if(false)</code> can be used in a more
+general way and don&#8217;t imply that the pointcut method must have a body.
+You can thus write <code>@Before("somePoincut() &amp;&amp; if(false)")</code> .</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_advice">Advice</h3>
+<div class="paragraph">
+<p>In this section we first discuss the use of annotations for simple
+advice declarations. Then we show how <code>thisJoinPoint</code> and its siblings
+are handled in the body of advice and discuss the treatment of <code>proceed</code>
+in around advice.</p>
+</div>
+<div class="paragraph">
+<p>Using the annotation style, an advice declaration is written as a
+regular Java method with one of the <code>Before, After, AfterReturning,
+                    AfterThrowing,</code> or <code>Around</code> annotations. Except in
+the case of around advice, the method should return void. The method
+should be declared public.</p>
+</div>
+<div class="paragraph">
+<p>A method that has an advice annotation is treated exactly as an advice
+declaration by AspectJ&#8217;s weaver. This includes the join points that
+arise when the advice is executed (an adviceexecution join point, not a
+method execution join point).</p>
+</div>
+<div class="paragraph">
+<p>The following example shows a simple before advice declaration in both
+styles:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Before</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">call(* org.aspectprogrammer..*(..)) &amp;&amp; this(Foo)</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="type">void</span> callFromFoo() {
+  <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Call from Foo</span><span class="delimiter">&quot;</span></span>);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>is equivalent to&#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">before() : call(* org.aspectprogrammer..*(..)) &amp;&amp; <span class="local-variable">this</span>(Foo) {
+  <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Call from Foo</span><span class="delimiter">&quot;</span></span>);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the advice body needs to know which particular <code>Foo</code> instance is
+making the call, just add a parameter to the advice declaration.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">before(Foo foo) : call(* org.aspectprogrammer..*(..)) &amp;&amp; <span class="local-variable">this</span>(foo) {
+  <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Call from Foo: </span><span class="delimiter">&quot;</span></span> + foo);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>can be written as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Before</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">call(* org.aspectprogrammer..*(..)) &amp;&amp; this(foo)</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="type">void</span> callFromFoo(Foo foo) {
+  <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Call from Foo: </span><span class="delimiter">&quot;</span></span> + foo);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the advice body needs access to <code>thisJoinPoint</code> ,
+<code>thisJoinPointStaticPart</code> , <code>thisEnclosingJoinPointStaticPart</code> then
+these need to be declared as additional method parameters when using the
+annotation style.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Before</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">call(* org.aspectprogrammer..*(..)) &amp;&amp; this(foo)</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="type">void</span> callFromFoo(JoinPoint thisJoinPoint, Foo foo) {
+  <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Call from Foo: </span><span class="delimiter">&quot;</span></span> + foo + <span class="string"><span class="delimiter">&quot;</span><span class="content"> at </span><span class="delimiter">&quot;</span></span> + thisJoinPoint);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>is equivalent to&#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">before(Foo foo) : call(* org.aspectprogrammer..*(..)) &amp;&amp; <span class="local-variable">this</span>(foo) {
+  <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Call from Foo: </span><span class="delimiter">&quot;</span></span> + foo + <span class="string"><span class="delimiter">&quot;</span><span class="content"> at </span><span class="delimiter">&quot;</span></span> + thisJoinPoint);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Advice that needs all three variables would be declared:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Before</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">call(* org.aspectprogrammer..*(..)) &amp;&amp; this(Foo)</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="type">void</span> callFromFoo(
+  JoinPoint thisJoinPoint,
+  JoinPoint.StaticPart thisJoinPointStaticPart,
+  JoinPoint.EnclosingStaticPart thisEnclosingJoinPointStaticPart
+) {
+    <span class="comment">// ...</span>
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>JoinPoint.EnclosingStaticPart</code> is a new (empty) sub-interface of
+<code>JoinPoint.StaticPart</code> which allows the AspectJ weaver to distinguish
+based on type which of <code>thisJoinPointStaticPart</code> and
+<code>thisEnclosingJoinPointStaticPart</code> should be passed in a given parameter
+position.</p>
+</div>
+<div class="paragraph">
+<p><code>After</code> advice declarations take exactly the same form as <code>Before</code> , as
+do the forms of <code>AfterReturning</code> and <code>AfterThrowing</code> that do not expose
+the return type or thrown exception respectively.</p>
+</div>
+<div class="paragraph">
+<p>To expose a return value with after returning advice simply declare the
+returning parameter as a parameter in the method body and bind it with
+the "returning" attribute:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@AfterReturning</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">criticalOperation()</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="type">void</span> phew() {
+  <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">phew</span><span class="delimiter">&quot;</span></span>);
+}
+
+<span class="annotation">@AfterReturning</span>(pointcut=<span class="string"><span class="delimiter">&quot;</span><span class="content">call(Foo+.new(..))</span><span class="delimiter">&quot;</span></span>,returning=<span class="string"><span class="delimiter">&quot;</span><span class="content">f</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="type">void</span> itsAFoo(Foo f) {
+  <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">It's a Foo: </span><span class="delimiter">&quot;</span></span> + f);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>is equivalent to&#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">after() returning : criticalOperation() {
+  <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">phew</span><span class="delimiter">&quot;</span></span>);
+}
+
+after() returning(Foo f) : call(Foo+.new(..)) {
+  <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">It's a Foo: </span><span class="delimiter">&quot;</span></span> + f);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(Note the use of the <code>pointcut=</code> prefix in front of the pointcut
+expression in the returning case).</p>
+</div>
+<div class="paragraph">
+<p>After throwing advice works in a similar fashion, using the <code>throwing</code>
+attribute when needing to expose a thrown exception.</p>
+</div>
+<div class="paragraph">
+<p>For around advice, we have to tackle the problem of <code>proceed</code> . One of
+the design goals for the annotation style is that a large class of
+AspectJ applications should be compilable with a standard Java 5
+compiler. A straight call to <code>proceed</code> inside a method body:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Around</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">call(* org.aspectprogrammer..*(..))</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="predefined-type">Object</span> doNothing() {
+  <span class="keyword">return</span> proceed(); <span class="comment">// CE on this line</span>
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>will result in a "No such method" compilation error. For this reason
+AspectJ 5 defines a new sub-interface of <code>JoinPoint</code> ,
+<code>ProceedingJoinPoint</code> .</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">ProceedingJoinPoint</span> <span class="directive">extends</span> JoinPoint {
+  <span class="directive">public</span> <span class="predefined-type">Object</span> proceed(<span class="predefined-type">Object</span><span class="type">[]</span> args);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The around advice given above can now be written as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Around</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">call(* org.aspectprogrammer..*(..))</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="predefined-type">Object</span> doNothing(ProceedingJoinPoint thisJoinPoint) {
+  <span class="keyword">return</span> thisJoinPoint.proceed();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s an example that uses parameters for the proceed call:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Aspect</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">ProceedAspect</span> {
+
+  <span class="annotation">@Pointcut</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">call(* setAge(..)) &amp;&amp; args(i)</span><span class="delimiter">&quot;</span></span>)
+  <span class="type">void</span> setAge(<span class="type">int</span> i) {}
+
+  <span class="annotation">@Around</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">setAge(i)</span><span class="delimiter">&quot;</span></span>)
+  <span class="directive">public</span> <span class="predefined-type">Object</span> twiceAsOld(ProceedingJoinPoint thisJoinPoint, <span class="type">int</span> i) {
+    <span class="keyword">return</span> thisJoinPoint.proceed(<span class="keyword">new</span> <span class="predefined-type">Object</span><span class="type">[]</span>{i*<span class="integer">2</span>}); <span class="comment">//using Java 5 autoboxing</span>
+  }
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>is equivalent to:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> aspect ProceedAspect {
+  pointcut setAge(<span class="type">int</span> i): call(* setAge(..)) &amp;&amp; args(i);
+
+  <span class="predefined-type">Object</span> around(<span class="type">int</span> i): setAge(i) {
+    <span class="keyword">return</span> proceed(i*<span class="integer">2</span>);
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that the ProceedingJoinPoint does not need to be passed to the
+<code>proceed(..)</code> arguments.</p>
+</div>
+<div class="paragraph">
+<p>In code style, the proceed method has the same signature as the advice,
+any reordering of actual arguments to the joinpoint that is done in the
+advice signature must be respected. Annotation style is different. The
+<code>proceed(..)</code> call takes, in this order:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If <code>this()</code> was used in the pointcut for binding, it must be passed first in
+<code>proceed(..)</code>.</p>
+</li>
+<li>
+<p>If <code>target()</code> was used in the pointcut for binding, it must be passed next in
+<code>proceed(..)</code> - it will be the first argument to <code>proceed(..)</code> if <code>this()</code>
+was not used for binding.</p>
+</li>
+<li>
+<p>Finally come all the arguments expected at the join point, in the order they
+are supplied at the join point. Effectively the advice signature is ignored -
+it doesn&#8217;t matter if a subset of arguments were bound or the ordering was
+changed in the advice signature, the <code>proceed(..)</code> calls takes all of them
+in the right order for the join point.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Since <code>proceed(..)</code> in this case takes an <code>Object</code> array, AspectJ cannot do
+as much compile time checking as it can for code style. If the rules
+above aren&#8217;t obeyed, then it will unfortunately manifest as a runtime
+error.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ataspectj-itds">Inter-type Declarations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Inter-type declarations are challenging to support using an annotation
+style. For code style aspects compiled with the <em>ajc</em> compiler, the entire
+type system can be made aware of inter-type declarations (new
+supertypes, new methods, new fields) and the completeness and
+correctness of it can be guaranteed. Achieving this with an annotation
+style is hard because the source code may simply be compiled with javac
+where the type system cannot be influenced and what is compiled must be
+'pure Java'.</p>
+</div>
+<div class="paragraph">
+<p>AspectJ 1.5.0 introduced <code>@DeclareParents</code>, an attempt to offer something
+like that which is achievable with code style declare parents and the
+other intertype declarations (fields, methods, constructors). However,
+it has proved too challenging to get close to the expressiveness and
+capabilities of code style in this area and effectively <code>@DeclareParents</code>
+is offering just a mixin strategy. The definition of mixin <code>I</code> am using
+here is that when some <code>interface I</code> is mixed into some target type <code>T</code> then
+this means that all the methods from <code>I</code> are created in <code>T</code> and their
+implementations are simple forwarding methods that call a delegate which
+that provides an implementation of <code>I</code>.</p>
+</div>
+<div class="paragraph">
+<p>The next section covers <code>@DeclareParents</code> but AspectJ 1.6.4 introduces
+<code>@DeclareMixin</code> - an improved approach to defining a mixin and the choice
+of a different name for the annotation will hopefully alleviate some of
+the confusion about why <code>@DeclareParents</code> just doesn&#8217;t offer the same
+semantics as the code style variant. Offering <code>@DeclareMixin</code> also gives
+code style developers a new tool for a simple mixin whereas previously
+they would have avoided <code>@DeclareParents</code>, thinking what it could only do
+was already achievable with code style syntax.</p>
+</div>
+<div class="paragraph">
+<p>The <code>defaultImpl</code> attribute of <code>@DeclareParents</code> may become deprecated if
+<code>@DeclareMixin</code> proves popular, leaving <code>@DeclareParents</code> purely as a way to
+introduce a marker interface.</p>
+</div>
+<div class="sect2">
+<h3 id="atDeclareParents">@DeclareParents</h3>
+<div class="paragraph">
+<p>Consider the following aspect:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> aspect MoodIndicator {
+
+   <span class="directive">public</span> <span class="type">interface</span> <span class="class">Moody</span> {};
+
+   <span class="directive">private</span> Mood Moody.mood = Mood.HAPPY;
+
+   <span class="directive">public</span> Mood Moody.getMood() {
+     <span class="keyword">return</span> mood;
+   }
+
+   declare parents : org.xyz..* <span class="directive">implements</span> Moody;
+
+   before(Moody m) : execution(* *.*(..)) &amp;&amp; <span class="local-variable">this</span>(m) {
+      <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">I'm feeling </span><span class="delimiter">&quot;</span></span> + m.getMood());
+   }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This declares an interface <code>Moody</code> , and then makes two inter-type
+declarations on the interface - a field that is private to the aspect,
+and a method that returns the mood. Within the body of the inter-type
+declared method <code>getMoody</code> , the type of <code>this</code> is <code>Moody</code> (the target
+type of the inter-type declaration).</p>
+</div>
+<div class="paragraph">
+<p>Using the annotation style this aspect can be written:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Aspect</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">MoodIndicator</span> {
+
+   <span class="comment">// this interface can be outside of the aspect</span>
+   <span class="directive">public</span> <span class="type">interface</span> <span class="class">Moody</span> {
+     Mood getMood();
+   };
+
+   <span class="comment">// this implementation can be outside of the aspect</span>
+   <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">MoodyImpl</span> <span class="directive">implements</span> Moody {
+      <span class="directive">private</span> Mood mood = Mood.HAPPY;
+
+      <span class="directive">public</span> Mood getMood() {
+        <span class="keyword">return</span> mood;
+      }
+   }
+
+   <span class="comment">// the field type must be the introduced interface. It can't be a class.</span>
+   <span class="annotation">@DeclareParents</span>(value=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.xzy..*</span><span class="delimiter">&quot;</span></span>,defaultImpl=MoodyImpl.class)
+   <span class="directive">private</span> Moody implementedInterface;
+
+   <span class="annotation">@Before</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">execution(* *.*(..)) &amp;&amp; this(m)</span><span class="delimiter">&quot;</span></span>)
+   <span class="type">void</span> feelingMoody(Moody m) {
+      <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">I'm feeling </span><span class="delimiter">&quot;</span></span> + m.getMood());
+   }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is very similar to the mixin mechanism supported by AspectWerkz.
+The effect of the <code>@DeclareParents</code> annotation is equivalent to a
+declare parents statement that all types matching the type pattern
+implement the given interface (in this case <code>Moody</code>). Each method declared
+in the interface is treated as an inter-type declaration. Note how this
+scheme operates within the constraints of Java type checking and ensures
+that <code>this</code> has access to the exact same set of members as in the code
+style example.</p>
+</div>
+<div class="paragraph">
+<p>Note that it is illegal to use the <code>@DeclareParents</code> annotation on an
+aspect' field of a non-interface type. The interface type is the
+inter-type declaration contract that dictates which methods are declared
+on the target type.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// this type will be affected by the inter-type declaration as the type pattern matches</span>
+<span class="keyword">package</span> <span class="namespace">org.xyz</span>;
+<span class="directive">public</span> <span class="type">class</span> <span class="class">MoodTest</span> {
+
+   <span class="directive">public</span> <span class="type">void</span> test() {
+       <span class="comment">// see here the cast to the introduced interface (required)</span>
+       Mood mood = ((Moody)<span class="local-variable">this</span>).getMood();
+       ...
+   }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>@DeclareParents</code> annotation can also be used without specifying a
+<code>defaultImpl</code> value (for example, <code>@DeclareParents("org.xyz..*")</code>). This
+is equivalent to a <code>declare parents &#8230;&#8203; implements</code> clause, and does
+<em>not</em> make any inter-type declarations for default implementation of the
+interface methods.</p>
+</div>
+<div class="paragraph">
+<p>Consider the following aspect:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> aspect SerializableMarker {
+   declare parents : org.xyz..* <span class="directive">implements</span> <span class="predefined-type">Serializable</span>;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Using the annotation style this aspect can be written:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Aspect</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">SerializableMarker</span> {
+   <span class="annotation">@DeclareParents</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.xyz..*</span><span class="delimiter">&quot;</span></span>)
+   <span class="predefined-type">Serializable</span> implementedInterface;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the interface defines one or more operations, and these are not
+implemented by the target type, an error will be issued during weaving.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="atDeclareMixin">@DeclareMixin</h3>
+<div class="paragraph">
+<p>Consider the following aspect:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> aspect MoodIndicator {
+
+   <span class="directive">public</span> <span class="type">interface</span> <span class="class">Moody</span> {};
+
+   <span class="directive">private</span> Mood Moody.mood = Mood.HAPPY;
+
+   <span class="directive">public</span> Mood Moody.getMood() {
+     <span class="keyword">return</span> mood;
+   }
+
+   declare parents : org.xyz..* <span class="directive">implements</span> Moody;
+
+   before(Moody m) : execution(* *.*(..)) &amp;&amp; <span class="local-variable">this</span>(m) {
+      <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">I'm feeling </span><span class="delimiter">&quot;</span></span> + m.getMood());
+   }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This declares an interface <code>Moody</code>, and then makes two inter-type
+declarations on the interface - a field that is private to the aspect,
+and a method that returns the mood. Within the body of the inter-type
+declared method <code>getMoody</code>, the type of <code>this</code> is <code>Moody</code> (the target
+type of the inter-type declaration).</p>
+</div>
+<div class="paragraph">
+<p>Using the annotation style, this aspect can be written:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Aspect</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">MoodIndicator</span> {
+
+   <span class="comment">// this interface can be outside of the aspect</span>
+   <span class="directive">public</span> <span class="type">interface</span> <span class="class">Moody</span> {
+     Mood getMood();
+   };
+
+   <span class="comment">// this implementation can be outside of the aspect</span>
+   <span class="directive">public</span> <span class="directive">static</span> <span class="type">class</span> <span class="class">MoodyImpl</span> <span class="directive">implements</span> Moody {
+      <span class="directive">private</span> Mood mood = Mood.HAPPY;
+
+      <span class="directive">public</span> Mood getMood() {
+        <span class="keyword">return</span> mood;
+      }
+   }
+
+   <span class="comment">// The DeclareMixin annotation is attached to a factory method that can return instances of the delegate</span>
+   <span class="comment">// which offers an implementation of the mixin interface.  The interface that is mixed in is the</span>
+   <span class="comment">// return type of the method.</span>
+   <span class="annotation">@DeclareMixin</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.xyz..*</span><span class="delimiter">&quot;</span></span>)
+   <span class="directive">public</span> <span class="directive">static</span> Moody createMoodyImplementation() {
+     <span class="keyword">return</span> <span class="keyword">new</span> MoodyImpl();
+   }
+
+   <span class="annotation">@Before</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">execution(* *.*(..)) &amp;&amp; this(m)</span><span class="delimiter">&quot;</span></span>)
+   <span class="type">void</span> feelingMoody(Moody m) {
+      <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">I'm feeling </span><span class="delimiter">&quot;</span></span> + m.getMood());
+   }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Basically, the <code>@DeclareMixin</code> annotation is attached to a factory
+method. The factory method specifies the interface to mixin as its
+return type, and calling the method should create an instance of a
+delegate that implements the interface. This is the interface which will
+be delegated to from any target matching the specified type pattern.</p>
+</div>
+<div class="paragraph">
+<p>Exploiting this syntax requires the user to obey the rules of pure Java.
+So references to any targeted type as if it were affected by the Mixin
+must be made through a cast, like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// this type will be affected by the inter-type declaration as the type pattern matches</span>
+<span class="keyword">package</span> <span class="namespace">org.xyz</span>;
+<span class="directive">public</span> <span class="type">class</span> <span class="class">MoodTest</span> {
+
+   <span class="directive">public</span> <span class="type">void</span> test() {
+       <span class="comment">// see here the cast to the introduced interface (required)</span>
+       Mood mood = ((Moody)<span class="local-variable">this</span>).getMood();
+       ...
+   }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Sometimes the delegate instance may want to perform differently
+depending upon the type/instance for which it is behaving as a delegate.
+To support this it is possible for the factory method to specify a
+parameter. If it does, then when the factory method is called the
+parameter will be the object instance for which a delegate should be
+created:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Aspect</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">Foo</span> {
+
+  <span class="annotation">@DeclareMixin</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.xyz..*</span><span class="delimiter">&quot;</span></span>)
+  <span class="directive">public</span> <span class="directive">static</span> SomeInterface createDelegate(<span class="predefined-type">Object</span> instance) {
+    <span class="keyword">return</span> <span class="keyword">new</span> SomeImplementation(instance);
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is also possible to make the factory method non-static - and in this
+case it can then exploit the local state in the surrounding aspect
+instance, but this is only supported for singleton aspects:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Aspect</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">Foo</span> {
+  <span class="directive">public</span> <span class="type">int</span> maxLimit=<span class="integer">35</span>;
+
+  <span class="annotation">@DeclareMixin</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.xyz..*</span><span class="delimiter">&quot;</span></span>)
+  <span class="directive">public</span> SomeInterface createDelegate(<span class="predefined-type">Object</span> instance) {
+    <span class="keyword">return</span> <span class="keyword">new</span> SomeImplementation(instance,maxLimit);
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Although the interface type is usually determined purely from the return
+type of the factory method, it can be specified in the annotation if
+necessary. In this example the return type of the method extends
+multiple other interfaces and only a couple of them (<code>I</code> and <code>J</code>) should be
+mixed into any matching targets:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// interfaces is an array of interface classes that should be mixed in</span>
+<span class="annotation">@DeclareMixin</span>(value=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.xyz..*</span><span class="delimiter">&quot;</span></span>,interfaces={I.class,J.class})
+<span class="directive">public</span> <span class="directive">static</span> InterfaceExtendingLotsOfInterfaces createMoodyImplementation() {
+  <span class="keyword">return</span> <span class="keyword">new</span> MoodyImpl();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There are clearly similarities between <code>@DeclareMixin</code> and
+<code>@DeclareParents</code> but <code>@DeclareMixin</code> is not pretending to offer more
+than a simple mixin strategy. The flexibility in being able to provide
+the factory method instead of requiring a no-arg constructor for the
+implementation also enables delegate instances to make decisions based
+upon the type for which they are the delegate.</p>
+</div>
+<div class="paragraph">
+<p>Any annotations defined on the interface methods are also put upon the
+delegate forwarding methods created in the matched target type.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ataspectj-declare">Declare statements</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The previous section on inter-type declarations covered the case of
+<code>declare parents &#8230;&#8203;</code> implements. The 1.5.0 release of AspectJ 5 does not
+support annotation style declarations for <code>declare parents &#8230;&#8203; extends</code>
+and <code>declare soft</code> (programs with these declarations would not in general
+be compilable by a regular Java 5 compiler, reducing the priority of
+their implementation). These may be supported in a future release.</p>
+</div>
+<div class="paragraph">
+<p>Declare annotation is also not supported in the 1.5.0 release of AspectJ 5.</p>
+</div>
+<div class="paragraph">
+<p>Declare precedence <em>is</em> supported. For declare precedence, use the
+<code>@DeclarePrecedence</code> annotation as in the following example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> aspect SystemArchitecture {
+  declare precedence : <span class="predefined-type">Security</span>*, TransactionSupport, Persistence;
+  <span class="comment">// ...</span>
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>can be written as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Aspect</span>
+<span class="annotation">@DeclarePrecedence</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Security*,org.xyz.TransactionSupport,org.xyz.Persistence</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">SystemArchitecture</span> {
+  <span class="comment">// ...</span>
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We also support annotation style declarations for declare warning and
+declare error - any corresponding warnings and errors will be emitted at
+weave time, not when the aspects containing the declarations are
+compiled. (This is the same behaviour as when using declare warning or
+error with the code style). Declare warning and error declarations are
+made by annotating a string constant whose value is the message to be
+issued.</p>
+</div>
+<div class="paragraph">
+<p>Note that the String must be a literal and not the result of the
+invocation of a static method for example.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">declare warning : call(* javax.sql..*(..)) &amp;&amp; !within(org.xyz.daos..*)
+                : <span class="string"><span class="delimiter">&quot;</span><span class="content">Only DAOs should be calling JDBC.</span><span class="delimiter">&quot;</span></span>;
+
+declare error : execution(* IFoo+.*(..)) &amp;&amp; !within(org.foo..*)
+              : <span class="string"><span class="delimiter">&quot;</span><span class="content">Only foo types can implement IFoo</span><span class="delimiter">&quot;</span></span>;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>can be written as&#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@DeclareWarning</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">call(* javax.sql..*(..)) &amp;&amp; !within(org.xyz.daos..*)</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">String</span> aMessage = <span class="string"><span class="delimiter">&quot;</span><span class="content">Only DAOs should be calling JDBC.</span><span class="delimiter">&quot;</span></span>;
+
+<span class="annotation">@DeclareError</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">execution(* IFoo+.*(..)) &amp;&amp; !within(org.foo..*)</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">String</span> badIFooImplementors = <span class="string"><span class="delimiter">&quot;</span><span class="content">Only foo types can implement IFoo</span><span class="delimiter">&quot;</span></span>;
+
+<span class="comment">// the following is not valid since the message is not a String literal</span>
+<span class="annotation">@DeclareError</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">execution(* IFoo+.*(..)) &amp;&amp; !within(org.foo..*)</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">String</span> badIFooImplementorsCorrupted = getMessage();
+<span class="directive">static</span> <span class="predefined-type">String</span> getMessage() {
+  <span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">Only foo types can implement IFoo </span><span class="delimiter">&quot;</span></span> + <span class="predefined-type">System</span>.currentTimeMillis();
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ataspectj-aspectof"><code>aspectOf()</code> and <code>hasAspect()</code> methods</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A central part of AspectJ&#8217;s programming model is that aspects written
+using the code style and compiled using ajc support <code>aspectOf</code> and
+<code>hasAspect</code> static methods. When developing an aspect using the
+annotation style and compiling using a regular Java 5 compiler, these
+methods will not be visible to the compiler and will result in a
+compilation error if another part of the program tries to call them.</p>
+</div>
+<div class="paragraph">
+<p>To provide equivalent support for AspectJ applications compiled with a
+standard Java 5 compiler, AspectJ 5 defines the <code>Aspects</code> utility class:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">Aspects</span> {
+
+  <span class="comment">/* variation used for singleton, percflow, percflowbelow */</span>
+  <span class="directive">static</span>&lt;T&gt; <span class="directive">public</span> <span class="directive">static</span> T aspectOf(T aspectType) {...}
+
+  <span class="comment">/* variation used for perthis, pertarget */</span>
+  <span class="directive">static</span>&lt;T&gt; <span class="directive">public</span> <span class="directive">static</span> T aspectOf(T aspectType, <span class="predefined-type">Object</span> forObject) {...}
+
+  <span class="comment">/* variation used for pertypewithin */</span>
+  <span class="directive">static</span>&lt;T&gt; <span class="directive">public</span> <span class="directive">static</span> T aspectOf(T aspectType, <span class="predefined-type">Class</span> forType) {...}
+
+  <span class="comment">/* variation used for singleton, percflow, percflowbelow */</span>
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">boolean</span> hasAspect(<span class="predefined-type">Object</span> anAspect) {...}
+
+  <span class="comment">/* variation used for perthis, pertarget */</span>
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">boolean</span> hasAspect(<span class="predefined-type">Object</span> anAspect, <span class="predefined-type">Object</span> forObject) {...}
+
+  <span class="comment">/* variation used for pertypewithin */</span>
+  <span class="directive">public</span> <span class="directive">static</span> <span class="type">boolean</span> hasAspect(<span class="predefined-type">Object</span> anAspect, <span class="predefined-type">Class</span> forType) {...}
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

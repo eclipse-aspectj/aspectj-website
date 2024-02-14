@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>Debugging Pointcuts</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body id="pointcuts" class="article toc2 toc-left">
+<div id="header">
+<h1>Debugging Pointcuts</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#pointcuts-introduction">Introduction</a></li>
+<li><a href="#pointcuts-debugging">Debugging pointcuts</a>
+<ul class="sectlevel2">
+<li><a href="#_top_down">Top-down</a></li>
+<li><a href="#_bottom_up">Bottom-up</a></li>
+</ul>
+</li>
+<li><a href="#_common_pointcut_mistakes">Common pointcut mistakes</a>
+<ul class="sectlevel2">
+<li><a href="#_mistakes_in_primitive_pointcuts">Mistakes in primitive pointcuts</a></li>
+<li><a href="#_mistakes_in_composition">Mistakes in composition</a></li>
+<li><a href="#_mistakes_in_implicit_advice_constraints">Mistakes in implicit advice constraints</a></li>
+<li><a href="#_mistakes_in_implementation_requirements">Mistakes in implementation requirements</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="pointcuts-introduction">Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section describes how to write and debug pointcuts using the usual
+approach of iteration and decomposition. New users are often stumped
+when their advice does not match. That means the pointcut doesn&#8217;t match;
+they rewrite the pointcut and it still doesn&#8217;t match, with no new
+information. This can be frustrating if each iteration involves
+building, deploying, and testing a complex application. Learning to
+break it down, particularly into parts that can be checked at
+compile-time, can save a lot of time.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="pointcuts-debugging">Debugging pointcuts</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Go at it top-down and then bottom-up.</p>
+</div>
+<div class="sect2">
+<h3 id="_top_down">Top-down</h3>
+<div class="paragraph">
+<p>Top-down, draft significant
+aspects by first writing the comments to specify responsibilities.
+Advice responsibility usually takes the form, <em>"When X, do Y"</em>. Pointcut
+responsibility for <em>"When X"</em> often takes the form, <em>"When [join points]
+[in locations] [are &#8230;&#8203;]"</em>. These <em>[]</em>'s often translate to named pointcuts
+like <code>libraryCalls() &amp;&amp; within(Client) &amp;&amp; args(Context)</code>, which form a
+semantic bridge to the plain-text meaning in a comment, e.g. <code>// when
+the client passes only context into the library</code>. This gets you to a
+point where you can debug the parts of the pointcut independently.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_bottom_up">Bottom-up</h3>
+<div class="paragraph">
+<p>Bottom-up (to build each part), consider each primitive pointcut
+designator (PCD), then the composition, and then any implicit
+constraints:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>What kinds of join points should it match? (constructor-call?
+field-get?)? This translates to using the kinded pointcuts (<code>call(..)</code>,
+<code>get(..)</code>, etc.).</p>
+</li>
+<li>
+<p>Are these restricted to being lexically within something? This
+translates to using <code>within{code}(..)</code>. If this is true, it should
+always be used, to speed up weaving.</p>
+</li>
+<li>
+<p>What runtime constraints and context should be true and available at
+each join point? This translates to <code>this()</code>, <code>target()</code>, <code>args()</code>,
+<code>cflow{below}()</code> and <code>if(..)</code>.</p>
+</li>
+<li>
+<p>Are there any advice or implementation limitations at issue? This
+involves knowing the few constraints on AspectJ imposed by Java bytecode
+as listed in the AspectJ Programming Guide section on
+<a href="../progguide/implementation.html#implementation">Implementation Notes</a>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>It&#8217;s much faster to iterate a pointcut at compile-time using declare
+warning (even better, some errors are identified at parse-time in the
+latest versions of AJDT). Start with the parts of the pointcut that are
+staticly-determinable (i.e., they do not involve the runtime PCD&#8217;s
+listed above). If compiles themselves take too long because of all the
+AspectJ weaving, then try to only include the debugging aspect with the
+prototype pointcut, and limit the scope using <code>within(..)</code>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_common_pointcut_mistakes">Common pointcut mistakes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are some typical types of mistakes developers make when designing pointcuts.
+Here are a few examples:</p>
+</div>
+<div class="sect2">
+<h3 id="_mistakes_in_primitive_pointcuts">Mistakes in primitive pointcuts</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><code>this(Foo) &amp;&amp; execution(static * *(..))</code>: There is no <code>this</code> in a
+static context, so <code>this()</code> or <code>target()</code> should not be used in a static
+context or when targetting a static context (respectively). This happens
+most often when you want to say things like "all calls to <code>Foo</code> from <code>Bar</code>"
+and you only pick out calls to instance methods of <code>Foo</code> or you try to
+pick out calls from static methods of <code>Bar</code>.</p>
+</li>
+<li>
+<p><code>target(Foo) &amp;&amp; call(new(..)</code>: This will never match. In
+constructor-call join points, there is no target because the object has
+not been created yet.</p>
+</li>
+<li>
+<p><code>call(* Foo.*(..))</code>: <code>Foo</code> refers to the compile-time type of the
+invoking reference, not the implementing class. In Java before 1.4, the
+compile-time type was rendered as the defining type, not the reference
+type; this was corrected in 1.4 (as shown when using ajc with the -1.4
+flag) Most people should use <code>target(Foo) &amp;&amp; call(&#8230;&#8203;)</code>.</p>
+</li>
+<li>
+<p><code>execution(* Foo.bar(..))</code>: An execution join point for <code>Foo</code> is always
+within <code>Foo</code>, so this won&#8217;t pick out any overrides of <code>bar(..)</code>. Use
+<code>target(Foo) &amp;&amp; execution(* bar(..))</code> for instance methods.</p>
+</li>
+<li>
+<p><code>within(Foo)</code>: anonymous types are not known at weave-time to be
+within the lexically-enclosing type (a limitation of Java bytecode).</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mistakes_in_composition">Mistakes in composition</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><code>call(* foo(Bar, Foo)) &amp;&amp; args(Foo)</code>: This will never match. The
+parameters in <code>args(..)</code> are position-dependent, so <code>args(Foo)</code> only
+picks out join points where there is only one argument possible, of type
+Foo. Use the indeterminate-arguments operator <code>..</code> as needed, e.g.,
+<code>args(Foo, ..)</code>.</p>
+</li>
+<li>
+<p><code>call(* foo()) &amp;&amp; execution(* foo())</code>: This will never match. Each
+pointcut must be true at each join point matched. For a union of
+different kinds of join points (here, call or execution), use <code>||</code>.
+E.g., to match both method-call and field-get join points, use
+<code>call(* &#8230;&#8203;) || get(&#8230;&#8203;)</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mistakes_in_implicit_advice_constraints">Mistakes in implicit advice constraints</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><code>after () returning (Foo foo) : &#8230;&#8203;</code>: after advice can bind the
+returned object or exception thrown. That effectively acts like
+<code>target()</code>, <code>this()</code>, or <code>args()</code> in restricting when the advice runs
+based on the runtime type of the bound object, even though it is not
+explicitly part of the pointcut.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mistakes_in_implementation_requirements">Mistakes in implementation requirements</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><em>ajc</em> has to control the code for a join point in order to implement
+the join point. This translates to an implicit <code>within({code under the
+control of the compiler})</code> for all join points, with additional caveat
+for some join points. Take exception handlers, for example: there is no
+way to be sure from the bytecode where the original handler ends, so
+<em>ajc</em> can&#8217;t implement after advice on handler join points. (Since these
+are on a per-join-point basis, they should be considered for each
+corresponding primitive pointcut designator.) Unlike the mistakes with
+the primitive PCDs above, the compiler will emit an error for these
+caveats.</p>
+</li>
+<li>
+<p><code>call(@SuperAnnotation Subclass.meth()</code>: Annotations are not inherited
+by default, so e.g., if the pointcut specifies an annotation, then
+subclass implementations of that method will not be matched.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

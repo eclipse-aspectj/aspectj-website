@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>AspectJ 1.8.4</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>AspectJ 1.8.4</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_notable_changes">Notable changes</a>
+<ul class="sectlevel2">
+<li><a href="#_support_for_isfinaltype">Support for is(FinalType)</a></li>
+<li><a href="#_thisaspectinstance_correctly_handled_with_1_8">thisAspectInstance correctly handled with -1.8</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>© Copyright 2014 Contributors. All rights reserved.</em></p>
+</div>
+<div class="paragraph">
+<p>The full list of resolved issues in 1.8.4 is available
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced;bug_status=RESOLVED;bug_status=VERIFIED;bug_status=CLOSED;product=AspectJ;target_milestone=1.8.4;">here</a></p>
+</div>
+<div class="paragraph">
+<p><em>Release info: 1.8.4 available 6-Nov-2014</em></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_notable_changes">Notable changes</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_support_for_isfinaltype">Support for is(FinalType)</h3>
+<div class="paragraph">
+<p>AspectJ has had type category type patterns since version 1.6.9, see the
+<a href="https://www.eclipse.org/aspectj/doc/released/README-1.6.9.html">README</a>.
+This enabled pointcuts to include is(..) clauses to specify which kinds
+of type they were or were not interested in matching, e.g. !within(* &amp;&amp;
+is(InnerType)) means not within innertypes. In 1.8.4 it is now possible
+to recognize (for inclusion or exclusion) final types with
+is(FinalType).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_thisaspectinstance_correctly_handled_with_1_8">thisAspectInstance correctly handled with -1.8</h3>
+<div class="paragraph">
+<p>This is the key fix in this release. Some products based on AspectJ were
+using the thisAspectInstance feature (see
+<a href="https://www.eclipse.org/aspectj/doc/released/README-1.6.12.html">README
+1.6.12</a> for more info on the feature). Unfortunately if specifying -1.8
+compliance and using the feature an error would be reported at compile
+time of the aspect. This is now fixed.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:11 +0700
+</div>
+</div>
+</body>
+</html>

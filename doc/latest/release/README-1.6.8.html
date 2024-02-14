@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>AspectJ 1.6.8</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>AspectJ 1.6.8</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_incorrect_treatment_of_some_aop_xml_includeexclude_patterns">Incorrect treatment of some aop.xml include/exclude patterns</a></li>
+<li><a href="#_stack_overflow_problem_in_referencetype_isassignablefrom">Stack overflow problem in ReferenceType.isAssignableFrom()</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>© Copyright 2009 Contributors. All rights reserved.</em></p>
+</div>
+<div class="paragraph">
+<p>The first sentence in the 1.6.7 readme was 'AspectJ 1.6.7 includes some
+radical internal changes.'</p>
+</div>
+<div class="paragraph">
+<p>Unfortunately not enough testing was done on 1.6.7 and two nasty issues
+were found that really needed addressing. Fixes for these issues are all
+that is new in 1.6.8.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_incorrect_treatment_of_some_aop_xml_includeexclude_patterns">Incorrect treatment of some aop.xml include/exclude patterns</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>See <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=298786">Bug 298786</a></p>
+</div>
+<div class="paragraph">
+<p>Basically, if a certain combination of includes and excludes were
+specified in the within section, then the weaver would fail to merge
+them correctly. The conditions for the failure are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>you need an exclude pattern that the weaver is not optimizing for
+(basically a pattern that could not be matched based upon the typename
+alone, eg. based on whether the type has an annotation)</p>
+</li>
+<li>
+<p>you need two include patterns - one that is being optimized and one
+that is not</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These three meet that spec:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;include</span> <span class="attribute-name">within</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">*</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+<span class="tag">&lt;include</span> <span class="attribute-name">within</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">@Foo *</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+<span class="tag">&lt;exclude</span> <span class="attribute-name">within</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">*Funk*y*</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The include="<strong>" can be optimized. The include="@Foo *" is not optimized.
+The exclude="*Funk*y</strong>" is not optimized (this one could be but isn&#8217;t
+right now as it includes multiple wildcards).</p>
+</div>
+<div class="paragraph">
+<p>With that configuration any types that the include="*" would have
+accepted are not accepted.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_stack_overflow_problem_in_referencetype_isassignablefrom">Stack overflow problem in ReferenceType.isAssignableFrom()</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>See <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=298908">Bug 298908</a></p>
+</div>
+<div class="paragraph">
+<p>This is actually a problem AspectJ has had for a long time, but has
+always proved elusive to recreate. It turns out that it is memory
+related and the more aggressive policy in 1.6.7 causes it to occur much
+more frequently.</p>
+</div>
+<div class="paragraph">
+<p>The stack trace when this is hit looks like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">...
+at org.aspectj.weaver.ReferenceType.isAssignableFrom(ReferenceType.java:393)
+at org.aspectj.weaver.ReferenceType.isAssignableFrom(ReferenceType.java:427)
+at org.aspectj.weaver.ReferenceType.isAssignableFrom(ReferenceType.java:393)
+at org.aspectj.weaver.ReferenceType.isAssignableFrom(ReferenceType.java:427)
+at org.aspectj.weaver.ReferenceType.isAssignableFrom(ReferenceType.java:393)
+at org.aspectj.weaver.ReferenceType.isAssignableFrom(ReferenceType.java:427)
+at org.aspectj.weaver.ReferenceType.isAssignableFrom(ReferenceType.java:393)
+at org.aspectj.weaver.ReferenceType.isAssignableFrom(ReferenceType.java:427)
+at org.aspectj.weaver.ReferenceType.isAssignableFrom(ReferenceType.java:393)
+at org.aspectj.weaver.ReferenceType.isAssignableFrom(ReferenceType.java:427)
+at org.aspectj.weaver.ReferenceType.isAssignableFrom(ReferenceType.java:393)
+...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The weaver has changed over the 1.5 and 1.6 releases and is now reaching
+a point where it really shrinks quite small when not in use (maybe in a
+loadtime environment you have finished loading all your classes). The
+aim is that it can rebuild any required state that is needed later. With
+the move in 1.6.7 from Soft to Weak references, things are being
+discarded much sooner and this is exercising the state rebuilding code
+that wasn&#8217;t used that often prior to 1.6.7.</p>
+</div>
+<div class="paragraph">
+<p>The problem is actually because the call on a generic type to get the
+raw type was actually broken and returning the generic type. This then
+loops forever trying to get the raw type from the generic type. This
+happens because the world should store only raw types (which point to
+their generic form) but there was a bug in state rebuilding that instead
+put the generic type directly in the world.</p>
+</div>
+<hr>
+<div class="paragraph">
+<p>Thanks to everyone who helped get to the bottom of these problems.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:11 +0700
+</div>
+</div>
+</body>
+</html>

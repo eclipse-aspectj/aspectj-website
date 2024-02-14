@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>Idioms</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>Idioms</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#idioms-intro">Introduction</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="idioms-intro">Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This chapter consists of very short snippets of AspectJ code, typically
+pointcuts, that are particularly evocative or useful. This section is a
+work in progress.</p>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s an example of how to enfore a rule that code in the <code>java.sql</code>
+package can only be used from one particular package in your system.
+This doesn&#8217;t require any access to code in the <code>java.sql</code> package.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">/* Any call to methods or constructors in java.sql */</span>
+pointcut restrictedCall():
+  call(* java.sql.*.*(..)) || call(java.sql.*.new(..));
+
+<span class="comment">/* Any code in my system not in the sqlAccess package */</span>
+pointcut illegalSource():
+  within(com.foo..*) &amp;&amp; !within(com.foo.sqlAccess.*);
+
+declare error: restrictedCall() &amp;&amp; illegalSource():
+  <span class="string"><span class="delimiter">&quot;</span><span class="content">java.sql package can only be accessed from com.foo.sqlAccess</span><span class="delimiter">&quot;</span></span>;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Any call to an instance of a subtype of <code>AbstractFacade</code> whose class is
+not exactly equal to <code>AbstractFacade</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut nonAbstract(AbstractFacade af):
+  call(* *(..))
+  &amp;&amp; target(af)
+  &amp;&amp; !<span class="keyword">if</span>(af.getClass() == AbstractFacade.class);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If <code>AbstractFacade</code> is an abstract class or an interface, then every
+instance must be of a subtype and you can replace this with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut nonAbstract(AbstractFacade af):
+  call(* *(..))
+  &amp;&amp; target(af);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Any call to a method which is defined by a subtype of <code>AbstractFacade</code>,
+but which isn&#8217;t defined by the type <code>AbstractFacade</code> itself:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut callToUndefinedMethod():
+   call(* AbstractFacade+.*(..))
+   &amp;&amp; !call(* AbstractFacade.*(..));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The execution of a method that is defined in the source code for a type
+that is a subtype of <code>AbstractFacade</code> but not in <code>AbstractFacade</code> itself:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">pointcut executionOfUndefinedMethod():
+  execution(* *(..))
+  &amp;&amp; within(AbstractFacade+)
+  &amp;&amp; !within(AbstractFacade)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>

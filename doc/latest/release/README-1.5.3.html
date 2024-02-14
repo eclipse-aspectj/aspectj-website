@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>AspectJ 5 v1.5.3 Readme</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>AspectJ 5 v1.5.3 Readme</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_pipeline_compilation_146781">Pipeline compilation - 146781</a></li>
+<li><a href="#_serviceability_150487">Serviceability - 150487</a></li>
+<li><a href="#_ltw_enhancements">LTW enhancements</a>
+<ul class="sectlevel2">
+<li><a href="#_user_and_system_configuration_files_149289">User and System Configuration Files - 149289</a></li>
+<li><a href="#_weaving_concrete_aspects_defined_in_aop_xml_132080">Weaving Concrete Aspects Defined in aop.xml - 132080</a></li>
+</ul>
+</li>
+<li><a href="#_pertypewithin_enhancement_123423">Pertypewithin enhancement - 123423</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>© Copyright 2006 Contributors. All rights reserved.</em></p>
+</div>
+<div class="paragraph">
+<p>This release includes a number of bug fixes and enhancements (over 80).
+The full list of resolved issues can be found with
+<a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=&amp;product=AspectJ&amp;target_milestone=1.5.3&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=">this
+bugzilla query</a>.</p>
+</div>
+<div class="paragraph">
+<p>Notable changes since the 1.5.2 release include:<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_pipeline_compilation_146781">Pipeline compilation - <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=146781">146781</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Until this release, the memory profile for AspectJ looked like this
+(time is along the X axis, memory usage is the Y axis)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">     /\_
+    /   \_
+   /      \_
+  /         \_
+ /            \_
+/               \</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The first phase (as we go up and up and up) is the compilation of every
+file - when the peak is reached we then start weaving files one by one,
+discarding them once woven and dumped to disk. In 1.5.3 we don&#8217;t compile
+everything up front - we compile and weave files one at a time. Giving
+us this profile:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">  /\  /\  /\
+ /  \/  \/  \
+/            \</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Each peak is compiling a file, then it is woven, dumped to disk and the
+space recovered (the trough) - we then move onto the next file. What
+does this mean? The peaks are far far lower, so you need far less memory
+to compile a project. For example, I have a 1000file project, affected
+by aspects at &gt;750 join points. For given values of Xmx, here are the
+times taken to compile it (on the command line) with AspectJ1.5.2:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">Xmx  Time
+512M 33seconds
+256M 40seconds
+220M 116seconds
+212M OutOfMemory</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The times gradually increase as the memory is reduced because the VM
+starts to thrash in garbage collection. Here are the results for
+AspectJ1.5.3:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="text">Xmx  Time
+512M 33s
+256M 33s
+180M 33s
+140M 33s
+100M 35s
+80M  43s
+70M  OutOfMemory</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So with 1.5.3, it isn&#8217;t until around 80M that the VM starts to struggle
+with memory. These savings will affect any code built from source: on
+the command line, in Ant, or in AJDT. It will not affect binary weaving
+- that is a future enhancement.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_serviceability_150487">Serviceability - <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=150487">150487</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As AspectJ grows in popularity, we find that it is becoming more
+difficult for users to come up with the small testcases that recreate
+problems - the usage scenarios for AJ are becoming more and more
+sophisticated. To help us work on problems in these scenarios we have
+added a tracing and logging framework and improved our dump mechanism.
+These traces and dumps can be attached to bug reports. In AspectJ 1.5.3
+we have included some
+<a href="https://www.eclipse.org/aspectj/doc/released/pdguide/index.html">documentation</a>
+on how to configure these new features. Don&#8217;t be surprised if you get
+asked for an AspectJ trace on a future bug report!</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ltw_enhancements">LTW enhancements</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_user_and_system_configuration_files_149289">User and System Configuration Files - <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=149289">149289</a></h3>
+<div class="paragraph">
+<p>The <code>-outxml</code> option now generates a file named <code>META-INF/aop-ajc.xml</code>.
+This no longer clashes with a user defined <code>META-INF/aop.xml</code>
+configuration file. Both file names along with an OSGi-friendly
+<code>org/aspectj/aop.xml</code> (which can also be signed) are used by default to
+configure LTW.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_weaving_concrete_aspects_defined_in_aop_xml_132080">Weaving Concrete Aspects Defined in aop.xml - <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=132080">132080</a></h3>
+<div class="paragraph">
+<p>Concrete aspects defined using aop.xml are now exposed for weaving.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_pertypewithin_enhancement_123423">Pertypewithin enhancement - <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=123423">123423</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>It is now possible to ask an instance of a ptw aspect which type it is
+'attached' to. The method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="predefined-type">String</span> getWithinTypeName()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>can be called on an aspect and will return the full qualified name of
+the type (eg. "com.foo.MyClass")</p>
+</div>
+<hr>
+<div class="paragraph">
+<p>For information on bug fixes in AspectJ 5 v1.5.3, see the
+<a href="changes.html">changes</a> document.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-01 14:58:10 +0700
+</div>
+</div>
+</body>
+</html>
