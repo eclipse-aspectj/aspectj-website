@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>AspectJ 1.8.13</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>AspectJ 1.8.13</h1>
+</div>
+<div id="content">
+<div class="paragraph">
+<p><em>© Copyright 2017 Contributors. All rights reserved.</em></p>
+</div>
+<div class="paragraph">
+<p><em>Release info: 1.8.13 available 15-Nov-2017</em></p>
+</div>
+<div class="paragraph">
+<p>Small release that:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Dials back the performance optimizations for Spring AOP. One of them was taking things too far and has caused an
+issue <a href="https://jira.spring.io/browse/SPR-16161">SPR-16161</a>. This wasn&#8217;t the main performance enhancement for
+Spring AOP though so the numbers are still very close to those shown in the 1.8.12 readme.</p>
+</li>
+<li>
+<p>Includes better toleration of new JDK versions. If the versions are coming out thick and fast we need older
+AspectJs to cope when simply running on new JDKs they haven&#8217;t encountered before.</p>
+</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

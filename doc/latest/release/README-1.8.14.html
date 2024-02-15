@@ -5,25 +5,34 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<title>AspectJ 1.7.3</title>
+<title>AspectJ 1.8.14</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <link rel="stylesheet" href="./asciidoctor.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body class="article">
 <div id="header">
-<h1>AspectJ 1.7.3</h1>
+<h1>AspectJ 1.8.14</h1>
 </div>
 <div id="content">
 <div class="paragraph">
-<p><em>© Copyright 2011 Contributors. All rights reserved.</em></p>
+<p><em>© Copyright 2019 Contributors. All rights reserved.</em></p>
 </div>
 <div class="paragraph">
-<p><em>Release info: 1.7.3 available 13-Jun-2013</em></p>
+<p><em>Release info: 1.8.14 available 6-Mar-2019</em></p>
 </div>
 <div class="paragraph">
-<p>The list of resolved issues in 1.7.3 is available
-<a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced;bug_status=RESOLVED;bug_status=VERIFIED;bug_status=CLOSED;product=AspectJ;target_milestone=1.7.3;">here</a></p>
+<p>Small release that:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Will skip <code>module-info.class</code> and class files under <code>META-INF</code> that you find in multi-release JARs, as described in
+<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=545033">bug 545033</a>. This enables some usage of AspectJ 8 operating
+on JARs containing some of these features from later Java (but where the main set of classfiles in a JAR are Java 8
+or lower). For proper treatment of Java 9 code, please use AspectJ 1.9 or later.</p>
+</li>
+</ul>
 </div>
 </div>
 </body>
