@@ -3,9 +3,9 @@
   <bugzilla>
     <product name="AspectJ"/>
   </bugzilla>
-  <committers url="/aspectj/committers.php"/>
-  <contributors url="/aspectj/contributors.php"/>
-  <leaders url="/aspectj/committers.php"/>
+  <committers url="/aspectj/team.php"/>
+  <contributors url="/aspectj/team.php"/>
+  <leaders url="/aspectj/team.php"/>
 
   <cvs repository="/cvsroot/tools/">
     <module path="org.aspectj/modules"/>
