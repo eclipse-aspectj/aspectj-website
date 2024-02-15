@@ -44,7 +44,7 @@ HTML;
 
   $Nav->addNavSeparator("Developers", "", "_self", 1);
   #$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;Contributing", "/aspectj/developers.php", 	"_self", 1);
-  $Nav->addCustomNav("&nbsp;&nbsp;&nbsp;Git Repo", "https://github.com/eclipse-aspectj/aspectj", "_self", 1);
+  $Nav->addCustomNav("&nbsp;&nbsp;&nbsp;Source code", "https://github.com/eclipse-aspectj/aspectj", "_self", 1);
   $Nav->addCustomNav("&nbsp;&nbsp;&nbsp;Mailing list", "https://dev.eclipse.org/mailman/listinfo/aspectj-dev", "_self", 1);
   #$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;Work tasks", "/aspectj/tasks.php", 	"_self", 1);
 
