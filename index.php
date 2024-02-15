@@ -92,6 +92,72 @@
 
   </div>
 
+    <div class="homeitem">
+      <h3>Recent Books and Articles</h3>
+      <ul>
+
+        <li>
+          <a href="https://manning.com/laddad2/"/>AspectJ in Action, Second Edition</a><br>
+          March 2009<br>
+          by Ramnivas Laddad
+        </li>
+
+        <li>
+          <a href="https://www.infoq.com/articles/aspectj-with-ajdt">Making AspectJ development easier with AJDT</a>
+          by Matt Chapman
+        </li>
+
+        <li>
+          <a href="https://www.regdeveloper.co.uk/2006/10/26/aspects_java_aop/">RegDeveloper: Aspect oriented programming
+            with Java</a>
+          by John Hunt
+        </li>
+
+        <li>
+          <a href="https://www.eclipse.org/articles/Article-Introducing-AJDT/article.html">Introducing AJDT: The AspectJ
+            Development Tools</a>
+          by Matt Chapman
+        </li>
+
+        <li>
+          <a target="_top" href="https://www-128.ibm.com/developerworks/java/library/j-aopwork17.html">
+            &quot;AOP@Work: Component Design with Contract4J&quot;</a>
+          by Dean Wampler
+        </li>
+
+        <li>
+          <a target="_top" href="https://www.ibm.com/developerworks/views/java/libraryview.jsp?search_by=AOP@work">
+            &quot;AOP@Work series on IBM developerWorks&quot;</a>
+          Series lead: Nicholas Lesiecki
+        </li>
+
+        <li>
+          <a target="_top" href="https://www.ratio.co.uk/objectiveview.html">
+            &quot;Introduction to AOP&quot;</a> in ObjectiveView Issue 9
+          by Alex Ruiz
+        </li>
+
+        <li>
+          <a target="_top" href="https://www.ibm.com/developerworks/java/library/j-aopwork15/">
+            &quot;AOP@Work: AOP myths and realities&quot;</a>
+          by Ramnivas Laddad
+        </li>
+
+        <li>
+          <a target="_top" href="https://www.ibm.com/developerworks/java/library/j-aopwork14/">
+            &quot;AOP@Work: Check out library aspects with AspectJ 5&quot;</a>
+          by Wes Isberg
+        </li>
+
+        <li>
+          <a target="_top" href="https://www.ibm.com/developerworks/java/library/j-aopwork13.html">
+            &quot;AOP@Work: Dependency Injection with AspectJ and Spring&quot;</a>
+          by Adrian Colyer
+        </li>
+
+      </ul>
+    </div>
+
   </div>
 </div>
 HTML;
