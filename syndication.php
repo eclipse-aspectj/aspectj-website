@@ -7,23 +7,23 @@
   <h2>See also...</h2>
 
   <ul>
-    <li><a target="_top" href="http://aosd.net">AOSD.net</a></li>
-    <li><a target="_top" href="http://www.parc.com/research/csl/projects/aspectj/default.html">AspectJ PARC Page</a>
+    <li><a target="_top" href="https://aosd.net">AOSD.net</a></li>
+    <li><a target="_top" href="https://www.parc.com/research/csl/projects/aspectj/default.html">AspectJ PARC Page</a>
     </li>
-    <li><a href="http://www.amazon.com/exec/obidos/ASIN/0321245873/qid=1112868888/sr=2-3/ref=pd_bbs_b_2_3/103-5274059-2049410">
+    <li><a href="https://www.amazon.com/exec/obidos/ASIN/0321245873/qid=1112868888/sr=2-3/ref=pd_bbs_b_2_3/103-5274059-2049410">
         Eclipse AspectJ</a> the book, by some of the leading AspectJ committers
     </li>
   </ul>
 
   <p align="center">
-    <a href="http://www.amazon.com/exec/obidos/ASIN/0321245873/qid=1112868888/sr=2-3/ref=pd_bbs_b_2_3/103-5274059-2049410">
+    <a href="https://www.amazon.com/exec/obidos/ASIN/0321245873/qid=1112868888/sr=2-3/ref=pd_bbs_b_2_3/103-5274059-2049410">
       <img src="images/s_eclipseaspectj.gif" alt="Eclipse AspectJ Book Cover"/>
     </a>
   </p>
 
   <!-- ============ The Aspects Blog portlet ============== -->
 
-  <h3><a href="http://www.aspectprogrammer.org/blogs/adrian">The Aspects Blog</a></h3>
+  <h3><a href="https://www.aspectprogrammer.org/blogs/adrian">The Aspects Blog</a></h3>
 
   <ul>
     <?php require('syndication/aspectprogrammer.html'); ?>
@@ -31,7 +31,7 @@
 
   <!-- ============ Alex's Blog ============== -->
 
-  <h3><a href="http://blogs.codehaus.org/people/avasseur">Alex Vasseur's blog</a></h3>
+  <h3><a href="https://blogs.codehaus.org/people/avasseur">Alex Vasseur's blog</a></h3>
 
   <ul>
     <?php require('syndication/alex.html'); ?>
@@ -39,14 +39,14 @@
 
   <!-- ============ Aspectivity blog portlet =============== -->
 
-  <h3><a href="http://ramnivas.com/blog/">Aspectivity</a></h3>
+  <h3><a href="https://ramnivas.com/blog/">Aspectivity</a></h3>
   <ul>
     <?php require('syndication/aspectivity.html'); ?>
   </ul>
 
   <!-- ============= Ron Bodkin's blog portlet ========== -->
 
-  <h3><a href="http://rbodkin.blogs.com/ron_bodkins_blog/aspectoriented_programming/index.html">Ron Bodkin on AOP</a>
+  <h3><a href="https://rbodkin.blogs.com/ron_bodkins_blog/aspectoriented_programming/index.html">Ron Bodkin on AOP</a>
   </h3>
   <ul>
     <?php require('syndication/ron.html'); ?>
@@ -54,7 +54,7 @@
 
   <!-- ============ Jonas' Blog ============== -->
 
-  <h3><a href="http://blogs.codehaus.org/people/jboner">Jonas Bon�r's blog</a></h3>
+  <h3><a href="https://blogs.codehaus.org/people/jboner">Jonas Bon�r's blog</a></h3>
 
   <ul>
     <?php require('syndication/jonas.html'); ?>
@@ -62,7 +62,7 @@
 
   <!-- ========== Dion's blog portlet =============== -->
 
-  <h3><a href="http://www.almaer.com/blog/archives/cat_aop.html">Dion Almaer on AOP</a></h3>
+  <h3><a href="https://www.almaer.com/blog/archives/cat_aop.html">Dion Almaer on AOP</a></h3>
   <ul>
     <?php require('syndication/dion.html'); ?>
   </ul>
@@ -73,10 +73,10 @@
 
     <ul>
      <xphp require('syndication/news.html'); ?>
-      <li><a href="http://news.search.yahoo.com/search/news/?ei=ISO-8859-1&c=&p=aspectj" target=\"external\">
+      <li><a href="https://news.search.yahoo.com/search/news/?ei=ISO-8859-1&c=&p=aspectj" target=\"external\">
          more from Yahoo...</a>
       </li>
-      <li><a href="http://news.google.com/news?hl=en&ned=us&q=aspectj&ie=UTF-8&scoring=d" target=\"external\">
+      <li><a href="https://news.google.com/news?hl=en&ned=us&q=aspectj&ie=UTF-8&scoring=d" target=\"external\">
          more from Google...</a>
       </li>
 

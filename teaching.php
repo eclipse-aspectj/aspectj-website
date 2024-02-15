@@ -12,10 +12,10 @@
   $pageAuthor = "Type your name here";
 
   # Add page-specific Nav bars here
-  # Format is Link text, link URL (can be http://www.someothersite.com/), target (_self, _blank), level (1, 2 or 3)
+  # Format is Link text, link URL (can be https://www.someothersite.com/), target (_self, _blank), level (1, 2 or 3)
   # $Nav->addNavSeparator("My Page Links", 	"downloads.php");
   # $Nav->addCustomNav("My Link", "mypage.php", "_self", 3);
-  # $Nav->addCustomNav("Google", "http://www.google.com/", "_blank", 3);
+  # $Nav->addCustomNav("Google", "https://www.google.com/", "_blank", 3);
   # End: page-specific settings
 
   # Paste your HTML content between the HTML markers!
@@ -47,7 +47,7 @@
         <td>Prof. Oege de Moor</td>
         <td>Oxford University</td>
         <td>3rd year undergraduate course (also available as an MSc module) on AOP. Uses
-          the <a href="http://www.aspectbench.org">abc compiler</a> for AspectJ. [<a href="http://web.comlab.ox.ac.uk/oucl/courses/topics04-05/ood/">Course materials</a>]
+          the <a href="https://www.aspectbench.org">abc compiler</a> for AspectJ. [<a href="https://web.comlab.ox.ac.uk/oucl/courses/topics04-05/ood/">Course materials</a>]
         </td>
       </tr>
       <tr>
@@ -61,71 +61,71 @@
         <td>Jeff Gray, Ph.D.</td>
         <td>University of Alabama at Birmingham</td>
         <td>Course on Reflective and Adaptive systems with 6 weeks of AOP content.
-          [<a href="http://www.cis.uab.edu/cs622/">Course materials</a>,
-          <a href="http://www.cis.uab.edu/gray/Pubs/scicop-2004.pdf">paper</a>]
+          [<a href="https://www.cis.uab.edu/cs622/">Course materials</a>,
+          <a href="https://www.cis.uab.edu/gray/Pubs/scicop-2004.pdf">paper</a>]
         </td>
       </tr>
       <tr>
         <td>Dr Awais Rashid</td>
         <td>Lancaster University</td>
         <td>MSc. module on AOSD
-          [<a href="http://www.comp.lancs.ac.uk/postgraduates/mod_aosd.html">Course materials</a>]
+          [<a href="https://www.comp.lancs.ac.uk/postgraduates/mod_aosd.html">Course materials</a>]
         </td>
       </tr>
       <tr>
         <td>Paulo Borba, Sergio Soares</td>
         <td>Federal University of Pernambuco</td>
         <td>Aspect-Oriented Programming course
-          [<a href="http://www.cin.ufpe.br/~scbs/talp1/index_en.html">Course materials</a>]
+          [<a href="https://www.cin.ufpe.br/~scbs/talp1/index_en.html">Course materials</a>]
         </td>
       </tr>
       <tr>
         <td>Sergio Soares</td>
         <td>Catholic University of Pernambuco</td>
         <td>Aspect-Oriented Programming course
-          [<a href="http://www.dei.unicap.br/~sergio/tac/">Course materials</a>]
+          [<a href="https://www.dei.unicap.br/~sergio/tac/">Course materials</a>]
         </td>
       </tr>
       <tr>
         <td>Francisco Reverbel</td>
         <td>University of Sao Paulo</td>
         <td>Object-Oriented Programming course (with aspect content)
-          [<a href="http://www.ime.usp.br/~kon/MAC5715/aulas/Aula16.html">Course materials</a>]
+          [<a href="https://www.ime.usp.br/~kon/MAC5715/aulas/Aula16.html">Course materials</a>]
         </td>
       </tr>
       <tr>
         <td>Bedir Tekinerdogan, Ph.D.</td>
         <td>University of Twente, The Netherlands</td>
         <td>Aspect Oriented Software Development course
-          [<a href="http://www.cs.bilkent.edu.tr/taosd03">Course materials</a>]
+          [<a href="https://www.cs.bilkent.edu.tr/taosd03">Course materials</a>]
         </td>
       </tr>
       <tr>
         <td>Wim Vanderperren</td>
         <td>Vrije Universiteit Brussel (Belgium)</td>
         <td>Masters course in Aspect-Oriented Programming
-          [<a href="http://ssel.vub.ac.be/index.php?sitecommand=./Courses/technieken/index.php">Course materials</a>]
+          [<a href="https://ssel.vub.ac.be/index.php?sitecommand=./Courses/technieken/index.php">Course materials</a>]
         </td>
       </tr>
       <tr>
         <td>Constantinos Constantinides</td>
         <td>Concordia University</td>
         <td>Software Comprehension and Maintenance (including AOP and AO refactoring)
-          [<a href="http://www.cs.concordia.ca/~comp6431">Course materials</a>]
+          [<a href="https://www.cs.concordia.ca/~comp6431">Course materials</a>]
         </td>
       </tr>
       <tr>
         <td>Dr.Guenter Kniesel</td>
         <td>Bonn University</td>
         <td>AOSD course
-          [<a href="http://roots.iai.uni-bonn.de/teaching/vorlesungen/2004aosd/">Course materials</a>]
+          [<a href="https://roots.iai.uni-bonn.de/teaching/vorlesungen/2004aosd/">Course materials</a>]
         </td>
       </tr>
       <tr>
         <td>Jonathan Aldrich</td>
         <td>Carnegie Mellon University</td>
         <td>Objects and Aspects: Language Support for Extensibility and Evolvability
-          [<a href="http://www-2.cs.cmu.edu/~aldrich/courses/819">Course materials</a>]
+          [<a href="https://www-2.cs.cmu.edu/~aldrich/courses/819">Course materials</a>]
         </td>
       </tr>
       <tr>
@@ -138,21 +138,21 @@
       <tr>
         <td>Walter Cazzola PhD</td>
         <td>University of Milano</td>
-        <td>Reflection and Aspect-Oriented Programming [<a href="http://www.disi.unige.it/person/CazzolaW">
+        <td>Reflection and Aspect-Oriented Programming [<a href="https://www.disi.unige.it/person/CazzolaW">
           Course materials</a>]
         </td>
       </tr>
       <tr>
         <td>Mariano Ceccato, Filippo Ricca</td>
         <td>University of Trento, Italy</td>
-        <td>Laboratory of Sofware Analysis (1 topic of many) [<a href="http://star.itc.it/ricca/swatII">
+        <td>Laboratory of Sofware Analysis (1 topic of many) [<a href="https://star.itc.it/ricca/swatII">
           Course materials</a>]
         </td>
       </tr>
       <tr>
         <td>Dr Dirk Heuzeroth</td>
         <td>University of Karlsruhe, Germany</td>
-        <td>Component Based Software Engineering [<a href="http://www.info.uni-karlsruhe.de/lehre/2004SS/swk">
+        <td>Component Based Software Engineering [<a href="https://www.info.uni-karlsruhe.de/lehre/2004SS/swk">
           Course materials</a>]
         </td>
       </tr>
@@ -160,14 +160,14 @@
         <td>Gary T. Leavens</td>
         <td>Iowa State University</td>
         <td>ComS541 - discusses AspectJ from the perspective of programming language design and semantics [
-          <a href="http://www.cs.iastate.edu/~leavens/ComS541/lectures/aspectj/">Course materials</a>]
+          <a href="https://www.cs.iastate.edu/~leavens/ComS541/lectures/aspectj/">Course materials</a>]
         </td>
       </tr>
       <tr>
         <td>Gregor Kiczales</td>
         <td>University of British Columbia</td>
         <td>4th year undergraduate compiler course builds a simple AspectJ compiler [
-          <a href="http://www.ugrad.cs.ubc.ca/~cs411/">Course Materials</a>]
+          <a href="https://www.ugrad.cs.ubc.ca/~cs411/">Course Materials</a>]
         </td>
       </tr>
       <tr>
@@ -176,14 +176,14 @@
         <td>Northeastern University
         </td>
         <td>Several Masters Courses, see the
-          [<a href="http://www.ccs.neu.edu/research/demeter/course/AspectJ_For_Teaching/">Information Page</a>]
+          [<a href="https://www.ccs.neu.edu/research/demeter/course/AspectJ_For_Teaching/">Information Page</a>]
         </td>
       </tr>
       <tr>
         <td>Manuel Menezes de Sequeira</td>
         <td>ISCTE (Instituto Superior de Ciencias do Trabalho e da Empresa)</td>
         <td>5th year course on advanced programming with substantial part on AOP using AspectJ
-          [<a href="http://www.iscte.pt/PA/">Course Materials (Portuguese)</a>]
+          [<a href="https://www.iscte.pt/PA/">Course Materials (Portuguese)</a>]
         </td>
       </tr>
 
@@ -225,7 +225,7 @@
         <td>Filippo Diotalevi</td>
         <td>Politecnico of Milan-Como</td>
         <td>Single lecture on AOP and AspectJ
-          [<a href="http://www.jugmilano.it/jsp/Wiki?seminario+policomo+gennaio+2005">
+          [<a href="https://www.jugmilano.it/jsp/Wiki?seminario+policomo+gennaio+2005">
             Slides</a> (Italian)].
         </td>
       </tr>
@@ -284,7 +284,7 @@
           Lesiecki, Mira Mezini
         </td>
         <td>
-          <a href="http://www.aspectmentor.com">AspectMentor</a>
+          <a href="https://www.aspectmentor.com">AspectMentor</a>
         </td>
         <td>A group of recognised experts in AOP and AOSD that offer two-day training
           courses in AOP in addition to consultancy services.
@@ -294,12 +294,12 @@
         <td>Antti Karanta</td>
         <td>FCS Partners, Finland</td>
         <td>A 2-day intensive course on AOP / AspectJ [
-          <a href="http://www.fcspartners.fi/koulutus/kurssit/1267.html">link</a>].
+          <a href="https://www.fcspartners.fi/koulutus/kurssit/1267.html">link</a>].
         </td>
       </tr>
       <tr>
         <td>
-          <a href="http://aspectjcookbook.com">Russ Miles</a>
+          <a href="https://aspectjcookbook.com">Russ Miles</a>
         </td>
         <td>General Dynamics UK</td>
         <td>Has developed an internal course for GD, and is able to offer courses
@@ -310,7 +310,7 @@
         <td>
           Bill Burke
         </td>
-        <td><a href="http://www.jboss.org">JBoss Group</a></td>
+        <td><a href="https://www.jboss.org">JBoss Group</a></td>
         <td>Teaches a JBoss AOP unit at every JBoss training event</td>
       </tr>
       </tbody>

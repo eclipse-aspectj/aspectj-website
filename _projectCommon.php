@@ -26,13 +26,13 @@ HTML;
   $Nav->setLinkList(array());
 
   # Define your project-wide Nav bars here.
-  # Format is Link text, link URL (can be http://www.someothersite.com/), target (_self, _blank), level (1, 2 or 3)
+  # Format is Link text, link URL (can be https://www.someothersite.com/), target (_self, _blank), level (1, 2 or 3)
   $Nav->addNavSeparator("AspectJ", "/aspectj/index.php");
   $Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;About This Project",
     "/projects/project_summary.php?projectid=tools.aspectj", "", 1);
   #$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;About AspectJ", "/aspectj/description.php", "_self", 1);
   $Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Team", "/aspectj/team.php", "_self", 1);
-  $Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Plans", "http://www.eclipse.org/projects/project-plan.php?projectid=tools.aspectj", "_self", 1);
+  $Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Plans", "https://www.eclipse.org/projects/project-plan.php?projectid=tools.aspectj", "_self", 1);
 
   $Nav->addNavSeparator("Users", "", "_self", 1);
   #$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Getting Started", 	"/aspectj/gettingstarted.php", 	"_self", 1);
@@ -44,8 +44,8 @@ HTML;
 
   $Nav->addNavSeparator("Developers", "", "_self", 1);
   #$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;Contributing", "/aspectj/developers.php", 	"_self", 1);
-  $Nav->addCustomNav("&nbsp;&nbsp;&nbsp;Git Repo", "http://git.eclipse.org/c/aspectj/org.aspectj.git", "_self", 1);
-  $Nav->addCustomNav("&nbsp;&nbsp;&nbsp;Mailing list", "http://dev.eclipse.org/mailman/listinfo/aspectj-dev", "_self", 1);
+  $Nav->addCustomNav("&nbsp;&nbsp;&nbsp;Git Repo", "https://git.eclipse.org/c/aspectj/org.aspectj.git", "_self", 1);
+  $Nav->addCustomNav("&nbsp;&nbsp;&nbsp;Mailing list", "https://dev.eclipse.org/mailman/listinfo/aspectj-dev", "_self", 1);
   #$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;Work tasks", "/aspectj/tasks.php", 	"_self", 1);
 
 ?>

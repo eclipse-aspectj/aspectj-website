@@ -25,7 +25,7 @@ ajde-core,      166580,   Helen Beeken,       <500,       aclement,       fix to
 ajdoc,          168795,   Arno Schmidmeier,   <500,       aclement,       reactivated the ajdoc Ant task
 ajde,           168840,   Helen Beeken,       <500,       aclement,       fix to detect changes on inpath correctly
 various,        193065,   Linton Ye,          <500,       aclement,       new custommungerfactory support for 'PointcutDoctor'
- 
+
 For AspectJ 1.5.3:
 component,      bug#,     name,               size,       committer,      description
 compiler,       125981,   Helen Hawkins,      <50,        aclement,       fix for declare soft not working in anonymous class
@@ -45,7 +45,7 @@ ajdtcore,       150467,   Helen Hawkins,      <50,        aclement,       AST pa
 weaver,         150671,   Helen Hawkins,      <50,        aclement,       fix for deow volatile
 ajdtcore,       110465,   Eduardo Piveta,     <500,       aclement,       AST changes
 ajdtcore,       110465,   Helen Hawkins,      <1000,      aclement,       AST changes
-loadtime,       152366,   Ron Bodkin,         <50,        aclement,       bug fix 
+loadtime,       152366,   Ron Bodkin,         <50,        aclement,       bug fix
 bcel,           152979,   Ron Bodkin,         <500,       aclement,       bcel class caching
 various,        154054,   Helen Hawkins,      <50,        aclement,       incremental building and change in around advice
 weaver,         155139,   Ron Bodkin,         <50,        aclement,       clarify message for circularDependency
@@ -64,7 +64,7 @@ For AspectJ 1.5.2a:
 component,      bug#,     name,               size,       committer,      description
 weaver,         121312,   Ron Bodkin,         <100,       aclement,       reflection delegates for bootstrap types
 ajdtcore,       129282,   Helen Hawkins,      <200,       aclement,       improved interaction between javac warnings and Aj constructs
-weaver,         133117,   Helen Hawkins,      <100,       aclement,       remove duplicate warnings 
+weaver,         133117,   Helen Hawkins,      <100,       aclement,       remove duplicate warnings
 weaver,         134371,   Helen Hawkins,      <50,        aclement,       bug fix
 runtime,        135780,   Ron Bodkin,         <50,        aclement,       removed Java2 dependency
 weaver,         136665,   Ron Bodkin,         <50,        aclement,       coping with bad classpath
@@ -76,7 +76,7 @@ runtime,        145086,   Ron Bodkin,         <50,        aclement,       bug fi
 various,        146456,   Helen Hawkins,      <50,        aclement,       structure model related bug
 
 
-For AspectJ 1.5.1: 
+For AspectJ 1.5.1:
 component,          bug#,       name,               size,       committer,          description
 ajdoc,              58520,      Helen Hakwins,      <100,       aclement,           ajdoc fixes
 ajdoc,              58524,      Helen Hawkins,      <1000,      aclement,           ajdoc fixes
@@ -128,4 +128,4 @@ Ipzilla CQ Reference - https://dev.eclipse.org/ipzilla/show_bug.cgi?id=2245
 /cvsroot/tools/org.aspectj/modules/lib/bcel/bcel.jar
 Apache 1.1 software license, modified
 
-Eclipse JDT Compiler 3.3 (version 785) - AspectJ is based on an extended form of this compiler (http://eclipse.org)
+Eclipse JDT Compiler 3.3 (version 785) - AspectJ is based on an extended form of this compiler (https://eclipse.org)

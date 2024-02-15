@@ -12,10 +12,10 @@
   $pageAuthor = "Type your name here";
 
   # Add page-specific Nav bars here
-  # Format is Link text, link URL (can be http://www.someothersite.com/), target (_self, _blank), level (1, 2 or 3)
+  # Format is Link text, link URL (can be https://www.someothersite.com/), target (_self, _blank), level (1, 2 or 3)
   # $Nav->addNavSeparator("My Page Links", 	"downloads.php");
   # $Nav->addCustomNav("My Link", "mypage.php", "_self", 3);
-  # $Nav->addCustomNav("Google", "http://www.google.com/", "_blank", 3);
+  # $Nav->addCustomNav("Google", "https://www.google.com/", "_blank", 3);
   # End: page-specific settings
 
   # Paste your HTML content between the HTML markers!
@@ -34,10 +34,10 @@
           as language design, new features, and best usage practices.
         </li>
 
-        <li><a href="http://dev.eclipse.org/mhonarc/lists/aspectj-users/maillist.html">
+        <li><a href="https://dev.eclipse.org/mhonarc/lists/aspectj-users/maillist.html">
           Mailing list archive</a></li>
 
-        <li><a href="http://www.eclipse.org/search/search.cgi?cmd=Search%21&form=extended&ps=10&m=all&t=5&ul=%2Fmhonarc%2Flists%2Faspectj-users&wm=wrd&t=News&t=Mail">Search
+        <li><a href="https://www.eclipse.org/search/search.cgi?cmd=Search%21&form=extended&ps=10&m=all&t=5&ul=%2Fmhonarc%2Flists%2Faspectj-users&wm=wrd&t=News&t=Mail">Search
           list</a></li>
 
       </ul>
@@ -52,10 +52,10 @@
           a low traffic list.
         </li>
 
-        <li><a href="http://dev.eclipse.org/mhonarc/lists/aspectj-announce/maillist.html">
+        <li><a href="https://dev.eclipse.org/mhonarc/lists/aspectj-announce/maillist.html">
           Mailing list archive</a></li>
 
-        <li><a href="http://www.eclipse.org/search/search.cgi?cmd=Search%21&form=extended&ps=10&m=all&t=5&ul=%2Fmhonarc%2Flists%2Faspectj-announce&wm=wrd&t=News&t=Mail">Search
+        <li><a href="https://www.eclipse.org/search/search.cgi?cmd=Search%21&form=extended&ps=10&m=all&t=5&ul=%2Fmhonarc%2Flists%2Faspectj-announce&wm=wrd&t=News&t=Mail">Search
           list</a></li>
 
       </ul>
@@ -64,12 +64,12 @@
     <div class="homeitem3col">
       <h3>Archives</h3>
       <ul>
-        <li><a href="http://dev.eclipse.org/viewcvs/indextech.cgi/~checkout~/aspectj-home/archives/users.zip">
+        <li><a href="https://dev.eclipse.org/viewcvs/indextech.cgi/~checkout~/aspectj-home/archives/users.zip">
           users at aspectj.org ZIP archive (deprecated mailing list)</a>
           <br>These archives contain user discussion from August 1999 - December 2002.
         </li>
 
-        <li><a href="http://dev.eclipse.org/viewcvs/indextech.cgi/~checkout~/aspectj-home/archives/announce.zip">
+        <li><a href="https://dev.eclipse.org/viewcvs/indextech.cgi/~checkout~/aspectj-home/archives/announce.zip">
           announce at aspectj.org ZIP archive (deprecated mailing list)</a>
           <br>These archives contain announcement messages from August 1999 -
           December 2002.

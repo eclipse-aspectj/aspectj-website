@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+  "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml">
 <head>
   <title>The AspectJ project at Eclipse.org: Publications</title>
   <link rel="stylesheet" href="aspectj_style.css" type="text/css"/>
@@ -16,7 +16,7 @@
         <td ALIGN="LEFT" width="60%" valign="top">
           <h1>aspectj publications</h1>
         </td>
-        <td WIDTH="40%" align="right">&nbsp;<img src="http://eclipse.org/images/Idea.jpg" width="120" height="86"></td>
+        <td WIDTH="40%" align="right">&nbsp;<img src="https://eclipse.org/images/Idea.jpg" width="120" height="86"></td>
       </tr>
     </table>
 
@@ -37,12 +37,12 @@
       <tbody>
       <tr>
         <td width="20%">
-          <a href="http://www.dpunkt.de/buch/3-89864-330-1.html">
+          <a href="https://www.dpunkt.de/buch/3-89864-330-1.html">
             <img width="200" src="images/aopaj5.jpg" alt="Aspektorientierte Programmierung mit AspectJ 5">
           </a>
         </td>
         <td align="left"><p><b>
-              <a href="http://www.dpunkt.de/buch/3-89864-330-1.html">Aspektorientierte Programmierung mit AspectJ 5</a>
+              <a href="https://www.dpunkt.de/buch/3-89864-330-1.html">Aspektorientierte Programmierung mit AspectJ 5</a>
             </b>,
             by Oliver B&ouml;hm.</p>
           <p> Nach der Objektorientierung ist ein neuer, bedeutender Trend in der
@@ -56,12 +56,12 @@
 
       <tr>
         <td width="20%">
-          <a href="http://www.amazon.com/exec/obidos/ASIN/0321245873/qid=1112868888/sr=2-3/ref=pd_bbs_b_2_3/103-5274059-2049410">
+          <a href="https://www.amazon.com/exec/obidos/ASIN/0321245873/qid=1112868888/sr=2-3/ref=pd_bbs_b_2_3/103-5274059-2049410">
             <img width="200" src="images/eclipseaspectj.jpg" alt="Eclipse AspectJ">
           </a>
         </td>
         <td align="left"><p><b>
-              <a href="http://www.amazon.com/exec/obidos/ASIN/0321245873/qid=1112868888/sr=2-3/ref=pd_bbs_b_2_3/103-5274059-2049410">Eclipse
+              <a href="https://www.amazon.com/exec/obidos/ASIN/0321245873/qid=1112868888/sr=2-3/ref=pd_bbs_b_2_3/103-5274059-2049410">Eclipse
                 AspectJ</a> :
               Aspect-Oriented Programming in Eclipse with AspectJ and the AspectJ Development Tools</b>,
             by Adrian Colyer, Andy Clement, George Harley and Matthew Webster.</p>
@@ -77,12 +77,12 @@
 
       <tr>
         <td width="20%">
-          <a href="http://www.amazon.com/exec/obidos/tg/detail/-/1930110936/ref=pd_bxgy_img_2/103-5274059-2049410?v=glance&s=books&n=507846">
+          <a href="https://www.amazon.com/exec/obidos/tg/detail/-/1930110936/ref=pd_bxgy_img_2/103-5274059-2049410?v=glance&s=books&n=507846">
             <img width="200" src="images/aspectjinaction.jpg" alt="AspectJ in Action">
           </a>
         </td>
         <td align="left">
-          <p><a target="_top" href="http://www.manning.com/laddad/">
+          <p><a target="_top" href="https://www.manning.com/laddad/">
               &quot;AspectJ in Action&quot;</a>
             (350 pages, July 2003, Manning)
             by Ramnivas Laddad</p>
@@ -97,12 +97,12 @@
 
       <tr>
         <td width="20%">
-          <a href="http://www.amazon.com/exec/obidos/tg/detail/-/0596006543/qid=1112883594/sr=8-3/ref=pd_csp_3/103-5274059-2049410?v=glance&s=books&n=507846">
+          <a href="https://www.amazon.com/exec/obidos/tg/detail/-/0596006543/qid=1112883594/sr=8-3/ref=pd_csp_3/103-5274059-2049410?v=glance&s=books&n=507846">
             <img width="200" src="images/aspectjcookbook.gif" alt="AspectJ Cookbook">
           </a>
         </td>
         <td align="left">
-          <p><a target="_top" href="http://www.oreilly.com/catalog/aspectjckbk/">
+          <p><a target="_top" href="https://www.oreilly.com/catalog/aspectjckbk/">
               &quot;The AspectJ Cookbook&quot;</a>
             by Russ Miles</p>
           <p>The AspectJ Cookbook shows readers why, and how, common Java development problems
@@ -115,12 +115,12 @@
 
       <tr>
         <td width="20%">
-          <a href="http://www.amazon.com/exec/obidos/tg/detail/-/0471431044/qid=1112883856/sr=1-1/ref=sr_1_1/103-5274059-2049410?v=glance&s=books">
+          <a href="https://www.amazon.com/exec/obidos/tg/detail/-/0471431044/qid=1112883856/sr=1-1/ref=sr_1_1/103-5274059-2049410?v=glance&s=books">
             <img width="200" src="images/masteringaspectj.jpg" alt="Mastering AspectJ">
           </a>
         </td>
         <td align="left">
-          <p><a target="_top" href="http://www.wiley.com/WileyCDA/WileyTitle/productCd-0471431044.html">
+          <p><a target="_top" href="https://www.wiley.com/WileyCDA/WileyTitle/productCd-0471431044.html">
               &quot;Mastering AspectJ&quot;</a>
             (456 pages, March 2003, Wiley)
             by Joseph Gradecki and Nicholas Lesiecki
@@ -137,24 +137,24 @@
 
       <tr>
         <td width="20%">
-          <a href="http://www.amazon.co.jp/exec/obidos/ASIN/4797326387/qid=1112884110/sr=8-1/ref=sr_8_xs_ap_i1_xgl/249-9397178-5049905">
+          <a href="https://www.amazon.co.jp/exec/obidos/ASIN/4797326387/qid=1112884110/sr=8-1/ref=sr_8_xs_ap_i1_xgl/249-9397178-5049905">
             <img width="200" src="images/tatsubori.jpg" alt="Introduction to Aspect-Oriented Programming with AspectJ">
           </a>
         </td>
         <td align="left">
-          <a href="http://www.amazon.co.jp/exec/obidos/ASIN/4797326387/qid=1112884110/sr=8-1/ref=sr_8_xs_ap_i1_xgl/249-9397178-5049905">
+          <a href="https://www.amazon.co.jp/exec/obidos/ASIN/4797326387/qid=1112884110/sr=8-1/ref=sr_8_xs_ap_i1_xgl/249-9397178-5049905">
             Introduction to Aspect-Oriented Programming with AspectJ</a> (Japanese)
         </td>
       </tr>
 
       <tr>
         <td width="20%">
-          <a href="http://www.amazon.com/exec/obidos/ASIN/0321219767/qid=1112884234/sr=2-1/ref=pd_bbs_b_2_1/103-5274059-2049410">
+          <a href="https://www.amazon.com/exec/obidos/ASIN/0321219767/qid=1112884234/sr=2-1/ref=pd_bbs_b_2_1/103-5274059-2049410">
             <img width="200" src="images/aosd.jpg" alt="AOSD">
           </a>
         </td>
         <td align="left">
-          <p><a href="http://www.amazon.com/exec/obidos/ASIN/0321219767/qid=1112884234/sr=2-1/ref=pd_bbs_b_2_1/103-5274059-2049410">
+          <p><a href="https://www.amazon.com/exec/obidos/ASIN/0321219767/qid=1112884234/sr=2-1/ref=pd_bbs_b_2_1/103-5274059-2049410">
               Aspect-Oriented Software Development</a> edited by Robert Filman, Tzilla Elrad, Siobhan Clarke and Mehmet
             Aksit.</p>
           <p>In this book, four leaders in AOSD development bring together today's most significant advances.
@@ -167,12 +167,12 @@
 
       <tr>
         <td width="20%">
-          <a href="http://www.amazon.com/exec/obidos/tg/detail/-/0321268881/qid=1112885840/sr=1-1/ref=sr_1_1/103-5274059-2049410?v=glance&s=books">
+          <a href="https://www.amazon.com/exec/obidos/tg/detail/-/0321268881/qid=1112885840/sr=1-1/ref=sr_1_1/103-5274059-2049410?v=glance&s=books">
             <img width="200" src="images/aosdusecases.jpg" alt="AOSD">
           </a>
         </td>
         <td align="left">
-          <p><a href="http://www.amazon.com/exec/obidos/tg/detail/-/0321268881/qid=1112885840/sr=1-1/ref=sr_1_1/103-5274059-2049410?v=glance&s=books">
+          <p><a href="https://www.amazon.com/exec/obidos/tg/detail/-/0321268881/qid=1112885840/sr=1-1/ref=sr_1_1/103-5274059-2049410?v=glance&s=books">
               Aspect-Oriented Software Development with Use Cases</a></p>
           <p>In this highly anticipated new book, Ivar Jacobson and Pan-Wei Ng demonstrate how to apply use cases�
             a mature and systematic approach to focusing on stakeholder concerns�and
@@ -186,12 +186,12 @@
 
       <tr>
         <td width="20%">
-          <a href="http://www.amazon.com/exec/obidos/tg/detail/-/0321246748/qid=1112885475/sr=1-2/ref=sr_1_2/103-5274059-2049410?v=glance&s=books">
+          <a href="https://www.amazon.com/exec/obidos/tg/detail/-/0321246748/qid=1112885475/sr=1-2/ref=sr_1_2/103-5274059-2049410?v=glance&s=books">
             <img width="200" src="images/aoad.jpg" alt="AOSD">
           </a>
         </td>
         <td align="left">
-          <p><a href="http://www.amazon.com/exec/obidos/tg/detail/-/0321246748/qid=1112885475/sr=1-2/ref=sr_1_2/103-5274059-2049410?v=glance&s=books">Aspect-Oriented
+          <p><a href="https://www.amazon.com/exec/obidos/tg/detail/-/0321246748/qid=1112885475/sr=1-2/ref=sr_1_2/103-5274059-2049410?v=glance&s=books">Aspect-Oriented
               Analysis and Design</a></p>
           <p>In this new book, two AOSD experts apply theory to the practical realm of real-world development.
             They explain the different kinds of aspects, help the reader identify them, and provide guidance on
@@ -202,13 +202,13 @@
 
       <tr>
         <td width="20%">
-          <a href="http://www.amazon.com/exec/obidos/tg/detail/-/0672324105/qid=1112885592/sr=1-4/ref=sr_1_4/103-5274059-2049410?v=glance&s=books">
+          <a href="https://www.amazon.com/exec/obidos/tg/detail/-/0672324105/qid=1112885592/sr=1-4/ref=sr_1_4/103-5274059-2049410?v=glance&s=books">
             <img width="200" src="images/kiselev.jpg" alt="AOSD">
           </a>
         </td>
         <td align="left">
           <p>
-            <a href="http://www.amazon.com/exec/obidos/tg/detail/-/0672324105/qid=1112885592/sr=1-4/ref=sr_1_4/103-5274059-2049410?v=glance&s=books">
+            <a href="https://www.amazon.com/exec/obidos/tg/detail/-/0672324105/qid=1112885592/sr=1-4/ref=sr_1_4/103-5274059-2049410?v=glance&s=books">
               Aspect-Oriented Programming with AspectJ</a> (covers AspectJ 1.0x)</p>
           <p>In a November 2001 Java Pro magazine article, noted Java pundit Daniel Savarese states,
             "The days of Object-Oriented Programming may be numbered, One day we may all be using Aspect-Oriented
@@ -232,7 +232,7 @@
 
     <dl>
 
-      <dt><a href="http://www.builderau.com.au/architect/0,39024564,39183763,00.htm">
+      <dt><a href="https://www.builderau.com.au/architect/0,39024564,39183763,00.htm">
           &quot;A new aspect to programming&quot;</a> by Simon Sharwood.
       </dt>
       <dd>
@@ -241,16 +241,16 @@
         bottle.&quot;
       </dd>
 
-      <dt><a target="_top" href="http://www.ibm.com/developerworks/java/library/j-aopwork1/">
+      <dt><a target="_top" href="https://www.ibm.com/developerworks/java/library/j-aopwork1/">
           &quot;AOP@Work: AOP tools comparison&quot;</a> by Mik Kersten
       </dt>
-      <dd>In this <a href="http://www.ibm.com/developerworks/java">developerWorks</a>
+      <dd>In this <a href="https://www.ibm.com/developerworks/java">developerWorks</a>
         article, Mik compares AspectJ, AspectWerkz,
         JBoss AOP and Spring AOP for power and usability, and touches
         on the implications of the merger of AspectWerkz and AspectJ.
       </dd>
 
-      <dt><a target="_top" href="http://www-106.ibm.com/developerworks/library/j-ajdt/">
+      <dt><a target="_top" href="https://www-106.ibm.com/developerworks/library/j-ajdt/">
           &quot;Develop aspect-oriented Java applications with Eclipse and AJDT&quot;</a>
         (Sep. 2004) by Matt Chapman and Helen Hawkins
       </dt>
@@ -261,7 +261,7 @@
         structures inherent to aspect-oriented programming.
       </dd>
 
-      <dt><a target="_top" href="http://www-106.ibm.com/developerworks/library/j-ceaop/">
+      <dt><a target="_top" href="https://www-106.ibm.com/developerworks/library/j-ceaop/">
           &quot;Contract enforcement with AOP&quot;</a>
         by Filippo Diotalevi
       </dt>
@@ -269,7 +269,7 @@
         (Level: introductory)
       </dd>
 
-      <dt><a target="_top" href="http://www.theserverside.com/resources/article.jsp?l=AspectOrientedRefactoringPart1">
+      <dt><a target="_top" href="https://www.theserverside.com/resources/article.jsp?l=AspectOrientedRefactoringPart1">
           &quot;Aspect-Oriented Refactoring&quot;</a>
         by Ramnivas Laddad
       </dt>
@@ -277,7 +277,7 @@
         refactoring and AOP to refactor crosscutting elements.
       </dd>
 
-      <dt><a target="_top" href="http://www.theserverside.com/events/videos/GregorKiczalesText/interview.jsp">
+      <dt><a target="_top" href="https://www.theserverside.com/events/videos/GregorKiczalesText/interview.jsp">
           &quot;Aspect Oriented Programming&quot;</a>
         (July 2003 ServerSide interview of Gregor Kiczales)
         by Dion Almaer
@@ -288,7 +288,7 @@
         try and build bridges to each other.&quot;
       </dd>
 
-      <dt><a target="_top" href="http://www.fawcette.com/javapro/2003_03/magazine/columns/javatecture/default_pf.asp">
+      <dt><a target="_top" href="https://www.fawcette.com/javapro/2003_03/magazine/columns/javatecture/default_pf.asp">
           &quot;Aspects, Concerns, and Java&quot;</a>
         (March 2003)
         by James W. Cooper
@@ -296,7 +296,7 @@
       <dd>
       </dd>
 
-      <dt><a target="_top" href="http://www.xprogramming.com/xpmag/virtualMockObjects.htm">
+      <dt><a target="_top" href="https://www.xprogramming.com/xpmag/virtualMockObjects.htm">
           &quot;Virtual Mock Objects using
           AspectJ with JUnit&quot;</a>
         (October, 2002)
@@ -304,7 +304,7 @@
       <dd>by Simon Monk and Stephen Hall
       </dd>
 
-      <dt><a target="_top" href="http://developers.sun.com/tools/javatools/articles/aspectJ.html">
+      <dt><a target="_top" href="https://developers.sun.com/tools/javatools/articles/aspectJ.html">
           &quot;Aspect-Oriented Programming with Sun(tm) ONE Studio&quot;</a> (October 2002, updated July 2003)
         by Vaughn Spurlin
       </dt>
@@ -318,19 +318,19 @@
         gradual and gentle transition.&quot;
       </dd>
 
-      <dt><a target="_top" href="http://www.ddj.com/articles/2002/0208/">
+      <dt><a target="_top" href="https://www.ddj.com/articles/2002/0208/">
           &quot;Aspect-Oriented Programming and AspectJ&quot;</a> in the August 2002 Dr. Dobbs
         Journal, by William Grosso
       </dt>
       <dd>&quot;Aspect-oriented programming extends the
         object-oriented paradigm by letting you write more maintainable code using
         aspects. Additional resources include
-        <a target="_top" href="http://www.ddj.com/ftp/2002/2002_08/aop.txt">aop.txt</a> (listings)
-        and <a target="_top" href="http://www.ddj.com/ftp/2002/2002_08/aop.zip">aop.zip</a>
+        <a target="_top" href="https://www.ddj.com/ftp/2002/2002_08/aop.txt">aop.txt</a> (listings)
+        and <a target="_top" href="https://www.ddj.com/ftp/2002/2002_08/aop.zip">aop.zip</a>
         (source code).
       </dd>
 
-      <dt><a target="_top" href="http://sdmagazine.com/articles/2002/0205/">&quot;Get
+      <dt><a target="_top" href="https://sdmagazine.com/articles/2002/0205/">&quot;Get
           Test-Inoculated!&quot;</a> in the May 2002 issue of Software Development, by Wes
         Isberg and the AspectJ Team
       </dt>
@@ -343,7 +343,7 @@
           sources are available</a>)
       </dd>
 
-      <dt><a target="_top" href="http://www-106.ibm.com/developerworks/java/library/j-aspectj2/?open&l=007,t=gr">
+      <dt><a target="_top" href="https://www-106.ibm.com/developerworks/java/library/j-aspectj2/?open&l=007,t=gr">
           &quot;Test flexibly with AspectJ and mock objects&quot;</a> in the May 2002 Java
         Technology Zone of IBM's Developer Works, by Nicholas Lesiecki
       </dt>
@@ -357,7 +357,7 @@
         code allows you to cleanly replace code in these types of situations.&quot;
       </dd>
 
-      <dt><a target="_top" href="http://www.javaworld.com/javaworld/jw-04-2002/jw-0412-aspect3.html">
+      <dt><a target="_top" href="https://www.javaworld.com/javaworld/jw-04-2002/jw-0412-aspect3.html">
           &quot;I want my AOP!, Part 3&quot;</a> in the April 2002 issue of Java World, by
         Ramnivas Laddad
       </dt>
@@ -371,7 +371,7 @@
         methodology will be a fun thing to watch and, better still, participate in.&quot;
       </dd>
 
-      <dt><a target="_top" href="http://www.javaworld.com/javaworld/jw-03-2002/jw-0301-aspect2.html">
+      <dt><a target="_top" href="https://www.javaworld.com/javaworld/jw-03-2002/jw-0301-aspect2.html">
           &quot;I want my AOP!, Part 2&quot;</a> in the March 2002 issue of Java World, by
         Ramnivas Laddad
       </dt>
@@ -381,7 +381,7 @@
         extends Java, Java programmers will find it an easy language to learn.&quot;
       </dd>
 
-      <dt><a target="_top" href="http://www.stepwise.com/Articles/AspectJ/index.html">
+      <dt><a target="_top" href="https://www.stepwise.com/Articles/AspectJ/index.html">
           &quot;Aspect-Oriented Programming with WebObjects&quot;</a> in the March 2002 issue of
         StepWise.com, by Christian Pekeler
       </dt>
@@ -390,7 +390,7 @@
         Integration with Project Builder can certainly be improved, though.&quot;
       </dd>
 
-      <dt><a target="_top" href="http://www-106.ibm.com/developerworks/java/library/j-aspectj/index.html?dwzone=java">
+      <dt><a target="_top" href="https://www-106.ibm.com/developerworks/java/library/j-aspectj/index.html?dwzone=java">
           &quot;Improve Modularity with Aspect-Oriented Programming&quot;</a> in the January
         2002 Java Technology Zone of IBM's Developer Works, by Nicholas Lesiecki
       </dt>
@@ -405,7 +405,7 @@
         use.&quot;
       </dd>
 
-      <dt><a target="_top" href="http://www.javaworld.com/javaworld/jw-01-2002/jw-0118-aspect.html">
+      <dt><a target="_top" href="https://www.javaworld.com/javaworld/jw-01-2002/jw-0118-aspect.html">
           &quot;I want my AOP!, Part 1&quot;</a> in the January 2002 issue of Java World, by
         Ramnivas Laddad
       </dt>
@@ -421,7 +421,7 @@
         to solve.&quot;
       </dd>
 
-      <dt><a target="_top" href="http://www.devx.com/premier/mgznarch/javapro/2001/11nov01/ps0111/ps0111.asp">
+      <dt><a target="_top" href="https://www.devx.com/premier/mgznarch/javapro/2001/11nov01/ps0111/ps0111.asp">
           &quot;Aspect-Oriented Programming in Java&quot;</a>, in the November 2001 issue of
         JavaPro, by Daniel F. Savarese
       </dt>
@@ -437,7 +437,7 @@
       </dd>
 
       <dt><a target="_top"
-             href="http://portal.acm.org/toc.cfm?id=383845&type=issue&coll=portal&dl=ACM&idx=J79&part=magazine&WantType=Magazines&title=CACM">
+             href="https://portal.acm.org/toc.cfm?id=383845&type=issue&coll=portal&dl=ACM&idx=J79&part=magazine&WantType=Magazines&title=CACM">
           Special Issue on Aspect-Oriented Programming</a>, October 2001
         Communications of the ACM
       </dt>
@@ -445,7 +445,7 @@
         including &quot;Getting Started with AspectJ&quot; by the AspectJ Team.
       </dd>
 
-      <dt><a target="_top" href="http://www.javareport.com/html/from_pages/article.asp?id=4712&mon=9&yr=2001">
+      <dt><a target="_top" href="https://www.javareport.com/html/from_pages/article.asp?id=4712&mon=9&yr=2001">
           &quot;Real-world AOP Tool Simplifies OO Development&quot;</a> in the September 2001
         issue of Java Report, by Rich Price
       </dt>
@@ -457,7 +457,7 @@
         limitations, I can't imagine not using AspectJ.&quot;
       </dd>
 
-      <dt><a target="_top" href="http://www.sdmagazine.com/documents/s=1123/sdm0109e/0109e.htm">&quot;The
+      <dt><a target="_top" href="https://www.sdmagazine.com/documents/s=1123/sdm0109e/0109e.htm">&quot;The
           First Aspect-Oriented Compiler&quot;</a> in the September 2001 issue of Software
         Development, by Larry O'Brien
       </dt>
@@ -472,7 +472,7 @@
         - download it today.&quot;
       </dd>
 
-      <dt><a target="_top" href="http://www.sdmagazine.com/documents/s=843/sdm0107i/0107i.htm">
+      <dt><a target="_top" href="https://www.sdmagazine.com/documents/s=843/sdm0107i/0107i.htm">
           &quot;Through the Looking Glass&quot;</a> in the July 2001 issue of Software
         Development, by Grady Booch
       </dt>
@@ -486,7 +486,7 @@
         transformation, a disruptive technology, on the horizon.&quot;
       </dd>
 
-      <dt><a target="_top" href="http://www.technologyreview.com/magazine/jan01/TR10_kiczales.asp">
+      <dt><a target="_top" href="https://www.technologyreview.com/magazine/jan01/TR10_kiczales.asp">
           &quot;The Technology Review Ten: Untangling Code&quot;</a> in the January/February
         2001 issue of the Technology Review, by Claire Tristram
       </dt>
@@ -501,7 +501,7 @@
         those of us in other professions have been making for years. . .&quot;
       </dd>
 
-      <dt><a target="_top" href="http://www.computer.org/software/so2000/s6toc.htm">&quot;Can
+      <dt><a target="_top" href="https://www.computer.org/software/so2000/s6toc.htm">&quot;Can
           Aspect-Oriented Programming Lead to More Reliable Software?&quot;</a> in the
         November/December 2000 issue of IEEE Software, by John Viega and Jeffrey
         Voas
@@ -515,9 +515,9 @@
         construct more reliable software.&quot;
       </dd>
 
-      <dt><a target="_top" href="http://www.voelter.de/data/articles/aop/aop.html">&quot;Aspectj-Oriented
+      <dt><a target="_top" href="https://www.voelter.de/data/articles/aop/aop.html">&quot;Aspectj-Oriented
           Programming in Java&quot;</a> in the January 2000 issue of the
-        <a target="_top" href="http://www.javareport.com">Java Report</a>, by Markus Voelter
+        <a target="_top" href="https://www.javareport.com">Java Report</a>, by Markus Voelter
       </dt>
       <dd>&quot;Abstract: AOP defines a new program construct,
         called an aspect, which is used to capture corsscutting aspects of a

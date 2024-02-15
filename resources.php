@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+  "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml">
 <head>
   <title>The AspectJ project at Eclipse.org: User Resources</title>
   <link rel="stylesheet" href="aspectj_style.css" type="text/css"/>
@@ -20,16 +20,16 @@
     <dl>
       <dt><a target="_top" href="https://dev.eclipse.org/mailman/listinfo/aspectj-users">
           aspectj-users at eclipse.org</a> and
-        <a target="_top" href="http://dev.eclipse.org/mhonarc/lists/aspectj-users/maillist.html">
+        <a target="_top" href="https://dev.eclipse.org/mhonarc/lists/aspectj-users/maillist.html">
           archive</a>
-        (<a href="http://www.eclipse.org/search/search.cgi?ul=%2Fmhonarc%2Flists%2Faspectj-users">
+        (<a href="https://www.eclipse.org/search/search.cgi?ul=%2Fmhonarc%2Flists%2Faspectj-users">
           search</a>).
       </dt>
       <dd>Supports discussion among AspectJ users and developers on topics such
         as language design, new features, and best usage practices.
       </dd>
 
-      <dt><a href="http://dev.eclipse.org/viewcvs/indextech.cgi/~checkout~/aspectj-home/archives/users.zip">
+      <dt><a href="https://dev.eclipse.org/viewcvs/indextech.cgi/~checkout~/aspectj-home/archives/users.zip">
           users@aspectj.org ZIP archive (deprecated mailing list)</a>
       </dt>
       <dd>These archives contain user discussion from August 1999 - December
@@ -45,9 +45,9 @@
       <dt>
         <a target="_top" href="https://dev.eclipse.org/mailman/listinfo/aspectj-announce">
           aspectj-announce at eclipse.org</a> and
-        <a target="_top" href="http://dev.eclipse.org/mhonarc/lists/aspectj-announce/maillist.html">
+        <a target="_top" href="https://dev.eclipse.org/mhonarc/lists/aspectj-announce/maillist.html">
           archive</a>
-        (<a href="http://www.eclipse.org/search/search.cgi?ul=%2Fmhonarc%2Flists%2Faspectj-announce">
+        (<a href="https://www.eclipse.org/search/search.cgi?ul=%2Fmhonarc%2Flists%2Faspectj-announce">
           search</a>)
       </dt>
       <dd>
@@ -56,7 +56,7 @@
       </dd>
 
       <dt>
-        <a href="http://dev.eclipse.org/viewcvs/indextech.cgi/~checkout~/aspectj-home/archives/announce.zip">
+        <a href="https://dev.eclipse.org/viewcvs/indextech.cgi/~checkout~/aspectj-home/archives/announce.zip">
           announce@aspectj.org ZIP archive (deprecated mailing list)</a>
       </dt>
       <dd>
@@ -83,18 +83,18 @@
       <dd> Submit new Bugzilla feature requests for AspectJ.
       </dd>
 
-      <dt><a href="http://dev.eclipse.org/bugs/query.cgi?product=AspectJ">View
+      <dt><a href="https://dev.eclipse.org/bugs/query.cgi?product=AspectJ">View
           AspectJ bug reports</a>
       </dt>
       <dd> Query the Bugzilla database for AspectJ bug reports and feature
         requests.
       </dd>
 
-      <dt><a href="http://dev.eclipse.org/bugs/enter_bug.cgi?product=AspectJ">Submit
+      <dt><a href="https://dev.eclipse.org/bugs/enter_bug.cgi?product=AspectJ">Submit
           a new AspectJ bug report</a>
       </dt>
       <dd>Submit new Bugzilla reports and feature requests according to the
-        <a href="http://dev.eclipse.org/bugs/bugwritinghelp.html">Bug Writing
+        <a href="https://dev.eclipse.org/bugs/bugwritinghelp.html">Bug Writing
           Guidelines</a>.
       </dd>
     </dl>

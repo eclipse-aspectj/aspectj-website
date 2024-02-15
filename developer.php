@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+  "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml">
 <head>
   <title>The AspectJ project at Eclipse.org: Developers</title>
   <link rel="stylesheet" href="aspectj_style.css" type="text/css"/>
@@ -18,12 +18,12 @@
     <h2>Bug Reports</h2>
 
     <dl>
-      <dt><a href="http://bugs.eclipse.org/bugs/enter_bug.cgi?product=AspectJ">
+      <dt><a href="https://bugs.eclipse.org/bugs/enter_bug.cgi?product=AspectJ">
           Submit a new AspectJ bug report</a>
       </dt>
       <dd>
         For guidance on writing bug reports and feature requests, see the
-        <a href="http://dev.eclipse.org/bugs/bugwritinghelp.html">
+        <a href="https://dev.eclipse.org/bugs/bugwritinghelp.html">
           Eclipse Bug Writing Guidelines</a>
         and the FAQ entries for
         <a href="doc/released/faq.html#q:idebugs">writing IDE bugs</a>
@@ -31,16 +31,16 @@
         <a href="doc/released/faq.html#q:ajcbugs">writing compiler bugs</a>.
       </dd>
 
-      <dt><a href="http://dev.eclipse.org/bugs/query.cgi">View
+      <dt><a href="https://dev.eclipse.org/bugs/query.cgi">View
           AspectJ bug reports</a>
       </dt>
       <dd>Query the Bugzilla database for AspectJ bug reports and feature
         requests, e.g., unresolved bugs in the
-        <a href="http://dev.eclipse.org/bugs/buglist.cgi?&product=AspectJ&component=Compiler&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED">
+        <a href="https://dev.eclipse.org/bugs/buglist.cgi?&product=AspectJ&component=Compiler&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED">
           compiler</a> or in support for
-        <a href="http://dev.eclipse.org/bugs/buglist.cgi?&product=AspectJ&component=IDE&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED">
+        <a href="https://dev.eclipse.org/bugs/buglist.cgi?&product=AspectJ&component=IDE&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED">
           IDE's </a> or
-        <a href="http://dev.eclipse.org/bugs/buglist.cgi?&product=AspectJ&component=Ant&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED">
+        <a href="https://dev.eclipse.org/bugs/buglist.cgi?&product=AspectJ&component=Ant&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED">
           Ant</a>.
       </dd>
     </dl>
@@ -52,9 +52,9 @@
     <dl>
       <dt><a target="_top" href="https://dev.eclipse.org/mailman/listinfo/aspectj-dev">
           aspectj-dev at eclipse.org</a> or
-        <a target="_top" href="http://dev.eclipse.org/mhonarc/lists/aspectj-dev/maillist.html">
+        <a target="_top" href="https://dev.eclipse.org/mhonarc/lists/aspectj-dev/maillist.html">
           archives</a>
-        (<a href="http://www.eclipse.org/search/search.cgi?ul=%2Fmhonarc%2Flists%2Faspectj-dev">
+        (<a href="https://www.eclipse.org/search/search.cgi?ul=%2Fmhonarc%2Flists%2Faspectj-dev">
           search</a>).
       </dt>
       <dd>
@@ -84,7 +84,7 @@
     <h2>Sources</h2>
 
     <dl>
-      <dt><a href="http://dev.eclipse.org/viewcvs/index.cgi?cvsroot=Technology_Project">
+      <dt><a href="https://dev.eclipse.org/viewcvs/index.cgi?cvsroot=Technology_Project">
           AspectJ CVS Repository</a>
       </dt>
       <dd> Use the web interface to browse the AspectJ source code or

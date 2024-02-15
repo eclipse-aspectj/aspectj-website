@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+  "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml">
 <head>
   <title>The AspectJ project at Eclipse.org: Downloads</title>
   <link rel="stylesheet" href="aspectj_style.css" type="text/css"/>
@@ -17,11 +17,11 @@
       (jdk1.1 and later). The compiler itself requires Java2 (1.3 or later) to run.
       Consult the <a href="doc/faq.html#q:compability">FAQ</a>
       for more details.&nbsp; All releases are provided under the terms and
-      conditions of the <a href="http://www.eclipse.org/legal/notice.html">Eclipse.org
+      conditions of the <a href="https://www.eclipse.org/legal/notice.html">Eclipse.org
         Software User Agreement</a> unless otherwise specified.
     </p>
 
-    <p>If you plan to use AspectJ inside the Eclipse IDE you can just <a href="http://www.eclipse.org/ajdt">
+    <p>If you plan to use AspectJ inside the Eclipse IDE you can just <a href="https://www.eclipse.org/ajdt">
         download AJDT</a> since it includes a bundled AspectJ compiler. <a href="#ides"><i>More IDEs...</i></a>.</p>
 
     <h2>Downloads</h2>
@@ -56,12 +56,12 @@
             $devbuilds = GetDevBuildsIn('/home/data/httpd/download.eclipse.org/technology/aspectj/dev');
             $justthefirstfile = basename($devbuilds[0]);
             $stats = stat($devbuilds[0]);
-            echo "<a href=\"http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/dev/$justthefirstfile\">$justthefirstfile</a><br><br>(size: $stats[7] bytes)";
+            echo "<a href=\"https://www.eclipse.org/downloads/download.php?file=/technology/aspectj/dev/$justthefirstfile\">$justthefirstfile</a><br><br>(size: $stats[7] bytes)";
             echo "<br><br>";
             $changesFiles = GetChangesFilesIn('/home/data/httpd/download.eclipse.org/technology/aspectj/dev');
             $justthefirstchangesfile = basename($changesFiles[0]);
             $stats2 = stat($changesFiles[0]);
-            echo "<a href=\"http://download.eclipse.org/technology/aspectj/dev/$justthefirstchangesfile\">(Changes in this build)</a><br>";
+            echo "<a href=\"https://download.eclipse.org/technology/aspectj/dev/$justthefirstchangesfile\">(Changes in this build)</a><br>";
           ?>
           <br><a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=AspectJ&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&keywords_type=allwords&keywords=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&emailtype1=substring&email1=&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=2005-04-07&chfieldto=Now&chfieldvalue=&field0-0-0=noop&type0-0-0=noop&value0-0-0=">
             Bugs resolved since last milestone</a>
@@ -94,7 +94,7 @@
           </dl>
         </td>
         <td width="30%" align="right">
-          <a href="http://www.eclipse.org/downloads/download.php?file=/technology/aspectj/dev/aspectj-1.5.0M2.jar">aspectj-1.5.0M2.jar</a>
+          <a href="https://www.eclipse.org/downloads/download.php?file=/technology/aspectj/dev/aspectj-1.5.0M2.jar">aspectj-1.5.0M2.jar</a>
           (~8.3M)
         </td>
       </tr>
@@ -108,7 +108,7 @@
           </dl>
         </td>
         <td width="30%" align="right">
-          <a href="http://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.5.0M1.jar">
+          <a href="https://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.5.0M1.jar">
             aspectj-1.5.0M1.jar</a> (~7.5M)
         </td>
       </tr>
@@ -129,7 +129,7 @@
           </dl>
         </td>
         <td width="30%" align="right">
-          <a href="http://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.2.1.jar">
+          <a href="https://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.2.1.jar">
             aspectj-1.2.1.jar</a> (7,382,062 bytes)
         </td>
       </tr>
@@ -150,7 +150,7 @@
           </dl>
         </td>
         <td width="30%" align="right">
-          <a href="http://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.2.1.jar">
+          <a href="https://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.2.1.jar">
             aspectj-1.2.1.jar</a> (7,382,062 bytes)
         </td>
       </tr>
@@ -164,7 +164,7 @@
                   </dl>
                 </td>
               <td width="30%" align="right">
-                  <a href="http://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.2.1rc1.jar">
+                  <a href="https://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.2.1rc1.jar">
                   aspectj-1.2.1rc1.jar</a> (7,393,774 bytes)
                 </td>
             </tr>
@@ -177,7 +177,7 @@
           </dl>
         </td>
         <td width="30%" align="right">
-          <a href="http://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.2.jar">
+          <a href="https://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.2.jar">
             aspectj-1.2.jar</a> (5,859,690 bytes)
         </td>
       </tr>
@@ -190,7 +190,7 @@
                   </dl>
                 </td>
               <td width="30%" align="right">
-                 <a href="http://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.2rc2.jar">
+                 <a href="https://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.2rc2.jar">
                   aspectj-1.2rc2.jar</a> (5,853,184 bytes)
                 </td>
             </tr>
@@ -203,7 +203,7 @@
                   </dl>
                 </td>
               <td width="30%" align="right">
-                 <a href="http://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.2rc1.jar">
+                 <a href="https://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.2rc1.jar">
                   aspectj-1.2rc1.jar</a> (5,860,538 bytes)
                </td>
             </tr>
@@ -225,7 +225,7 @@
           </dl>
         </td>
         <td width="30%" align="right">
-          <a href="http://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.1.1.jar">
+          <a href="https://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.1.1.jar">
             aspectj-1.1.1.jar</a> (6,352,092 bytes)
         </td>
       </tr>
@@ -238,7 +238,7 @@
           </dl>
         </td>
         <td width="30%" align="right">
-          <a href="http://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.1.0.jar">
+          <a href="https://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.1.0.jar">
             aspectj-1.1.0.jar</a> (6,297,885 bytes)
         </td>
       </tr>
@@ -251,7 +251,7 @@
                 </dl>
                 </td>
               <td width="30%" align="right">
-                   <a href="http://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.1rc2.jar">
+                   <a href="https://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.1rc2.jar">
                   aspectj-1.1rc2.jar</a> (6,285,237 bytes)
               </td>
             </tr>
@@ -264,7 +264,7 @@
                 </dl>
                 </td>
               <td width="30%" align="right">
-                   <a href="http://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.1rc1.jar">
+                   <a href="https://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.1rc1.jar">
                   aspectj-1.1rc1.jar</a> (5,747,357 bytes)
               </td>
             </tr>
@@ -278,7 +278,7 @@
           <td>&nbsp;</td>
           <td>AspectJ Compiler, Browser, Ant tasks, and Documentation</td>
           <td>
-            <a href="http://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.1b4.jar">
+            <a href="https://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.1b4.jar">
             aspectj-1.1b4.jar</a>
             (5,792,693 bytes)
           </td>
@@ -290,7 +290,7 @@
           <td>&nbsp;</td>
           <td>AspectJ Compiler, Browser, Ant tasks, and Documentation</td>
           <td>
-            <a href="http://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.1b2.jar">
+            <a href="https://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-1.1b2.jar">
             aspectj-1.1b2.jar</a>
             (4,928,000 bytes)
           </td>
@@ -317,14 +317,14 @@
                 <tr>
                   <td>AspectJ Compiler and Browser (<i>binary distribution</i>)</td>
                   <td width="30%" align="right">
-                    <a href="http://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-tools-1.0.6.jar">
+                    <a href="https://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-tools-1.0.6.jar">
                       aspectj-tools-1.0.6.jar</a> <i>(1,580,450 bytes)</i>
                   </td>
                 </tr>
                 <tr>
                   <td>AspectJ Compiler and Browser (<i>source</i>)</td>
                   <td width="30%" align="right">
-                    <a href="http://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-tools-src-1.0.6.tgz">
+                    <a href="https://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-tools-src-1.0.6.tgz">
                       aspectj-tools-src-1.0.6.tgz</a> <i>(795,633 bytes)</i>
                   </td>
                 </tr>
@@ -332,16 +332,16 @@
                 <tr>
                   <td>Documentation and Examples</td>
                   <td width="30%" align="right">
-                    <a href="http://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-docs-1.0.6.tgz">
+                    <a href="https://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-docs-1.0.6.tgz">
                       aspectj-docs-1.0.6.tgz</a> <i>(1,715,824 bytes) </i>
                   </td>
                 </tr>
                 <tr>
-                  <td>Ant Tasks (released under the <a target="_top" href="http://apache.org/LICENSE.txt">
+                  <td>Ant Tasks (released under the <a target="_top" href="https://apache.org/LICENSE.txt">
                       Apache License</a>)
                   </td>
                   <td width="30%" align="right">
-                    <a href="http://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-antTasks-1.0.6.tgz">
+                    <a href="https://www.eclipse.org/downloads/download.php?file=/technology/ajdt/aspectj-antTasks-1.0.6.tgz">
                       aspectj-antTasks-1.0.6.tgz</a> <i>(83,124 bytes) </i>
                   </td>
                 </tr>
@@ -356,7 +356,7 @@
 
     <p align="left">Note: All code, documentation and other files in the 1.0.6 release
       are made available under the terms and conditions of the
-      <a target="_top" href="http://www.mozilla.org/MPL/MPL-1.1.html">
+      <a target="_top" href="https://www.mozilla.org/MPL/MPL-1.1.html">
         Mozilla Public License version 1.1</a>.</p>
 
     <!-- ============ INSTALLATION ======================= -->
@@ -378,19 +378,19 @@
     <h2 id="ides">Development Environment Support</h2>
 
     <dl>
-      <dt><a target="_top" href="http://eclipse.org/ajdt">AJDT Project</a></dt>
+      <dt><a target="_top" href="https://eclipse.org/ajdt">AJDT Project</a></dt>
       <dd>an Eclipse Technology project that provides an AspectJ plug-in for Eclipse.</dd>
-      <dt><a target="_top" href="http://aspectj4jbuildr.sourceforge.net">AJDE for JBuilder</a></dt>
+      <dt><a target="_top" href="https://aspectj4jbuildr.sourceforge.net">AJDE for JBuilder</a></dt>
       <dd>is a SourceForge project that provides an AspectJ
         OpenTool for Borland's JBuilder IDE.
       </dd>
-      <dt><a target="_top" href="http://aspectj4netbean.sourceforge.net">
+      <dt><a target="_top" href="https://aspectj4netbean.sourceforge.net">
           AJDE for SunONE/NetBeans</a>
       </dt>
       <dd> is a SourceForge project that provides an
         AspectJ Module for Sun's Forte/SunONEStudio4/NetBeans IDE.
       </dd>
-      <dt><a target="_top" href="http://aspectj4emacs.sourceforge.net">
+      <dt><a target="_top" href="https://aspectj4emacs.sourceforge.net">
           AJDE for Emacs and JDEE</a>
       </dt>
       <dd>is a SourceForge project that provides an
@@ -404,7 +404,7 @@
       </dd>
       <dt>Easy installers</dt>
       <dd>Russ Miles has packaged together
-        <a target="_top" href="http://www.aspectjcookbook.com">integrated
+        <a target="_top" href="https://www.aspectjcookbook.com">integrated
           installers for Eclipse, AJDT, and AspectJ on the Windows and Mac platforms</a>.
       </dd>
     </dl>
