@@ -37,9 +37,9 @@ HTML;
   $Nav->addNavSeparator("Users", "", "_self", 1);
   #$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Getting Started", 	"/aspectj/gettingstarted.php", 	"_self", 1);
   $Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Downloads", "/aspectj/downloads.php", "_self", 1);
-  $Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Docs", "/aspectj/docs.php", "_self", 1);
+  $Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Docs", "/aspectj/doc/latest/index.html", "_self", 1);
   $Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Bugs", "/aspectj/bugs.php", "_self", 1);
-  $Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;FAQ", "/aspectj/doc/released/faq.php", "_self", 1);
+  $Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;FAQ", "/aspectj/doc/latest/faq/faq.html", "_self", 1);
   $Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Mailing lists", "/aspectj/userlists.php", "_self", 1);
 
   $Nav->addNavSeparator("Developers", "", "_self", 1);

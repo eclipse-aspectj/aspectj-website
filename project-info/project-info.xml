@@ -17,10 +17,6 @@
 
   <getting-started url="/aspectj/faq.php"/>
 
-  <!--
-  <ip-log url=""/>
-  -->
-
   <mailing-lists>
     <list name="aspectj-users"/>
     <list name="aspectj-dev"/>
