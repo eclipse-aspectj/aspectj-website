@@ -32,7 +32,8 @@ HTML;
     "/projects/project_summary.php?projectid=tools.aspectj", "", 1);
   #$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;About AspectJ", "/aspectj/description.php", "_self", 1);
   $Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Team", "/aspectj/team.php", "_self", 1);
-  $Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Plans", "https://www.eclipse.org/projects/project-plan.php?projectid=tools.aspectj", "_self", 1);
+  # I do not think, we will use Eclipse release plans any longer, but rather GitHub milestones and releases
+  #$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Plans", "https://www.eclipse.org/projects/project-plan.php?projectid=tools.aspectj", "_self", 1);
 
   $Nav->addNavSeparator("Users", "", "_self", 1);
   #$Nav->addCustomNav("&nbsp;&nbsp;&nbsp;&nbsp;Getting Started", 	"/aspectj/gettingstarted.php", 	"_self", 1);
