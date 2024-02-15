@@ -94,74 +94,59 @@
   <div id="midcolumn" style="width: 80%">
 
     <h1>Downloads</h1>
-
-    <p>The AspectJ compiler produces programs for any version of the Java platform
-      (jdk1.1 and later). The compiler itself requires Java2 (1.4 or later) to run.
-      Consult the <a href="doc/released/faq.html#q:compability">FAQ</a>
-      for more details.&nbsp; All releases are provided under the terms and
-      conditions of the <a href="https://www.eclipse.org/legal/notice.html">Eclipse.org
-        Software User Agreement</a> unless otherwise specified.
+    
+    <p>
+      Please note, that all releases are provided under the terms and conditions of the
+      <a href="https://www.eclipse.org/legal/notice.html">Eclipse.org Software User Agreement</a>
+      unless otherwise specified.
     </p>
 
-    <p>If you plan to use AspectJ inside the Eclipse IDE you can just <a href="https://www.eclipse.org/ajdt">
-      download AJDT</a> since it includes a bundled AspectJ compiler. <a href="#ides"><i>More IDEs...</i></a>.</p>
+    <h2>AspectJ libraries</h2>
 
-    <h2>Downloads</h2>
-
-    <p>See below for a list of available AspectJ downloads. You probably want one of:
-      the most recent <a href="#most_recent">development build</a>,
-      the most recent <a href="#milestones">milestone build</a>, or
-      the latest <a href="#stable_release">stable release</a>. <a href="#install">Installation
-        instructions</a> and more information on
-      <a href="#ides">IDE support</a> can be found at the bottom of this page.
-    </p>
-
-    <div class="homeitem3col">
-      <h3 id="most_recent">Most Recent Build</h3>
+    <p>
+      AspectJ consists of the following main artifacts, the more recent versions of which can all be found on
+      <a href="https://central.sonatype.com/namespace/org.aspectj">Maven Central</a> and consumed using build tools like
+      Maven, Gradle etc.:
       <ul>
-        <li>
-          <b>Last Known Good developer build</b>
-          <table border="0" cellspacing="0" cellpadding="0" width="100%">
-            <tbody>
-            <tr>
-              <td>
-                <ul>
-                  AspectJ Compiler, Browser, Ant tasks, and Documentation. Only download this version if you are
-                  prepared to work with a pre-release compiler.
-                  The most recent stable build below is the currently supported release version.
-                </ul>
-              </td>
-              <td rowspan="2" width="30%" align="right">
-                <!-- stick out reference to most recent dev build -->
+        <li><code>org.aspectj:aspectjrt</code> - the AspectJ runtime</li>
+        <li><code>org.aspectj:aspectjweaver</code> - the AspectJ weaver</li>
+        <li><code>org.aspectj:aspectjtools</code> - the AspectJ compiler</li>
+        <li><code>org.aspectj:aspectjmatcher</code> - the AspectJ matcher</li>
+      </ul> 
+    </p>
+    <p>
+      Occasionally, an AspectJ developer might deploy a snapshot release (development version) of the above libraries on
+      <code>https://oss.sonatype.org/content/repositories/snapshots</code>. Adding this URL as a snapshot repository to
+      your build configuration enables you to consume snapshots, if you need them, e.g. to re-test fixed bugs or test
+      unreleased new features.
+    </p>
+    
+    <h2>AspectJ distribution installer</h2>
 
-                %name
+    <p>
+      If you need a full AspectJ distribution with the main libraries (runtime, weaver, compiler), command line tools
+      and documentation, please download the executable JAR installer for the release of your choice.
+    </p>
+    <p>
+      Since release 1.9.7, you can download installers from the
+      <a href="https://github.com/eclipse-aspectj/aspectj/releases">AspectJ GitHub releases</a> page.
+      Historical release installers can be found in the list below.
+    </p>
+    <p>
+      The installer JAR should not be unzipped, as it is a self-extracting Java-based GUI installer. On many systems,
+      it be run directly by selecting &quot;Open this file from its current location&quot; or by double-clicking the downloaded
+      file.&nbsp;Otherwise, simply call <code>java&nbsp;-jar&nbsp;aspectj-1.9.21.jar</code> (replace the version according to your
+      needs). If you wish to install AspectJ into a protected location, e.g. <code>c:\Program Files\Java\AspectJ</code>
+      on Windows, you might need to run the Java command from an elevated prompt ("run as administrator"). 
+    </p>
+    <p>
+      For information about how to use AspectJ with build tools and IDEs, please check
+      <a href="https://github.com/eclipse-aspectj/aspectj/blob/master/docs/developer/IDE.md">this overview</a>.
+    </p>
 
-                <br><!--a href="https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=AspectJ&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&keywords_type=allwords&keywords=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&emailtype1=substring&email1=&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=2006-06-30&chfieldto=Now&chfieldvalue=&field0-0-0=noop&type0-0-0=noop&value0-0-0=">
-                            Bugs resolved since last release</a-->
-              </td>
-            </tr>
-            <tr>
-              <td><br>
-                <i>This download is updated after every successful build and test cycle.</i>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </li>
-      </ul>
-    </div>
+    <h2>Historical installer versions</h2>
 
-    <!-- ============ LATEST STABLE RELEASE ======================= -->
-
-    <div class="homeitem3col">
-      <h3 id="stable_release">Latest Stable Release</h3>
-      From 1.9.7 onwards, AspectJ releases are now available from GitHub.
-      <br>
-      See the releases page <a href="https://github.com/eclipse/org.aspectj/releases/">here</a>.
-    </div>
-
-    <!-- ============ ASPECTJ MILESTONES -->
-
+    <!-- ============ ASPECTJ 9 ======================= -->
     <div class="homeitem3col">
       <h3 id="milestones">AspectJ 9</h3>
       <ul>
@@ -177,9 +162,6 @@
             </tr>
           </table>
         </li>
-      </ul>
-
-      <ul>
         <li>
           <b>AspectJ 1.9.5, Released 28 Nov 2019</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -192,9 +174,6 @@
             </tr>
           </table>
         </li>
-      </ul>
-
-      <ul>
         <li>
           <b>AspectJ 1.9.4, Released 10 May 2019</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -207,9 +186,6 @@
             </tr>
           </table>
         </li>
-      </ul>
-
-      <ul>
         <li>
           <b>AspectJ 1.9.3, Released 4 Apr 2019</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -222,8 +198,6 @@
             </tr>
           </table>
         </li>
-      </ul>
-      <ul>
         <li>
           <b>AspectJ 1.9.3.RC1, Released 7 Mar 2019</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -236,8 +210,6 @@
             </tr>
           </table>
         </li>
-      </ul>
-      <ul>
         <li>
           <b>AspectJ 1.9.2, Released 24 Oct 2018</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -250,8 +222,6 @@
             </tr>
           </table>
         </li>
-      </ul>
-      <ul>
         <li>
           <b>AspectJ 1.9.1, Released 20 Apr 2018</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -264,8 +234,6 @@
             </tr>
           </table>
         </li>
-      </ul>
-      <ul>
         <li>
           <b>AspectJ 1.9.0, Released 2 Apr 2018</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -279,6 +247,10 @@
           </table>
         </li>
       </ul>
+    </div>
+
+    <!-- ============ ASPECTJ 8 ======================= -->
+    <div class="homeitem3col">
       <h3 id="milestones">AspectJ 8</h3>
       <ul>
         <li>
@@ -293,8 +265,6 @@
             </tr>
           </table>
         </li>
-      </ul>
-      <ul>
         <li>
           <b>AspectJ 1.8.13, Released 15 Nov 2017</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -307,8 +277,6 @@
             </tr>
           </table>
         </li>
-      </ul>
-      <ul>
         <li>
           <b>AspectJ 1.8.11, Released 26 Sep 2017</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -321,8 +289,6 @@
             </tr>
           </table>
         </li>
-      </ul>
-      <ul>
         <li>
           <b>AspectJ 1.8.10, Released 12 Dec 2016</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -335,8 +301,6 @@
             </tr>
           </table>
         </li>
-      </ul>
-      <ul>
         <li>
           <b>AspectJ 1.8.9, Released 14 Mar 2016</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -349,8 +313,6 @@
             </tr>
           </table>
         </li>
-      </ul>
-      <ul>
         <li>
           <b>AspectJ 1.8.8, Released 7 Jan 2016</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -363,8 +325,6 @@
             </tr>
           </table>
         </li>
-      </ul>
-      <ul>
         <li>
           <b>AspectJ 1.8.7, Released 9 Sep 2015</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -377,8 +337,6 @@
             </tr>
           </table>
         </li>
-      </ul>
-      <ul>
         <li>
           <b>AspectJ 1.8.6, Released 8 Jun 2015</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -391,8 +349,6 @@
             </tr>
           </table>
         </li>
-      </ul>
-      <ul>
         <li>
           <b>AspectJ 1.8.5, Released 28 Jan 2015</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -405,8 +361,6 @@
             </tr>
           </table>
         </li>
-      </ul>
-      <ul>
         <li>
           <b>AspectJ 1.8.4, Released 6 Nov 2014</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -419,8 +373,6 @@
             </tr>
           </table>
         </li>
-      </ul>
-      <ul>
         <li>
           <b>AspectJ 1.8.3, Released 23 Oct 2014</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -445,8 +397,6 @@
             </tr>
           </table>
         </li>
-      </ul>
-      <ul>
         <li>
           <b>AspectJ 1.8.1, Released 20 Jun 2014</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -459,8 +409,6 @@
             </tr>
           </table>
         </li>
-      </ul>
-      <ul>
         <li>
           <b>AspectJ 1.8.0, Released 17 Apr 2014</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -474,8 +422,11 @@
           </table>
         </li>
       </ul>
-      <h3 id="milestones">AspectJ 7</h3>
+    </div>
 
+    <!-- ============ ASPECTJ 7 ======================= -->
+    <div class="homeitem3col">
+      <h3 id="milestones">AspectJ 7</h3>
       <ul>
         <li>
           <b>AspectJ 1.7.4, Released 25 Oct 2013</b>
@@ -489,9 +440,6 @@
             </tr>
           </table>
         </li>
-      </ul>
-
-      <ul>
         <li>
           <b>AspectJ 1.7.3, Released 13 Jun 2013</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -504,8 +452,6 @@
             </tr>
           </table>
         </li>
-      </ul>
-      <ul>
         <li>
           <b>AspectJ 1.7.2, Released 15 Feb 2013</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -518,8 +464,6 @@
             </tr>
           </table>
         </li>
-      </ul>
-      <ul>
         <li>
           <b>AspectJ 1.7.1, Released 10 Sep, 2012</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -532,9 +476,6 @@
             </tr>
           </table>
         </li>
-      </ul>
-
-      <ul>
         <li>
           <b>AspectJ 1.7.0, Released 2-Jul-2012</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -547,33 +488,11 @@
             </tr>
           </table>
         </li>
-
-        <li>
-          <b>AspectJ 1.7.0.RC1, Released 25-May-2012</b>
-          <table border="0" cellspacing="0" cellpadding="0" width="100%">
-            <tr>
-              <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
-              <td width="30%" align="right">
-                <a href="https://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.7.0.RC1.jar">aspectj-1.7.0.RC1.jar</a> (~13M)<br>
-                <a href="https://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.7.0.RC1-src.jar">aspectj-1.7.0.RC1-src.jar</a>
-              </td>
-            </tr>
-          </table>
-        </li>
-        <li>
-          <b>AspectJ 1.7.0.M1, Released 16-Dec-2011</b>
-          <table border="0" cellspacing="0" cellpadding="0" width="100%">
-            <tr>
-              <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
-              <td width="30%" align="right">
-                <a href="https://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.7.0.M1.jar">aspectj-1.7.0.M1.jar</a> (~13M)<br>
-                <a href="https://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.7.0.M1-src.jar">aspectj-1.7.0.M1-src.jar</a>
-              </td>
-            </tr>
-          </table>
-        </li>
       </ul>
+    </div>
 
+    <!-- ============ ASPECTJ 6 ======================= -->
+    <div class="homeitem3col">
       <h3 id="milestones6">AspectJ 6</h3>
       <ul>
         <li>
@@ -588,7 +507,6 @@
             </tr>
           </table>
         </li>
-
         <li>
           <b>AspectJ 1.6.12, Released 18-Oct-2011</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -601,7 +519,6 @@
             </tr>
           </table>
         </li>
-
         <li>
           <b>AspectJ 1.6.11, Released 15-Mar-2011</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -614,7 +531,6 @@
             </tr>
           </table>
         </li>
-
         <li>
           <b>AspectJ 1.6.10, Released 22-Oct-2010</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -745,39 +661,6 @@
             </tr>
           </table>
         </li>
-        <li>
-          <b>AspectJ 1.6.0rc1, Released 16th April, 2008</b>
-          <table border="0" cellspacing="0" cellpadding="0" width="100%">
-            <tr>
-              <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
-              <td width="30%" align="right">
-                <a href="https://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.0rc1.jar">aspectj-1.6.0rc1.jar</a> (~11M)
-              </td>
-            </tr>
-          </table>
-        </li>
-        <li>
-          <b>AspectJ 1.6.0m2, Released 26th February, 2008</b>
-          <table border="0" cellspacing="0" cellpadding="0" width="100%">
-            <tr>
-              <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
-              <td width="30%" align="right">
-                <a href="https://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.6.0m2.jar">aspectj-1.6.0m2.jar</a> (~11M)
-              </td>
-            </tr>
-          </table>
-        </li>
-        <li>
-          <b>AspectJ 1.6.0m1, Released 16th January, 2008</b>
-          <table border="0" cellspacing="0" cellpadding="0" width="100%">
-            <tr>
-              <td><ul>AspectJ compiler, browser, documentation tool, Ant tasks, and documentation.</ul></td>
-              <td width="30%" align="right">
-                <a href="https://www.eclipse.org/downloads/download.php?file=/tools/aspectj/dev/aspectj-1.6.0m1.jar">aspectj-1.6.0m1.jar</a> (~11M)
-              </td>
-            </tr>
-          </table>
-        </li>
       </ul>
     </div>
 
@@ -818,7 +701,6 @@
             </tr>
           </table>
         </li>
-
         <li>
           <b>AspectJ 1.5.2, Released 30th June, 2006</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -830,7 +712,6 @@
             </tr>
           </table>
         </li>
-
         <li>
           <b>AspectJ 1.5.1a, Released 10th April, 2006</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -842,7 +723,6 @@
             </tr>
           </table>
         </li>
-
         <li>
           <b>AspectJ 1.5.0, Released 20th December, 2005</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -857,122 +737,10 @@
       </ul>
     </div>
 
-    <!--
-        Commenting out all pre-release AspectJ 5.
-        Normally I would just delete, but the convention in this document
-        seems to be commenting - to preserve the original file location?
-    
-      <h3 id="milestones">AspectJ 5 Release Candidates</h3>
-    
-      <p>	Only download these versions if you are prepared to work with a pre-release compiler. 
-            The most recent stable build below is the currently supported release version.
-      </p>
-      
-       <table border="0" cellspacing="0" cellpadding="0" width="100%">
-         <tbody>
-            <tr>
-             <td>
-               <dl>
-                 <dt>AspectJ 1.5.0 RC1, Released 14th December, 2005</dt>
-                <dd>AspectJ Compiler, Browser, Ant tasks, and Documentation. 
-                  </dd>
-                </dl>
-              </td>
-            <td width="30%" align="right">
-              <a href="https://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.5.0_RC1.jar">aspectj-1.5.0_RC1.jar</a> (~11M)
-              </td>
-          </tr>
-    
-        </tbody>
-      </table>
-    
-      
-      <h3 id="milestones">AspectJ 5 Milestone Builds</h3>
-    
-      <p>	Only download these versions if you are prepared to work with a pre-release compiler. 
-            The most recent stable build below is the currently supported release version.
-      </p>
-      
-       <table border="0" cellspacing="0" cellpadding="0" width="100%">
-         <tbody>
-            <tr>
-             <td>
-               <dl>
-                 <dt>AspectJ 1.5.0 M5, Released 16th November, 2005</dt>
-                <dd>AspectJ Compiler, Browser, Ant tasks, and Documentation. 
-                  </dd>
-                </dl>
-              </td>
-            <td width="30%" align="right">
-              <a href="https://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.5.0_M5.jar">aspectj-1.5.0_M5.jar</a> (~11M)
-              </td>
-          </tr>
-          
-           <tr>
-             <td>
-               <dl>
-                 <dt>AspectJ 1.5.0 M4, Released 7th October, 2005</dt>
-                <dd>AspectJ Compiler, Browser, Ant tasks, and Documentation. 
-                  </dd>
-                </dl>
-              </td>
-            <td width="30%" align="right">
-              <a href="https://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.5.0_M4.jar">aspectj-1.5.0_M4.jar</a> (~9.7M)
-              </td>
-          </tr>
-         
-           <tr>
-             <td>
-               <dl>
-                 <dt>AspectJ 1.5.0 M3a, Released 26th August, 2005</dt>
-                <dd>AspectJ Compiler, Browser, Ant tasks, and Documentation. 
-                  </dd>
-                </dl>
-              </td>
-            <td width="30%" align="right">
-              <a href="https://www.eclipse.org/downloads/download.php?file=/tools/aspectj/aspectj-1.5.0_M3a.jar">aspectj-1.5.0_M3a.jar</a> (~9.1M)
-              </td>
-          </tr>
-         
-         
-           <tr>
-             <td>
-               <dl>
-                 <dt>AspectJ 1.5.0 M2, Released 7th April, 2005</dt>
-                <dd>AspectJ Compiler, Browser, Ant tasks, and Documentation. 
-                  </dd>
-                </dl>
-              </td>
-            <td width="30%" align="right">
-              <a href="https://www.eclipse.org/downloads/download.php?file=/tools/aspectj/dev/aspectj-1.5.0M2.jar">aspectj-1.5.0M2.jar</a> (~8.3M)
-              </td>
-          </tr>
-    
-           <tr>
-             <td>
-               <dl>
-                 <dt>AspectJ 1.5.0 M1, Released 10th December, 2004</dt>
-                <dd>AspectJ Compiler, Browser, Ant tasks, and Documentation. 
-                  </dd>
-                </dl>
-              </td>
-            <td width="30%" align="right">
-                <a href="https://www.eclipse.org/downloads/download.php?file=/tools/ajdt/aspectj-1.5.0M1.jar">
-                aspectj-1.5.0M1.jar</a> (~7.5M)
-              </td>
-          </tr>
-        </tbody>
-      </table>
-        
-        END of commenting out AspectJ 5 pre-release versions
-        -->
-
     <!-- ============ ASPECTJ 1.2 ======================= -->
-
     <div class="homeitem3col">
       <h3>AspectJ 1.2</h3>
       <ul>
-
         <li>
           <b>Version 1.2.1, Released November 5th, 2004</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -990,23 +758,6 @@
             </tr>
           </table>
         </li>
-
-        <!--    		
-                <tr>
-                  <td>
-                   <dl>
-                      <dt>Version 1.2.1 release candidate 1, Released October 22nd, 2004</dt>
-                      <dd>AspectJ Compiler, Browser, Ant tasks, and Documentation</dd>
-                    </dl>
-                  </td>
-                <td width="30%" align="right">
-                    <a href="https://www.eclipse.org/downloads/download.php?file=/tools/ajdt/aspectj-1.2.1rc1.jar">
-                    aspectj-1.2.1rc1.jar</a> (7,393,774 bytes)
-                  </td>
-              </tr>
-              
-        -->
-
         <li>
           <b>Version 1.2.0, Released May 25, 2004</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -1023,34 +774,7 @@
             </tr>
           </table>
         </li>
-        <!--
-              <tr>
-                  <td>
-                   <dl>
-                      <dt>Version 1.2 release candidate 2, Released May 13, 2004</dt>
-                      <dd>AspectJ Compiler, Browser, Ant tasks, and Documentation</dd>
-                    </dl>
-                  </td>
-                <td width="30%" align="right">
-                   <a href="https://www.eclipse.org/downloads/download.php?file=/tools/ajdt/aspectj-1.2rc2.jar">
-                    aspectj-1.2rc2.jar</a> (5,853,184 bytes)
-                  </td>
-              </tr>			
-        
-              <tr>
-                  <td>
-                   <dl>
-                      <dt>Version 1.2 release candidate 1, Released April 15, 2004</dt>
-                      <dd>AspectJ Compiler, Browser, Ant tasks, and Documentation</dd>
-                    </dl>
-                  </td>
-                <td width="30%" align="right">
-                   <a href="https://www.eclipse.org/downloads/download.php?file=/tools/ajdt/aspectj-1.2rc1.jar">
-                    aspectj-1.2rc1.jar</a> (5,860,538 bytes)	  			
-                 </td>
-              </tr>			
-          </table>
-        -->
+      </ul>
     </div>
 
     <!-- ============ ASPECTJ 1.1 ======================= -->
@@ -1073,7 +797,6 @@
             </tr>
           </table>
         </li>
-
         <li>
           <b>Version 1.1.0, Released June 6, 2003</b>
           <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -1090,65 +813,6 @@
             </tr>
           </table>
         </li>
-        <!--
-              <tr>
-                 <td>
-                   <dl>
-                     <dt>Version 1.1.rc2, Released May 13, 2003</dt>
-                    <dd>AspectJ Compiler, Browser, Ant tasks, and Documentation</dd>
-                  </dl>
-                  </td>
-                <td width="30%" align="right">
-                     <a href="https://www.eclipse.org/downloads/download.php?file=/tools/ajdt/aspectj-1.1rc2.jar">
-                    aspectj-1.1rc2.jar</a> (6,285,237 bytes)
-                </td>
-              </tr>
-        
-              <tr>
-                 <td>
-                   <dl>
-                     <dt>Version 1.1.rc1, Released March 14, 2003</dt>
-                    <dd>AspectJ Compiler, Browser, Ant tasks, and Documentation</dd>
-                  </dl>
-                  </td>
-                <td width="30%" align="right">
-                     <a href="https://www.eclipse.org/downloads/download.php?file=/tools/ajdt/aspectj-1.1rc1.jar">
-                    aspectj-1.1rc1.jar</a> (5,747,357 bytes)
-                </td>
-              </tr>
-            </tbody>
-          </table>
-                
-        
-          <tr>
-            <td colSpan="3"><b>Version 1.1beta4&nbsp;&nbsp;&nbsp; Released January 15, 2003</b></td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>AspectJ Compiler, Browser, Ant tasks, and Documentation</td>
-            <td>
-              <a href="https://www.eclipse.org/downloads/download.php?file=/tools/ajdt/aspectj-1.1b4.jar">
-              aspectj-1.1b4.jar</a>
-              (5,792,693 bytes)
-            </td>
-          </tr>
-          <tr>
-            <td colSpan="3"><b>Version 1.1beta2&nbsp;&nbsp;&nbsp; Released December 18, 2002</b></td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>AspectJ Compiler, Browser, Ant tasks, and Documentation</td>
-            <td>
-              <a href="https://www.eclipse.org/downloads/download.php?file=/tools/ajdt/aspectj-1.1b2.jar">
-              aspectj-1.1b2.jar</a>
-              (4,928,000 bytes)
-            </td>
-          </tr>
-          
-              </table>
-            </td>
-          </tr>
-        -->
       </ul>
     </div>
 
@@ -1200,58 +864,6 @@
         </li>
       </ul>
     </div>
-
-    <!-- ============ INSTALLATION ======================= -->
-
-    <h2 id="install">Installation</h2>
-
-    <p>
-      The <tt>.jar</tt> files should not be unzipped as they are self-extracting
-      Java-based GUI installers.&nbsp; On many systems they can be run directly by
-      selecting &quot;Open this file from its current location&quot; or by
-      double-clicking the downloaded file.&nbsp; If you download the <tt>.jar</tt> files
-      do not unzip them; instead invoke the GUI installer with the
-      <font face="Courier">java -jar</font> command on the corresponding file
-      e.g.: <tt><b>java&nbsp;-jar&nbsp;aspectj-1.1.0.jar</b></tt>
-    </p>
-
-    <!-- ============ IDE SUPPORT ======================= -->
-
-    <h2 id="ides">Development Environment Support</h2>
-
-    <dl>
-      <dt><a target="_top" href="https://eclipse.org/ajdt">AJDT Project</a></dt>
-      <dd>an Eclipse Tools project that provides an AspectJ plug-in for Eclipse.</dd>
-      <dt><a target="_top" href="https://aspectj4jbuildr.sourceforge.net">AspectJ for JBuilder</a></dt>
-      <dd>is an old SourceForge project that provides an AspectJ
-        OpenTool for Borland's JBuilder IDE.
-      </dd>
-      <dt><a target="_top" href="https://aspectj-netbeans.sourceforge.net">
-        AspectJ for NetBeans</a>
-      </dt>
-      <dd> is an a SourceForge project that provides an
-        AspectJ Module for Sun's Forte/SunONEStudio4/NetBeans IDE.
-      </dd>
-      <dt><a target="_top" href="https://aspectj4emacs.sourceforge.net">
-        AspectJ for Emacs and JDEE</a>
-      </dt>
-      <dd>is an old SourceForge project that provides an
-        AspectJ mode for Emacs and an AspectJ extension to JDEE.
-      </dd>
-      <dt><a target="_top" href="https://jdeveloperaop.dev.java.net">
-        jdeveloperaop</a>
-      </dt>
-      <dd> is a java.net project to support AspectJ programming in
-        Oracle's JDeveloper IDE.
-      </dd>
-      <!-- removed - installers not updated since July, 2005
-    <dt>Easy installers</dt>
-    <dd>Russ Miles has packaged together
-      <a target="_top" href="https://www.aspectjcookbook.com">integrated 
-      installers for Eclipse, AJDT, and AspectJ on the Windows and Mac platforms</a>.
-    </dd>
-      -->
-    </dl>
 
   </div>
 
