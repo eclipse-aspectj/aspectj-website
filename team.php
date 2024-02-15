@@ -99,31 +99,31 @@
         Some Git statistics (from February 2024, commit 74f05309ce):
 
 <pre><code>$ git shortlog -sne
-  5536  Andy Clement <aclement@...>
-   953  Adrian Colyer <acolyer>
-   918  Wes Isberg <wisberg>
-   532  Alexander Kriegisch <kriegaex@...>
-   313  Jim Hugunin <jhugunin>
-   205  Mik Kersten <mkersten>
-   119  Matthew Webster <mwebster>
-   100  Alexandre Vasseur <avasseur>
-    94  Erik Hilsdale <ehilsdal>
-    41  Lars Grefer <eclipse@...>
-    19  Andrey Turbanov <turbanoff@...>
-    11  Sergey Stupin <stupin.sergey@...>
-     7  Jerry James <loganjerry@...>
-     4  Uri Simchoni <urisimchoni@...>
-     3  Dmitry Mikhaylov <dmitry@...>
-     2  Eli Finkel <eyfinkel@...>
-     2  Emmanuel Bourg <ebourg@...>
-     1  Andy Russell <arussell123@...>
-     1  Anuj Dodhia <59048795+capgen628@...>
-     1  John Kew <jkew@...>
-     1  Jonathan Leitschuh <Jonathan.Leitschuh@...>
-     1  Kui Liu <brucekuiliu@...>
-     1  Semyon Danilov <samvimes@...>
-     1  Stefan Starke <stefan@...>
-     1  Tobias Roeser <le.petit.fou@...></code></pre>
+  5536  Andy Clement &lt;aclement@...&gt;
+   953  Adrian Colyer &lt;acolyer&gt;
+   918  Wes Isberg &lt;wisberg&gt;
+   532  Alexander Kriegisch &lt;kriegaex@...&gt;
+   313  Jim Hugunin &lt;jhugunin&gt;
+   205  Mik Kersten &lt;mkersten&gt;
+   119  Matthew Webster &lt;mwebster&gt;
+   100  Alexandre Vasseur &lt;avasseur&gt;
+    94  Erik Hilsdale &lt;ehilsdal&gt;
+    41  Lars Grefer &lt;eclipse@...&gt;
+    19  Andrey Turbanov &lt;turbanoff@...&gt;
+    11  Sergey Stupin &lt;stupin.sergey@...&gt;
+     7  Jerry James &lt;loganjerry@...&gt;
+     4  Uri Simchoni &lt;urisimchoni@...&gt;
+     3  Dmitry Mikhaylov &lt;dmitry@...&gt;
+     2  Eli Finkel &lt;eyfinkel@...&gt;
+     2  Emmanuel Bourg &lt;ebourg@...&gt;
+     1  Andy Russell &lt;arussell123@...&gt;
+     1  Anuj Dodhia &lt;59048795+capgen628@...&gt;
+     1  John Kew &lt;jkew@...&gt;
+     1  Jonathan Leitschuh &lt;Jonathan.Leitschuh@...&gt;
+     1  Kui Liu &lt;brucekuiliu@...&gt;
+     1  Semyon Danilov &lt;samvimes@...&gt;
+     1  Stefan Starke &lt;stefan@...&gt;
+     1  Tobias Roeser &lt;le.petit.fou@...&gt;</code></pre>
 
         Not to mention all commits done in other SCM systems before the initial Git import.
       </p>
