@@ -289,7 +289,7 @@ destination directory on the inpath and rebuild.)</p>
 <dl>
 <dt class="hdlist1"><code>-injars &lt;JarList&gt;</code></dt>
 <dd>
-<p>deprecated: since 1.2, use -inpath, which also takes directories.</p>
+<p>deprecated: since 1.2, use <code>-inpath</code>, which also takes directories.</p>
 </dd>
 <dt class="hdlist1"><code>-inpath &lt;Path&gt;</code></dt>
 <dd>
@@ -306,7 +306,7 @@ sources. The aspects should have been output by the same version of
 the compiler. When running the output classes, the run classpath
 should contain all aspectpath entries. Path, like classpath, is a
 single argument containing a list of paths to jar files, delimited by
-the platform- specific classpath delimiter.</p>
+the platform-specific classpath delimiter.</p>
 </dd>
 <dt class="hdlist1"><code>-argfile &lt;File&gt;</code></dt>
 <dd>
@@ -318,9 +318,9 @@ calculated from the directory containing the file (not the current
 working directory). Comments, as in Java, start with <code>//</code> and extend
 to the end of the line. Options specified in argument files may
 override rather than extending existing option values, so avoid
-specifying options like &#8592;classpath&gt; in argument files unlike the
-argument file is the only build specification. The form &lt;@file&gt; is the
-same as specifying &#8592;argfile file&gt;.</p>
+specifying options like <code>-classpath</code> in argument files unlike the
+argument file is the only build specification. The form <code>@file</code> is the
+same as specifying <code>-argfile file</code>.</p>
 </dd>
 <dt class="hdlist1"><code>-outjar &lt;output.jar&gt;</code></dt>
 <dd>
@@ -340,14 +340,71 @@ same as specifying &#8592;argfile file&gt;.</p>
 compiler will wait to recompile until it reads a newline from the
 standard input, and will quit when it reads a 'q'. It will only
 recompile necessary components, so a recompile should be much faster
-than doing a second compile. This requires -sourceroots.</p>
+than doing a second compile. This requires <code>-sourceroots</code>.</p>
 </dd>
 <dt class="hdlist1"><code>-sourceroots &lt;DirPaths&gt;</code></dt>
 <dd>
 <p>Find and build all .java or .aj source files under any directory
 listed in DirPaths. DirPaths, like classpath, is a single argument
-containing a list of paths to directories, delimited by the platform-
-specific classpath delimiter. Required by -incremental.</p>
+containing a list of paths to directories, delimited by the platform-specific
+classpath delimiter. Required by <code>-incremental</code>.</p>
+</dd>
+<dt class="hdlist1"><code>-xmlConfigured &lt;files&gt;</code></dt>
+<dd>
+<p>Configure the weaving process, if you wish to impose non-standard limitations, e.g.
+a list of aspects to use (if not all), global and per-aspect scopes for the weaver
+(target packages and classes to exclude or include). This option also needs an .xml
+file on the command line, optionally multiple ones to be logically merged into one
+weaver configuration. Example:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;aspectj&gt;</span>
+  <span class="comment">&lt;!-- From all aspects found, only use the ones listed here --&gt;</span>
+  <span class="tag">&lt;aspects&gt;</span>
+    <span class="comment">&lt;!-- Only weave class org.acme.app.B --&gt;</span>
+    <span class="tag">&lt;aspect</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">a.b.FooAspect</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">scope</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.acme.app.B</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="comment">&lt;!-- Only weave classes in package orc.acme and its sub-packages --&gt;</span>
+    <span class="tag">&lt;aspect</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">c.d.BarAspect</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">scope</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">orc.acme..*</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="comment">&lt;!-- Weave all classes, unless globally excluded --&gt;</span>
+    <span class="tag">&lt;aspect</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">e.f.ZotAspect</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;/aspects&gt;</span>
+  <span class="tag">&lt;weaver&gt;</span>
+    <span class="comment">&lt;!-- Globally exclude classes in package org.acme.internal and its sub-packages from weaving --&gt;</span>
+    <span class="tag">&lt;exclude</span> <span class="attribute-name">within</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.acme.internal..*</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="comment">&lt;!-- This has **no effect**, use per-aspect scopes instead --&gt;</span>
+    <span class="tag">&lt;include</span> <span class="attribute-name">within</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">com.xyz..*</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;/weaver&gt;</span>
+<span class="tag">&lt;/aspectj&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Please note that <code>-xmlConfigured</code> only supports a subset of options available to
+load-time weaving configuration by <em>aop.xml</em>. Current limitations include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>There is <strong>no magical file name</strong> like <em>aop.xml</em> for the load-time weaver,
+i.e. an XML configuration file for the compiler needs to be listed explicitly
+on the command line.</p>
+</li>
+<li>
+<p>Scopes and excludes only affect method interception pointcuts, not ITDs.
+The latter will always be applied and are unaffected by XML configuration.</p>
+</li>
+<li>
+<p>There is no global <code>&lt;include within="&#8230;&#8203;"/&gt;</code> (see example above).</p>
+</li>
+<li>
+<p>Lists in aspect scope expressions are not supported, i.e. an expression like
+<code>scope="A,B,C"</code> will be treated like <code>scope="A"</code>, using only the first element.</p>
+</li>
+<li>
+<p>If you want to apply a scope to an aspect extending an abstract base aspect,
+you need to list and scope both aspects in the XML file.</p>
+</li>
+</ul>
+</div>
 </dd>
 <dt class="hdlist1"><code>-crossrefs</code></dt>
 <dd>
@@ -365,17 +422,17 @@ viewing crosscutting references by tools like the AspectJ Browser.</p>
 <dt class="hdlist1"><code>-Xlint:{level}</code></dt>
 <dd>
 <p>Set default level for messages about potential programming mistakes in
-crosscutting code. {level} may be ignore, warning, or error. This
-overrides entries in org/aspectj/weaver/XlintDefault.properties from
+crosscutting code. <code>{level}</code> may be <code>ignore</code>, <code>warning</code>, or <code>error</code>. This
+overrides entries in <em>org/aspectj/weaver/XlintDefault.properties</em> from
 aspectjtools.jar, but does not override levels set using the
--Xlintfile option.</p>
+<code>-Xlintfile</code> option.</p>
 </dd>
 <dt class="hdlist1"><code>-Xlintfile &lt;PropertyFile&gt;</code></dt>
 <dd>
 <p>Specify properties file to set levels for specific crosscutting
 messages. PropertyFile is a path to a Java .properties file that takes
 the same property names and values as
-org/aspectj/weaver/XlintDefault.properties from aspectjtools.jar,
+<em>org/aspectj/weaver/XlintDefault.properties</em> from aspectjtools.jar,
 which it also overrides.</p>
 </dd>
 <dt class="hdlist1"><code>-help</code></dt>
@@ -411,40 +468,32 @@ path delimiter.</p>
 <p>Specify where to place generated .class files. If not specified,
 &lt;Directory&gt; defaults to the current working dir.</p>
 </dd>
-<dt class="hdlist1"><code>-target &lt;[1.1 to 1.5]&gt;</code></dt>
+</dl>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>-source &lt;[1.3 to 21]&gt;</code></dt>
 <dd>
-<p>Specify classfile target setting (1.1 to 1.5, default is 1.2)</p>
+<p>Set source file Java language level</p>
 </dd>
-<dt class="hdlist1"><code>-1.3</code></dt>
+<dt class="hdlist1"><code>-target &lt;[1.3 to 21]&gt;</code></dt>
 <dd>
-<p>Set compliance level to 1.3 This implies -source 1.3 and -target 1.1.</p>
+<p>Set classfile Java bytecode level</p>
 </dd>
-<dt class="hdlist1"><code>-1.4</code></dt>
+<dt class="hdlist1"><code>-&lt;[1.3 to 21]&gt;</code></dt>
 <dd>
-<p>Set compliance level to 1.4 (default) This implies -source 1.4 and
--target 1.2.</p>
-</dd>
-<dt class="hdlist1"><code>-1.5</code></dt>
-<dd>
-<p>Set compliance level to 1.5. This implies -source 1.5 and -target 1.5.</p>
-</dd>
-<dt class="hdlist1"><code>-source &lt;[1.3|1.4|1.5]&gt;</code></dt>
-<dd>
-<p>Toggle assertions (1.3, 1.4, or 1.5 - default is 1.4). When using
--source 1.3, an assert() statement valid under Java 1.4 will result in
-a compiler error. When using -source 1.4, treat <code>assert</code> as a keyword
-and implement assertions according to the 1.4 language spec. When
-using -source 1.5, Java 5 language features are permitted.</p>
+<p>Set compiler compliance level. Implies identical <code>-source</code> and <code>-target</code> levels.
+E.g., <code>-11</code> implies <code>-source 11</code> and <code>-target 11</code>.</p>
 </dd>
 <dt class="hdlist1"><code>-nowarn</code></dt>
 <dd>
-<p>Emit no warnings (equivalent to '-warn:none') This does not suppress
+<p>Emit no warnings (equivalent to <code>-warn:none</code>) This does not suppress
 messages generated by <code>declare warning</code> or <code>Xlint</code>.</p>
 </dd>
 <dt class="hdlist1"><code>-warn: &lt;items&gt;</code></dt>
 <dd>
 <p>Emit warnings for any instances of the comma-delimited list of
-questionable code (eg '-warn:unusedLocals,deprecation'):</p>
+questionable code (e.g. <code>-warn:unusedLocals,deprecation</code>):</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="text">constructorName        method with constructor name
@@ -464,7 +513,7 @@ none                   suppress all compiler warnings</code></pre>
 </dd>
 <dt class="hdlist1"><code>-deprecation</code></dt>
 <dd>
-<p>Same as -warn:deprecation</p>
+<p>Same as <code>-warn:deprecation</code></p>
 </dd>
 <dt class="hdlist1"><code>-noImportError</code></dt>
 <dd>
@@ -498,7 +547,7 @@ debugging).</p>
 <dt class="hdlist1"><code>-encoding &lt;format&gt;</code></dt>
 <dd>
 <p>Specify default source encoding format. Specify custom encoding on a
-per file basis by suffixing each input source file/folder name with
+per-file basis by suffixing each input source file/folder name with
 '[encoding]'.</p>
 </dd>
 <dt class="hdlist1"><code>-verbose</code></dt>
@@ -523,7 +572,7 @@ per file basis by suffixing each input source file/folder name with
 </dd>
 <dt class="hdlist1"><code>-noExit</code></dt>
 <dd>
-<p>Do not call System.exit(n) at end of compilation (n=0 if no error)</p>
+<p>Do not call <code>System.exit(n)</code> at end of compilation (n=0 if no error)</p>
 </dd>
 <dt class="hdlist1"><code>-repeat &lt;N&gt;</code></dt>
 <dd>
