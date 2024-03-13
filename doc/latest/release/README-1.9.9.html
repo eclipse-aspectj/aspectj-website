@@ -93,7 +93,7 @@ here:</p>
 </div>
 <div class="sect2">
 <h3 id="_improvements">Improvements</h3>
-<div class="paragraph">
+<div id="async_proceed" class="paragraph">
 <p>In annotation style aspects, asynchronous <code>proceed()</code> calls in <code>@Around</code> advice now works in threads created from within
 the advice. Previously, this was only working in native syntax aspects. There is still a limitation with regard to
 asynchronous proceed, if you do not create the thread in the advice but want to use e.g. an <code>ExecutorService</code> with its

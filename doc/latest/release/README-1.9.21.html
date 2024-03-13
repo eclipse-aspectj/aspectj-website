@@ -16,17 +16,24 @@
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_aspectj_1_9_21_1">AspectJ 1.9.21.1</a>
+<li><a href="#_aspectj_1_9_21_2">AspectJ 1.9.21.2</a>
 <ul class="sectlevel2">
 <li><a href="#_new_features">New features</a></li>
 <li><a href="#_improvements">Improvements</a></li>
 <li><a href="#_other_changes_and_bugfixes">Other changes and bugfixes</a></li>
 </ul>
 </li>
-<li><a href="#_aspectj_1_9_21">AspectJ 1.9.21</a>
+<li><a href="#_aspectj_1_9_21_1">AspectJ 1.9.21.1</a>
 <ul class="sectlevel2">
 <li><a href="#_new_features_2">New features</a></li>
 <li><a href="#_improvements_2">Improvements</a></li>
+<li><a href="#_other_changes_and_bugfixes_2">Other changes and bugfixes</a></li>
+</ul>
+</li>
+<li><a href="#_aspectj_1_9_21">AspectJ 1.9.21</a>
+<ul class="sectlevel2">
+<li><a href="#_new_features_3">New features</a></li>
+<li><a href="#_improvements_3">Improvements</a></li>
 <li><a href="#_other_changes_and_bug_fixes">Other changes and bug fixes</a></li>
 <li><a href="#_aspectj_usage_hints">AspectJ usage hints</a></li>
 </ul>
@@ -38,7 +45,67 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The releases 1.9.21 and 1.9.21.1 are described together in this document.</p>
+<p>The releases 1.9.21, 1.9.21.1 and 1.9.21.2 are described together in this document.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_aspectj_1_9_21_2">AspectJ 1.9.21.2</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>© Copyright 2024 Contributors. All rights reserved.</em></p>
+</div>
+<div class="paragraph">
+<p><em>Release info: 1.9.21.2 available 13-Mar-2024</em></p>
+</div>
+<div class="paragraph">
+<p>Please note that Bugzilla for issue management is deprecated and new issues should be filed as
+<a href="https://github.com/eclipse-aspectj/aspectj/issues/new">GitHub issues</a>. The list of issues addressed for 1.9.21.2 can be
+found here:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/eclipse-aspectj/aspectj/issues?q=is%3Aissue+is%3Aclosed++milestone%3A1.9.21.2">GitHub 1.9.21.2</a></p>
+</li>
+<li>
+<p><a href="https://bugs.eclipse.org/bugs/buglist.cgi?bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;f0=OP&amp;f1=OP&amp;f3=CP&amp;f4=CP&amp;j1=OR&amp;list_id=16866879&amp;product=AspectJ&amp;query_format=advanced&amp;target_milestone=1.9.21.2">Bugzilla 1.9.21.2</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_new_features">New features</h3>
+<div class="paragraph">
+<p>AspectJ 1.9.21.2 is a maintenance release with no new language features, but an important improvement and a bugfix,
+see below.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_improvements">Improvements</h3>
+<div class="paragraph">
+<p>Previously, when targeting the same join point from multiple around advices in annotation-style @AspectJ syntax, there
+were limitations in functionality in concurrent (multi-threaded) situations, if the around advice code was not inlined.
+This was improved in <a href="README-1.9.9#async_proceed">AspectJ 1.9.9</a> (see also <a href="https://github.com/eclipse-aspectj/aspectj/issues/128">issue #128</a>),
+but the improvement only applied to child threads directly created during aspect execution and would fail for
+pre-existing, long-lived threads, e.g. thread pools used by executor services. Furthermore, the improvement could lead
+to memory leaks, not cleaning up thread-local references to posssibly expensive objects. In such situations, users had
+to switch to native-syntax aspects which never had that problem to begin with due to their different internal structure.</p>
+</div>
+<div class="paragraph">
+<p>Now, <a href="https://github.com/eclipse-aspectj/aspectj/issues/141">issue #141</a> has been resolved, closing the gap and, as well
+as possible given their different internal structure, bringing @AspectJ aspects up to par with native-syntax aspects in
+concurrent situations, while simultaneously also addressing the memory leak <a href="https://github.com/eclipse-aspectj/aspectj/issues/288">issue #288</a>. This is a substantial improvement, and annotation-style syntax users are strongly engouraged to upgrade. Thanks
+to user <em>pagrawalgit</em> for raising the memory leak issue and triggering me to think about the concurrency issue more
+broadly and finally solve both in one shot.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_other_changes_and_bugfixes">Other changes and bugfixes</h3>
+<div class="paragraph">
+<p>The fix for <a href="https://github.com/eclipse-aspectj/aspectj/issues/277">issue #277</a> in AspectJ 1.9.21.1 introduced a
+regression bug in the optional weaving cache now fixed in <a href="https://github.com/eclipse-aspectj/aspectj/issues/285">issue #285</a>.
+Thanks to user <em>Kimming Lau</em> for raising and re-testing both issues.</p>
+</div>
 </div>
 </div>
 </div>
@@ -67,14 +134,14 @@ found here:</p>
 </ul>
 </div>
 <div class="sect2">
-<h3 id="_new_features">New features</h3>
+<h3 id="_new_features_2">New features</h3>
 <div class="paragraph">
 <p>AspectJ 1.9.21.1 is a maintenance release with no new language features, but important improvements and some bugfixes,
 see below.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_improvements">Improvements</h3>
+<h3 id="_improvements_2">Improvements</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -98,7 +165,7 @@ incrementally from various release notes.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_other_changes_and_bugfixes">Other changes and bugfixes</h3>
+<h3 id="_other_changes_and_bugfixes_2">Other changes and bugfixes</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -143,7 +210,7 @@ found here:</p>
 </ul>
 </div>
 <div class="sect2">
-<h3 id="_new_features_2">New features</h3>
+<h3 id="_new_features_3">New features</h3>
 <div class="paragraph">
 <p>AspectJ 1.9.21 supports <a href="https://openjdk.java.net/projects/jdk/21/">Java 21</a>, its final features and a subset of preview
 features, such as:</p>
@@ -194,7 +261,7 @@ to support them in the AspectJ Compiler (AJC), too.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_improvements_2">Improvements</h3>
+<h3 id="_improvements_3">Improvements</h3>
 <div class="ulist">
 <ul>
 <li>
