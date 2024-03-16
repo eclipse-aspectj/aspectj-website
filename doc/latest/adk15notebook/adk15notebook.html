@@ -20,25 +20,85 @@
 <li><a href="#jpsigs">Join Point Signatures</a>
 <ul class="sectlevel2">
 <li><a href="#_join_point_matching">Join Point Matching</a></li>
-<li><a href="#join-point-signatures">Join Point Signatures</a></li>
+<li><a href="#join-point-signatures">Join Point Signatures</a>
+<ul class="sectlevel3">
+<li><a href="#_method_call_join_point_signatures">Method call join point signatures</a></li>
+<li><a href="#_method_execution_join_point_signatures">Method execution join point signatures</a></li>
+<li><a href="#_field_get_and_set_join_point_signatures">Field get and set join point signatures</a></li>
+</ul>
+</li>
 <li><a href="#_join_point_modifiers">Join Point Modifiers</a></li>
 <li><a href="#join-point-matching-summary">Summary of Join Point Matching</a></li>
 </ul>
 </li>
 <li><a href="#_annotations">Annotations</a>
 <ul class="sectlevel2">
-<li><a href="#annotations-inJava5">Annotations in Java 5</a></li>
+<li><a href="#annotations-inJava5">Annotations in Java 5</a>
+<ul class="sectlevel3">
+<li><a href="#_using_annotations">Using Annotations</a></li>
+<li><a href="#_retention_policies">Retention Policies</a></li>
+<li><a href="#_accessing_annotations_at_runtime">Accessing Annotations at Runtime</a></li>
+<li><a href="#_annotation_inheritance">Annotation Inheritance</a></li>
+</ul>
+</li>
 <li><a href="#annotations-aspectmembers">Annotating Aspects</a></li>
-<li><a href="#annotations-pointcuts-and-advice">Join Point Matching based on Annotations</a></li>
-<li><a href="#annotations-decp">Using Annotations with declare statements</a></li>
+<li><a href="#annotations-pointcuts-and-advice">Join Point Matching based on Annotations</a>
+<ul class="sectlevel3">
+<li><a href="#_annotation_patterns">Annotation Patterns</a></li>
+<li><a href="#_type_patterns">Type Patterns</a></li>
+<li><a href="#signaturePatterns">Signature Patterns</a>
+<ul class="sectlevel4">
+<li><a href="#fieldPatterns">Field Patterns</a></li>
+<li><a href="#methodPatterns">Method and Constructor Patterns</a></li>
+</ul>
+</li>
+<li><a href="#_example_pointcuts">Example Pointcuts</a></li>
+<li><a href="#_runtime_type_matching_and_context_exposure">Runtime type matching and context exposure</a></li>
+<li><a href="#_package_and_parameter_annotations">Package and Parameter Annotations</a></li>
+<li><a href="#_annotation_inheritance_and_pointcut_matching">Annotation Inheritance and pointcut matching</a></li>
+<li><a href="#matchingOnAnnotationValues">Matching based on annotation values</a></li>
+</ul>
+</li>
+<li><a href="#annotations-decp">Using Annotations with declare statements</a>
+<ul class="sectlevel3">
+<li><a href="#_declare_error_and_declare_warning">Declare error and declare warning</a></li>
+<li><a href="#_declare_parents">declare parents</a></li>
+<li><a href="#_declare_precedence">declare precedence</a></li>
+</ul>
+</li>
 <li><a href="#annotations-declare">Declare Annotation</a></li>
 <li><a href="#annotations-itds">Inter-type Declarations</a></li>
 </ul>
 </li>
 <li><a href="#_generics">Generics</a>
 <ul class="sectlevel2">
-<li><a href="#generics-inJava5">Generics in Java 5</a></li>
-<li><a href="#generics-inAspectJ5">Generics in AspectJ 5</a></li>
+<li><a href="#generics-inJava5">Generics in Java 5</a>
+<ul class="sectlevel3">
+<li><a href="#_declaring_generic_types">Declaring Generic Types</a></li>
+<li><a href="#_using_generic_and_parameterized_types">Using Generic and Parameterized Types</a></li>
+<li><a href="#_subtypes_supertypes_and_assignability">Subtypes, Supertypes, and Assignability</a></li>
+<li><a href="#_generic_methods_and_constructors">Generic Methods and Constructors</a></li>
+<li><a href="#_erasure">Erasure</a></li>
+</ul>
+</li>
+<li><a href="#generics-inAspectJ5">Generics in AspectJ 5</a>
+<ul class="sectlevel3">
+<li><a href="#_matching_generic_and_parameterized_types_in_pointcut_expressions">Matching generic and parameterized types in pointcut expressions</a>
+<ul class="sectlevel4">
+<li><a href="#_restricting_matching_using_parameterized_types">Restricting matching using parameterized types</a></li>
+<li><a href="#_generic_wildcards_and_signature_matching">Generic wildcards and signature matching</a></li>
+<li><a href="#_treatment_of_bridge_methods">Treatment of bridge methods</a></li>
+<li><a href="#_runtime_type_matching_with_this_target_and_args">Runtime type matching with this(), target() and args()</a></li>
+<li><a href="#_binding_return_values_in_after_returning_advice">Binding return values in after returning advice</a></li>
+<li><a href="#_declaring_pointcuts_inside_generic_types">Declaring pointcuts inside generic types</a></li>
+</ul>
+</li>
+<li><a href="#_inter_type_declarations">Inter-type Declarations</a></li>
+<li><a href="#declare-parents-java5">Declare Parents</a></li>
+<li><a href="#_declare_soft">Declare Soft</a></li>
+<li><a href="#_generic_aspects">Generic Aspects</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#autoboxing">Autoboxing and Unboxing</a>
@@ -56,8 +116,17 @@
 </li>
 <li><a href="#_varargs">Varargs</a>
 <ul class="sectlevel2">
-<li><a href="#varargs-inJava5">Variable-length Argument Lists in Java 5</a></li>
-<li><a href="#varargs-in-pcds">Using Variable-length arguments in advice and pointcut expressions</a></li>
+<li><a href="#varargs-inJava5">Variable-length Argument Lists in Java 5</a>
+<ul class="sectlevel3">
+<li><a href="#_calling_methods_and_constructors_with_variable_length_arguments">Calling Methods and Constructors with variable-length arguments</a></li>
+</ul>
+</li>
+<li><a href="#varargs-in-pcds">Using Variable-length arguments in advice and pointcut expressions</a>
+<ul class="sectlevel3">
+<li><a href="#_matching_signatures_based_on_variable_length_argument_types">Matching signatures based on variable length argument types</a></li>
+<li><a href="#_exposing_variable_length_arguments_as_context_in_pointcuts_and_advice">Exposing variable-length arguments as context in pointcuts and advice</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#enumeratedtypes">Enumerated Types</a>
@@ -70,9 +139,28 @@
 <li><a href="#ataspectj">An Annotation Based Development Style</a>
 <ul class="sectlevel2">
 <li><a href="#ataspectj-intro">Introduction</a></li>
-<li><a href="#ataspectj-aspects">Aspect Declarations</a></li>
-<li><a href="#ataspectj-pcadvice">Pointcuts and Advice</a></li>
-<li><a href="#ataspectj-itds">Inter-type Declarations</a></li>
+<li><a href="#ataspectj-aspects">Aspect Declarations</a>
+<ul class="sectlevel3">
+<li><a href="#_limitations">Limitations</a></li>
+</ul>
+</li>
+<li><a href="#ataspectj-pcadvice">Pointcuts and Advice</a>
+<ul class="sectlevel3">
+<li><a href="#_pointcuts">Pointcuts</a>
+<ul class="sectlevel4">
+<li><a href="#_type_references_inside_aspectj_annotations">Type references inside @AspectJ annotations</a></li>
+<li><a href="#_if_pointcut_expressions">if() pointcut expressions</a></li>
+</ul>
+</li>
+<li><a href="#_advice">Advice</a></li>
+</ul>
+</li>
+<li><a href="#ataspectj-itds">Inter-type Declarations</a>
+<ul class="sectlevel3">
+<li><a href="#atDeclareParents">@DeclareParents</a></li>
+<li><a href="#atDeclareMixin">@DeclareMixin</a></li>
+</ul>
+</li>
 <li><a href="#ataspectj-declare">Declare statements</a></li>
 <li><a href="#ataspectj-aspectof"><code>aspectOf()</code> and <code>hasAspect()</code> methods</a></li>
 </ul>

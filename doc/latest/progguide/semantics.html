@@ -23,10 +23,47 @@
 <ul class="sectlevel2">
 <li><a href="#_pointcut_definition">Pointcut definition</a></li>
 <li><a href="#_context_exposure">Context exposure</a></li>
-<li><a href="#_primitive_pointcuts">Primitive pointcuts</a></li>
-<li><a href="#_signatures">Signatures</a></li>
-<li><a href="#_matching">Matching</a></li>
-<li><a href="#_type_patterns">Type patterns</a></li>
+<li><a href="#_primitive_pointcuts">Primitive pointcuts</a>
+<ul class="sectlevel3">
+<li><a href="#_method_related_pointcuts">Method-related pointcuts</a></li>
+<li><a href="#_field_related_pointcuts">Field-related pointcuts</a></li>
+<li><a href="#_object_creation_related_pointcuts">Object creation-related pointcuts</a></li>
+<li><a href="#_class_initialization_related_pointcuts">Class initialization-related pointcuts</a></li>
+<li><a href="#_exception_handler_execution_related_pointcuts">Exception handler execution-related pointcuts</a></li>
+<li><a href="#_advice_execution_related_pointcuts">Advice execution-related pointcuts</a></li>
+<li><a href="#_state_based_pointcuts">State-based pointcuts</a></li>
+<li><a href="#_control_flow_based_pointcuts">Control flow-based pointcuts</a>
+<ul class="sectlevel4">
+<li><a href="#_context_exposure_from_control_flows">Context exposure from control flows</a></li>
+</ul>
+</li>
+<li><a href="#_program_text_based_pointcuts">Program text-based pointcuts</a></li>
+<li><a href="#_expression_based_pointcuts">Expression-based pointcuts</a></li>
+</ul>
+</li>
+<li><a href="#_signatures">Signatures</a>
+<ul class="sectlevel3">
+<li><a href="#_methods">Methods</a></li>
+<li><a href="#_fields">Fields</a></li>
+<li><a href="#_constructors">Constructors</a></li>
+<li><a href="#_others">Others</a></li>
+</ul>
+</li>
+<li><a href="#_matching">Matching</a>
+<ul class="sectlevel3">
+<li><a href="#_matching_based_on_the_declaring_type">Matching based on the declaring type</a></li>
+<li><a href="#_matching_based_on_the_throws_clause">Matching based on the <code>throws</code> clause</a></li>
+</ul>
+</li>
+<li><a href="#_type_patterns">Type patterns</a>
+<ul class="sectlevel3">
+<li><a href="#_exact_type_pattern">Exact type pattern</a></li>
+<li><a href="#_type_name_patterns">Type name patterns</a></li>
+<li><a href="#_subtype_patterns">Subtype patterns</a></li>
+<li><a href="#_array_type_patterns">Array type patterns</a></li>
+<li><a href="#_type_patterns_2">Type patterns</a></li>
+</ul>
+</li>
 <li><a href="#_pattern_summary">Pattern Summary</a></li>
 </ul>
 </li>
@@ -34,7 +71,12 @@
 <ul class="sectlevel2">
 <li><a href="#_advice_modifiers">Advice modifiers</a></li>
 <li><a href="#_advice_and_checked_exceptions">Advice and checked exceptions</a></li>
-<li><a href="#_advice_precedence">Advice precedence</a></li>
+<li><a href="#_advice_precedence">Advice precedence</a>
+<ul class="sectlevel3">
+<li><a href="#_determining_precedence">Determining precedence</a></li>
+<li><a href="#_effects_of_precedence">Effects of precedence</a></li>
+</ul>
+</li>
 <li><a href="#_reflective_access_to_the_join_point">Reflective access to the join point</a></li>
 </ul>
 </li>
@@ -47,15 +89,39 @@
 <li><a href="#_interfaces_with_members">Interfaces with members</a></li>
 <li><a href="#_warnings_and_errors">Warnings and Errors</a></li>
 <li><a href="#_softened_exceptions">Softened exceptions</a></li>
-<li><a href="#advice-precedence-cross">Advice Precedence</a></li>
+<li><a href="#advice-precedence-cross">Advice Precedence</a>
+<ul class="sectlevel3">
+<li><a href="#_various_cycles">Various cycles</a></li>
+<li><a href="#_applies_to_concrete_aspects">Applies to concrete aspects</a></li>
+</ul>
+</li>
 <li><a href="#_statically_determinable_pointcuts">Statically determinable pointcuts</a></li>
 </ul>
 </li>
 <li><a href="#semantics-aspects">Aspects</a>
 <ul class="sectlevel2">
-<li><a href="#_aspect_declaration">Aspect Declaration</a></li>
-<li><a href="#_aspect_extension">Aspect Extension</a></li>
-<li><a href="#_aspect_instantiation">Aspect instantiation</a></li>
+<li><a href="#_aspect_declaration">Aspect Declaration</a>
+<ul class="sectlevel3">
+<li><a href="#_aspect_implementation_can_cut_across_other_types">Aspect implementation can cut across other types</a></li>
+<li><a href="#_aspects_are_not_directly_instantiated">Aspects are not directly instantiated</a></li>
+<li><a href="#_nested_aspects_must_be_static">Nested aspects must be <code>static</code></a></li>
+</ul>
+</li>
+<li><a href="#_aspect_extension">Aspect Extension</a>
+<ul class="sectlevel3">
+<li><a href="#_aspects_may_extend_classes_and_implement_interfaces">Aspects may extend classes and implement interfaces</a></li>
+<li><a href="#_classes_may_not_extend_aspects">Classes may not extend aspects</a></li>
+<li><a href="#_aspects_extending_aspects">Aspects extending aspects</a></li>
+</ul>
+</li>
+<li><a href="#_aspect_instantiation">Aspect instantiation</a>
+<ul class="sectlevel3">
+<li><a href="#_singleton_aspects">Singleton Aspects</a></li>
+<li><a href="#_per_object_aspects">Per-object aspects</a></li>
+<li><a href="#_per_control_flow_aspects">Per-control-flow aspects</a></li>
+<li><a href="#_aspect_instantiation_and_advice">Aspect instantiation and advice</a></li>
+</ul>
+</li>
 <li><a href="#_aspect_privilege">Aspect privilege</a></li>
 </ul>
 </li>

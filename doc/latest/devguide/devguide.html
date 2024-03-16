@@ -20,14 +20,27 @@
 <li><a href="#tools-intro">Introduction to the AspectJ tools</a>
 <ul class="sectlevel2">
 <li><a href="#eclipse-aspectj">The Eclipse AspectJ implementation</a></li>
-<li><a href="#bytecode-concepts">Bytecode weaving, incremental compilation, and memory usage</a></li>
+<li><a href="#bytecode-concepts">Bytecode weaving, incremental compilation, and memory usage</a>
+<ul class="sectlevel3">
+<li><a href="#classpathInpathAndAspectpath">Classpath, inpath, and aspectpath</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#ajc"><code>ajc</code>, the AspectJ compiler/weaver</a>
 <ul class="sectlevel2">
 <li><a href="#_name">Name</a></li>
 <li><a href="#_synopsis">Synopsis</a></li>
-<li><a href="#_description">Description</a></li>
+<li><a href="#_description">Description</a>
+<ul class="sectlevel3">
+<li><a href="#ajc_options">Options</a></li>
+<li><a href="#_file_names">File names</a></li>
+<li><a href="#_compatibility">Compatibility</a></li>
+<li><a href="#_examples">Examples</a></li>
+<li><a href="#_the_aspectj_compiler_api">The AspectJ compiler API</a></li>
+<li><a href="#_stack_traces_and_the_sourcefile_attribute">Stack Traces and the SourceFile attribute</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_ajdoc_the_aspectj_api_documentation_generator"><code>ajdoc</code>, the AspectJ API documentation generator</a>
@@ -50,25 +63,79 @@
 <ul class="sectlevel2">
 <li><a href="#antTasks-intro">Introduction</a></li>
 <li><a href="#antTasks-install">Installing Ant Tasks</a></li>
-<li><a href="#antTasks-iajc">AjcTask (iajc)</a></li>
-<li><a href="#antTasks-adapter">Ajc11CompilerAdapter (javac)</a></li>
-<li><a href="#antTasks-ajc">Ajc10 (ajc)</a></li>
-<li><a href="#antTasks-problems">Isolating problems running the Ant tasks</a></li>
+<li><a href="#antTasks-iajc">AjcTask (iajc)</a>
+<ul class="sectlevel3">
+<li><a href="#antTasks-iajc-options">AjcTask (iajc) Options</a></li>
+<li><a href="#antTasks-nested-includes">AjcTask matching parameters specified as nested elements</a></li>
+<li><a href="#antTasks-iajc-paths">AjcTask Path-like Structures</a></li>
+<li><a href="#antTasks-iajc-sample">Sample of iajc task</a></li>
+<li><a href="#antTasks-iajc-uptodate">Avoiding clean compiles</a></li>
+<li><a href="#_programmatically_handling_compiler_messages">Programmatically handling compiler messages</a></li>
+</ul>
+</li>
+<li><a href="#antTasks-adapter">Ajc11CompilerAdapter (javac)</a>
+<ul class="sectlevel3">
+<li><a href="#antTasks-adapter-sample">Sample of compiler adapter</a></li>
+<li><a href="#antTasks-adapter-options">Compiler adapter compilerarg options</a></li>
+</ul>
+</li>
+<li><a href="#antTasks-ajc">Ajc10 (ajc)</a>
+<ul class="sectlevel3">
+<li><a href="#antTasks-ajc-options">Ajc10 (ajc) Options</a>
+<ul class="sectlevel4">
+<li><a href="#_argfiles_argument_list_files">argfiles - argument list files</a></li>
+</ul>
+</li>
+<li><a href="#antTasks-ajc-nested">Ajc10 parameters specified as nested elements</a></li>
+<li><a href="#antTasks-ajc-sample">Sample of ajc task</a></li>
+</ul>
+</li>
+<li><a href="#antTasks-problems">Isolating problems running the Ant tasks</a>
+<ul class="sectlevel3">
+<li><a href="#antTasks-knownProblems">Known issues with the Ant tasks</a></li>
+<li><a href="#antTasks-feedback">Ant task questions and bugs</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#ltw">Load-Time Weaving</a>
 <ul class="sectlevel2">
-<li><a href="#ltw-introduction">Introduction</a></li>
+<li><a href="#ltw-introduction">Introduction</a>
+<ul class="sectlevel3">
+<li><a href="#_weaving_class_files_more_than_once">Weaving class files more than once</a></li>
+</ul>
+</li>
 <li><a href="#ltw-rules">Load-time Weaving Requirements</a></li>
-<li><a href="#ltw-configuration">Configuration</a></li>
+<li><a href="#ltw-configuration">Configuration</a>
+<ul class="sectlevel3">
+<li><a href="#_enabling_load_time_weaving">Enabling Load-time Weaving</a></li>
+<li><a href="#configuring-load-time-weaving-with-aopxml-files">Configuring Load-time Weaving with aop.xml files</a></li>
+<li><a href="#concrete-aspect">Using Concrete Aspects</a></li>
+<li><a href="#concrete-aspect-precedence">Using Concrete Aspects to define precedence</a></li>
+<li><a href="#weaver-options">Weaver Options</a></li>
+</ul>
+</li>
 <li><a href="#ltw-specialcases">Special cases</a></li>
 <li><a href="#ltw-packaging">Runtime Requirements for Load-time Weaving</a></li>
-<li><a href="#ltw-agents">Supported Agents</a></li>
+<li><a href="#ltw-agents">Supported Agents</a>
+<ul class="sectlevel3">
+<li><a href="#_jvmti">JVMTI</a></li>
+<li><a href="#jrockit">JRockit with Java 1.3/1.4 (use JVMTI on Java 5)</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#compatibility">AspectJ version compatibility</a>
 <ul class="sectlevel2">
-<li><a href="#versionCompatibility">Version Compatibility</a></li>
+<li><a href="#versionCompatibility">Version Compatibility</a>
+<ul class="sectlevel3">
+<li><a href="#javaCompatibility">Java compatibility</a></li>
+<li><a href="#runtimeCompatibility">Runtime library compatibility</a></li>
+<li><a href="#binaryCompatibility">Aspect binary compatibility</a></li>
+<li><a href="#sourceCompatibility">Aspect source compatibility</a></li>
+<li><a href="#upgrading">Problems when upgrading to new AspectJ versions</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

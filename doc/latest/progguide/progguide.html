@@ -21,19 +21,65 @@
 <li><a href="#starting">Getting Started with AspectJ</a>
 <ul class="sectlevel2">
 <li><a href="#starting-intro">Introduction</a></li>
-<li><a href="#starting-aspectj">Introduction to AspectJ</a></li>
-<li><a href="#starting-development">Development Aspects</a></li>
-<li><a href="#starting-production">Production Aspects</a></li>
+<li><a href="#starting-aspectj">Introduction to AspectJ</a>
+<ul class="sectlevel3">
+<li><a href="#_the_dynamic_join_point_model">The Dynamic Join Point Model</a></li>
+<li><a href="#pointcuts-starting">Pointcuts</a></li>
+<li><a href="#advice-starting">Advice</a>
+<ul class="sectlevel4">
+<li><a href="#_exposing_context_in_pointcuts">Exposing Context in Pointcuts</a></li>
+</ul>
+</li>
+<li><a href="#_inter_type_declarations">Inter-type declarations</a></li>
+<li><a href="#_aspects">Aspects</a></li>
+</ul>
+</li>
+<li><a href="#starting-development">Development Aspects</a>
+<ul class="sectlevel3">
+<li><a href="#_tracing">Tracing</a></li>
+<li><a href="#_profiling_and_logging">Profiling and Logging</a></li>
+<li><a href="#pre-and-post-conditions">Pre- and Post-Conditions</a></li>
+<li><a href="#_contract_enforcement">Contract Enforcement</a></li>
+<li><a href="#_configuration_management">Configuration Management</a></li>
+</ul>
+</li>
+<li><a href="#starting-production">Production Aspects</a>
+<ul class="sectlevel3">
+<li><a href="#_change_monitoring">Change Monitoring</a></li>
+<li><a href="#_context_passing">Context Passing</a></li>
+<li><a href="#starting-production-consistentBehavior">Providing Consistent Behavior</a></li>
+</ul>
+</li>
 <li><a href="#starting-conclusion">Conclusion</a></li>
 </ul>
 </li>
 <li><a href="#language">The AspectJ Language</a>
 <ul class="sectlevel2">
 <li><a href="#language-intro">Introduction</a></li>
-<li><a href="#language-anatomy">The Anatomy of an Aspect</a></li>
-<li><a href="#language-joinPoints">Join Points and Pointcuts</a></li>
+<li><a href="#language-anatomy">The Anatomy of an Aspect</a>
+<ul class="sectlevel3">
+<li><a href="#_an_example_aspect">An Example Aspect</a></li>
+<li><a href="#_pointcuts">Pointcuts</a></li>
+<li><a href="#_advice">Advice</a></li>
+</ul>
+</li>
+<li><a href="#language-joinPoints">Join Points and Pointcuts</a>
+<ul class="sectlevel3">
+<li><a href="#_some_example_pointcuts">Some Example Pointcuts</a></li>
+<li><a href="#call-vs-execution">call vs. execution</a></li>
+<li><a href="#_pointcut_composition">Pointcut composition</a></li>
+<li><a href="#_pointcut_parameters">Pointcut Parameters</a></li>
+<li><a href="#example">Example: <code>HandleLiveness</code></a></li>
+<li><a href="#pointcut-best-practice">Writing good pointcuts</a></li>
+</ul>
+</li>
 <li><a href="#language-advice">Advice</a></li>
-<li><a href="#language-interType">Inter-type declarations</a></li>
+<li><a href="#language-interType">Inter-type declarations</a>
+<ul class="sectlevel3">
+<li><a href="#_inter_type_scope">Inter-type Scope</a></li>
+<li><a href="#_example_pointassertions">Example: <code>PointAssertions</code></a></li>
+</ul>
+</li>
 <li><a href="#language-thisJoinPoint"><code>thisJoinPoint</code></a></li>
 </ul>
 </li>
@@ -41,10 +87,91 @@
 <ul class="sectlevel2">
 <li><a href="#examples-intro">Introduction</a></li>
 <li><a href="#examples-howto">Obtaining, Compiling and Running the Examples</a></li>
-<li><a href="#examples-basic">Basic Techniques</a></li>
-<li><a href="#examples-development">Development Aspects</a></li>
-<li><a href="#examples-production">Production Aspects</a></li>
-<li><a href="#examples-reusable">Reusable Aspects</a></li>
+<li><a href="#examples-basic">Basic Techniques</a>
+<ul class="sectlevel3">
+<li><a href="#examples-joinPoints">Join Points and <code>thisJoinPoint</code></a>
+<ul class="sectlevel4">
+<li><a href="#_the_demo_class">The <code>Demo</code> class</a></li>
+<li><a href="#_the_getinfo_aspect">The <code>GetInfo</code> aspect</a>
+<ul class="sectlevel5">
+<li><a href="#_defining_the_scope_of_a_pointcut">Defining the scope of a pointcut</a></li>
+<li><a href="#_printing_the_class_and_method_name">Printing the class and method name</a></li>
+<li><a href="#_printing_the_parameters">Printing the parameters</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#examples-roles">Roles and Views</a>
+<ul class="sectlevel4">
+<li><a href="#_the_point_class">The <code>Point</code> class</a></li>
+<li><a href="#_the_cloneablepoint_aspect">The <code>CloneablePoint</code> aspect</a></li>
+<li><a href="#_the_comparablepoint_aspect">The <code>ComparablePoint</code> aspect</a></li>
+<li><a href="#_the_hashablepoint_aspect">The <code>HashablePoint</code> aspect</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#examples-development">Development Aspects</a>
+<ul class="sectlevel3">
+<li><a href="#_tracing_using_aspects">Tracing using aspects</a>
+<ul class="sectlevel4">
+<li><a href="#_an_example_application">An Example Application</a></li>
+<li><a href="#_tracing_version_1">Tracing - Version 1</a></li>
+<li><a href="#_tracing_version_2">Tracing - Version 2</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#examples-production">Production Aspects</a>
+<ul class="sectlevel3">
+<li><a href="#_a_bean_aspect">A Bean Aspect</a>
+<ul class="sectlevel4">
+<li><a href="#_the_point_class_2">The <code>Point</code> class</a></li>
+<li><a href="#_the_boundpoint_aspect">The <code>BoundPoint</code> aspect</a></li>
+<li><a href="#_the_test_program">The Test Program</a></li>
+<li><a href="#_compiling_and_running_the_example">Compiling and Running the Example</a></li>
+</ul>
+</li>
+<li><a href="#the-subject-observer-protocol">The Subject/Observer Protocol</a>
+<ul class="sectlevel4">
+<li><a href="#_generic_components">Generic Components</a></li>
+<li><a href="#_application_classes">Application Classes</a></li>
+<li><a href="#_compiling_and_running">Compiling and Running</a></li>
+</ul>
+</li>
+<li><a href="#_a_simple_telecom_simulation">A Simple Telecom Simulation</a>
+<ul class="sectlevel4">
+<li><a href="#_the_application">The Application</a></li>
+<li><a href="#_the_basic_objects">The Basic Objects</a></li>
+<li><a href="#_the_customer_class">The <code>Customer</code> class</a></li>
+<li><a href="#_the_call_class">The <code>Call</code> class</a></li>
+<li><a href="#_the_connection_class">The <code>Connection</code> class</a></li>
+<li><a href="#_the_local_and_longdistance_classes">The <code>Local</code> and <code>LongDistance</code> classes</a></li>
+<li><a href="#_compiling_and_running_the_basic_simulation">Compiling and Running the Basic Simulation</a></li>
+<li><a href="#_the_timing_aspect">The Timing aspect</a>
+<ul class="sectlevel5">
+<li><a href="#_the_timer_class">The <code>Timer</code> class</a></li>
+</ul>
+</li>
+<li><a href="#_the_timerlog_aspect">The <code>TimerLog</code> aspect</a></li>
+<li><a href="#_the_timing_aspect_2">The <code>Timing</code> aspect</a></li>
+<li><a href="#_the_billing_aspect">The <code>Billing</code> aspect</a></li>
+<li><a href="#_accessing_the_inter_type_state">Accessing the inter-type state</a></li>
+<li><a href="#_compiling_and_running_2">Compiling and Running</a></li>
+<li><a href="#_discussion">Discussion</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#examples-reusable">Reusable Aspects</a>
+<ul class="sectlevel3">
+<li><a href="#_tracing_using_aspects_revisited">Tracing using Aspects, Revisited</a>
+<ul class="sectlevel4">
+<li><a href="#_tracing_version_3">Tracing - Version 3</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_idioms">Idioms</a>
@@ -72,16 +199,124 @@
 <ul class="sectlevel2">
 <li><a href="#semantics-intro">Introduction</a></li>
 <li><a href="#semantics-joinPoints">Join Points</a></li>
-<li><a href="#semantics-pointcuts">Pointcuts</a></li>
-<li><a href="#semantics-advice">Advice</a></li>
-<li><a href="#semantics-declare">Static crosscutting</a></li>
-<li><a href="#semantics-aspects">Aspects</a></li>
+<li><a href="#semantics-pointcuts">Pointcuts</a>
+<ul class="sectlevel3">
+<li><a href="#_pointcut_definition">Pointcut definition</a></li>
+<li><a href="#_context_exposure">Context exposure</a></li>
+<li><a href="#_primitive_pointcuts">Primitive pointcuts</a>
+<ul class="sectlevel4">
+<li><a href="#_method_related_pointcuts">Method-related pointcuts</a></li>
+<li><a href="#_field_related_pointcuts">Field-related pointcuts</a></li>
+<li><a href="#_object_creation_related_pointcuts">Object creation-related pointcuts</a></li>
+<li><a href="#_class_initialization_related_pointcuts">Class initialization-related pointcuts</a></li>
+<li><a href="#_exception_handler_execution_related_pointcuts">Exception handler execution-related pointcuts</a></li>
+<li><a href="#_advice_execution_related_pointcuts">Advice execution-related pointcuts</a></li>
+<li><a href="#_state_based_pointcuts">State-based pointcuts</a></li>
+<li><a href="#_control_flow_based_pointcuts">Control flow-based pointcuts</a>
+<ul class="sectlevel5">
+<li><a href="#_context_exposure_from_control_flows">Context exposure from control flows</a></li>
+</ul>
+</li>
+<li><a href="#_program_text_based_pointcuts">Program text-based pointcuts</a></li>
+<li><a href="#_expression_based_pointcuts">Expression-based pointcuts</a></li>
+</ul>
+</li>
+<li><a href="#_signatures">Signatures</a>
+<ul class="sectlevel4">
+<li><a href="#_methods">Methods</a></li>
+<li><a href="#_fields">Fields</a></li>
+<li><a href="#_constructors">Constructors</a></li>
+<li><a href="#_others">Others</a></li>
+</ul>
+</li>
+<li><a href="#_matching">Matching</a>
+<ul class="sectlevel4">
+<li><a href="#_matching_based_on_the_declaring_type">Matching based on the declaring type</a></li>
+<li><a href="#_matching_based_on_the_throws_clause">Matching based on the <code>throws</code> clause</a></li>
+</ul>
+</li>
+<li><a href="#_type_patterns">Type patterns</a>
+<ul class="sectlevel4">
+<li><a href="#_exact_type_pattern">Exact type pattern</a></li>
+<li><a href="#_type_name_patterns">Type name patterns</a></li>
+<li><a href="#_subtype_patterns">Subtype patterns</a></li>
+<li><a href="#_array_type_patterns">Array type patterns</a></li>
+<li><a href="#_type_patterns_2">Type patterns</a></li>
+</ul>
+</li>
+<li><a href="#_pattern_summary">Pattern Summary</a></li>
+</ul>
+</li>
+<li><a href="#semantics-advice">Advice</a>
+<ul class="sectlevel3">
+<li><a href="#_advice_modifiers">Advice modifiers</a></li>
+<li><a href="#_advice_and_checked_exceptions">Advice and checked exceptions</a></li>
+<li><a href="#_advice_precedence">Advice precedence</a>
+<ul class="sectlevel4">
+<li><a href="#_determining_precedence">Determining precedence</a></li>
+<li><a href="#_effects_of_precedence">Effects of precedence</a></li>
+</ul>
+</li>
+<li><a href="#_reflective_access_to_the_join_point">Reflective access to the join point</a></li>
+</ul>
+</li>
+<li><a href="#semantics-declare">Static crosscutting</a>
+<ul class="sectlevel3">
+<li><a href="#_inter_type_member_declarations">Inter-type member declarations</a></li>
+<li><a href="#_access_modifiers">Access modifiers</a></li>
+<li><a href="#_conflicts">Conflicts</a></li>
+<li><a href="#_extension_and_implementation">Extension and Implementation</a></li>
+<li><a href="#_interfaces_with_members">Interfaces with members</a></li>
+<li><a href="#_warnings_and_errors">Warnings and Errors</a></li>
+<li><a href="#_softened_exceptions">Softened exceptions</a></li>
+<li><a href="#advice-precedence-cross">Advice Precedence</a>
+<ul class="sectlevel4">
+<li><a href="#_various_cycles">Various cycles</a></li>
+<li><a href="#_applies_to_concrete_aspects">Applies to concrete aspects</a></li>
+</ul>
+</li>
+<li><a href="#_statically_determinable_pointcuts">Statically determinable pointcuts</a></li>
+</ul>
+</li>
+<li><a href="#semantics-aspects">Aspects</a>
+<ul class="sectlevel3">
+<li><a href="#_aspect_declaration">Aspect Declaration</a>
+<ul class="sectlevel4">
+<li><a href="#_aspect_implementation_can_cut_across_other_types">Aspect implementation can cut across other types</a></li>
+<li><a href="#_aspects_are_not_directly_instantiated">Aspects are not directly instantiated</a></li>
+<li><a href="#_nested_aspects_must_be_static">Nested aspects must be <code>static</code></a></li>
+</ul>
+</li>
+<li><a href="#_aspect_extension">Aspect Extension</a>
+<ul class="sectlevel4">
+<li><a href="#_aspects_may_extend_classes_and_implement_interfaces">Aspects may extend classes and implement interfaces</a></li>
+<li><a href="#_classes_may_not_extend_aspects">Classes may not extend aspects</a></li>
+<li><a href="#_aspects_extending_aspects">Aspects extending aspects</a></li>
+</ul>
+</li>
+<li><a href="#_aspect_instantiation">Aspect instantiation</a>
+<ul class="sectlevel4">
+<li><a href="#_singleton_aspects">Singleton Aspects</a></li>
+<li><a href="#_per_object_aspects">Per-object aspects</a></li>
+<li><a href="#_per_control_flow_aspects">Per-control-flow aspects</a></li>
+<li><a href="#_aspect_instantiation_and_advice">Aspect instantiation and advice</a></li>
+</ul>
+</li>
+<li><a href="#_aspect_privilege">Aspect privilege</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#implementation">Implementation Notes</a>
 <ul class="sectlevel2">
 <li><a href="#_compiler_notes">Compiler Notes</a></li>
-<li><a href="#_bytecode_notes">Bytecode Notes</a></li>
+<li><a href="#_bytecode_notes">Bytecode Notes</a>
+<ul class="sectlevel3">
+<li><a href="#the-class-expression-and-string-plus">The <code>.class</code> expression and <code>String</code> <code>+</code></a></li>
+<li><a href="#_the_handler_join_point">The <code>handler()</code> join point</a></li>
+<li><a href="#_initializers_and_inter_type_constructors">Initializers and Inter-type Constructors</a></li>
+</ul>
+</li>
 <li><a href="#_annotation_style_notes">Annotation-style Notes</a></li>
 <li><a href="#_summary_of_implementation_requirements">Summary of implementation requirements</a></li>
 </ul>

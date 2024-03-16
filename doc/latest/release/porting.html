@@ -24,23 +24,81 @@
 <li><a href="#pre-1_0beta1">Porting pre-1.0beta1 code</a></li>
 <li><a href="#pre-1_0alpha1">Porting pre-1.0alpha1 code</a>
 <ul class="sectlevel2">
-<li><a href="#_1_0a1-pointcuts">Pointcuts</a></li>
-<li><a href="#_1_0a1-type-patterns">Type patterns</a></li>
-<li><a href="#_1_0a1-advice">Advice</a></li>
-<li><a href="#_1_0a1-introduction-and-static">Introduction and static crosscutting</a></li>
+<li><a href="#_1_0a1-pointcuts">Pointcuts</a>
+<ul class="sectlevel3">
+<li><a href="#_1_0a1-plural-to-singular">Removing the "s" from pointcuts</a></li>
+<li><a href="#_1_0a1-remove-receptions">Removing the receptions pointcut</a>
+<ul class="sectlevel4">
+<li><a href="#_not_exposing_state">Not exposing state</a></li>
+<li><a href="#_exposing_state">Exposing state</a></li>
+<li><a href="#_constructor_receptions">Constructor receptions</a></li>
+</ul>
+</li>
+<li><a href="#_1_0a1-fixing-state-access">Fixing state access</a>
+<ul class="sectlevel4">
+<li><a href="#_using_args">Using args</a></li>
+<li><a href="#_rewriting_calls">Rewriting calls</a></li>
+<li><a href="#_rewriting_gets_and_sets">Rewriting gets and sets</a></li>
+<li><a href="#_rewriting_handlers">Rewriting handlers</a></li>
+<li><a href="#_rewriting_within">Rewriting within</a></li>
+</ul>
+</li>
+<li><a href="#_1_0a1-no-subs-in-sigs">Understanding signatures</a></li>
+<li><a href="#_1_0a1-fixing-instanceof">Removing the instanceof pointcut</a></li>
+<li><a href="#_1_0a1-initializations">Rewriting the initializations pointcut</a></li>
+<li><a href="#_1_0a1-constructor-calls">Understanding constructor calls</a></li>
+<li><a href="#_1_0a1-hasaspect">Removing the hasaspect pointcut</a></li>
+<li><a href="#_1_0a1-withinall">Removing the withinall pointcut</a></li>
+<li><a href="#_1_0a1-user-defined-returns">Removing returns modifier from pointcuts</a></li>
+<li><a href="#_1_0a1-static-pointcuts">Making some pointcuts static</a></li>
+</ul>
+</li>
+<li><a href="#_1_0a1-type-patterns">Type patterns</a>
+<ul class="sectlevel3">
+<li><a href="#_1_0a1-new-wildcards">Understanding * and .. in type patterns</a></li>
+<li><a href="#_1_0a1-subtypes-to-plus">Fixing subtypes in introduction</a></li>
+</ul>
+</li>
+<li><a href="#_1_0a1-advice">Advice</a>
+<ul class="sectlevel3">
+<li><a href="#_1_0a1-around-returns">Moving the return type of around</a></li>
+<li><a href="#_1_0a1-around-throws">Adding a throws clause to around</a></li>
+<li><a href="#_1_0a1-advice-precedence">Understanding advice precedence</a></li>
+<li><a href="#_1_0a1-after-returning">Fixing after returning</a></li>
+<li><a href="#_1_0a1-this-static-join-point">Renaming thisStaticJoinPoint</a></li>
+<li><a href="#_1_0a1-this-join-point">Converting access to thisJoinPoint</a></li>
+</ul>
+</li>
+<li><a href="#_1_0a1-introduction-and-static">Introduction and static crosscutting</a>
+<ul class="sectlevel3">
+<li><a href="#_1_0a1-plus-implements-extends">Removing +implements and +extends</a></li>
+<li><a href="#_1_0a1-now-use-soft">Using declare soft</a></li>
+</ul>
+</li>
 <li><a href="#_1_0a1-aspects">Aspects</a></li>
 </ul>
 </li>
 <li><a href="#pre08b3">Porting pre-0.8beta3 code</a>
 <ul class="sectlevel2">
-<li><a href="#cflowTerminology">Changing cflow terminology</a></li>
+<li><a href="#cflowTerminology">Changing cflow terminology</a>
+<ul class="sectlevel3">
+<li><a href="#_eachcflowroot">eachcflowroot</a></li>
+<li><a href="#_cflow">cflow</a></li>
+<li><a href="#_cflowtop">cflowtop</a></li>
+</ul>
+</li>
 <li><a href="#abstractPointcuts">Overriding abstract pointcuts</a></li>
 <li><a href="#recursiveAdvice">Limiting recursive advice</a></li>
 </ul>
 </li>
 <li><a href="#pre08b1">Porting pre-0.8beta1 code</a>
 <ul class="sectlevel2">
-<li><a href="#introSyntax">Rewriting introductions</a></li>
+<li><a href="#introSyntax">Rewriting introductions</a>
+<ul class="sectlevel3">
+<li><a href="#_syntax">Syntax</a></li>
+<li><a href="#_access">Access</a></li>
+</ul>
+</li>
 <li><a href="#staticAdvice">Removing static advice</a></li>
 <li><a href="#aspect-aspect">Fixing aspect-aspect inheritance</a></li>
 <li><a href="#usingPrivateIntroduction">Using private introduction</a></li>
@@ -48,13 +106,23 @@
 </li>
 <li><a href="#pre07b11">Porting pre-0.7beta11 code</a>
 <ul class="sectlevel2">
-<li><a href="#twoArgumentCalls">Removing two-argument calls</a></li>
+<li><a href="#twoArgumentCalls">Removing two-argument calls</a>
+<ul class="sectlevel3">
+<li><a href="#_calls_to_static_methods">Calls to static methods</a></li>
+<li><a href="#_calls_to_non_static_methods">Calls to non-static methods</a></li>
+</ul>
+</li>
 <li><a href="#adviceInClasses">Removing advice from Class declarations</a></li>
 </ul>
 </li>
 <li><a href="#pre07b10">Porting pre-0.7beta10 code</a>
 <ul class="sectlevel2">
-<li><a href="#joinPoints">Changing access to thisJoinPoint</a></li>
+<li><a href="#joinPoints">Changing access to thisJoinPoint</a>
+<ul class="sectlevel3">
+<li><a href="#proceed"><code>thisJoinPoint.runNext()</code> to <code>proceed()</code></a></li>
+<li><a href="#thisJoinPoint">Using <code>thisJoinPoint</code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

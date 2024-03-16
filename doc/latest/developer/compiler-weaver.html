@@ -19,7 +19,14 @@
 <ul class="sectlevel1">
 <li><a href="#_guide_for_developers_of_the_aspectj_compiler_and_weaver">Guide for Developers of the AspectJ Compiler and Weaver</a>
 <ul class="sectlevel2">
-<li><a href="#_compiler_front_end_org_aspectj_ajdt_core">Compiler front-end (org.aspectj.ajdt.core)</a></li>
+<li><a href="#_compiler_front_end_org_aspectj_ajdt_core">Compiler front-end (org.aspectj.ajdt.core)</a>
+<ul class="sectlevel3">
+<li><a href="#_top_level_parse_tree">Top-level parse tree</a></li>
+<li><a href="#_pointcutdeclaration_processing">PointcutDeclaration processing</a></li>
+<li><a href="#_advicedeclaration_processing">AdviceDeclaration processing</a></li>
+<li><a href="#_overview_of_the_main_classes_in_org_aspectj_ajdt_core">Overview of the main classes in org.aspectj.ajdt.core</a></li>
+</ul>
+</li>
 <li><a href="#_weaving_back_end_weaver">Weaving back-end (weaver)</a></li>
 <li><a href="#_runtime_support_library_runtime">Runtime support library (runtime)</a></li>
 <li><a href="#_mappings_from_aspectj_language_to_implementation">Mappings from AspectJ language to implementation</a></li>
@@ -27,9 +34,36 @@
 </li>
 <li><a href="#_tutorial_implementing_a_throw_join_point">Tutorial: implementing a throw join point</a>
 <ul class="sectlevel2">
-<li><a href="#_part_1_adding_the_join_point_and_corresponding_pcd">Part 1: Adding the join point and corresponding pcd</a></li>
-<li><a href="#_part_2_getting_the_signature_of_this_new_join_point_right">Part 2: Getting the signature of this new join point right</a></li>
-<li><a href="#_part_3_more_serious_testing">Part 3: More serious testing</a></li>
+<li><a href="#_part_1_adding_the_join_point_and_corresponding_pcd">Part 1: Adding the join point and corresponding pcd</a>
+<ul class="sectlevel3">
+<li><a href="#_step_1_synchronize_with_repository_and_run_the_existing_test_suite">Step 1. Synchronize with repository and run the existing test suite</a></li>
+<li><a href="#_step_2_write_a_proto_test_case">Step 2. Write a proto test case</a></li>
+<li><a href="#_step_3_implement_the_new_join_point_shadow_kind">Step 3. Implement the new join point shadow kind</a></li>
+<li><a href="#_step_4_create_this_new_kind_of_joinpoint_for_the_throw_bytecode">Step 4. Create this new kind of joinpoint for the throw bytecode</a></li>
+<li><a href="#_step_5_extend_our_proto_test_to_use_a_pointcut_designator_for_matching">Step 5. Extend our proto-test to use a pointcut designator for matching</a></li>
+<li><a href="#_step_6_extend_the_pcd_parser_to_handle_this_new_primitive_pcd">Step 6. Extend the PCD parser to handle this new primitive PCD</a></li>
+<li><a href="#_step_7_check_that_were_properly_providing_the_single_thrown_argument_and_clean_up_the_test">Step 7. Check that we&#8217;re properly providing the single thrown argument (and clean-up the test)</a></li>
+</ul>
+</li>
+<li><a href="#_part_2_getting_the_signature_of_this_new_join_point_right">Part 2: Getting the signature of this new join point right</a>
+<ul class="sectlevel3">
+<li><a href="#_step_1_change_the_signature_of_the_throw_pcd">Step 1. Change the signature of the throw pcd</a></li>
+<li><a href="#_part_2_make_a_real_test_case">Part 2. Make a real test case</a></li>
+<li><a href="#_step_3_fix_signature_matching_again">Step 3. Fix signature matching again</a></li>
+<li><a href="#_step_4_extend_org_aspectj_lang_reflect_to_understand_throw_signatures">Step 4. Extend org.aspectj.lang.reflect to understand throw signatures</a></li>
+<li><a href="#_step_5_extend_the_test_for_automated_coverage_of_reflection">Step 5. Extend the test for automated coverage of reflection</a></li>
+</ul>
+</li>
+<li><a href="#_part_3_more_serious_testing">Part 3: More serious testing</a>
+<ul class="sectlevel3">
+<li><a href="#_step_1_run_the_test_suite_again">Step 1. Run the test suite again</a></li>
+<li><a href="#_step_2_fix_the_failing_test_case">Step 2. Fix the failing test case</a></li>
+<li><a href="#_step_3_extend_test_coverage_to_after_advice">Step 3. Extend test coverage to after advice</a></li>
+<li><a href="#_step_4_look_at_around_advice_on_throw_join_points">Step 4. Look at around advice on throw join points</a></li>
+<li><a href="#_step_5_prohibit_around_advice_on_this_new_join_point_kind">Step 5. Prohibit around advice on this new join point kind</a></li>
+<li><a href="#_step_6_final_preparations_for_a_commit_or_patch">Step 6. Final preparations for a commit or patch</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
