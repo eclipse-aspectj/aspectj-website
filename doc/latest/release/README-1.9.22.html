@@ -10,20 +10,31 @@
 <link rel="stylesheet" href="./asciidoctor.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body class="article toc2 toc-left">
+<body class="book toc2 toc-left">
 <div id="header">
 <h1>AspectJ 1.9.22</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
+<li><a href="#_aspectj_1_9_22_1">AspectJ 1.9.22.1</a>
+<ul class="sectlevel2">
 <li><a href="#_new_features">New features</a></li>
 <li><a href="#_improvements">Improvements</a></li>
 <li><a href="#_other_changes_and_bug_fixes">Other changes and bug fixes</a></li>
-<li><a href="#_aspectj_usage_hints">AspectJ usage hints</a>
+</ul>
+</li>
+<li><a href="#_aspectj_1_9_22">AspectJ 1.9.22</a>
 <ul class="sectlevel2">
+<li><a href="#_new_features_2">New features</a></li>
+<li><a href="#_improvements_2">Improvements</a></li>
+<li><a href="#_other_changes_and_bug_fixes_2">Other changes and bug fixes</a></li>
+<li><a href="#_aspectj_usage_hints">AspectJ usage hints</a>
+<ul class="sectlevel3">
 <li><a href="#ajc_build_system_requirements">AspectJ compiler build system requirements</a></li>
 <li><a href="#ltw_java_16">Use LTW on Java 16+</a></li>
 <li><a href="#compile_with_preview">Compile with Java preview features</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -31,6 +42,77 @@
 </div>
 <div id="content">
 <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The releases 1.9.22 and 1.9.22.1 are described together in this document.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_aspectj_1_9_22_1">AspectJ 1.9.22.1</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>© Copyright 2024 Contributors. All rights reserved.</em></p>
+</div>
+<div class="paragraph">
+<p><em>Release info: 1.9.22.1 available 11-May-2024</em></p>
+</div>
+<div class="paragraph">
+<p>Please note that Bugzilla for issue management is deprecated and new issues should be filed as
+<a href="https://github.com/eclipse-aspectj/aspectj/issues/new">GitHub issues</a>. The list of issues addressed for 1.9.22.1 can be
+found here:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/eclipse-aspectj/aspectj/issues?q=is%3Aissue+is%3Aclosed++milestone%3A1.9.22.1">GitHub 1.9.22.1</a></p>
+</li>
+<li>
+<p><a href="https://bugs.eclipse.org/bugs/buglist.cgi?bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;f0=OP&amp;f1=OP&amp;f3=CP&amp;f4=CP&amp;j1=OR&amp;list_id=16866879&amp;product=AspectJ&amp;query_format=advanced&amp;target_milestone=1.9.22.1">Bugzilla 1.9.22.1</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_new_features">New features</h3>
+<div class="paragraph">
+<p>AspectJ 1.9.22.1 has no new features, only bugfixes and improvements.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_improvements">Improvements</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>The pointcut parser now traverses type parameters in generic types, e.g. in <code>MyType&lt;A, B&gt;</code> it also traverses the
+previously ignored type parameters <code>A</code> and <code>B</code>, enabling future improvements like more exact type matching or checks
+for illegal primitive type parameters. See <a href="https://github.com/eclipse-aspectj/aspectj/issues/221">issue #221</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/eclipse-aspectj/aspectj/issues/306">Performance issue due to repeated attempts to find classes without FQN</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_other_changes_and_bug_fixes">Other changes and bug fixes</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/eclipse-aspectj/aspectj/issues/211">AJC core dump when mixing type name wildcards with generics</a></p>
+</li>
+<li>
+<p><a href="https://github.com/eclipse-aspectj/aspectj/issues/302">Potential ThreadLocalMap.Entry accumulation in JoinPointImpl</a></p>
+</li>
+<li>
+<p><a href="https://github.com/eclipse-aspectj/aspectj/issues/305">WeavingAdaptor optimisations cause Equinox weaving problems</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_aspectj_1_9_22">AspectJ 1.9.22</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><em>© Copyright 2024 Contributors. All rights reserved.</em></p>
@@ -53,11 +135,8 @@ found here:</p>
 </li>
 </ul>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_new_features">New features</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_new_features_2">New features</h3>
 <div class="paragraph">
 <p>AspectJ 1.9.22 supports <a href="https://openjdk.java.net/projects/jdk/22/">Java 22</a>, its final and preview features, such as:</p>
 </div>
@@ -110,10 +189,8 @@ out of the box:</p>
 </ul>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_improvements">Improvements</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_improvements_2">Improvements</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -122,10 +199,8 @@ out of the box:</p>
 </ul>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_other_changes_and_bug_fixes">Other changes and bug fixes</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_other_changes_and_bug_fixes_2">Other changes and bug fixes</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -134,12 +209,10 @@ out of the box:</p>
 </ul>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_aspectj_usage_hints">AspectJ usage hints</h2>
-<div class="sectionbody">
 <div class="sect2">
-<h3 id="ajc_build_system_requirements">AspectJ compiler build system requirements</h3>
+<h3 id="_aspectj_usage_hints">AspectJ usage hints</h3>
+<div class="sect3">
+<h4 id="ajc_build_system_requirements">AspectJ compiler build system requirements</h4>
 <div class="paragraph">
 <p>Since 1.9.21, the AspectJ compiler <code>ajc</code> (contained in the <code>aspectjtools</code> library) no longer works on JDKs 11 to 16. The
 minimum compile-time requirement is now JDK 17 due to upstream changes in the Eclipse Java Compiler (subset of JDT
@@ -152,8 +225,8 @@ weaver <code>aspectjweaver</code> still only require JRE 8+.</p>
 <p>History: Since 1.9.8, the AspectJ compiler ajc needed JDK 11+, before then JDK 8+.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="ltw_java_16">Use LTW on Java 16+</h3>
+<div class="sect3">
+<h4 id="ltw_java_16">Use LTW on Java 16+</h4>
 <div class="paragraph">
 <p><strong>Since AspectJ 1.9.21.1, using <code>--add-opens</code> is no longer necessary!</strong> The additional JVM command-line option was
 necessary for LTW on JRE 16+ in all AspectJ versions up to 1.9.21. Since AspectJ 1.9.21.1, the LTW agent uses an
@@ -162,8 +235,8 @@ JDKs 8 to 22. There still is no canonical solution, because <a href="https://bug
 is still unresolved since 2018.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="compile_with_preview">Compile with Java preview features</h3>
+<div class="sect3">
+<h4 id="compile_with_preview">Compile with Java preview features</h4>
 <div class="paragraph">
 <p>For features marked as preview on a given JDK, you need to compile with <code>ajc --enable-preview</code> and run with
 <code>java --enable-preview</code> on that JDK.</p>
@@ -173,6 +246,7 @@ is still unresolved since 2018.</p>
 For example, records compiled with preview on JDK 15 cannot be used on JDK 16 without recompilation. This is a JVM
 limitation unrelated to AspectJ. Also, e.g. sealed classes are preview-1 on JDK 15 and preview-2 on JDK 16. You still
 need to recompile, no matter what.</p>
+</div>
 </div>
 </div>
 </div>
